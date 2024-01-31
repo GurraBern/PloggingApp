@@ -57,14 +57,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
-	  <Folder Include="MVVM\ViewModels\" />
+	  <Compile Update="MVVM\Views\RankingsPage.xaml.cs">
+	    <DependentUpon>RankingsPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="MVVM\Views\RankingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Data\Repositories\" />
+	  <Folder Include="Data\Services\ApiClients\" />
+	  <Folder Include="Data\Services\Interfaces\" />
 	</ItemGroup>
 
 </Project>
