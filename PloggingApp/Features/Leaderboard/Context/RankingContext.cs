@@ -1,5 +1,5 @@
 ﻿using PloggingApp.Data.Context.Interfaces;
-using PloggingApp.MVVM.Models;
+using PloggingApp.Shared.Models;
 
 namespace PloggingApp.Data.Context;
 

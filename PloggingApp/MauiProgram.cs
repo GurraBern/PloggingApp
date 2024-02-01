@@ -3,8 +3,9 @@ using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
 using PloggingApp.Data.Context;
 using PloggingApp.Data.Context.Interfaces;
-using PloggingApp.MVVM.ViewModels;
-using PloggingApp.MVVM.Views;
+using PloggingApp.Features.Leaderboard;
+using PloggingApp.Pages;
+using PloggingApp.Pages.Leaderboard;
 
 namespace PloggingApp;
 
@@ -36,12 +37,16 @@ public static class MauiProgram
 
     private static void AddViewModels(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<RankingsViewModel>();
+        //Pages ViewModels
+        builder.Services.AddTransient<RankingViewmodel>();
+
+        //Views ViewModels
+        builder.Services.AddTransient<LeaderboardViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<RankingsPage>();
+        builder.Services.AddTransient<RankingPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)

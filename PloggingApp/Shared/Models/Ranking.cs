@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.MVVM.Models;
+﻿namespace PloggingApp.Shared.Models;
 
 public class Ranking
 {

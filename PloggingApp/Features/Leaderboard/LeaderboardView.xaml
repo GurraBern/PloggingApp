@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PloggingApp.Features.Leaderboard"
+             xmlns:models="clr-namespace:PloggingApp.Shared.Models"
+             x:Class="PloggingApp.Features.Leaderboard.LeaderboardView"
+             x:DataType="viewmodel:LeaderboardViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Text="Rank"></Label>
+                <Label Grid.Column="1" Text="Name"></Label>
+                <Label Grid.Column="2" Text="Scrap Collected"></Label>
+                <Label Grid.Column="3" Text="Steps"></Label>
+                <Label Grid.Column="4" Text="Distance"></Label>
+                 
+                <CollectionView ItemsSource="{Binding Rankings}" Grid.Row="1" Grid.ColumnSpan="7">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Ranking">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Grid.Column="0" Text="1"></Label>
+                                <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
+                                <Label Grid.Column="2" Text="{Binding ScrapCount}"></Label>
+                                <Label Grid.Column="3" Text="{Binding Distance}"></Label>
+                                <Label Grid.Column="4" Text="{Binding Steps}"></Label>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

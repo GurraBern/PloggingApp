@@ -66,21 +66,35 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\RankingsPage.xaml.cs">
-	    <DependentUpon>RankingsPage.xaml</DependentUpon>
+	  <Compile Update="Features\Dashboard\DashboardView.xaml.cs">
+	    <DependentUpon>DashboardView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Leaderboard\LeaderboardView.xaml.cs">
+	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
+	    <DependentUpon>DashboardPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Leaderboard\RankingPage.xaml.cs">
+	    <DependentUpon>RankingPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\RankingsPage.xaml">
+	  <MauiXaml Update="Features\Leaderboard\LeaderboardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Dashboard\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Leaderboard\RankingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Data\Repositories\" />
-	  <Folder Include="Data\Services\ApiClients\" />
-	  <Folder Include="Data\Services\Interfaces\" />
+	  <Folder Include="Shared\Services\Api\" />
+	  <Folder Include="Shared\Services\" />
 	</ItemGroup>
 
 </Project>
