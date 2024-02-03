@@ -60,16 +60,19 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="RestSharp" Version="110.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Features\Dashboard\DashboardView.xaml.cs">
+	  <Compile Update="MVVM\Views\DashboardView.xaml.cs">
 	    <DependentUpon>DashboardView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Features\Leaderboard\LeaderboardView.xaml.cs">
+	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
@@ -81,7 +84,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Features\Leaderboard\LeaderboardView.xaml">
+	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Dashboard\DashboardPage.xaml">
@@ -93,8 +96,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Shared\Services\Api\" />
-	  <Folder Include="Shared\Services\" />
+	  <Folder Include="MVVM\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,0 +1,6 @@
+@PloggingAPI_HostAddress = http://localhost:5119
+
+GET {{PloggingAPI_HostAddress}}/userRanking/
+Accept: application/json
+
+###

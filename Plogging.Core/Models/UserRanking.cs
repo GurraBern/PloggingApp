@@ -1,6 +1,6 @@
-﻿namespace PloggingApp.Shared.Models;
+﻿namespace Plogging.Core.Models;
 
-public class Ranking
+public class UserRanking
 {
     public required string DisplayName { get; set; }
     public int ScrapCount { get; set; }

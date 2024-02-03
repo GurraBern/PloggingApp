@@ -1,4 +1,4 @@
-﻿using PloggingApp.Features.Leaderboard;
+﻿using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.Pages.Leaderboard;
 

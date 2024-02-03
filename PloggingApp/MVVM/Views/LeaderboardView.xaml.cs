@@ -1,4 +1,4 @@
-namespace PloggingApp.Features.Leaderboard;
+namespace PloggingApp.MVVM.Views;
 
 public partial class LeaderboardView : ContentView
 {

@@ -1,11 +1,15 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PloggingApp.Data.Context;
-using PloggingApp.Data.Context.Interfaces;
-using PloggingApp.Features.Leaderboard;
+using Plogging.Core.Models;
+using PloggingApp.Data.Services;
+using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Pages;
 using PloggingApp.Pages.Leaderboard;
+using RestSharp;
+using System.Reflection;
 
 namespace PloggingApp;
 
@@ -51,6 +55,36 @@ public static class MauiProgram
 
     private static void AddServices(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<IRankingContext, RankingContext>();
+        builder.Services.AddTransient<IRankingService, RankingService>();
+    }
+
+    private static void AddApiClients(MauiAppBuilder builder)
+    {
+
+        var personalHealthApiClient = new RestClient(builder.Configuration["AppSettings:PloggingApiUrl"]);
+        builder.RegisterPloggingApiClient<UserRanking>(personalHealthApiClient);
+    }
+
+    private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)
+    {
+        builder.Services.AddTransient<IPloggingApiClient<T>>(serviceProvider =>
+        {
+            return new PloggingApiClient<T>(restClient);
+        });
+    }
+
+    private static void AddAppSettings(this MauiAppBuilder builder)
+    {
+        var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
+        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"NutritionApp.appsettings.{environment}.json");
+
+        if (stream != null)
+        {
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonStream(stream)
+                .Build();
+
+            builder.Configuration.AddConfiguration(config);
+        }
     }
 }
