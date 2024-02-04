@@ -22,12 +22,14 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
+            .AddAppSettings()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        AddApiClients(builder);
         AddViewModels(builder);
         AddPages(builder);
         AddServices(builder);
@@ -60,9 +62,12 @@ public static class MauiProgram
 
     private static void AddApiClients(MauiAppBuilder builder)
     {
-
-        var personalHealthApiClient = new RestClient(builder.Configuration["AppSettings:PloggingApiUrl"]);
-        builder.RegisterPloggingApiClient<UserRanking>(personalHealthApiClient);
+        var apiUrl = builder.Configuration["ApiUrls:PloggingApiUrl"];
+        if(apiUrl != null)
+        {
+            var personalHealthApiClient = new RestClient(apiUrl);
+            builder.RegisterPloggingApiClient<UserRanking>(personalHealthApiClient);
+        }
     }
 
     private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)
@@ -73,10 +78,10 @@ public static class MauiProgram
         });
     }
 
-    private static void AddAppSettings(this MauiAppBuilder builder)
+    private static MauiAppBuilder AddAppSettings(this MauiAppBuilder builder)
     {
         var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
-        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"NutritionApp.appsettings.{environment}.json");
+        using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"PloggingApp.appsettings.{environment}.json");
 
         if (stream != null)
         {
@@ -86,5 +91,7 @@ public static class MauiProgram
 
             builder.Configuration.AddConfiguration(config);
         }
+
+        return builder;
     }
 }

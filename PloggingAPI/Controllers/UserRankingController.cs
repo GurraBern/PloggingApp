@@ -12,9 +12,9 @@ public class UserRankingController : ControllerBase
     }
 
     [HttpGet(Name = "GetRankings")]
-    public IEnumerable<UserRanking> Get()
+    public ActionResult<IEnumerable<UserRanking>> Get()
     {
-        return new List<UserRanking>()
+        return Ok(new List<UserRanking>()
         {
             new()
             {
@@ -37,6 +37,6 @@ public class UserRankingController : ControllerBase
                 Steps = 1549,
                 Distance = 734
             }
-        };
+        });
     }
 }

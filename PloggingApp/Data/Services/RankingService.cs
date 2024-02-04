@@ -15,7 +15,7 @@ public class RankingService : IRankingService
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings()
     {
-        var request = new RestRequest("/GetRankings");
+        var request = new RestRequest("api/UserRanking");
 
         return await _ploggingApiClient.GetAllAsync(request);
     }
