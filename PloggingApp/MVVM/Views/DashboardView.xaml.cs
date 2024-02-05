@@ -1,10 +1,10 @@
-﻿namespace PloggingApp;
+﻿namespace PloggingApp.MVVM.Views;
 
-public partial class MainPage : ContentPage
+public partial class DashboardView : ContentView
 {
     int count = 0;
 
-    public MainPage()
+    public DashboardView()
     {
         InitializeComponent();
     }

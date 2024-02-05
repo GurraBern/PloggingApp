@@ -57,14 +57,62 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="appsettings.Development.json" />
+		<EmbeddedResource Include="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="appsettings.Production.json" />
+		<Content Include="appsettings.*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<DependentUpon>appsettings.json</DependentUpon>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="RestSharp" Version="110.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="MVVM\Views\DashboardView.xaml.cs">
+	    <DependentUpon>DashboardView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
+	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
+	    <DependentUpon>DashboardPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\Leaderboard\RankingPage.xaml.cs">
+	    <DependentUpon>RankingPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Dashboard\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Leaderboard\RankingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="MVVM\Models\" />
-	  <Folder Include="MVVM\ViewModels\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 
 </Project>
