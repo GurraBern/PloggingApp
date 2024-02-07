@@ -1,15 +1,33 @@
+using PloggingAPI.Models;
+using PloggingAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var dbUrl = Environment.GetEnvironmentVariable("PLOGGINGDB_CONNECTIONSTRING", EnvironmentVariableTarget.Process);
+if (dbUrl != null)
+{
+    builder.Services.Configure<PloggingDatabaseSettings>(options =>
+    {
+        builder.Configuration.GetSection("PloggingDatabaseSettings").Bind(options);
+        options.ConnectionString = dbUrl;
+    });
+}
+else
+{
+    var t = builder.Configuration.GetSection("PloggingDatabaseSettings");
+    builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
+}
+
+//Register Services
+builder.Services.AddSingleton<IRankingService, RankingService>();
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
