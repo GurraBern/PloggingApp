@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Plogging.Core.Models;
+using PloggingAPI.Services;
 
 namespace PloggingAPI.Controllers;
 
@@ -7,36 +8,17 @@ namespace PloggingAPI.Controllers;
 [Route("api/[controller]")]
 public class UserRankingController : ControllerBase
 {
-    public UserRankingController()
+    private readonly IRankingService _rankingService;
+
+    public UserRankingController(IRankingService rankingService)
     {
+        _rankingService = rankingService;
     }
 
     [HttpGet(Name = "GetRankings")]
-    public ActionResult<IEnumerable<UserRanking>> Get()
+    public async Task<ActionResult<IEnumerable<UserRanking>>> Get()
     {
-        return Ok(new List<UserRanking>()
-        {
-            new()
-            {
-                DisplayName = "Test Name",
-                ScrapCount = 123,
-                Steps = 25004,
-                Distance = 3574
-            },
-            new()
-            {
-                DisplayName = "Test Name2",
-                ScrapCount = 157,
-                Steps = 35683,
-                Distance = 6574
-            },
-            new()
-            {
-                DisplayName = "Test Name3",
-                ScrapCount = 26,
-                Steps = 1549,
-                Distance = 734
-            }
-        });
+        var rankings = await _rankingService.GetRankings();
+        return Ok(rankings);
     }
 }
