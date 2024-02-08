@@ -33,7 +33,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="modelsCore:UserRanking">
                             <HorizontalStackLayout Spacing="10">
-                                <Label Grid.Column="0" Text="1"></Label>
+                                <Label Grid.Column="0" Text="{Binding Rank}"></Label>
                                 <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
                                 <Label Grid.Column="2" Text="{Binding ScrapCount}"></Label>
                                 <Label Grid.Column="3" Text="{Binding Distance}"></Label>

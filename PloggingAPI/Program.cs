@@ -14,7 +14,6 @@ if (dbUrl != null)
 }
 else
 {
-    var t = builder.Configuration.GetSection("PloggingDatabaseSettings");
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
@@ -36,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

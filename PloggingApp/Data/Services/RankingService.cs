@@ -19,7 +19,9 @@ public class RankingService : IRankingService
         {
             var request = new RestRequest("api/UserRanking");
 
-            return await _ploggingApiClient.GetAllAsync(request);
+            var rankings = await _ploggingApiClient.GetAllAsync(request);
+
+            return rankings;
         }
         catch (Exception ex)
         {
