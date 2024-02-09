@@ -1,50 +1,47 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using Plogging.Core.Models;
-using PloggingAPI.Models;
+﻿using Plogging.Core.Models;
+using PloggingAPI.Repository.Interfaces;
+using PloggingAPI.Services.Interfaces;
 
 namespace PloggingAPI.Services;
 
 public class RankingService : IRankingService
 {
-    private readonly IMongoCollection<UserRanking> _rankingCollection;
+    private readonly IRankingRepository _rankingRepository;
+    private readonly IPloggingSessionRepository _ploggingSessionRepository;
 
-    public RankingService(IOptions<PloggingDatabaseSettings> rankingDatabaseSettings)
+    public RankingService(IRankingRepository rankingRepository, IPloggingSessionRepository ploggingSessionRepository)
     {
-        var mongoClient = new MongoClient(rankingDatabaseSettings.Value.ConnectionString);
-        var mongoDatabase = mongoClient.GetDatabase(rankingDatabaseSettings.Value.DatabaseName);
-        _rankingCollection = mongoDatabase.GetCollection<UserRanking>(rankingDatabaseSettings.Value.RankingCollectionName);
+        _rankingRepository = rankingRepository;
+        _ploggingSessionRepository = ploggingSessionRepository;
     }
 
     //TODO Get all rankings over a specific TIME PERIOD
-    public async Task<IEnumerable<UserRanking>> GetRankings()
+    public async Task<IEnumerable<UserRanking>> GetRankings(int pageNumber, int pageSize)
     {
-        var pipeline = new List<BsonDocument>
+        var rankings = await _rankingRepository.GetUserRankings(pageNumber, pageSize);
+
+        return rankings;
+    }
+
+    //Todo run if it hasnt run in some hours
+    //todo Performant enough?
+    public async Task UpdateUserRankings()
+    {
+        var sessions = await _ploggingSessionRepository.GetSessionSummaries();
+        var userRanks = await _rankingRepository.GetAllUserRankings();
+
+        var rankings = new List<UserRanking>();
+        var rank = 1;
+        foreach (var session in sessions)
         {
-            new() {
-                {"$group", new BsonDocument
-                    {
-                        {"_id", "$DisplayName"},
-                        {"DisplayName", new BsonDocument { { "$first", "$DisplayName" } } },
-                        {"ScrapCount", new BsonDocument {{"$sum", "$ScrapCount"}}}
-                    }
-                }
-            },
-            new() {
-                {"$sort", new BsonDocument {{"TotalScrapCount", -1}}}
-            }
-        };
+            var userRank = userRanks.FirstOrDefault(userRank => userRank.Id == session.UserId);
+            if (userRank == null)
+                continue;
 
-        var rankings = await _rankingCollection.Aggregate<UserRanking>(pipeline).ToListAsync();
+            userRank.Rank = rank++;
+            rankings.Add(userRank);
+        }
 
-        //TODO Is it possible to do in pipeline above?
-        var rankingsList = rankings.Select((ranking, index) =>
-        {
-            ranking.Rank = index + 1;
-            return ranking;
-        }).ToList();
-
-        return rankingsList;
+        await _rankingRepository.UpdateUserRankings(rankings);
     }
 }

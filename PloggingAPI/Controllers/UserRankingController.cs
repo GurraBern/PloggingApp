@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Plogging.Core.Models;
-using PloggingAPI.Services;
+using PloggingAPI.Services.Interfaces;
 
 namespace PloggingAPI.Controllers;
 
@@ -16,9 +16,9 @@ public class UserRankingController : ControllerBase
     }
 
     [HttpGet(Name = "GetRankings")]
-    public async Task<ActionResult<IEnumerable<UserRanking>>> Get()
+    public async Task<ActionResult<IEnumerable<UserRanking>>> Get(int pageNumber = 1, int pageSize = 10)
     {
-        var rankings = await _rankingService.GetRankings();
+        var rankings = await _rankingService.GetRankings(pageNumber, pageSize);
         return Ok(rankings);
     }
 }

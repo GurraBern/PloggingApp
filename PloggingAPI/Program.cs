@@ -1,5 +1,8 @@
 using PloggingAPI.Models;
+using PloggingAPI.Repository;
+using PloggingAPI.Repository.Interfaces;
 using PloggingAPI.Services;
+using PloggingAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +22,10 @@ else
 
 //Register Services
 builder.Services.AddSingleton<IRankingService, RankingService>();
+builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 
+builder.Services.AddSingleton<IRankingRepository, RankingRepository>();
+builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
