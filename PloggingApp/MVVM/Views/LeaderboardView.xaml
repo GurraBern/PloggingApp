@@ -35,9 +35,9 @@
                             <HorizontalStackLayout Spacing="10">
                                 <Label Grid.Column="0" Text="{Binding Rank}"></Label>
                                 <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
-                                <Label Grid.Column="2" Text="{Binding ScrapCount}"></Label>
-                                <Label Grid.Column="3" Text="{Binding Distance}"></Label>
-                                <Label Grid.Column="4" Text="{Binding Steps}"></Label>
+                                <Label Grid.Column="2" Text="{Binding PloggingData.ScrapCount}"></Label>
+                                <Label Grid.Column="3" Text="{Binding PloggingData.Distance}"></Label>
+                                <Label Grid.Column="4" Text="{Binding PloggingData.Steps}"></Label>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

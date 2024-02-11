@@ -21,10 +21,8 @@ else
 }
 
 //Register Services
-builder.Services.AddSingleton<IRankingService, RankingService>();
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 
-builder.Services.AddSingleton<IRankingRepository, RankingRepository>();
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 
 builder.Services.AddControllers();

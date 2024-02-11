@@ -1,4 +1,5 @@
 ﻿using Plogging.Core.Models;
+using PloggingAPI.Models.Queries;
 using PloggingAPI.Repository.Interfaces;
 using PloggingAPI.Services.Interfaces;
 
@@ -13,9 +14,16 @@ public class PloggingSessionService : IPloggingSessionService
         _ploggingSessionRepository = ploggingSessionRepository;
     }
 
-    public async Task<IEnumerable<PloggingSession>> GetSessionSummaries()
+    public async Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query)
     {
-        var sessions = await _ploggingSessionRepository.GetSessionSummaries();
+        var sessions = await _ploggingSessionRepository.GetSessionSummaries(query);
+        return sessions;
+    }
+
+    public async Task<IEnumerable<PloggingSession>> GetPloggingSessions(string userId, DateTime startDate, DateTime endDate)
+    {
+        var sessions = await _ploggingSessionRepository.GetPloggingSessions(userId, startDate, endDate);
+
         return sessions;
     }
 }

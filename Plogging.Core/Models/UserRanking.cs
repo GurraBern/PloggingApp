@@ -10,4 +10,5 @@ public class UserRanking
     public string? Id { get; set; }
     public required string DisplayName { get; set; }
     public int Rank { get; set; }
+    public PloggingData PloggingData { get; set; } = new();
 }
