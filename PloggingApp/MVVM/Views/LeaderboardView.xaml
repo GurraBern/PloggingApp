@@ -43,6 +43,11 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
+
+            <Button Text="Yearly Rankings" Command="{Binding GetYearlyRankingsCommand}"></Button>
+            <Button Text="Monthly Rankings" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+
+            <Picker ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}"></Picker>
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>

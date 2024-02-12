@@ -14,17 +14,16 @@ public class RankingService : IRankingService
         _ploggingApiClient = ploggingApiClient;
     }
 
-    public async Task<IEnumerable<UserRanking>> GetUserRankings()
+    public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
     {
         try
         {
             var request = new RestRequest("api/PloggingSession/Summary");
-            request.AddParameter("startDate", DateTime.Now.AddDays(-5));
-            request.AddParameter("endDate", DateTime.Now);
+            request.AddParameter("startDate", startDate);
+            request.AddParameter("endDate", endDate);
             request.AddParameter(nameof(SortDirection), SortDirection.Descending);
-            request.AddParameter(nameof(SortProperty), SortProperty.ScrapCount);
+            request.AddParameter(nameof(SortProperty), sortProperty);
 
-            //TODO add time interval sorting etc
             var ploggingSummaries = await _ploggingApiClient.GetAllAsync(request);
 
             var rankings = new List<UserRanking>();
@@ -33,10 +32,10 @@ public class RankingService : IRankingService
             {
                 var userRank = new UserRanking()
                 {
-                    DisplayName = "test",
+                    DisplayName = summary.DisplayName,
                     Id = summary.UserId,
-                    Rank = rank++,
-                    PloggingData = summary.PloggingData
+                    PloggingData = summary.PloggingData,
+                    Rank = rank++
                 };
 
                 rankings.Add(userRank);
@@ -44,7 +43,7 @@ public class RankingService : IRankingService
 
             return rankings;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //TODO display toast
             return Enumerable.Empty<UserRanking>();

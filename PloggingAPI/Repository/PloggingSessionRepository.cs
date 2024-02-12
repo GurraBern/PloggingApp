@@ -39,6 +39,7 @@ public class PloggingSessionRepository : IPloggingSessionRepository
 
     public async Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query)
     {
+        //TODO bug where CreateSortDefintion does not return a x => x.CorrectProperty
         var sortDefinition = SortDefinitionFactory.CreateSortDefinition(query);
 
         var matchFilter = Builders<PloggingSession>.Filter.Gte(f => f.StartDate, query.StartDate) &
@@ -46,12 +47,11 @@ public class PloggingSessionRepository : IPloggingSessionRepository
 
         var pipeline = new EmptyPipelineDefinition<PloggingSession>()
             .Match(matchFilter)
-            .Sort(sortDefinition)
             .Group(f => f.UserId,
                g => new PloggingSession
                {
                    UserId = g.Key,
-                   DisplayName = "test",
+                   DisplayName = g.First().DisplayName,
                    PloggingData = new()
                    {
                        ScrapCount = g.Sum(f => f.PloggingData.ScrapCount),
@@ -60,8 +60,8 @@ public class PloggingSessionRepository : IPloggingSessionRepository
                    },
                    StartDate = query.StartDate,
                    EndDate = query.EndDate
-               }
-        );
+               })
+            .Sort(sortDefinition);
 
         var sessions = await _ploggingSessionCollection.Aggregate(pipeline).ToListAsync();
 
