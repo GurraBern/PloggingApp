@@ -21,7 +21,6 @@ public class PloggingSessionRepository : IPloggingSessionRepository
 
     public async Task<IEnumerable<PloggingSession>> GetPloggingSessions(string userId, DateTime startDate, DateTime endDate)
     {
-        //TODO get user sessions within a timeframe
         var matchFilter = Builders<PloggingSession>.Filter.Eq(f => f.UserId, userId) &
             Builders<PloggingSession>.Filter.Gte(f => f.StartDate, startDate) &
             Builders<PloggingSession>.Filter.Lte(f => f.StartDate, endDate);
@@ -39,7 +38,6 @@ public class PloggingSessionRepository : IPloggingSessionRepository
 
     public async Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query)
     {
-        //TODO bug where CreateSortDefintion does not return a x => x.CorrectProperty
         var sortDefinition = SortDefinitionFactory.CreateSortDefinition(query);
 
         var matchFilter = Builders<PloggingSession>.Filter.Gte(f => f.StartDate, query.StartDate) &
