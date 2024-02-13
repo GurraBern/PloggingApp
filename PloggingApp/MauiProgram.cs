@@ -65,8 +65,8 @@ public static class MauiProgram
         var apiUrl = builder.Configuration["ApiUrls:PloggingApiUrl"];
         if (apiUrl != null)
         {
-            var personalHealthApiClient = new RestClient(apiUrl);
-            builder.RegisterPloggingApiClient<PloggingSession>(personalHealthApiClient);
+            var ploggingApiClient = new RestClient(apiUrl);
+            builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
         }
     }
 
