@@ -1,4 +1,5 @@
-﻿using Plogging.Core.Models;
+﻿using Plogging.Core.Enums;
+using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
 using RestSharp;
 
@@ -6,22 +7,43 @@ namespace PloggingApp.Data.Services;
 
 public class RankingService : IRankingService
 {
-    private readonly IPloggingApiClient<UserRanking> _ploggingApiClient;
+    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
 
-    public RankingService(IPloggingApiClient<UserRanking> ploggingApiClient)
+    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient)
     {
         _ploggingApiClient = ploggingApiClient;
     }
 
-    public async Task<IEnumerable<UserRanking>> GetUserRankings()
+    public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
     {
         try
         {
-            var request = new RestRequest("api/UserRanking");
+            var request = new RestRequest("api/PloggingSession/Summary");
+            request.AddParameter("startDate", startDate);
+            request.AddParameter("endDate", endDate);
+            request.AddParameter(nameof(SortDirection), SortDirection.Descending);
+            request.AddParameter(nameof(SortProperty), sortProperty);
 
-            return await _ploggingApiClient.GetAllAsync(request);
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(request);
+
+            var rankings = new List<UserRanking>();
+            var rank = 1;
+            foreach (var summary in ploggingSummaries)
+            {
+                var userRank = new UserRanking()
+                {
+                    DisplayName = summary.DisplayName,
+                    Id = summary.UserId,
+                    PloggingData = summary.PloggingData,
+                    Rank = rank++
+                };
+
+                rankings.Add(userRank);
+            }
+
+            return rankings;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //TODO display toast
             return Enumerable.Empty<UserRanking>();

@@ -1,5 +1,8 @@
 using PloggingAPI.Models;
+using PloggingAPI.Repository;
+using PloggingAPI.Repository.Interfaces;
 using PloggingAPI.Services;
+using PloggingAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +17,13 @@ if (dbUrl != null)
 }
 else
 {
-    var t = builder.Configuration.GetSection("PloggingDatabaseSettings");
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
 //Register Services
-builder.Services.AddSingleton<IRankingService, RankingService>();
+builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 
+builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -36,7 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

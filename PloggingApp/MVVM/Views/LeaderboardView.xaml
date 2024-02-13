@@ -33,16 +33,21 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="modelsCore:UserRanking">
                             <HorizontalStackLayout Spacing="10">
-                                <Label Grid.Column="0" Text="1"></Label>
+                                <Label Grid.Column="0" Text="{Binding Rank}"></Label>
                                 <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
-                                <Label Grid.Column="2" Text="{Binding ScrapCount}"></Label>
-                                <Label Grid.Column="3" Text="{Binding Distance}"></Label>
-                                <Label Grid.Column="4" Text="{Binding Steps}"></Label>
+                                <Label Grid.Column="2" Text="{Binding PloggingData.ScrapCount}"></Label>
+                                <Label Grid.Column="3" Text="{Binding PloggingData.Distance}"></Label>
+                                <Label Grid.Column="4" Text="{Binding PloggingData.Steps}"></Label>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
+
+            <Button Text="Yearly Rankings" Command="{Binding GetYearlyRankingsCommand}"></Button>
+            <Button Text="Monthly Rankings" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+
+            <Picker ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}"></Picker>
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>
