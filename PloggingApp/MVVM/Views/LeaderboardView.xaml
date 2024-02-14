@@ -3,51 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:converters="clr-namespace:PloggingApp.Converters"
              x:Class="PloggingApp.MVVM.Views.LeaderboardView"
              x:DataType="viewmodel:LeaderboardViewModel">
 
-    <ScrollView>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ScrollView Padding="10, 0">
         <VerticalStackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
+            <SearchBar Placeholder="search..."></SearchBar>
+            <HorizontalStackLayout Spacing="5" Margin="0,0,0,20">
+                <Button Style="{StaticResource RoundButton}" Text="This Year" Command="{Binding GetYearlyRankingsCommand}"></Button>
+                <Button Style="{StaticResource RoundButton}" Text="This Month" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+                <Button Style="{StaticResource RoundButton}" Text="All Time"></Button>
+                <Picker TextColor="{StaticResource White}" ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}" BackgroundColor="Grey"></Picker>
+            </HorizontalStackLayout>
 
-                <Label Grid.Column="0" Text="Rank"></Label>
-                <Label Grid.Column="1" Text="Name"></Label>
-                <Label Grid.Column="2" Text="Scrap Collected"></Label>
-                <Label Grid.Column="3" Text="Steps"></Label>
-                <Label Grid.Column="4" Text="Distance"></Label>
-                 
-                <CollectionView ItemsSource="{Binding Rankings}" Grid.Row="1" Grid.ColumnSpan="7">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="modelsCore:UserRanking">
+            <CollectionView ItemsSource="{Binding Rankings}" Grid.Row="1" Grid.ColumnSpan="7">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelsCore:UserRanking">
+                        <Border Stroke="Transparent" Padding="0,5">
                             <HorizontalStackLayout Spacing="10">
-                                <Label Grid.Column="0" Text="{Binding Rank}"></Label>
-                                <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
-                                <Label Grid.Column="2" Text="{Binding PloggingData.ScrapCount}"></Label>
-                                <Label Grid.Column="3" Text="{Binding PloggingData.Distance}"></Label>
-                                <Label Grid.Column="4" Text="{Binding PloggingData.Steps}"></Label>
+                                <Label VerticalOptions="Center" Text="{Binding Rank}"></Label>
+                                
+                                <Border WidthRequest="50" HeightRequest="50">
+                                    <Label Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="60"></RoundRectangle>
+                                    </Border.StrokeShape>
+                                </Border>
+                                
+                                <Label VerticalOptions="Center" Text="{Binding DisplayName}"></Label>
+                                <Label VerticalOptions="Center" Text="{Binding PloggingData.ScrapCount}"></Label>
+                                <Label VerticalOptions="Center" Text="{Binding PloggingData.Distance}"></Label>
+                                <Label VerticalOptions="Center" Text="{Binding PloggingData.Steps}"></Label>
                             </HorizontalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
-
-            <Button Text="Yearly Rankings" Command="{Binding GetYearlyRankingsCommand}"></Button>
-            <Button Text="Monthly Rankings" Command="{Binding GetMonthlyRankingsCommand}"></Button>
-
-            <Picker ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}"></Picker>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>
