@@ -2,8 +2,9 @@
 
 public partial class MapPage : ContentPage
 {
-    public MapPage()
+    public MapPage(MapPageViewModel vm)
     {
         InitializeComponent();
+        BindingContext = vm;
     }
 }

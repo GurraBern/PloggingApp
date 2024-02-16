@@ -1,6 +1,6 @@
 ﻿using PloggingApp.MVVM.ViewModels;
 
-namespace PloggingApp.Pages.Leaderboard;
+namespace PloggingApp.Pages;
 
 public class RankingViewmodel
 {

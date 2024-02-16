@@ -4,12 +4,10 @@
 			 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="PloggingApp.Pages.MapPage"
 			 xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-			 xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+			 xmlns:pagesviewmodel="clr-namespace:PloggingApp.Pages"
+             x:DataType="pagesviewmodel:MapPageViewModel"
              Title="Map">
-    <ContentPage.BindingContext>
-        <viewmodel:MapViewModel />
-    </ContentPage.BindingContext>
-    
+
     <VerticalStackLayout>
         <VerticalStackLayout>
             <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>

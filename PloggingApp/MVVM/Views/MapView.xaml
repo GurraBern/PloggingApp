@@ -5,14 +5,31 @@
 			 xmlns:loc="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"    
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              x:Class="PloggingApp.MVVM.Views.MapView"
 			 x:DataType="viewmodel:MapViewModel">
 
 <ContentView.Content>
         <ScrollView>
             <VerticalStackLayout>
-                <maps:Map x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
+                <maps:Map ItemsSource="{Binding PlacedPins}" WidthRequest="500" HeightRequest="500">
+
+                    <maps:Map.ItemTemplate>
+                        <DataTemplate x:DataType="models:LocationPin">
+                            <components:CustomPin
+                                Location="{Binding Location}"
+                                Address="{Binding Address}"
+                                Label="test label"
+                                ImageSource="{Binding ImageSource}"
+                                Type="Place"/>
+                        </DataTemplate>
+                    </maps:Map.ItemTemplate>
+
                 </maps:Map>
+                <!--<maps:Map ItemsSource="{Binding PlacedPins}" x:Name="ploggingMap" WidthRequest="500" HeightRequest="500"/>-->
+                
+                <Button Text="add pin" Command="{Binding AddPinCommand}"></Button>
             </VerticalStackLayout>
         </ScrollView>
     </ContentView.Content>

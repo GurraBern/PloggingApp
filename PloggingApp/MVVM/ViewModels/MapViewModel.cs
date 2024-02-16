@@ -1,22 +1,39 @@
-﻿
-using Microsoft.Maui.Controls.Maps;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using PloggingApp.MVVM.Models;
+using System.Collections.ObjectModel;
 
-namespace PloggingApp.MVVM.ViewModels
+namespace PloggingApp.MVVM.ViewModels;
+
+public partial class MapViewModel : ObservableObject
 {
-    public class MapViewModel
+    public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
+
+    public MapViewModel()
     {
-        public class CustomPin : Pin
+
+    }
+
+    [RelayCommand]
+    public void AddPin()
+    {
+        var pin = new LocationPin()
         {
-            public static readonly BindableProperty ImageSourceProperty =
-                BindableProperty.Create(nameof(ImageSource), typeof(ImageSource), typeof(CustomPin));
+            Label = "Test",
+            Location = new Location(57.683071, 11.990950),
+            Address = "Ukraine",
+            ImageSource = ImageSource.FromUri(new Uri("https://www.gamesatlas.com/images/football/teams/ukraine/dynamo-kyiv.png")),
+        };
 
-            public ImageSource? ImageSource
-            {
-                get => (ImageSource?)GetValue(ImageSourceProperty);
-                set => SetValue(ImageSourceProperty, value);
-            }
-        }
+        var pin2 = new LocationPin()
+        {
+            Label = "Test2",
+            Location = new Location(57.682071, 11.990450),
+            Address = "Ukraine",
+            ImageSource = ImageSource.FromUri(new Uri("https://www.gamesatlas.com/images/football/teams/ukraine/dynamo-kyiv.png")),
+        };
 
-
+        PlacedPins.Add(pin);
+        PlacedPins.Add(pin2);
     }
 }

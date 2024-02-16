@@ -1,5 +1,5 @@
-﻿
-namespace PloggingApp.MVVM.Views;
+﻿namespace PloggingApp.MVVM.Views;
+
 public partial class MapView : ContentView
 {
     public MapView()

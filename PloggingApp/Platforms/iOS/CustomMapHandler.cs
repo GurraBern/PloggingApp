@@ -127,7 +127,7 @@ public class CustomMapHandler : MapHandler
             if (pinHandler is IMapPinHandler mapPinHandler)
             {
                 var markerOption = mapPinHandler.PlatformView;
-                if (pin is MVVM.Models.CustomPin cp)
+                if (pin is MVVM.Views.Components.CustomPin cp)
                 {
                     cp.ImageSource.LoadImage(MauiContext, result =>
                     {

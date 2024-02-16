@@ -8,7 +8,6 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Pages;
-using PloggingApp.Pages.Leaderboard;
 using RestSharp;
 using System.Reflection;
 namespace PloggingApp;
@@ -36,7 +35,7 @@ public static class MauiProgram
         AddViewModels(builder);
         AddPages(builder);
         AddServices(builder);
- 
+
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -50,6 +49,7 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
+        builder.Services.AddTransient<MapPageViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
@@ -58,6 +58,7 @@ public static class MauiProgram
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddTransient<MapPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
