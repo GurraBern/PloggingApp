@@ -10,5 +10,6 @@
     <TabBar>
         <ShellContent Route="MainPage" Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
+        <ShellContent Route="MapPage" Title="Map"  ContentTemplate="{DataTemplate views:MapPage}"></ShellContent>
     </TabBar>
 </Shell>
