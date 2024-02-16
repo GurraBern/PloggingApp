@@ -11,7 +11,6 @@ using PloggingApp.Pages;
 using PloggingApp.Pages.Leaderboard;
 using RestSharp;
 using System.Reflection;
-
 namespace PloggingApp;
 
 public static class MauiProgram
@@ -20,12 +19,14 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
+
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*för android och IOS*/
+
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -35,10 +36,12 @@ public static class MauiProgram
         AddViewModels(builder);
         AddPages(builder);
         AddServices(builder);
+ 
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
+
 
         return builder.Build();
     }

@@ -116,10 +116,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 
