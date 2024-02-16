@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices.Sensors;
 using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
 

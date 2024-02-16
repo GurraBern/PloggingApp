@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Maps;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices.Sensors;
+using Microsoft.Maui.Maps;
 
 namespace PloggingApp.MVVM.Views;
 
