@@ -5,18 +5,14 @@
              x:Class="PloggingApp.Pages.MapPage"
 			 xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
 			 xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-			 x:DataType="viewmodel:MapViewModel"
              Title="Map">
-	<VerticalStackLayout>
-		<!--<views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>-->
-		
-		<maps:Map x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
-		</maps:Map>
-
-		<Button x:Name="addMarkerButton" Text="Add a marker on the map" ></Button>
-		<Entry x:Name="xCoord" Placeholder="X coordinate" />
-		<Entry x:Name="yCoord" Placeholder="Y coordinate" />
-		<Entry x:Name="pinLabel" Placeholder="pin label" />
-		<Button x:Name="placePinButton" Text="Place pin"/>
-	</VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <viewmodel:MapViewModel />
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout>
+        <VerticalStackLayout>
+            <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>

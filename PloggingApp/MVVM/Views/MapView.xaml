@@ -8,10 +8,12 @@
              x:Class="PloggingApp.MVVM.Views.MapView"
 			 x:DataType="viewmodel:MapViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout>
-			<maps:Map x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
-			</maps:Map>
-        </VerticalStackLayout>
-    </ScrollView>
+<ContentView.Content>
+        <ScrollView>
+            <VerticalStackLayout>
+                <maps:Map x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
+                </maps:Map>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentView.Content>
 </ContentView>
