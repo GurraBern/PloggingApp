@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="PloggingApp.Pages.MapPage"
+			 xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+			 xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+			 x:DataType="viewmodel:MapViewModel"
              Title="Map">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+	<VerticalStackLayout>
+		<!--<views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>-->
+		
+		<maps:Map x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
+		</maps:Map>
+
+		<Button x:Name="addMarkerButton" Text="Add a marker on the map" ></Button>
+		<Entry x:Name="xCoord" Placeholder="X coordinate" />
+		<Entry x:Name="yCoord" Placeholder="Y coordinate" />
+		<Entry x:Name="pinLabel" Placeholder="pin label" />
+		<Button x:Name="placePinButton" Text="Place pin"/>
+	</VerticalStackLayout>
 </ContentPage>
