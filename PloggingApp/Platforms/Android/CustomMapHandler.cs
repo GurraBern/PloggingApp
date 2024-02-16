@@ -1,16 +1,18 @@
-﻿namespace PloggingApp.Platforms.Android;
-
-using global::Android.Gms.Maps;
-using global::Android.Gms.Maps.Model;
-using global::Android.Graphics;
-using global::Android.Graphics.Drawables;
+﻿using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Maps.Handlers;
 using Microsoft.Maui.Platform;
-using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.Views.Components;
+using IMap = Microsoft.Maui.Maps.IMap;
+
+namespace PloggingApp;
+
 public class CustomMapHandler : MapHandler
 {
-    public static readonly IPropertyMapper<IMap, IMapHandler> CustomMapper =
+    public static readonly IPropertyMapper<Microsoft.Maui.Maps.IMap, IMapHandler> CustomMapper =
         new PropertyMapper<IMap, IMapHandler>(Mapper)
         {
             [nameof(IMap.Pins)] = MapPins
@@ -36,6 +38,15 @@ public class CustomMapHandler : MapHandler
 
     private static new void MapPins(IMapHandler handler, IMap map)
     {
+        if (MainThread.IsMainThread)
+        {
+            Console.WriteLine("Running on main thread.");
+        }
+        else
+        {
+            Console.WriteLine("Not running on main thread.");
+        }
+
         if (handler is CustomMapHandler mapHandler)
         {
             var pinsToAdd = map.Pins.Where(x => x.MarkerId == null).ToList();
@@ -52,6 +63,16 @@ public class CustomMapHandler : MapHandler
 
     private void AddPins(IEnumerable<IMapPin> mapPins)
     {
+        if (MainThread.IsMainThread)
+        {
+            Console.WriteLine("Running on main thread.");
+        }
+        else
+        {
+            Console.WriteLine("Not running on main thread.");
+        }
+
+
         if (Map is null || MauiContext is null)
         {
             return;

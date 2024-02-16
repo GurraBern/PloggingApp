@@ -1,5 +1,5 @@
 ﻿
-namespace PloggingApp.Platforms.iOS;
+namespace PloggingApp;
 using CoreLocation;
 using MapKit;
 using Microsoft.Maui.Maps;

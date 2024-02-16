@@ -13,21 +13,21 @@
 <ContentView.Content>
         <ScrollView>
             <VerticalStackLayout>
-                <maps:Map ItemsSource="{Binding PlacedPins}" WidthRequest="500" HeightRequest="500">
+                <maps:Map ItemsSource="{Binding PlacedPins}" x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
 
+                    <!--TODO  ImageSource="{Binding ImageSource}"-->
                     <maps:Map.ItemTemplate>
                         <DataTemplate x:DataType="models:LocationPin">
                             <components:CustomPin
                                 Location="{Binding Location}"
                                 Address="{Binding Address}"
-                                Label="test label"
+                                Label="{Binding Label}"
                                 ImageSource="{Binding ImageSource}"
                                 Type="Place"/>
                         </DataTemplate>
                     </maps:Map.ItemTemplate>
 
                 </maps:Map>
-                <!--<maps:Map ItemsSource="{Binding PlacedPins}" x:Name="ploggingMap" WidthRequest="500" HeightRequest="500"/>-->
                 
                 <Button Text="add pin" Command="{Binding AddPinCommand}"></Button>
             </VerticalStackLayout>

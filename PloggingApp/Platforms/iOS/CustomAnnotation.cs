@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.Platforms.iOS;
+﻿namespace PloggingApp;
 
 using MapKit;
 using Microsoft.Maui.Maps;

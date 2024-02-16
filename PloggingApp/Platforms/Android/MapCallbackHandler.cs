@@ -1,15 +1,13 @@
 ﻿using Android.Gms.Maps;
-using Microsoft.Maui.Maps;
 
-namespace PloggingApp.Platforms.Android
+namespace PloggingApp;
+
+class MapCallbackHandler(CustomMapHandler mapHandler) : Java.Lang.Object, IOnMapReadyCallback
 {
-    class MapCallbackHandler(CustomMapHandler mapHandler) : Java.Lang.Object, IOnMapReadyCallback
+    public void OnMapReady(GoogleMap googleMap)
     {
-        public void OnMapReady(GoogleMap googleMap)
-        {
-            mapHandler.UpdateValue(nameof(Microsoft.Maui.Maps.IMap.Pins));
-            mapHandler.Map?.SetOnMarkerClickListener(new CustomMarkerClickListener(mapHandler));
-            mapHandler.Map?.SetOnInfoWindowClickListener(new CustomInfoWindowClickListener(mapHandler));
-        }
+        mapHandler.UpdateValue(nameof(Microsoft.Maui.Maps.IMap.Pins));
+        mapHandler.Map?.SetOnMarkerClickListener(new CustomMarkerClickListener(mapHandler));
+        mapHandler.Map?.SetOnInfoWindowClickListener(new CustomInfoWindowClickListener(mapHandler));
     }
 }

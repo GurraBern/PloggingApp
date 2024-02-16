@@ -1,12 +1,13 @@
 ﻿
 using Android.Gms.Maps;
-using PloggingApp.Platforms.Android;
+using Android.Gms.Maps.Model;
 
 namespace PloggingApp;
+
 internal class CustomInfoWindowClickListener(CustomMapHandler mapHandler)
     : Java.Lang.Object, GoogleMap.IOnInfoWindowClickListener
 {
-    public void OnInfoWindowClick(Android.Gms.Maps.Model.Marker marker)
+    public void OnInfoWindowClick(Marker marker)
     {
         var pin = mapHandler.Markers.FirstOrDefault(x => x.marker.Id == marker.Id);
         pin.pin?.SendInfoWindowClick();

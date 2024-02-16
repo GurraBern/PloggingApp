@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
@@ -10,6 +9,7 @@ using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Pages;
 using RestSharp;
 using System.Reflection;
+
 namespace PloggingApp;
 
 public static class MauiProgram
@@ -18,13 +18,12 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
-            .UseMauiMaps() /*för android och IOS*/
+            .UseMauiMaps() /*android och IOS specific*/
 
             .ConfigureFonts(fonts =>
             {
@@ -36,6 +35,10 @@ public static class MauiProgram
         AddPages(builder);
         AddServices(builder);
 
+        builder.ConfigureMauiHandlers(handlers =>
+        {
+            handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
+        });
 
 #if DEBUG
         builder.Logging.AddDebug();
