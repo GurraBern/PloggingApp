@@ -1,7 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices.Sensors;
+using Java.Lang;
+using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
 using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
 
@@ -17,25 +19,58 @@ public partial class MapViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void AddPin()
+    public async Task AddTrashCollectedPin()
     {
-        var pin = new LocationPin()
+        Location loc = await updateLocationAsync();
+        var pin = new TrashCollectedPin()
         {
-            Label = "Test",
-            Location = new Location(57.683071, 11.990950),
-            Address = "Ukraine",
-            ImageSource = ImageSource.FromUri(new Uri("https://www.gamesatlas.com/images/football/teams/ukraine/dynamo-kyiv.png")),
+            Label = "COLLECTED",
+            Location = loc,
+            Address = "!!"
         };
-
-        var pin2 = new LocationPin()
-        {
-            Label = "Test2",
-            Location = new Location(57.682071, 11.990450),
-            Address = "Ukraine",
-            ImageSource = ImageSource.FromUri(new Uri("https://www.gamesatlas.com/images/football/teams/ukraine/dynamo-kyiv.png")),
-        };
-
         PlacedPins.Add(pin);
-        PlacedPins.Add(pin2);
+    }
+
+    [RelayCommand]
+    public async Task AddNeedHelpToCollectPin()
+    {
+        Location loc = await updateLocationAsync();
+        var pin = new NeedHelpToCollectPin()
+        {
+            Label = "HELP",
+            Location = loc,
+            Address = "!!"
+        };
+        PlacedPins.Add(pin);
+    }
+
+    public async Task<Location> updateLocationAsync()
+    {
+        try
+        {
+            var Request = new GeolocationRequest(GeolocationAccuracy.Best);
+            var UpdatedLocation = await Geolocation.GetLocationAsync(Request);
+
+            if (UpdatedLocation != null)
+            {
+                return UpdatedLocation;
+            }
+            else
+            {
+                // Handle case where location is null
+                return null;
+            }
+        }
+        catch (FeatureNotSupportedException fnsEx)
+        {
+            return null;
+            // Handle not supported on device exception
+        }
+        catch (PermissionException pEx)
+        {
+            return null;
+            // Handle permission exception
+        }
     }
 }
+

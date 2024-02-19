@@ -28,8 +28,12 @@
                     </maps:Map.ItemTemplate>
 
                 </maps:Map>
-                
-                <Button Text="add pin" Command="{Binding AddPinCommand}"></Button>
+                <HorizontalStackLayout>
+                    <Button Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}">
+                    </Button>
+                    <Button Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}">
+                    </Button>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
     </ContentView.Content>
