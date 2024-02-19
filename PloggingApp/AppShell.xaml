@@ -8,7 +8,7 @@
     Title="PloggingApp">
 
     <TabBar>
-        <ShellContent Route="MainPage" Title="Dashboard" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
-        <ShellContent Route="RankingPage" Title="Rankings" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
+        <ShellContent Route="MainPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
+        <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
     </TabBar>
 </Shell>
