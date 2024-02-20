@@ -14,6 +14,13 @@
         <ScrollView>
             <VerticalStackLayout>
                 <maps:Map ItemsSource="{Binding PlacedPins}"  x:Name="PloggingMap" WidthRequest="500" HeightRequest="500">
+                    <maps:Map.MapElements>
+                        <maps:Polyline StrokeColor="Green"
+                           StrokeWidth="12">
+                            <maps:Polyline.Geopath ItemsSource="{Binding Polyline}">
+                            </maps:Polyline.Geopath>
+                        </maps:Polyline>
+                    </maps:Map.MapElements>
                     <!--TODO  ImageSource="{Binding ImageSource}"-->
                 
                     <maps:Map.ItemTemplate>
@@ -30,7 +37,7 @@
                 </maps:Map>
                 <Button Text="Start Tracking" Command="{Binding StartTrackingLocationCommand}">
                 </Button>
-                <Button Text="Stop Tracking" Command="{Binding StopTrackingCommand}">
+                <Button Text="Stop Tracking" Command="{Binding StopTrackingCommand}" Clicked="DrawPolyLine" >
                 </Button>
                 <HorizontalStackLayout>
                     <Button Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}">

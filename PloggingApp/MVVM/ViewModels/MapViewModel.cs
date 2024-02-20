@@ -10,23 +10,21 @@ using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
+using Polyline = Microsoft.Maui.Controls.Maps.Polyline;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class MapViewModel
 {
+     public Polyline Polyline = new Polyline
+    {
+        StrokeColor = Colors.Blue,
+        StrokeWidth = 15
+    };
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
 
-    public bool Tracking = false;
-
-
-
-    Microsoft.Maui.Controls.Maps.Polyline Polyline = new Microsoft.Maui.Controls.Maps.Polyline
-    {
-        StrokeColor = Colors.Blue,
-        StrokeWidth = 12
-    };
+    public bool isTracking = false;
 
     public MapViewModel()
     {
@@ -109,15 +107,22 @@ public partial class MapViewModel
             Label = "Start"
         };
         PlacedPins.Add(StartPin);
-        Tracking = true;
-        while (Tracking)
+        isTracking = true;
+        while (isTracking)
         {
             await KeepTracking();
-            foreach (Location TrackingPosition in TrackingPositions)
-            {
-                Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
-            }
+
         }
+
+        loc = await CurrentLocationAsync();
+        var FinishPin = new FinishPin()
+        {
+            Location = loc,
+            Label = "End"
+        };
+        PlacedPins.Add(FinishPin);
+        TrackingPositions.Add(loc);
+        UpdatePolyline();
     }
 
 
@@ -126,32 +131,29 @@ public partial class MapViewModel
 
         Location loc = await CurrentLocationAsync();
         TrackingPositions.Add(loc);
-        UpdatePolyline();
-        await Task.Delay(TimeSpan.FromSeconds(15));
+        var StartPin = new StartPin()
+        {
+            Location = loc,
+            Label = "Start"
+        };
+        PlacedPins.Add(StartPin);
+        await Task.Delay(TimeSpan.FromSeconds(2));
 
     }
 
     public void UpdatePolyline()
     {
+       
         foreach (Location TrackingPosition in TrackingPositions)
         {
             Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
         }
-        //PloggingMap.MapElements.Add(Polyline);
     }
 
     [RelayCommand]
     public async Task StopTracking()
     {
-        Tracking = false;
-        Location loc = await CurrentLocationAsync();
-        UpdatePolyline();
-        var FinishPin = new FinishPin()
-        {
-            Location = loc,
-            Label = "Start"
-        };
-        PlacedPins.Add(FinishPin);
+        isTracking = false;
     }
 
 

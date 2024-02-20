@@ -1,6 +1,8 @@
 ﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
+using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.MVVM.Views;
 
@@ -12,7 +14,13 @@ public partial class MapView : ContentView
         InitializeComponent();
     }
 
-   public async Task<Location> MoveMapToCurrentLocationAsync()
+    public void DrawPolyLine(object sender, EventArgs e)
+    {
+        PloggingMap.MapElements.Clear();
+    Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
+        PloggingMap.MapElements.Add(Polyline);
+    }
+    public async Task<Location> MoveMapToCurrentLocationAsync()
             {
         try
         {
