@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
-			 xmlns:loc="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"    
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              x:Class="PloggingApp.MVVM.Views.MapView"
-			 x:DataType="viewmodel:MapViewModel">
+             x:DataType="viewmodel:MapViewModel">
 
-<ContentView.Content>
+    <ContentView.Content>
         <ScrollView>
             <VerticalStackLayout>
-                <maps:Map ItemsSource="{Binding PlacedPins}" x:Name="ploggingMap" WidthRequest="500" HeightRequest="500">
-
+                <maps:Map ItemsSource="{Binding PlacedPins}"  x:Name="PloggingMap" WidthRequest="500" HeightRequest="500">
                     <!--TODO  ImageSource="{Binding ImageSource}"-->
+                
                     <maps:Map.ItemTemplate>
                         <DataTemplate x:DataType="models:LocationPin">
                             <components:CustomPin
@@ -28,12 +28,18 @@
                     </maps:Map.ItemTemplate>
 
                 </maps:Map>
+                <Button Text="Start Tracking" Command="{Binding StartTrackingLocationCommand}">
+                </Button>
+                <Button Text="Stop Tracking" Command="{Binding StopTrackingCommand}">
+                </Button>
                 <HorizontalStackLayout>
                     <Button Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}">
                     </Button>
                     <Button Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}">
                     </Button>
                 </HorizontalStackLayout>
+                <Button Text="Remove latest pin" Command="{Binding RemovePinCommand}">
+                </Button>
             </VerticalStackLayout>
         </ScrollView>
     </ContentView.Content>

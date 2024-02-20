@@ -1,17 +1,32 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-using Java.Lang;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
 using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Net.NetworkInformation;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class MapViewModel : ObservableObject
+public partial class MapViewModel
 {
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
+    public List<Location> TrackingPositions { get; set; } = [];
+
+    public bool Tracking = false;
+
+
+
+    Microsoft.Maui.Controls.Maps.Polyline Polyline = new Microsoft.Maui.Controls.Maps.Polyline
+    {
+        StrokeColor = Colors.Blue,
+        StrokeWidth = 12
+    };
 
     public MapViewModel()
     {
@@ -19,9 +34,18 @@ public partial class MapViewModel : ObservableObject
     }
 
     [RelayCommand]
+    public async Task RemovePin()
+    {
+        if (PlacedPins.Count > 0)
+        {
+            int LastElement = PlacedPins.Count - 1;
+            PlacedPins.RemoveAt(LastElement);
+        }
+    }
+    [RelayCommand]
     public async Task AddTrashCollectedPin()
     {
-        Location loc = await updateLocationAsync();
+        Location loc = await CurrentLocationAsync();
         var pin = new TrashCollectedPin()
         {
             Label = "COLLECTED",
@@ -34,7 +58,7 @@ public partial class MapViewModel : ObservableObject
     [RelayCommand]
     public async Task AddNeedHelpToCollectPin()
     {
-        Location loc = await updateLocationAsync();
+        Location loc = await CurrentLocationAsync();
         var pin = new NeedHelpToCollectPin()
         {
             Label = "HELP",
@@ -44,7 +68,7 @@ public partial class MapViewModel : ObservableObject
         PlacedPins.Add(pin);
     }
 
-    public async Task<Location> updateLocationAsync()
+    public async Task<Location> CurrentLocationAsync()
     {
         try
         {
@@ -72,5 +96,67 @@ public partial class MapViewModel : ObservableObject
             // Handle permission exception
         }
     }
-}
 
+    [RelayCommand]
+    public async Task StartTrackingLocation()
+    {
+
+        Location loc = await CurrentLocationAsync();
+        TrackingPositions.Add(loc);
+        var StartPin = new StartPin()
+        {
+            Location = loc,
+            Label = "Start"
+        };
+        PlacedPins.Add(StartPin);
+        Tracking = true;
+        while (Tracking)
+        {
+            await KeepTracking();
+            foreach (Location TrackingPosition in TrackingPositions)
+            {
+                Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
+            }
+        }
+    }
+
+
+    public async Task KeepTracking()
+    {
+
+        Location loc = await CurrentLocationAsync();
+        TrackingPositions.Add(loc);
+        UpdatePolyline();
+        await Task.Delay(TimeSpan.FromSeconds(15));
+
+    }
+
+    public void UpdatePolyline()
+    {
+        foreach (Location TrackingPosition in TrackingPositions)
+        {
+            Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
+        }
+        //PloggingMap.MapElements.Add(Polyline);
+    }
+
+    [RelayCommand]
+    public async Task StopTracking()
+    {
+        Tracking = false;
+        Location loc = await CurrentLocationAsync();
+        UpdatePolyline();
+        var FinishPin = new FinishPin()
+        {
+            Location = loc,
+            Label = "Start"
+        };
+        PlacedPins.Add(FinishPin);
+    }
+
+
+
+
+
+
+}

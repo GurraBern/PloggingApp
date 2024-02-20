@@ -8,13 +8,12 @@ public partial class MapView : ContentView
 {
     public MapView()
     {
-        GetCurrentLocationAsync();
+        MoveMapToCurrentLocationAsync();
         InitializeComponent();
     }
 
-
-    public async Task<Location> GetCurrentLocationAsync()
-    {
+   public async Task<Location> MoveMapToCurrentLocationAsync()
+            {
         try
         {
             var request = new GeolocationRequest(GeolocationAccuracy.Best);
@@ -22,29 +21,29 @@ public partial class MapView : ContentView
 
             if (location != null)
             {
-                ploggingMap.MoveToRegion(new MapSpan(location,10,15));
+                PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
                 return location;
             }
             else
             {
                 // Handle case where location is null
                 return null;
-            }
+           }
         }
         catch (FeatureNotSupportedException fnsEx)
-        {
-            // Handle not supported on device exception
+       {
+           // Handle not supported on device exception
             return null;
         }
         catch (PermissionException pEx)
         {
             // Handle permission exception
             return null;
-        }
+       }
         catch (Exception ex)
         {
             // Unable to get location
-            return null;
+          return null;
         }
     }
 
