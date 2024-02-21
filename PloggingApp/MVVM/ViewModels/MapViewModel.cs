@@ -26,6 +26,8 @@ public partial class MapViewModel
 
     public bool isTracking = false;
 
+    public int DISTANCE_THRESHOLD = 50;
+
     public MapViewModel()
     {
 
@@ -130,14 +132,17 @@ public partial class MapViewModel
     {
 
         Location loc = await CurrentLocationAsync();
-        TrackingPositions.Add(loc);
-        var StartPin = new StartPin()
-        {
-            Location = loc,
-            Label = "Start"
-        };
-        PlacedPins.Add(StartPin);
-        await Task.Delay(TimeSpan.FromSeconds(2));
+        if (Distance.BetweenPositions(TrackingPositions.Last(), loc).Meters > DISTANCE_THRESHOLD){ 
+            TrackingPositions.Add(loc);
+            var StartPin = new StartPin()
+            {
+                Location = loc,
+                Label = "Start"
+            };
+            PlacedPins.Add(StartPin);
+            await Task.Delay(TimeSpan.FromSeconds(2));
+        }
+
 
     }
 
