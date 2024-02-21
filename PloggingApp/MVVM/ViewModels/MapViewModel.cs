@@ -6,6 +6,7 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
+using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,6 +28,8 @@ public partial class MapViewModel
     public bool isTracking = false;
 
     public int DISTANCE_THRESHOLD = 50;
+
+    DateTime StartTime; 
 
 
     public MapViewModel()
@@ -72,10 +75,52 @@ public partial class MapViewModel
     [RelayCommand]
     public async Task FinishSession()
     {
-        TrackingPositions.Clear();
+
+        PloggingData PData = new PloggingData
+        {
+            ScrapCount = PlacedPins.Count-2,
+            Distance = CalculateTotalDistance(),
+            Steps = CalculateAverageSteps(),
+        };
+
+        PloggingSession PSession = new PloggingSession {
+            UserId ="",
+            DisplayName ="",
+            Id = "",
+            StartDate = StartTime,
+            EndDate = DateTime.Now,
+            PloggingData = PData
+        };
+
+    TrackingPositions.Clear();
         PlacedPins.Clear();
         
+        
     }
+
+    private double CalculateTotalDistance()
+    {
+        double totalDistance = 0;
+
+        for (int i = 0; i < TrackingPositions.Count - 1; i++)
+        {
+            double distance = Distance.BetweenPositions(TrackingPositions.ElementAt(i), TrackingPositions.ElementAt(i + 1)).Meters;
+            totalDistance += distance;
+        }
+
+        return totalDistance;
+    }
+
+    private int CalculateAverageSteps()
+    {
+        int Steps;
+
+        Steps = (int)Math.Floor(CalculateTotalDistance() / 1000 * 1350);
+
+        return Steps;
+    }
+
+
 
     public async Task<Location> CurrentLocationAsync()
     {
@@ -109,6 +154,7 @@ public partial class MapViewModel
     [RelayCommand]
     public async Task StartTrackingLocation()
     {
+        StartTime = DateTime.Now;
         Location loc = await CurrentLocationAsync();
         TrackingPositions.Add(loc);
         var StartPin = new StartPin()
