@@ -28,6 +28,7 @@ public partial class MapViewModel
 
     public int DISTANCE_THRESHOLD = 50;
 
+
     public MapViewModel()
     {
 
@@ -68,6 +69,14 @@ public partial class MapViewModel
         PlacedPins.Add(pin);
     }
 
+    [RelayCommand]
+    public async Task FinishSession()
+    {
+        TrackingPositions.Clear();
+        PlacedPins.Clear();
+        
+    }
+
     public async Task<Location> CurrentLocationAsync()
     {
         try
@@ -100,7 +109,6 @@ public partial class MapViewModel
     [RelayCommand]
     public async Task StartTrackingLocation()
     {
-
         Location loc = await CurrentLocationAsync();
         TrackingPositions.Add(loc);
         var StartPin = new StartPin()
@@ -127,23 +135,45 @@ public partial class MapViewModel
         UpdatePolyline();
     }
 
-
+    [RelayCommand]
     public async Task KeepTracking()
     {
 
         Location loc = await CurrentLocationAsync();
         if (Distance.BetweenPositions(TrackingPositions.Last(), loc).Meters > DISTANCE_THRESHOLD){ 
             TrackingPositions.Add(loc);
-            var StartPin = new StartPin()
-            {
-                Location = loc,
-                Label = "Start"
-            };
-            PlacedPins.Add(StartPin);
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            //var StartPin = new StartPin()
+            //{
+            //    Location = loc,
+            //    Label = "Start"
+            //};
+            //PlacedPins.Add(StartPin);
+            //await Task.Delay(TimeSpan.FromSeconds(2));
         }
 
 
+    }
+    [RelayCommand]
+    public async Task ResumeSession()
+    {
+
+        PlacedPins.RemoveAt(PlacedPins.Count - 1);
+        isTracking = true;
+        while (isTracking)
+        {
+            await KeepTracking();
+
+        }
+
+        Location loc = await CurrentLocationAsync();
+        var FinishPin = new FinishPin()
+        {
+            Location = loc,
+            Label = "End"
+        };
+        PlacedPins.Add(FinishPin);
+        TrackingPositions.Add(loc);
+        UpdatePolyline();
     }
 
     public void UpdatePolyline()
@@ -160,6 +190,8 @@ public partial class MapViewModel
     {
         isTracking = false;
     }
+
+
 
 
 

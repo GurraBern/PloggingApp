@@ -17,8 +17,42 @@ public partial class MapView : ContentView
     public void DrawPolyLine(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
-    Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
+        Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
         PloggingMap.MapElements.Add(Polyline);
+        StopButton.IsVisible = false;
+        Polyline.Geopath.Clear();
+        ResumeButton.IsVisible = true;
+        FinishButton.IsVisible = true; ;
+
+    }
+    public void ResumeClick(object sender, EventArgs e)
+    {
+        PloggingMap.MapElements.Clear();
+        StartButton.IsVisible = false;
+        StopButton.IsVisible = true;
+        ResumeButton.IsVisible = false;
+        FinishButton.IsVisible = false;
+    }
+
+
+    public void FinishClick(object sender, EventArgs e)
+    {
+        PloggingMap.MapElements.Clear();
+        StartButton.IsVisible = true;
+        StopButton.IsVisible = false;
+        ResumeButton.IsVisible = false;
+        FinishButton.IsVisible = false;
+
+    }
+
+
+    public void StartClick(object sender, EventArgs e)
+    {
+        PloggingMap.MapElements.Clear();
+        StartButton.IsVisible = false;
+        StopButton.IsVisible =  true;
+        ResumeButton.IsVisible = false;
+
     }
     public async Task<Location> MoveMapToCurrentLocationAsync()
             {

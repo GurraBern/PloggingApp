@@ -13,7 +13,7 @@
     <ContentView.Content>
         <ScrollView>
             <VerticalStackLayout>
-                <maps:Map ItemsSource="{Binding PlacedPins}"  x:Name="PloggingMap" WidthRequest="500" HeightRequest="500">
+                <maps:Map ItemsSource="{Binding PlacedPins}" IsShowingUser="true" x:Name="PloggingMap" WidthRequest="500" HeightRequest="500">
                     <maps:Map.MapElements>
                         <maps:Polyline StrokeColor="Green"
                            StrokeWidth="12">
@@ -35,9 +35,13 @@
                     </maps:Map.ItemTemplate>
 
                 </maps:Map>
-                <Button Text="Start Tracking" Command="{Binding StartTrackingLocationCommand}">
+                <Button x:Name ="StartButton" Text="Start Tracking" Command="{Binding StartTrackingLocationCommand}" IsVisible="true" Clicked="StartClick">
                 </Button>
-                <Button Text="Stop Tracking" Command="{Binding StopTrackingCommand}" Clicked="DrawPolyLine" >
+                <Button x:Name ="StopButton" Text="Stop Tracking" Command="{Binding StopTrackingCommand}" Clicked="DrawPolyLine" IsVisible="false">
+                </Button>
+                <Button x:Name ="ResumeButton" Text="Resume session" Command="{Binding ResumeSessionCommand}" Clicked="ResumeClick" IsVisible="false">
+                </Button>
+                <Button x:Name ="FinishButton" Text="Finish session" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false">
                 </Button>
                 <HorizontalStackLayout>
                     <Button Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}">
