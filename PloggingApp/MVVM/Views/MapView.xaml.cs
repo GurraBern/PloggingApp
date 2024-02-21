@@ -25,15 +25,19 @@ public partial class MapView : ContentView
         FinishButton.IsVisible = true; ;
 
     }
-    public void ResumeClick(object sender, EventArgs e)
+    public async void ResumeClick(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
         StartButton.IsVisible = false;
         StopButton.IsVisible = true;
         ResumeButton.IsVisible = false;
         FinishButton.IsVisible = false;
+        while (StopButton.IsVisible){
+          await MoveMapToCurrentLocationAsync();
+        }
     }
 
+ 
 
     public void FinishClick(object sender, EventArgs e)
     {
@@ -46,12 +50,16 @@ public partial class MapView : ContentView
     }
 
 
-    public void StartClick(object sender, EventArgs e)
+    public async void StartClick(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
         StartButton.IsVisible = false;
         StopButton.IsVisible =  true;
         ResumeButton.IsVisible = false;
+        while (StopButton.IsVisible)
+        {
+            await MoveMapToCurrentLocationAsync();
+        }
 
     }
     public async Task<Location> MoveMapToCurrentLocationAsync()
