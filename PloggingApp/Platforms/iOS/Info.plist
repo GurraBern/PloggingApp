@@ -33,6 +33,9 @@
 	<string>Can we use your location at all times?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Can we use your location when your app is being used?</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take photos.</string>
 	
 </dict>
 </plist>

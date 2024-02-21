@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.CameraView"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:CameraViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout>
+
+			<Button x:Name="takePhotoButton" Text=" Ta bild " Command="{Binding TakePhotoCommand}">
+			</Button>
+			<Image x:Name ="myImage" WidthRequest="200" HeightRequest="200" Source ="{Binding PhotoTaken}">    	
+			</Image>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentView>
