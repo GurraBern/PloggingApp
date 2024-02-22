@@ -45,6 +45,7 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
+        builder.Services.AddTransient<AuthenticationViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
@@ -53,6 +54,8 @@ public static class MauiProgram
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -68,6 +71,7 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
         }
+
     }
 
     private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)

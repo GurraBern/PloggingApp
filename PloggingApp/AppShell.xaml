@@ -7,8 +7,11 @@
     Shell.FlyoutBehavior="Disabled"
     Title="PloggingApp">
 
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
+    
     <TabBar>
         <ShellContent Route="MainPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
     </TabBar>
 </Shell>
+
