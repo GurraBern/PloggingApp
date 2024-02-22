@@ -38,6 +38,9 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -115,4 +118,15 @@
 	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Images\leaderboard.svg" />
+	  <None Remove="Resources\Images\map_icon.svg" />
+	  <None Remove="Resources\Images\5aef423c06700a9afe62bfacfe1c74a9.png" />
+	  <None Remove="Resources\Images\flame-38705.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\leaderboard.svg" />
+	  <BundleResource Include="Resources\Images\map_icon.svg" />
+	  <BundleResource Include="Resources\Images\streak_flame.png" />
+	</ItemGroup>
 </Project>

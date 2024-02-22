@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:Class="PloggingApp.MVVM.Views.StreakView"
+             x:DataType="viewmodel:StreakViewModel">
+
+    <HorizontalStackLayout>
+
+        <Button Text="Get User Streak"
+                Command="{Binding GetUserStreakCommand}"/>
+    
+        <Image Source="streak_flame.png"
+               WidthRequest="50"
+               HeightRequest="50"/>
+
+        <Label Text="{Binding UserStreakCount.Streak}"
+               VerticalOptions="Center"
+               FontSize="Large"
+               FontAttributes="Bold"/>
+
+    </HorizontalStackLayout>
+
+    
+
+
+</ContentView>
+

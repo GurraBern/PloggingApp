@@ -7,6 +7,7 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Pages;
+using PloggingApp.Pages.Dashboard;
 using PloggingApp.Pages.Leaderboard;
 using RestSharp;
 using System.Reflection;
@@ -45,19 +46,23 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
+        builder.Services.AddTransient<DashBoardViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+        builder.Services.AddTransient<StreakViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddTransient<DashboardPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
+        builder.Services.AddTransient<IStreakService, StreakService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -67,6 +72,7 @@ public static class MauiProgram
         {
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
         }
     }
 
