@@ -232,12 +232,55 @@ public partial class MapViewModel
     }
 
     [RelayCommand]
-    public async Task StopTracking()
+    public void StopTracking()
     {
-        isTracking = false;
+         isTracking = false;
+    }
+
+    public Location CalculateZoomOut()
+    {
+        double Longitude = 0;
+        double Latitude = 0;
+        foreach(Location loc in TrackingPositions)
+        {
+            Longitude += loc.Longitude;
+            Latitude += loc.Latitude;
+        }
+        Longitude = Longitude / TrackingPositions.Count;
+        Latitude = Latitude / TrackingPositions.Count;
+        Location ZoomLoc = new Location(Latitude, Longitude);
+        return ZoomLoc;
+    }
+
+    public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
+    {
+
+        double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
+        double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
+        double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
+        double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
+
+        // Location TopLeft = new Location(minLon, maxLat);
+        // Location TopRight = new Location(maxLon, maxLat);
+        // Location BottomLeft = new Location(minLon, minLat);
+        // Location BottomRight = new Location(maxLon, minLat);
+
+        //double Distance1 = DistanceCalc(TopLeft, TopRight);
+        //double Distance2 = DistanceCalc(TopLeft, BottomRight);
+        //double Distance3 = DistanceCalc(TopLeft, BottomLeft);
+        //double Distance4 = DistanceCalc(BottomRight, TopRight);
+        //double Distance5 = DistanceCalc(BottomLeft, TopRight);
+       return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
+
     }
 
 
+
+    private double DistanceCalc(Location loc1, Location loc2)
+    {
+        double distance = Distance.BetweenPositions(loc1, loc2).Meters;
+        return distance;
+    }
 
 
 

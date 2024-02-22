@@ -22,7 +22,8 @@ public partial class MapView : ContentView
         StopButton.IsVisible = false;
         Polyline.Geopath.Clear();
         ResumeButton.IsVisible = true;
-        FinishButton.IsVisible = true; ;
+        FinishButton.IsVisible = true;
+
 
     }
     public async void ResumeClick(object sender, EventArgs e)
@@ -32,9 +33,7 @@ public partial class MapView : ContentView
         StopButton.IsVisible = true;
         ResumeButton.IsVisible = false;
         FinishButton.IsVisible = false;
-        while (StopButton.IsVisible){
-          await MoveMapToCurrentLocationAsync();
-        }
+        MapFollowFunction();
     }
 
  
@@ -46,6 +45,7 @@ public partial class MapView : ContentView
         StopButton.IsVisible = false;
         ResumeButton.IsVisible = false;
         FinishButton.IsVisible = false;
+        MoveMapToCurrentLocationAsync();
 
     }
 
@@ -56,10 +56,7 @@ public partial class MapView : ContentView
         StartButton.IsVisible = false;
         StopButton.IsVisible =  true;
         ResumeButton.IsVisible = false;
-        while (StopButton.IsVisible)
-        {
-            await MoveMapToCurrentLocationAsync();
-        }
+        MapFollowFunction();
 
     }
     public async Task<Location> MoveMapToCurrentLocationAsync()
@@ -95,6 +92,18 @@ public partial class MapView : ContentView
             // Unable to get location
           return null;
         }
+    }
+
+    private async void MapFollowFunction()
+    {
+        while (StopButton.IsVisible)
+        {
+            await MoveMapToCurrentLocationAsync();
+        }
+        Location ZoomLoc = ((MapViewModel)BindingContext).CalculateZoomOut();
+        var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
+        MapSpan MapSpan = new MapSpan(ZoomLoc,Longitude*1.8, Latitude*1.4);
+        PloggingMap.MoveToRegion(MapSpan);
     }
 
 }
