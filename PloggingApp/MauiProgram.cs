@@ -33,6 +33,7 @@ public static class MauiProgram
 
         AddApiClients(builder);
         AddViewModels(builder);
+        AddPopups(builder);
         AddPages(builder);
         AddServices(builder);
 
@@ -49,10 +50,14 @@ public static class MauiProgram
         builder.Services.AddTransient<RankingViewmodel>();
 
         builder.Services.AddScoped<removeViewmodel>();
+        builder.Services.AddScoped<CheckoutImageViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+    }
 
+    private static void AddPopups(MauiAppBuilder builder)
+    {
         builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
     }
 
@@ -60,6 +65,8 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<RankingPage>();
         builder.Services.AddTransient<DashboardPage>();
+
+        builder.Services.AddScoped<CheckoutImagePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)

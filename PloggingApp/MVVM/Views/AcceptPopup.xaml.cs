@@ -10,4 +10,6 @@ public partial class AcceptPopup : Popup
         InitializeComponent();
         BindingContext = vm;
     }
+
+    void OnOKButtonClicked(object? sender, EventArgs e) => Close();
 }
