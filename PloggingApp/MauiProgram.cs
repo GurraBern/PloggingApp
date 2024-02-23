@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Plogging.Core.Models;
@@ -41,6 +43,7 @@ public static class MauiProgram
         return builder.Build();
     }
 
+
     private static void AddViewModels(MauiAppBuilder builder)
     {
         //Pages ViewModels
@@ -61,6 +64,13 @@ public static class MauiProgram
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
+
+        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
+            AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
+            Providers = [new EmailProvider()]
+        }));  
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

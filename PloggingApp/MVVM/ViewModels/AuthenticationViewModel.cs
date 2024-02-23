@@ -1,21 +1,10 @@
 ﻿using Firebase.Auth;
-using Firebase.Auth.Providers;
 using System.Diagnostics;
-//namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.MVVM.ViewModels;
 
 public class AuthenticationViewModel
 {
-    FirebaseAuthConfig config = new FirebaseAuthConfig
-    {
-        ApiKey = "",
-        AuthDomain = "",
-        Providers = new FirebaseAuthProvider[]
-        {
-        new EmailProvider()
-        },
-
-    };
-
+    private readonly IFirebaseAuthClient firebaseAuthClient;
     private INavigation _navigation;
 
     public bool isSwitchToggled { get; set; }
@@ -35,6 +24,7 @@ public class AuthenticationViewModel
     public AuthenticationViewModel(INavigation navigation)
     {
         this._navigation = navigation;
+        //this.firebaseAuthClient = firebaseAuthClient;
 
         LoginBtn = new Command(LoginBtnClickedAsync);
         RegisterBtn = new Command(RegisterBtnClickedAsync);
@@ -44,7 +34,6 @@ public class AuthenticationViewModel
 
     private async void LoginBtnClickedAsync(object obj)
     {
-        var client = new FirebaseAuthClient(config);
         var loginEmail = LoginEmail;
         var loginPassword = LoginPassword;
         bool switchStatus = isSwitchToggled;
@@ -59,7 +48,7 @@ public class AuthenticationViewModel
 
         try
         {
-            var userCredential = await client.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
+            var userCredential = await firebaseAuthClient.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
 
             await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
             await this._navigation.PushAsync(new PloggingApp.Pages.DashboardPage());
@@ -84,10 +73,9 @@ public class AuthenticationViewModel
         var regPassword = RegPassword;
         Trace.WriteLine(regEmail);
         if (!string.IsNullOrEmpty(regEmail) && !string.IsNullOrEmpty(regPassword)) {
-            var client = new FirebaseAuthClient(config);
             try
             {
-                var userCredential = await client.CreateUserWithEmailAndPasswordAsync(regEmail, regPassword);
+                var userCredential = await firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(regEmail, regPassword);
                 await Application.Current.MainPage.DisplayAlert("Success", "ACCOUNT CREATED.", "OK");
             }
             catch (Exception ex)
@@ -101,14 +89,13 @@ public class AuthenticationViewModel
 
     public async Task AutoLoginAsync()
     {
-        var client = new FirebaseAuthClient(config);
         var loginEmail = await SecureStorage.GetAsync("loginEmail");
         var loginPassword = await SecureStorage.GetAsync("loginPassword");
 
         if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
         {
-            var userCredential = await client.SignInWithEmailAndPasswordAsync(loginEmail, loginPassword);
-            await this._navigation.PushAsync(new PloggingApp.Pages.DashboardPage());
+            var userCredential = await firebaseAuthClient.SignInWithEmailAndPasswordAsync(loginEmail, loginPassword);
+            await this._navigation.PushAsync(new Pages.DashboardPage());
         }
         else
         {

@@ -3,6 +3,7 @@ using PloggingAPI.Repository;
 using PloggingAPI.Repository.Interfaces;
 using PloggingAPI.Services;
 using PloggingAPI.Services.Interfaces;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ else
 {
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
+
 
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
@@ -44,3 +46,4 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
