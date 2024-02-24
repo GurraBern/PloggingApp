@@ -3,15 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.CameraView"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              x:DataType="viewmodel:CameraViewModel">
 
     <ScrollView>
         <VerticalStackLayout>
 
-			<Button x:Name="takePhotoButton" Text=" Ta bild " Command="{Binding TakePhotoCommand}">
-			</Button>
-			<Image x:Name ="myImage" WidthRequest="200" HeightRequest="200" Source ="{Binding PhotoTaken}">    	
-			</Image>
+            <Button x:Name ="TakePhotoButton" Text="Take a Photo!"  Clicked="TakePhotoButtonClicked">
+            </Button>
 
         </VerticalStackLayout>
     </ScrollView>

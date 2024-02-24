@@ -19,20 +19,15 @@ public partial class MapView : ContentView
         PloggingMap.MapElements.Clear();
         Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
         PloggingMap.MapElements.Add(Polyline);
-        StopButton.IsVisible = false;
         Polyline.Geopath.Clear();
-        ResumeButton.IsVisible = true;
-        FinishButton.IsVisible = true;
+        StopSessionButtons();
 
 
     }
-    public async void ResumeClick(object sender, EventArgs e)
+    public void ResumeClick(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
-        StartButton.IsVisible = false;
-        StopButton.IsVisible = true;
-        ResumeButton.IsVisible = false;
-        FinishButton.IsVisible = false;
+        InSessionButtons();
         MapFollowFunction();
     }
 
@@ -41,21 +36,16 @@ public partial class MapView : ContentView
     public void FinishClick(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
-        StartButton.IsVisible = true;
-        StopButton.IsVisible = false;
-        ResumeButton.IsVisible = false;
-        FinishButton.IsVisible = false;
+        FinishSessionButtons();
         MoveMapToCurrentLocationAsync();
 
     }
 
 
-    public async void StartClick(object sender, EventArgs e)
+    public void StartClick(object sender, EventArgs e)
     {
         PloggingMap.MapElements.Clear();
-        StartButton.IsVisible = false;
-        StopButton.IsVisible =  true;
-        ResumeButton.IsVisible = false;
+        InSessionButtons();
         MapFollowFunction();
 
     }
@@ -106,4 +96,36 @@ public partial class MapView : ContentView
         PloggingMap.MoveToRegion(MapSpan);
     }
 
+    private void InSessionButtons()
+    {
+        StartButton.IsVisible = false;
+        StopButton.IsVisible = true;
+        ResumeButton.IsVisible = false;
+        HelpButton.IsVisible = true;
+        FoundTrashButton.IsVisible = true;
+        FinishButton.IsVisible = false;
+        RemoveButton.IsVisible = true;
+    }
+
+
+    private void FinishSessionButtons()
+    {
+        StartButton.IsVisible = true;
+        StopButton.IsVisible = false;
+        ResumeButton.IsVisible = false;
+        FinishButton.IsVisible = false;
+        HelpButton.IsVisible = false;
+        FoundTrashButton.IsVisible = false;
+        RemoveButton.IsVisible = false;
+    }
+
+    private void StopSessionButtons()
+    {
+        ResumeButton.IsVisible = true;
+        FinishButton.IsVisible = true;
+        StopButton.IsVisible = false;
+        HelpButton.IsVisible = false;
+        FoundTrashButton.IsVisible = false;
+
+    }
 }

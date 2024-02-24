@@ -10,7 +10,7 @@
 
     <VerticalStackLayout>
         <VerticalStackLayout>
-            <!--<views:CameraView BindingContext="{Binding CameraViewModel}"></views:CameraView>-->
+            <!--<views:CameraView BindingContext="{Binding CameraViewModel}"></views:CameraView>--> 
             <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>
             
         </VerticalStackLayout>

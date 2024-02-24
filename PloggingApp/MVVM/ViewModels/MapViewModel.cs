@@ -29,7 +29,9 @@ public partial class MapViewModel
 
     public int DISTANCE_THRESHOLD = 50;
 
-    DateTime StartTime; 
+    DateTime StartTime;
+
+    Image PloggingSessionImage;
 
 
     public MapViewModel()
@@ -38,13 +40,15 @@ public partial class MapViewModel
     }
 
     [RelayCommand]
-    public async Task RemovePin()
+    public void RemovePin()
     {
-        if (PlacedPins.Count > 0)
+        int LastElement = PlacedPins.Count - 1;
+        if (PlacedPins.ElementAt(LastElement).GetType() != typeof(StartPin) && PlacedPins.ElementAt(LastElement).GetType() != typeof(FinishPin))
         {
-            int LastElement = PlacedPins.Count - 1;
+
             PlacedPins.RemoveAt(LastElement);
         }
+        
     }
     [RelayCommand]
     public async Task AddTrashCollectedPin()
@@ -73,7 +77,7 @@ public partial class MapViewModel
     }
 
     [RelayCommand]
-    public async Task FinishSession()
+    public void FinishSession()
     {
 
         PloggingData PData = new PloggingData

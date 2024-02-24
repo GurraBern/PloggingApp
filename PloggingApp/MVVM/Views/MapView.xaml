@@ -44,12 +44,12 @@
                 <Button x:Name ="FinishButton" Text="Finish session" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false">
                 </Button>
                 <HorizontalStackLayout>
-                    <Button Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}">
+                    <Button x:Name = "HelpButton" Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}" IsVisible="false">
                     </Button>
-                    <Button Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}">
+                    <Button  x:Name ="FoundTrashButton" Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}" IsVisible="false">
                     </Button>
                 </HorizontalStackLayout>
-                <Button Text="Remove latest pin" Command="{Binding RemovePinCommand}">
+                <Button x:Name = "RemoveButton" Text="Remove latest pin" Command="{Binding RemovePinCommand}" IsVisible ="False">
                 </Button>
             </VerticalStackLayout>
         </ScrollView>
