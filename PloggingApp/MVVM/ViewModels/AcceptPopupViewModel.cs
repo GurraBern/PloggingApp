@@ -2,21 +2,25 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Pages;
+using PloggingApp.Services.Camera;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class AcceptPopupViewModel : ObservableObject
 {
-    private readonly IPopupService popupService;
+    private readonly IPopupService _popupService;
+    private readonly ICameraService _cameraService;
 
-    public AcceptPopupViewModel(IPopupService popupService)
+    public AcceptPopupViewModel(IPopupService popupService, ICameraService cameraService)
     {
-        this.popupService = popupService;
+        _popupService = popupService;
+        _cameraService = cameraService;
     }
 
     [RelayCommand]
-    private async Task NavigateToCameraView()
+    private async Task ShowCameraView()
     {
-        await Shell.Current.GoToAsync(nameof(CheckoutImagePage));
+        var imagePath = await _cameraService.TakePhoto();
+        await Shell.Current.GoToAsync($"{nameof(CheckoutImagePage)}?ImagePath={imagePath}");
     }
 }

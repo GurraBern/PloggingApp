@@ -10,6 +10,7 @@ using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
 using PloggingApp.Pages.Dashboard;
 using PloggingApp.Pages.Leaderboard;
+using PloggingApp.Services.Camera;
 using RestSharp;
 using System.Reflection;
 
@@ -72,6 +73,7 @@ public static class MauiProgram
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
+        builder.Services.AddScoped<ICameraService, CameraService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

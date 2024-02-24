@@ -20,7 +20,7 @@
         <VerticalStackLayout BackgroundColor="Transparent">
             <Label Text="Complete" FontSize="Medium" HorizontalOptions="Center"/>
             <Label Margin="0,10" Text="Snap a picture of your trash for the community. By doing so you agree to share it publicly, this is to ensure legitimacy of your contribution to a cleaner environment. Other will be able to see the image on your profile."/>
-            <Button Command="{Binding NavigateToCameraViewCommand}" Clicked="OnOKButtonClicked" Style="{StaticResource RoundButton}" HeightRequest="40" FontSize="Small" Text="Share Your Cleanup"/>
+            <Button Command="{Binding ShowCameraViewCommand}" Clicked="OnOKButtonClicked" Style="{StaticResource RoundButton}" HeightRequest="40" FontSize="Small" Text="Share Your Cleanup"/>
         </VerticalStackLayout>
     </Border>
 

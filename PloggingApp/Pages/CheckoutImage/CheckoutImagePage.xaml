@@ -5,7 +5,7 @@
              xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
              x:DataType="viewmodels:CheckoutImageViewModel">
     <VerticalStackLayout Spacing="5">
-        <Image Source="dotnet_bot.png"></Image>
+        <Image Source="{Binding ImagePath}"></Image>
         <Button Command="{Binding UsePhotoCommand}" Style="{StaticResource RoundButton}" WidthRequest="250" HeightRequest="40" Text="Use Photo"></Button>
         <Button Command="{Binding RetakePhotoCommand}" Style="{StaticResource RoundButton}" BackgroundColor="{StaticResource Red}" WidthRequest="250" HeightRequest="40" Text="Retake Photo"></Button>
     </VerticalStackLayout>
