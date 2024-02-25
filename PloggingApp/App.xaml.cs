@@ -1,15 +1,14 @@
-﻿namespace PloggingApp
+﻿namespace PloggingApp;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            MainPage = new AppShell();
+        MainPage = new AppShell();
 
-            //TODO remove if we want to allow both Light mode and Dark mode
-            UserAppTheme = AppTheme.Light;
-        }
+        //TODO remove if we want to allow both Light mode and Dark mode
+        UserAppTheme = AppTheme.Light;
     }
 }

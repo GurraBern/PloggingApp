@@ -5,9 +5,14 @@ using Microsoft.Extensions.Logging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
+using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
+using PloggingApp.Pages.Dashboard;
 using PloggingApp.Pages.Leaderboard;
+using PloggingApp.Services.Camera;
+using PloggingApp.Services.PloggingTracking;
 using RestSharp;
 using System.Reflection;
 
@@ -31,6 +36,7 @@ public static class MauiProgram
 
         AddApiClients(builder);
         AddViewModels(builder);
+        AddPopups(builder);
         AddPages(builder);
         AddServices(builder);
 
@@ -46,18 +52,32 @@ public static class MauiProgram
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
 
+        builder.Services.AddScoped<removeViewmodel>();
+        builder.Services.AddScoped<CheckoutImageViewModel>();
+
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+    }
+
+    private static void AddPopups(MauiAppBuilder builder)
+    {
+        builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddTransient<DashboardPage>();
+
+        builder.Services.AddScoped<CheckoutImagePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
+        builder.Services.AddScoped<ICameraService, CameraService>();
+        builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
+        builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

@@ -19,6 +19,11 @@ public class PloggingSessionRepository : IPloggingSessionRepository
         _ploggingSessionCollection = mongoDatabase.GetCollection<PloggingSession>(settings.Value.PloggingSessionsCollectionName);
     }
 
+    public async Task InsertPloggingSession(PloggingSession ploggingSession)
+    {
+        await _ploggingSessionCollection.InsertOneAsync(ploggingSession);
+    }
+
     public async Task<IEnumerable<PloggingSession>> GetPloggingSessions(string userId, DateTime startDate, DateTime endDate)
     {
         var matchFilter = Builders<PloggingSession>.Filter.Eq(f => f.UserId, userId) &
