@@ -41,12 +41,12 @@
                 </Button>
                 <Button x:Name ="ResumeButton" Text="Resume session" Command="{Binding ResumeSessionCommand}" Clicked="ResumeClick" IsVisible="false">
                 </Button>
-                <Button x:Name ="FinishButton" Text="Finish session" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false">
+                <Button x:Name ="FinishButton" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false" ImageSource="Plogging">
                 </Button>
                 <HorizontalStackLayout>
-                    <Button x:Name = "HelpButton" Text="Picked up trash" Command="{Binding AddTrashCollectedPinCommand}" IsVisible="false">
+                    <Button x:Name = "FoundTrashButton" Text="Picked up can" Command="{Binding AddCanCollectedPinCommand}" IsVisible="false">
                     </Button>
-                    <Button  x:Name ="FoundTrashButton" Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}" IsVisible="false">
+                    <Button  x:Name ="HelpButton" Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}" IsVisible="false">
                     </Button>
                 </HorizontalStackLayout>
                 <Button x:Name = "RemoveButton" Text="Remove latest pin" Command="{Binding RemovePinCommand}" IsVisible ="False">

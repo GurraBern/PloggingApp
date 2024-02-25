@@ -51,10 +51,10 @@ public partial class MapViewModel
         
     }
     [RelayCommand]
-    public async Task AddTrashCollectedPin()
+    public async Task AddCanCollectedPin()
     {
         Location loc = await CurrentLocationAsync();
-        var pin = new TrashCollectedPin()
+        var pin = new CanPin()
         {
             Label = "COLLECTED",
             Location = loc,
