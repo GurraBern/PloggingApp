@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Camera;
+using PloggingApp.Services.PloggingTracking;
 
 namespace PloggingApp.Pages;
 
@@ -9,18 +10,19 @@ public partial class CheckoutImageViewModel : ObservableObject
 {
     [ObservableProperty]
     private string imagePath;
-    private readonly ICameraService cameraService;
+    private readonly ICameraService _cameraService;
+    private readonly IPloggingSessionTracker _ploggingSessionTracker;
 
-    public CheckoutImageViewModel(ICameraService cameraService)
+    public CheckoutImageViewModel(ICameraService cameraService, IPloggingSessionTracker ploggingSessionTracker)
     {
-        this.cameraService = cameraService;
+        _cameraService = cameraService;
+        _ploggingSessionTracker = ploggingSessionTracker;
     }
 
     [RelayCommand]
     private async Task UsePhoto()
     {
-        //TODO upload image alongside the plogging session data
-
+        await _ploggingSessionTracker.EndSession();
 
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
@@ -28,7 +30,7 @@ public partial class CheckoutImageViewModel : ObservableObject
     [RelayCommand]
     private async Task RetakePhoto()
     {
-        var imagePath = await cameraService.TakePhoto();
+        var imagePath = await _cameraService.TakePhoto();
         ImagePath = imagePath;
     }
 }
