@@ -31,8 +31,6 @@ public partial class MapViewModel
 
     DateTime StartTime;
 
-    Image PloggingSessionImage;
-
 
     public MapViewModel()
     {
@@ -263,17 +261,6 @@ public partial class MapViewModel
         double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
         double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
         double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
-
-        // Location TopLeft = new Location(minLon, maxLat);
-        // Location TopRight = new Location(maxLon, maxLat);
-        // Location BottomLeft = new Location(minLon, minLat);
-        // Location BottomRight = new Location(maxLon, minLat);
-
-        //double Distance1 = DistanceCalc(TopLeft, TopRight);
-        //double Distance2 = DistanceCalc(TopLeft, BottomRight);
-        //double Distance3 = DistanceCalc(TopLeft, BottomLeft);
-        //double Distance4 = DistanceCalc(BottomRight, TopRight);
-        //double Distance5 = DistanceCalc(BottomLeft, TopRight);
        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
 
     }

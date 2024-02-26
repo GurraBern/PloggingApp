@@ -41,7 +41,7 @@
                 </Button>
                 <Button x:Name ="ResumeButton" Text="Resume session" Command="{Binding ResumeSessionCommand}" Clicked="ResumeClick" IsVisible="false">
                 </Button>
-                <Button x:Name ="FinishButton" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false" ImageSource="Plogging">
+                <Button x:Name ="FinishButton" Text ="Finish Session" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false" ImageSource="Plogging">
                 </Button>
                 <HorizontalStackLayout>
                     <Button x:Name = "FoundTrashButton" Text="Picked up can" Command="{Binding AddCanCollectedPinCommand}" IsVisible="false">

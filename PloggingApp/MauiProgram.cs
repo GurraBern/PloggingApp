@@ -1,5 +1,4 @@
-﻿using Camera.MAUI;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +26,6 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
-            .UseMauiCameraView()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*android och IOS specific*/
 
