@@ -62,7 +62,6 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
-        builder.Services.AddTransient<MapPageViewModel>();
 
         builder.Services.AddScoped<removeViewmodel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
@@ -80,7 +79,7 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<RankingPage>();
 
-        builder.Services.AddTransient<MapPage>();
+        builder.Services.AddTransient<OthersProfilePage>();
 
         builder.Services.AddTransient<DashboardPage>();
 
