@@ -3,13 +3,13 @@
     x:Class="PloggingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:PloggingApp.Pages"
+    xmlns:views="clr-namespace:PloggingApp.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="PloggingApp">
 
     <TabBar>
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
-        <ShellContent Route="MapPage" Title="Map" ContentTemplate="{DataTemplate pages:MapPage}"></ShellContent>
+  
     </TabBar>
 </Shell>

@@ -6,11 +6,13 @@ namespace PloggingApp.Pages.Dashboard;
 
 public partial class removeViewmodel
 {
+    public MapViewModel MapViewModel { get; set; }
     private readonly IPopupService popupService;
 
     public removeViewmodel(IPopupService popupService)
     {
         this.popupService = popupService;
+        MapViewModel = new MapViewModel();
     }
 
     [RelayCommand]
