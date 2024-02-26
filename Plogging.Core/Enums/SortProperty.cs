@@ -9,3 +9,4 @@ public enum SortProperty
     Distance,
     Steps
 }
+

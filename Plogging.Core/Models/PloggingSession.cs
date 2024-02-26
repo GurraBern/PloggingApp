@@ -9,9 +9,9 @@ public class PloggingSession
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
-    public byte[] Image { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime StartDate { get; set; } = DateTime.UtcNow;
+    public DateTime EndDate { get; set; } = DateTime.UtcNow;
+
     public required string UserId { get; set; }
     public required string DisplayName { get; set; }
     public PloggingData PloggingData { get; set; } = new();

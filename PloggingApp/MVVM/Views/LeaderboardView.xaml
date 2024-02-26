@@ -3,51 +3,116 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:enumsCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
+             xmlns:converters="clr-namespace:PloggingApp.Converters"
              x:Class="PloggingApp.MVVM.Views.LeaderboardView"
              x:DataType="viewmodel:LeaderboardViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
+            <converters:SortPropertyToBoolConverter x:Key="SortPropertyToBoolConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
 
-                <Label Grid.Column="0" Text="Rank"></Label>
-                <Label Grid.Column="1" Text="Name"></Label>
-                <Label Grid.Column="2" Text="Scrap Collected"></Label>
-                <Label Grid.Column="3" Text="Steps"></Label>
-                <Label Grid.Column="4" Text="Distance"></Label>
-                 
-                <CollectionView ItemsSource="{Binding Rankings}" Grid.Row="1" Grid.ColumnSpan="7">
+    <Grid VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0" Padding="10, 0" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout>
+                <SearchBar x:Name="searchBar" SearchCommand="{Binding SearchUsersCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" Placeholder="search..."></SearchBar>
+                <HorizontalStackLayout Spacing="5" Margin="0,0,0,20">
+                    <Button Style="{StaticResource CapsuleButton}" Text="This Year" Command="{Binding GetYearlyRankingsCommand}"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Text="This Month" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Text="All Time" Command="{Binding GetAllTimeRankingsCommand}"></Button>
+                    <Picker TextColor="{StaticResource White}" ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}" BackgroundColor="Grey"></Picker>
+                </HorizontalStackLayout>
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"></ActivityIndicator>
+                <CollectionView ItemsSource="{Binding Rankings}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="modelsCore:UserRanking">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Grid.Column="0" Text="{Binding Rank}"></Label>
-                                <Label Grid.Column="1" Text="{Binding DisplayName}"></Label>
-                                <Label Grid.Column="2" Text="{Binding PloggingData.ScrapCount}"></Label>
-                                <Label Grid.Column="3" Text="{Binding PloggingData.Distance}"></Label>
-                                <Label Grid.Column="4" Text="{Binding PloggingData.Steps}"></Label>
-                            </HorizontalStackLayout>
+                            <FlexLayout Direction="Row" HeightRequest="60" JustifyContent="SpaceBetween">
+                                <HorizontalStackLayout Spacing="20">
+                                    <Label VerticalOptions="Center" Text="{Binding Rank}"></Label>
+                                    <Border WidthRequest="50" HeightRequest="50">
+                                        <Label Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" TextColor="Black" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="60"></RoundRectangle>
+                                        </Border.StrokeShape>
+                                    </Border>
+
+                                    <Label VerticalOptions="Center" Text="{Binding DisplayName}"></Label>
+
+                                </HorizontalStackLayout>
+
+                                <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PloggingData.ScrapCount}" FontSize="Small"/>
+                                            <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Distance}}" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PloggingData.Distance}" FontSize="Small"/>
+                                            <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Steps}}" VerticalOptions="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PloggingData.Steps}" FontSize="Small"/>
+                                            <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </FlexLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
 
-            <Button Text="Yearly Rankings" Command="{Binding GetYearlyRankingsCommand}"></Button>
-            <Button Text="Monthly Rankings" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+        <FlexLayout Grid.Row="1" Direction="Row" HeightRequest="60" JustifyContent="SpaceBetween" VerticalOptions="End">
+            <HorizontalStackLayout Spacing="20">
+                <Label VerticalOptions="Center" Text="{Binding UserRank.Rank, StringFormat='Your rank: #{0}'}"></Label>
+                <Label VerticalOptions="Center" Text="{Binding UserRank.DisplayName}"></Label>
+            </HorizontalStackLayout>
 
-            <Picker ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}"></Picker>
-        </VerticalStackLayout>
-    </ScrollView>
+            <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding UserRank.PloggingData.ScrapCount}" FontSize="Small"/>
+                        <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Distance}}" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding UserRank.PloggingData.Distance}" FontSize="Small"/>
+                        <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Steps}}" VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding UserRank.PloggingData.Steps}" FontSize="Small"/>
+                        <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </FlexLayout>
+    </Grid>
 </ContentView>

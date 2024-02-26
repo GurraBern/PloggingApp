@@ -56,4 +56,18 @@ public class PloggingSessionController : ControllerBase
             return StatusCode(500, "An error occurred while processing your request.");
         }
     }
+
+    [HttpPost("UserSessions")]
+    public async Task<ActionResult> CreatePloggingSession([FromBody] PloggingSession ploggingSession)
+    {
+        try
+        {
+            await _ploggingSessionService.AddPloggingSession(ploggingSession);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
 }
