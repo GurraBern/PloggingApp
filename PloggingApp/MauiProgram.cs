@@ -11,6 +11,7 @@ using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Pages;
 using PloggingApp.Pages.Leaderboard;
 using RestSharp;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace PloggingApp;
@@ -65,12 +66,16 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
 
+        var apikey = builder.Configuration["AppSettings:FirebaseApiKey"];
+
+        Trace.WriteLine($"HEEEELLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO/////////////////////////////////{apikey}");
+
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
             ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
             AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
-            Providers = [new EmailProvider()]
-        }));  
+            Providers = [ new EmailProvider()]
+        }));
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -94,7 +99,7 @@ public static class MauiProgram
 
     private static MauiAppBuilder AddAppSettings(this MauiAppBuilder builder)
     {
-        var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
+        var environment = Environment.GetEnvironmentVariable("env:MAUI_ENVIRONMENT") ?? "Production";
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"PloggingApp.appsettings.{environment}.json");
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

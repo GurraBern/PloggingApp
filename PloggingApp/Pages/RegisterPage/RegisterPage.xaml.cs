@@ -1,17 +1,13 @@
 ﻿using PloggingApp.MVVM.ViewModels;
 
-namespace PloggingApp.Pages
+namespace PloggingApp.Pages;
 
-
+public partial class RegisterPage : ContentPage
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RegisterPage : ContentPage
+    public RegisterPage(AuthenticationViewModel vm)
     {
-        public RegisterPage()
-        {
-            InitializeComponent();
-            BindingContext = new AuthenticationViewModel(Navigation);
-        }
+        InitializeComponent();
+        BindingContext = vm;
     }
 }
 

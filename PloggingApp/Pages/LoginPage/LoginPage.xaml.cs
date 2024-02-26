@@ -4,21 +4,19 @@ namespace PloggingApp.Pages;
 
 public partial class LoginPage : ContentPage
 {
-    private AuthenticationViewModel viewModel;
-
-    public LoginPage()
+    private readonly AuthenticationViewModel vm;
+    public LoginPage(AuthenticationViewModel vm)
     {
         InitializeComponent();
-        viewModel = new AuthenticationViewModel(Navigation);
-        BindingContext = viewModel;
+        BindingContext = vm;
 
-        viewModel.AutoLoginAsync();
+        vm.AutoLoginAsync();
     }
 
     void OnToggled(object sender, ToggledEventArgs e)
     {
         Switch switchControl = (Switch)sender;
         bool isSwitchToggled = e.Value;
-        viewModel.isSwitchToggled = isSwitchToggled;
+        vm.isSwitchToggled = isSwitchToggled;
     }
 }
