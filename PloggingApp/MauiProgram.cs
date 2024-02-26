@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Maps;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
@@ -28,21 +32,29 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
+            .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
+            .UseMauiMaps() /*android och IOS specific*/
+
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-
         AddApiClients(builder);
         AddViewModels(builder);
         AddPopups(builder);
         AddPages(builder);
         AddServices(builder);
 
+        builder.ConfigureMauiHandlers(handlers =>
+        {
+            handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
+        });
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
+
 
         return builder.Build();
     }
@@ -51,6 +63,7 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
+        builder.Services.AddTransient<MapPageViewModel>();
 
         builder.Services.AddScoped<removeViewmodel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
@@ -67,9 +80,13 @@ public static class MauiProgram
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+
+        builder.Services.AddTransient<MapPage>();
+
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
+
     }
 
     private static void AddServices(MauiAppBuilder builder)

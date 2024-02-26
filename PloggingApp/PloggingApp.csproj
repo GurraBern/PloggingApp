@@ -71,12 +71,16 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Maui.Maps" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="Geolocator.Plugin" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.7" />
 		<PackageReference Include="RestSharp" Version="110.2.0" />
 	</ItemGroup>
 
@@ -102,6 +106,9 @@
 	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\MapView.xaml">
+    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CheckoutImage\CheckoutImagePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -111,10 +118,9 @@
 	  <MauiXaml Update="Pages\Leaderboard\RankingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="MVVM\Models\" />
+	  <MauiXaml Update="Pages\Map\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>

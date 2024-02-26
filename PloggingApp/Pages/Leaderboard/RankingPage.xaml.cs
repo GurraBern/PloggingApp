@@ -1,5 +1,3 @@
-using PloggingApp.Pages.Leaderboard;
-
 namespace PloggingApp.Pages;
 
 public partial class RankingPage : ContentPage
