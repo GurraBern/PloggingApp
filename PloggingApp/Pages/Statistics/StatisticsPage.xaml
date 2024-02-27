@@ -4,9 +4,15 @@
              x:Class="PloggingApp.Pages.StatisticsPage"
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:DataType="viewmodel:StatisticsPageViewModel"
              Title="StatisticsPage">
-    <VerticalStackLayout>
-        <views:StatisticsView BindingContext="{Binding StatisticsViewModel}"></views:StatisticsView>
-    </VerticalStackLayout>
+    <Grid VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
+        <micro:ChartView Chart="{Binding ActivityChart}" HeightRequest="200" Grid.Row="1"/>
+    </Grid>
 </ContentPage>
