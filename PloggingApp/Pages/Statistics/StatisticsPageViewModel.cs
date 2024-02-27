@@ -5,6 +5,6 @@ public class StatisticsPageViewModel
     public StatisticsViewModel StatisticsViewModel { get; set; }
     public StatisticsPageViewModel()
     {
-        StatisticsViewModel = new StatisticsViewModel();
+        StatisticsViewModel = new StatisticsViewModel(); 
     }
 }

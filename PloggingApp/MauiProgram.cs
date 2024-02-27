@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
+using Microcharts.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ using PloggingApp.Pages.Dashboard;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
 
 namespace PloggingApp;
@@ -31,6 +33,8 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
+            .UseMicrocharts()
+            .UseSkiaSharp()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*android och IOS specific*/
 
@@ -70,6 +74,7 @@ public static class MauiProgram
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+        //builder.Services.AddTransient<StatisticsViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
