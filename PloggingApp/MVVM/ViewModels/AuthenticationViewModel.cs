@@ -6,7 +6,6 @@ namespace PloggingApp.MVVM.ViewModels;
 public class AuthenticationViewModel
 {
     private readonly FirebaseAuthClient _firebaseAuthClient;
-    //private INavigation _navigation;
 
     public bool isSwitchToggled { get; set; }
 
@@ -25,15 +24,6 @@ public class AuthenticationViewModel
     public AuthenticationViewModel(FirebaseAuthClient firebaseAuthClient)
     {
         this._firebaseAuthClient = firebaseAuthClient;
-
-        Routing.RegisterRoute("dbpage", typeof(DashboardPage));
-        Routing.RegisterRoute("login", typeof(LoginPage));
-        Routing.RegisterRoute("register", typeof(RegisterPage));
-
-        if (_firebaseAuthClient == null)
-        {
-            Trace.WriteLine("____________FIREBASECLIENT IS NULL___________");
-        }
 
         LoginBtn = new Command(LoginBtnClickedAsync);
         RegisterBtn = new Command(RegisterBtnClickedAsync);
@@ -60,7 +50,7 @@ public class AuthenticationViewModel
             var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
 
             await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
-            await Shell.Current.GoToAsync("dbpage");
+            await Shell.Current.GoToAsync("//MainPage");
 
         }
         catch (Exception ex)
@@ -73,7 +63,7 @@ public class AuthenticationViewModel
 
     private async void RegisterBtnClickedAsync(object obj)
     {
-        await Shell.Current.GoToAsync("register");
+        await Shell.Current.GoToAsync("//RegisterPage");
 
     }
 
@@ -105,7 +95,7 @@ public class AuthenticationViewModel
         if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
         {
             var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(loginEmail, loginPassword);
-            await Shell.Current.GoToAsync("dbpage");
+            await Shell.Current.GoToAsync("//MainPage");
         }
         else
         {
