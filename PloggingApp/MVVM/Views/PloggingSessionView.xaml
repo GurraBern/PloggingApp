@@ -29,7 +29,7 @@
             Style="{StaticResource RoundButton}" 
             WidthRequest="60" 
             HeightRequest="60" 
-            BackgroundColor="{StaticResource Green}" 
+            BackgroundColor="{StaticResource Red}" 
             Command="{Binding EndPloggingSessionCommand}"/>
 
     </VerticalStackLayout>

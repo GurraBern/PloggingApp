@@ -5,12 +5,14 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.Views;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class PloggingSessionViewModel: ObservableObject
 {
+    private const int DISTANCE_THRESHOLD = 50;
     public Polyline Polyline = new Polyline
     {
         StrokeColor = Colors.Blue,
@@ -22,12 +24,9 @@ public partial class PloggingSessionViewModel: ObservableObject
     [ObservableProperty]
     private bool isTracking = false;
 
-    private const int DISTANCE_THRESHOLD = 50;
-
 
     public PloggingSessionViewModel()
     {
-        
     }
 
     [RelayCommand]
@@ -35,23 +34,17 @@ public partial class PloggingSessionViewModel: ObservableObject
     {
         IsTracking = true;
 
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking));
+
         await StartTrackingLocation();
-
-        WeakReferenceMessenger.Default.Send(this);
-
-        //TODO notify listeners that StartPlogging is running
-        //Clear map
-        //Follow person
-
-        //PloggingMap.MapElements.Clear();
-        ////InSessionButtons();
-        //MapFollowFunction();   
     }
 
     [RelayCommand]
     private async Task EndPloggingSession()
     {
         IsTracking = false;
+
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking));
 
         var currentLocation = await CurrentLocationAsync();
         var FinishPin = new FinishPin()
@@ -81,8 +74,7 @@ public partial class PloggingSessionViewModel: ObservableObject
         {
             await KeepTracking();
         }
-
-           }
+    }
 
     public async Task<Location> CurrentLocationAsync()
     {
@@ -138,11 +130,11 @@ public partial class PloggingSessionViewModel: ObservableObject
     [RelayCommand]
     public async Task AddNeedHelpToCollectPin()
     {
-        Location loc = await CurrentLocationAsync();
+        Location location = await CurrentLocationAsync();
         var pin = new NeedHelpToCollectPin()
         {
             Label = "HELP",
-            Location = loc,
+            Location = location,
             Address = "!!"
         };
         PlacedPins.Add(pin);
@@ -229,33 +221,32 @@ public partial class PloggingSessionViewModel: ObservableObject
     [RelayCommand]
     public void StopTracking()
     {
-        isTracking = false;
+        IsTracking = false;
     }
 
     public Location CalculateZoomOut()
     {
-        double Longitude = 0;
-        double Latitude = 0;
+        double longitude = 0;
+        double latitude = 0;
         foreach (Location loc in TrackingPositions)
         {
-            Longitude += loc.Longitude;
-            Latitude += loc.Latitude;
+            longitude += loc.Longitude;
+            latitude += loc.Latitude;
         }
-        Longitude = Longitude / TrackingPositions.Count;
-        Latitude = Latitude / TrackingPositions.Count;
-        Location ZoomLoc = new Location(Latitude, Longitude);
+        longitude = longitude / TrackingPositions.Count;
+        latitude = latitude / TrackingPositions.Count;
+        Location ZoomLoc = new Location(latitude, longitude);
         return ZoomLoc;
     }
 
     public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
     {
-
         double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
         double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
         double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
         double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
-        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin);
 
+        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin);
     }
 
     private double DistanceCalc(Location loc1, Location loc2)

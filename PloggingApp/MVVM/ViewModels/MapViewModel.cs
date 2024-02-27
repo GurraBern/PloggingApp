@@ -17,11 +17,11 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class MapViewModel
 {
-     public Polyline Polyline = new Polyline
-    {
-        StrokeColor = Colors.Blue,
-        StrokeWidth = 15
-    };
+    // public Polyline Polyline = new Polyline
+    //{
+    //    StrokeColor = Colors.Blue,
+    //    StrokeWidth = 15
+    //};
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
 

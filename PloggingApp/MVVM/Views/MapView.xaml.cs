@@ -1,142 +1,96 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.MVVM.Views;
 
-public partial class MapView : ContentView, IRecipient<PloggingSessionViewModel>
+public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 {
-    //public MapViewModel MapViewModel { get; set; }
+    public MapViewModel? MapViewModel { get; set; }
 
     public MapView()
     {
-        //MoveMapToCurrentLocationAsync();
         InitializeComponent();
-        //Initialize();
+
+        WeakReferenceMessenger.Default.Register(this);
     }
 
-    //private void Initialize()//TODO maybe need to be onappearing
-    //{
-    //    MapViewModel = (MapViewModel)BindingContext;
-    //}
+    private void Initialize()   
+    {
+        MapViewModel = (MapViewModel)BindingContext;
+    }
 
-    public void DrawPolyLine(object sender, EventArgs e)
+    public void DrawPolyLine()
     {
         PloggingMap.MapElements.Clear();
-        Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
-        PloggingMap.MapElements.Add(Polyline);
-        Polyline.Geopath.Clear();
-        //StopSessionButtons();
 
-
+        foreach (var location in MapViewModel.TrackingPositions)
+        {
+            polyLine.Add(location);
+        }
+        //Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
+        PloggingMap.MapElements.Add(polyLine);
+        //Polyline.Geopath.Clear();
     }
 
-    public void ResumeClick(object sender, EventArgs e)
+    private async Task<Location> MoveMapToCurrentLocationAsync()
     {
-        PloggingMap.MapElements.Clear();
-        //InSessionButtons();
-        MapFollowFunction();
+        try
+        {
+            var request = new GeolocationRequest(GeolocationAccuracy.Best);
+            var location = await Geolocation.GetLocationAsync(request);
+
+            if (location != null)
+            {
+                PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
+                return location;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
-    public void FinishClick(object sender, EventArgs e)
+    private async Task MapFollowFunction()
     {
-        PloggingMap.MapElements.Clear();
-        //FinishSessionButtons();
-        //MoveMapToCurrentLocationAsync();
+        await MoveMapToCurrentLocationAsync();
 
-    }
-
-    public void StartClick(object sender, EventArgs e)
-    {
-        PloggingMap.MapElements.Clear();
-        //InSessionButtons();
-        MapFollowFunction();
-    }
-
-    //public async Task<Location> MoveMapToCurrentLocationAsync()
-    //{
-    //    try
-    //    {
-    //        var request = new GeolocationRequest(GeolocationAccuracy.Best);
-    //        var location = await Geolocation.GetLocationAsync(request);
-
-    //        if (location != null)
-    //        {
-    //            PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
-    //            return location;
-    //        }
-    //        else
-    //        {
-    //            // Handle case where location is null
-    //            return null;
-    //        }
-    //    }
-    //    catch (FeatureNotSupportedException fnsEx)
-    //    {
-    //        // Handle not supported on device exception
-    //        return null;
-    //    }
-    //    catch (PermissionException pEx)
-    //    {
-    //        // Handle permission exception
-    //        return null;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        // Unable to get location
-    //        return null;
-    //    }
-    //}
-
-    private async void MapFollowFunction()
-    {
-        //while (StopButton.IsVisible)
-        //{
-        //await MoveMapToCurrentLocationAsync();
-        //}
         Location ZoomLoc = ((MapViewModel)BindingContext).CalculateZoomOut();
         var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
         MapSpan MapSpan = new MapSpan(ZoomLoc, Longitude * 1.8, Latitude * 1.4);
         PloggingMap.MoveToRegion(MapSpan);
     }
 
-    public void Receive(PloggingSessionViewModel message)
+    //Bad solution should use data binding if possible
+    public void Receive(PloggingSessionMessage message)
     {
-        var t = 5;
+        if(MapViewModel == null)
+            Initialize();
 
+        if (message.IsTracking)
+        {
+            MapFollowFunction();
+        }
+        else
+        {
+            DrawPolyLine();
+        }
+    }
+}
+
+public class PloggingSessionMessage : ValueChangedMessage<bool>
+{
+    public PloggingSessionMessage(bool isTracking) : base(isTracking)
+    {
+        IsTracking = isTracking;
     }
 
-    //private void InSessionButtons()
-    //{
-    //    StartButton.IsVisible = false;
-    //    StopButton.IsVisible = true;
-    //    ResumeButton.IsVisible = false;
-    //    HelpButton.IsVisible = true;
-    //    FoundTrashButton.IsVisible = true;
-    //    FinishButton.IsVisible = false;
-    //    RemoveButton.IsVisible = true;
-    //}
-
-
-    //private void FinishSessionButtons()
-    //{
-    //    StartButton.IsVisible = true;
-    //    StopButton.IsVisible = false;
-    //    ResumeButton.IsVisible = false;
-    //    FinishButton.IsVisible = false;
-    //    HelpButton.IsVisible = false;
-    //    FoundTrashButton.IsVisible = false;
-    //    RemoveButton.IsVisible = false;
-    //}
-
-    //private void StopSessionButtons()
-    //{
-    //    ResumeButton.IsVisible = true;
-    //    FinishButton.IsVisible = true;
-    //    StopButton.IsVisible = false;
-    //    HelpButton.IsVisible = false;
-    //    FoundTrashButton.IsVisible = false;
-
-    //}
+    public bool IsTracking { get; set; }
 }
