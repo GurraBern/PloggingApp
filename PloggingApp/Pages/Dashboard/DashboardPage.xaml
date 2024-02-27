@@ -17,6 +17,6 @@
 
         <views:AddLitter HorizontalOptions="End" Margin="5,0"/>
 
-        <views:PloggingSessionView VerticalOptions="End"/>
+        <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
     </Grid>
 </ContentPage>

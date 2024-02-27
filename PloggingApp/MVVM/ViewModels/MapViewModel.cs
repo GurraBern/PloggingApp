@@ -34,93 +34,93 @@ public partial class MapViewModel
 
     public MapViewModel()
     {
-
-    }
-
-    [RelayCommand]
-    public void RemovePin()
-    {
-        int LastElement = PlacedPins.Count - 1;
-        if (PlacedPins.ElementAt(LastElement).GetType() != typeof(StartPin) && PlacedPins.ElementAt(LastElement).GetType() != typeof(FinishPin))
-        {
-
-            PlacedPins.RemoveAt(LastElement);
-        }
-        
-    }
-    [RelayCommand]
-    public async Task AddCanCollectedPin()
-    {
-        Location loc = await CurrentLocationAsync();
-        var pin = new CanPin()
-        {
-            Label = "COLLECTED",
-            Location = loc,
-            Address = "!!"
-        };
-        PlacedPins.Add(pin);
-    }
-
-    [RelayCommand]
-    public async Task AddNeedHelpToCollectPin()
-    {
-        Location loc = await CurrentLocationAsync();
-        var pin = new NeedHelpToCollectPin()
-        {
-            Label = "HELP",
-            Location = loc,
-            Address = "!!"
-        };
-        PlacedPins.Add(pin);
-    }
-
-    [RelayCommand]
-    public void FinishSession()
-    {
-
-        PloggingData PData = new PloggingData
-        {
-            ScrapCount = PlacedPins.Count-2,
-            Distance = CalculateTotalDistance(),
-            Steps = CalculateAverageSteps(),
-        };
-
-        PloggingSession PSession = new PloggingSession {
-            UserId ="",
-            DisplayName ="",
-            Id = "",
-            StartDate = StartTime,
-            EndDate = DateTime.Now,
-            PloggingData = PData
-        };
-
-    TrackingPositions.Clear();
-        PlacedPins.Clear();
-        
         
     }
 
-    private double CalculateTotalDistance()
-    {
-        double totalDistance = 0;
+    //[RelayCommand]
+    //public void RemovePin()
+    //{
+    //    int LastElement = PlacedPins.Count - 1;
+    //    if (PlacedPins.ElementAt(LastElement).GetType() != typeof(StartPin) && PlacedPins.ElementAt(LastElement).GetType() != typeof(FinishPin))
+    //    {
 
-        for (int i = 0; i < TrackingPositions.Count - 1; i++)
-        {
-            double distance = Distance.BetweenPositions(TrackingPositions.ElementAt(i), TrackingPositions.ElementAt(i + 1)).Meters;
-            totalDistance += distance;
-        }
+    //        PlacedPins.RemoveAt(LastElement);
+    //    }
 
-        return totalDistance;
-    }
+    //}
+    //[RelayCommand]
+    //public async Task AddCanCollectedPin()
+    //{
+    //    Location loc = await CurrentLocationAsync();
+    //    var pin = new CanPin()
+    //    {
+    //        Label = "COLLECTED",
+    //        Location = loc,
+    //        Address = "!!"
+    //    };
+    //    PlacedPins.Add(pin);
+    //}
 
-    private int CalculateAverageSteps()
-    {
-        int Steps;
+    //[RelayCommand]
+    //public async Task AddNeedHelpToCollectPin()
+    //{
+    //    Location loc = await CurrentLocationAsync();
+    //    var pin = new NeedHelpToCollectPin()
+    //    {
+    //        Label = "HELP",
+    //        Location = loc,
+    //        Address = "!!"
+    //    };
+    //    PlacedPins.Add(pin);
+    //}
 
-        Steps = (int)Math.Floor(CalculateTotalDistance() / 1000 * 1350);
+    //[RelayCommand]
+    //public void FinishSession()
+    //{
 
-        return Steps;
-    }
+    //    PloggingData PData = new PloggingData
+    //    {
+    //        ScrapCount = PlacedPins.Count-2,
+    //        Distance = CalculateTotalDistance(),
+    //        Steps = CalculateAverageSteps(),
+    //    };
+
+    //    PloggingSession PSession = new PloggingSession {
+    //        UserId ="",
+    //        DisplayName ="",
+    //        Id = "",
+    //        StartDate = StartTime,
+    //        EndDate = DateTime.Now,
+    //        PloggingData = PData
+    //    };
+
+    //TrackingPositions.Clear();
+    //    PlacedPins.Clear();
+
+
+    //}
+
+    //private double CalculateTotalDistance()
+    //{
+    //    double totalDistance = 0;
+
+    //    for (int i = 0; i < TrackingPositions.Count - 1; i++)
+    //    {
+    //        double distance = Distance.BetweenPositions(TrackingPositions.ElementAt(i), TrackingPositions.ElementAt(i + 1)).Meters;
+    //        totalDistance += distance;
+    //    }
+
+    //    return totalDistance;
+    //}
+
+    //private int CalculateAverageSteps()
+    //{
+    //    int Steps;
+
+    //    Steps = (int)Math.Floor(CalculateTotalDistance() / 1000 * 1350);
+
+    //    return Steps;
+    //}
 
 
 
@@ -153,37 +153,36 @@ public partial class MapViewModel
         }
     }
 
-    [RelayCommand]
-    public async Task StartTrackingLocation()
-    {
-        StartTime = DateTime.Now;
-        Location loc = await CurrentLocationAsync();
-        TrackingPositions.Add(loc);
-        var StartPin = new StartPin()
-        {
-            Location = loc,
-            Label = "Start"
-        };
-        PlacedPins.Add(StartPin);
-        isTracking = true;
-        while (isTracking)
-        {
-            await KeepTracking();
+    //[RelayCommand]
+    //public async Task StartTrackingLocation()
+    //{
+    //    StartTime = DateTime.Now;
+    //    Location loc = await CurrentLocationAsync();
+    //    TrackingPositions.Add(loc);
+    //    var StartPin = new StartPin()
+    //    {
+    //        Location = loc,
+    //        Label = "Start"
+    //    };
+    //    PlacedPins.Add(StartPin);
+    //    isTracking = true;
+    //    while (isTracking)
+    //    {
+    //        await KeepTracking();
 
-        }
+    //    }
 
-        loc = await CurrentLocationAsync();
-        var FinishPin = new FinishPin()
-        {
-            Location = loc,
-            Label = "End"
-        };
-        PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(loc);
-        UpdatePolyline();
-    }
+    //    loc = await CurrentLocationAsync();
+    //    var FinishPin = new FinishPin()
+    //    {
+    //        Location = loc,
+    //        Label = "End"
+    //    };
+    //    PlacedPins.Add(FinishPin);
+    //    TrackingPositions.Add(loc);
+    //    UpdatePolyline();
+    //}
 
-    [RelayCommand]
     public async Task KeepTracking()
     {
 
