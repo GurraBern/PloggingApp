@@ -21,7 +21,7 @@ public class StreakRepository : IStreakRepository
 	// called when user ends plogging session
 	public async Task UpdateStreak(string id)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;
         DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
@@ -34,13 +34,13 @@ public class StreakRepository : IStreakRepository
 		}
 
 		user.LastPlogged = currentDateMidnight;
-		await _ploggingStreakCollection.ReplaceOneAsync(u => u.Id == id, user);
+		await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == id, user);
     }
 
 	// called when user logs in
 	public async Task ResetStreak(string id)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;
 		DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
@@ -50,13 +50,13 @@ public class StreakRepository : IStreakRepository
         if (user.LastPlogged < previousWeekStartDate)
         {
             user.Streak = 0;
-            await _ploggingStreakCollection.ReplaceOneAsync(u => u.Id == id, user);
+            await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == id, user);
         }
     }
 
 	public async Task<UserStreak> GetUserStreak(string id)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.Id == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
 
 		return user;
     }

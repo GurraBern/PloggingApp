@@ -25,27 +25,14 @@ public partial class StreakViewModel : BaseViewModel
     private async Task GetUserStreak()
     {
         //TODO replace with actual id when user authentication is implemented
-        var currentUserId = "65cf726e9e8790c793081dd2"; 
+        var currentUserId = "333ajsldkfjasödjfk34"; 
 
-        if (IsBusy)
-        {
-            return;
-        }
-
-        try
-        {
-            RecentStreakCommand = GetUserStreakCommand;
-            IsBusy = true;
-            UserStreakCount = await _streakService.GetUserStreak(currentUserId);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+        RecentStreakCommand = GetUserStreakCommand;
+        IsBusy = true;
+        UserStreakCount = await _streakService.GetUserStreak(currentUserId);
+        IsBusy = false;
+        
+        
     }
 }
 

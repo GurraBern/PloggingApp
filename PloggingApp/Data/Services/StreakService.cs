@@ -17,15 +17,17 @@ public class StreakService : IStreakService
     {
         try
         {
-            var request = new RestRequest("api/Streak/GetUserStreak");
-            request.AddParameter("id", id);
+            var request = new RestRequest("api/Streak/UserStreak");
+            request.AddParameter("userId", id);
 
             var user = await _ploggingApiClient.GetAsync(request);
+            Console.WriteLine(user.UserId);
             return user;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             //TODO display toast
+            Console.WriteLine($"An error occurred: {ex.Message}");
             return null;
         }
     }

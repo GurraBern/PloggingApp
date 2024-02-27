@@ -45,12 +45,12 @@ public class StreakController : ControllerBase
         }
     }
 
-    [HttpGet("GetUserStreak/{id}")]
-    public async Task<ActionResult<UserStreak>> GetUserStreak(string id)
+    [HttpGet("UserStreak")]
+    public async Task<ActionResult<UserStreak>> GetUserStreak(string userId)
     {
         try
         {
-            var user = await _streakService.GetUserStreak(id);
+            var user = await _streakService.GetUserStreak(userId);
             return Ok(user);
         }
         catch (Exception ex)
