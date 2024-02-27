@@ -226,10 +226,10 @@ public partial class MapViewModel
     public void UpdatePolyline()
     {
        
-        foreach (Location TrackingPosition in TrackingPositions)
-        {
-            Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
-        }
+        //foreach (Location TrackingPosition in TrackingPositions)
+        //{
+        //    Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
+        //}
     }
 
     [RelayCommand]

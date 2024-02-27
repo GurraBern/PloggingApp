@@ -5,11 +5,13 @@ namespace Plogging.Core.Models;
 public class Litter
 {
     public LitterType LitterType { get; set; }
-    public double Amount { get; set; }
+    public double LitterCount { get; set; }
+    public double Weight { get; set; }
 
-    public Litter(LitterType litterType, double amount)
+    public Litter(LitterType litterType, double litterCount, double weight = 0)
     {
         LitterType = litterType;
-        Amount = amount;
+        LitterCount = litterCount;
+        Weight = weight;
     }
 }

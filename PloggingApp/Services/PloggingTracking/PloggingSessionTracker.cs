@@ -1,6 +1,7 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Helpers;
 
 namespace PloggingApp.Services.PloggingTracking;
 
@@ -22,9 +23,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
     public async Task EndSession()
     {
-        //var ploggingData = LitterCalculator.CreatePloggingData(CurrentLitter); //TODO add something similar
-        var ploggingData = new PloggingData();
-
+        var ploggingData = LitterCalculator.CreatePloggingData(CurrentLitter);
         var ploggingSession = new PloggingSession()
         {
             UserId = "TODOsetUserId",
@@ -40,9 +39,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     public void AddLitterItem(LitterType litterType, double amount)
     {
         //var weight = LitterCalculator.CalculateWeight(litterType, amount); //TODO add something similar
-        var weight = amount;
-        var litter = new Litter(litterType, weight);
-
+        var weight = 0; //TODO replace with above!
+        var litter = new Litter(litterType, amount, weight);
         CurrentLitter.Add(litter);
     }
 }

@@ -15,7 +15,7 @@
 
         <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
-        <views:AddLitter HorizontalOptions="End" Margin="5,0"/>
+        <views:AddLitter BindingContext="{Binding AddLitterViewModel}" HorizontalOptions="End" Margin="5,0"/>
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
     </Grid>

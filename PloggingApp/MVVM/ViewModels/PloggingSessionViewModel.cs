@@ -6,6 +6,7 @@ using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Views;
+using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
@@ -13,6 +14,7 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class PloggingSessionViewModel: ObservableObject
 {
     private const int DISTANCE_THRESHOLD = 50;
+    private readonly IPloggingSessionTracker _ploggingSessionTracker;
     public Polyline Polyline = new Polyline
     {
         StrokeColor = Colors.Blue,
@@ -24,15 +26,16 @@ public partial class PloggingSessionViewModel: ObservableObject
     [ObservableProperty]
     private bool isTracking = false;
 
-
-    public PloggingSessionViewModel()
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker)
     {
+        _ploggingSessionTracker = ploggingSessionTracker;
     }
 
     [RelayCommand]
     private async Task StartPloggingSession()
     {
         IsTracking = true;
+        _ploggingSessionTracker.StartSession();
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking));
 
@@ -56,6 +59,8 @@ public partial class PloggingSessionViewModel: ObservableObject
         PlacedPins.Add(FinishPin);
         TrackingPositions.Add(currentLocation);
         UpdatePolyline();
+
+        await _ploggingSessionTracker.EndSession();
     }
 
     private async Task StartTrackingLocation()
