@@ -2,22 +2,22 @@
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.ViewModels;
 
-namespace PloggingApp.Pages.Dashboard;
+namespace PloggingApp.Pages;
 
-public partial class removeViewmodel
+public partial class DashboardViewmodel
 {
     public MapViewModel MapViewModel { get; set; }
-    private readonly IPopupService popupService;
+    private readonly IPopupService _popupService;
 
-    public removeViewmodel(IPopupService popupService)
+    public DashboardViewmodel(IPopupService popupService)
     {
-        this.popupService = popupService;
+        _popupService = popupService;
         MapViewModel = new MapViewModel();
     }
 
     [RelayCommand]
     public async Task DisplayPopup()
     {
-        await popupService.ShowPopupAsync<AcceptPopupViewModel>();
+        await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
     }
 }

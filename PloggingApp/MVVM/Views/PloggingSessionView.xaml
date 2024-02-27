@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.PloggingSessionView">
+    <VerticalStackLayout>
+        <Button Text="▶"
+                Margin="0,0,0,5" 
+                FontSize="Large" 
+                Style="{StaticResource RoundButton}" 
+                WidthRequest="60" 
+                HeightRequest="60" 
+                BackgroundColor="{StaticResource Green}" 
+                Command="{Binding DisplayPopupCommand}"/>
+    </VerticalStackLayout>
+</ContentView>

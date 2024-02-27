@@ -13,7 +13,6 @@ using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
-using PloggingApp.Pages.Dashboard;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
@@ -39,6 +38,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
         AddApiClients(builder);
         AddViewModels(builder);
         AddPopups(builder);
@@ -54,7 +54,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-
         return builder.Build();
     }
 
@@ -64,7 +63,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RankingViewmodel>();
         builder.Services.AddTransient<MapPageViewModel>();
 
-        builder.Services.AddScoped<removeViewmodel>();
+        builder.Services.AddScoped<DashboardViewmodel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
 
         //Views ViewModels
@@ -85,7 +84,6 @@ public static class MauiProgram
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
-
     }
 
     private static void AddServices(MauiAppBuilder builder)

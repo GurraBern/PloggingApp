@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.AddLitter">
+
+    <Grid WidthRequest="150" HeightRequest="250">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Plastics"></Button>
+        <Button Grid.Row="1" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cans"></Button>
+        <Button Grid.Row="2" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cigarette"></Button>
+    </Grid>
+</ContentView>

@@ -91,6 +91,9 @@
 	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="MVVM\Views\PloggingSessionView.xaml.cs">
+	    <DependentUpon>PloggingSessionView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
 	    <DependentUpon>DashboardPage.xaml</DependentUpon>
 	  </Compile>
@@ -103,11 +106,17 @@
 	  <MauiXaml Update="MVVM\Views\AcceptPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\AddLitter.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MapView.xaml">
     <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\PloggingSessionView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\CheckoutImage\CheckoutImagePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
