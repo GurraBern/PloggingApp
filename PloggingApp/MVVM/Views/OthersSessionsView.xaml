@@ -9,21 +9,23 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
 
     <StackLayout>
-        <ListView ItemsSource="{Binding PloggingSession}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <!-- You can bind various properties of PloggingSession here -->
-                            <Label Text="{Binding PloggingSessions.PloggingData}" FontAttributes="Bold" />
-                            <Label Text="{Binding PloggingSessions.StartDate, StringFormat='Start Date: {0:MM/dd/yyyy HH:mm:ss}'}" />
-                            <Label Text="{Binding PloggingSessions.EndDate, StringFormat='End Date: {0:MM/dd/yyyy HH:mm:ss}'}" />
-                            <!-- You can add more labels for other properties if needed -->
-                        </StackLayout>
-                    </ViewCell>
+        <Label x:DataType="modelsCore:PloggingSession" Text="{Binding UserId}"></Label>
+        <CollectionView ItemsSource="{Binding PloggingSessions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="modelsCore:PloggingSession">
+                    <VerticalStackLayout>
+                        <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}"  />
+                        <HorizontalStackLayout>
+                            <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}" />
+                            <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" />
+                            <Label x:Name="ScrapCount"  Text="{Binding PloggingData.ScrapCount, StringFormat=' {0}'}" />
+                            <Image x:Name="Trashbag" Source="trashbag.png" HeightRequest="10" WidthRequest="10"/>
+                        </HorizontalStackLayout>
+                        <Label BackgroundColor="Black" HeightRequest="1"></Label>
+                    </VerticalStackLayout>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
     
     

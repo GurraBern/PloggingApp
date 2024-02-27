@@ -6,9 +6,10 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class OthersSessionsViewModel
 {
+    public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
     public OthersSessionsViewModel()
     {
-        PloggingSessions = new ObservableCollection<PloggingSession>();
+
 
         PloggingSessions.Add(new PloggingSession
         {
@@ -25,12 +26,11 @@ public partial class OthersSessionsViewModel
             StartDate = DateTime.UtcNow.AddHours(2),
             EndDate = DateTime.UtcNow.AddHours(3)
         });
+    }
 
     }
 
-    public ObservableCollection<PloggingSession> PloggingSessions { get; set; }
-
-}
+    
 
 
 

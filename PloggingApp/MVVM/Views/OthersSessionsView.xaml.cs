@@ -9,7 +9,7 @@ namespace PloggingApp.MVVM.Views
         {
             InitializeComponent();
 
- 
+
         }
 
     }
