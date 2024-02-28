@@ -9,31 +9,57 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
 
     <StackLayout>
-        <Label x:DataType="modelsCore:PloggingSession" Text="{Binding UserId}"></Label>
+        <Label Text="Total" Padding="6,0"></Label>
+        <Frame  Margin="0">
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Trash Collected" Grid.Column="0"  />
+                        <Label Text="Distance" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
+                        <Label Text="Time Spent" Grid.Column="2" />
+                    </Grid>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding PloggingSessions}" Grid.Column="0"  />
+                        <Label Text="{Binding PloggingSessions}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
+                        <Label Text="{Binding PloggingSessions}" Grid.Column="2" />
+                    </Grid>
+                </HorizontalStackLayout>
+            </VerticalStackLayout> 
+        </Frame>
+        
+        
+        <Label Text="Recent Sessions" Padding="6,0"></Label>
         <CollectionView ItemsSource="{Binding PloggingSessions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="modelsCore:PloggingSession">
-                    <VerticalStackLayout>
-                        <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}"  />
-                        <HorizontalStackLayout>
-                            <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}" />
-                            <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" />
-                            <Label x:Name="ScrapCount"  Text="{Binding PloggingData.ScrapCount, StringFormat=' {0}'}" />
-                            <Image x:Name="Trashbag" Source="trashbag.png" HeightRequest="10" WidthRequest="10"/>
+                    <Frame Margin="2,3" Padding="0">
+                        <HorizontalStackLayout >
+                            <Image Source="trashbag.png"  HeightRequest="40" WidthRequest="40"></Image>
+                            <VerticalStackLayout Margin="0,8">
+                                <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" />
+                                <HorizontalStackLayout Margin="0,10">
+                                    <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  />
+                                    <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" />
+                                    <Label x:Name="ScrapCount"  Text="{Binding PloggingData.ScrapCount, StringFormat=' {0}'}" />
+                                    <Image x:Name="Trashbag" Source="trashbag.png" HeightRequest="10" WidthRequest="10"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
                         </HorizontalStackLayout>
-                        <Label BackgroundColor="Black" HeightRequest="1"></Label>
-                    </VerticalStackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </StackLayout>
-    
-    
-    
-    
-    
-    
-    
-    
-    
 </ContentView>

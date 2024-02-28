@@ -4,6 +4,7 @@ using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Extensions;
+using PloggingApp.Pages;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
@@ -90,7 +91,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = false;
     }
 
-    private UserRanking GetUserRank()
+    public UserRanking GetUserRank()
     {
         var currentUserId = "123ajsldkfjasödjfk34"; //TODO replace with actual id when user authentication is implemented
 
@@ -112,4 +113,5 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
             Rankings.ClearAndAddRange(_allRankings);
         }
     }
+
 }

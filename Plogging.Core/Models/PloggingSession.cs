@@ -12,8 +12,9 @@ public class PloggingSession
     public DateTime StartDate { get; set; } = DateTime.UtcNow;
     public DateTime EndDate { get; set; } = DateTime.UtcNow;
 
-    public Byte[]? SessionImage { get; set; }
+    public byte[] SessionImage { get; set; }
     public required string UserId { get; set; }
     public required string DisplayName { get; set; }
     public PloggingData PloggingData { get; set; } = new();
 }
+

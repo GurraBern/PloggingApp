@@ -69,13 +69,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\CanPin.png" />
-	  <MauiImage Remove="Resources\Images\FinishPin.png" />
-	  <MauiImage Remove="Resources\Images\NeedHelpTrashPin.png" />
-	  <MauiImage Remove="Resources\Images\StartPin.png" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <None Remove="Resources\Images\canpin.png" />
+	  <None Remove="Resources\Images\FinishPin.png" />
+	  <None Remove="Resources\Images\NeedHelpTrashPin.png" />
+	  <None Remove="Resources\Images\StartPin.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
 	</ItemGroup>
 

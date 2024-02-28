@@ -44,7 +44,11 @@
                                         </Border.StrokeShape>
                                     </Border>
 
-                                    <Label VerticalOptions="Center" Text="{Binding DisplayName}"></Label>
+                                    <Label x:Name ="NameOfOtherUser" VerticalOptions="Center" Text="{Binding DisplayName}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="GoToOtherUserProfile"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
 
                                 </HorizontalStackLayout>
 

@@ -1,4 +1,6 @@
-﻿using PloggingApp.MVVM.ViewModels;
+﻿using CommunityToolkit.Mvvm.Input;
+using Plogging.Core.Models;
+using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.Pages;
 
@@ -9,4 +11,5 @@ public class RankingViewmodel
     {
         LeaderboardViewModel = leaderboardViewModel;
     }
+
 }

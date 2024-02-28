@@ -1,12 +1,13 @@
-﻿using PloggingApp.MVVM.ViewModels;
+﻿using Plogging.Core.Models;
+using PloggingApp.MVVM.ViewModels;
 namespace PloggingApp.Pages;
 
 public class OthersProfilePageViewModel
 {
     public OthersSessionsViewModel OthersSessionsViewModel{ get; set; }
 
-    public OthersProfilePageViewModel()
+    public OthersProfilePageViewModel(UserRanking UserRank)
     {
-        OthersSessionsViewModel = new OthersSessionsViewModel();
+        OthersSessionsViewModel = new OthersSessionsViewModel(UserRank);
     }
 }
