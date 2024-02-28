@@ -26,4 +26,9 @@ public class PloggingSessionService : IPloggingSessionService
 
         return sessions;
     }
+
+    public async Task AddPloggingSession(PloggingSession ploggingSession)
+    {
+        await _ploggingSessionRepository.InsertPloggingSession(ploggingSession);
+    }
 }

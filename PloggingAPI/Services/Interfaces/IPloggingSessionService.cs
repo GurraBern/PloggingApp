@@ -7,4 +7,5 @@ public interface IPloggingSessionService
 {
     Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query);
     Task<IEnumerable<PloggingSession>> GetPloggingSessions(string userId, DateTime startDate, DateTime endDate);
+    Task AddPloggingSession(PloggingSession ploggingSession);
 }

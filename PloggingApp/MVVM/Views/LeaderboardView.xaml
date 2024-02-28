@@ -24,9 +24,9 @@
             <VerticalStackLayout>
                 <SearchBar x:Name="searchBar" SearchCommand="{Binding SearchUsersCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" Placeholder="search..."></SearchBar>
                 <HorizontalStackLayout Spacing="5" Margin="0,0,0,20">
-                    <Button Style="{StaticResource RoundButton}" Text="This Year" Command="{Binding GetYearlyRankingsCommand}"></Button>
-                    <Button Style="{StaticResource RoundButton}" Text="This Month" Command="{Binding GetMonthlyRankingsCommand}"></Button>
-                    <Button Style="{StaticResource RoundButton}" Text="All Time" Command="{Binding GetAllTimeRankingsCommand}"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Text="This Year" Command="{Binding GetYearlyRankingsCommand}"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Text="This Month" Command="{Binding GetMonthlyRankingsCommand}"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Text="All Time" Command="{Binding GetAllTimeRankingsCommand}"></Button>
                     <Picker TextColor="{StaticResource White}" ItemsSource="{Binding SortProperties}" SelectedItem="{Binding SelectedSortProperty}" BackgroundColor="Grey"></Picker>
                 </HorizontalStackLayout>
                 <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"></ActivityIndicator>

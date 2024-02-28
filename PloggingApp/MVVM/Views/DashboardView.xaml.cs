@@ -1,4 +1,7 @@
-﻿namespace PloggingApp.MVVM.Views;
+﻿using Microsoft.Maui.Accessibility;
+using Microsoft.Maui.Controls;
+
+namespace PloggingApp.MVVM.Views;
 
 public partial class DashboardView : ContentView
 {

@@ -5,12 +5,15 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages.Dashboard"
              x:DataType="viewmodel:DashBoardViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="Dashboard">
 
     <VerticalStackLayout>
 
         <views:StreakView BindingContext="{Binding StreakViewModel}"></views:StreakView>
 
+        <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>
+        <Button Text="Done" Command="{Binding DisplayPopupCommand}"></Button>
     </VerticalStackLayout>
 
 </ContentPage>

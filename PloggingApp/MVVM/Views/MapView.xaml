@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
+             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             x:Class="PloggingApp.MVVM.Views.MapView"
+             x:DataType="viewmodel:MapViewModel">
+
+    <ContentView.Content>
+        <ScrollView>
+            <VerticalStackLayout>
+                <maps:Map ItemsSource="{Binding PlacedPins}" IsShowingUser="true" x:Name="PloggingMap" WidthRequest="500" HeightRequest="500">
+                    <maps:Map.MapElements>
+                        <maps:Polyline StrokeColor="Green"
+                           StrokeWidth="12">
+                            <maps:Polyline.Geopath ItemsSource="{Binding Polyline}">
+                            </maps:Polyline.Geopath>
+                        </maps:Polyline>
+                    </maps:Map.MapElements>
+                    <!--TODO  ImageSource="{Binding ImageSource}"-->
+                
+                    <maps:Map.ItemTemplate>
+                        <DataTemplate x:DataType="models:LocationPin">
+                            <components:CustomPin
+                                Location="{Binding Location}"
+                                Address="{Binding Address}"
+                                Label="{Binding Label}"
+                                ImageSource="{Binding ImageSource}"
+                                Type="Place"/>
+                        </DataTemplate>
+                    </maps:Map.ItemTemplate>
+
+                </maps:Map>
+                <Button x:Name ="StartButton" Text="Start Tracking" Command="{Binding StartTrackingLocationCommand}" IsVisible="true" Clicked="StartClick">
+                </Button>
+                <Button x:Name ="StopButton" Text="Stop Tracking" Command="{Binding StopTrackingCommand}" Clicked="DrawPolyLine" IsVisible="false">
+                </Button>
+                <Button x:Name ="ResumeButton" Text="Resume session" Command="{Binding ResumeSessionCommand}" Clicked="ResumeClick" IsVisible="false">
+                </Button>
+                <Button x:Name ="FinishButton" Text ="Finish Session" Command="{Binding FinishSessionCommand}" Clicked="FinishClick" IsVisible="false" ImageSource="Plogging">
+                </Button>
+                <HorizontalStackLayout>
+                    <Button x:Name = "FoundTrashButton" Text="Picked up can" Command="{Binding AddCanCollectedPinCommand}" IsVisible="false">
+                    </Button>
+                    <Button  x:Name ="HelpButton" Text="Found trash that I am unable to pick up" Command="{Binding AddNeedHelpToCollectPinCommand}" IsVisible="false">
+                    </Button>
+                </HorizontalStackLayout>
+                <Button x:Name = "RemoveButton" Text="Remove latest pin" Command="{Binding RemovePinCommand}" IsVisible ="False">
+                </Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>
