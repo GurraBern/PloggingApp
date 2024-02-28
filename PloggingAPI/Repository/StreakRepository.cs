@@ -19,9 +19,9 @@ public class StreakRepository : IStreakRepository
 	}
 
 	// called when user ends plogging session
-	public async Task UpdateStreak(string id)
+	public async Task UpdateStreak(string userId)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;
         DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
@@ -34,13 +34,13 @@ public class StreakRepository : IStreakRepository
 		}
 
 		user.LastPlogged = currentDateMidnight;
-		await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == id, user);
+		await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == userId, user);
     }
 
 	// called when user logs in
-	public async Task ResetStreak(string id)
+	public async Task ResetStreak(string userId)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;
 		DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
@@ -50,13 +50,13 @@ public class StreakRepository : IStreakRepository
         if (user.LastPlogged < previousWeekStartDate)
         {
             user.Streak = 0;
-            await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == id, user);
+            await _ploggingStreakCollection.ReplaceOneAsync(u => u.UserId == userId, user);
         }
     }
 
-	public async Task<UserStreak> GetUserStreak(string id)
+	public async Task<UserStreak> GetUserStreak(string userId)
 	{
-        var user = await _ploggingStreakCollection.Find(user => user.UserId == id).FirstOrDefaultAsync();
+        var user = await _ploggingStreakCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
 
 		return user;
     }

@@ -15,19 +15,19 @@ public class StreakService : IStreakService
         _streakRepository = streakRepository;
     }
 
-    public async Task UpdateStreak(string id)
+    public async Task UpdateStreak(string userId)
     {
-        await _streakRepository.UpdateStreak(id);
+        await _streakRepository.UpdateStreak(userId);
     }
 
-    public async Task ResetStreak(string id)
+    public async Task ResetStreak(string userId)
     {
-        await _streakRepository.ResetStreak(id);
+        await _streakRepository.ResetStreak(userId);
     }
 
-    public async Task<UserStreak> GetUserStreak(string id)
+    public async Task<UserStreak> GetUserStreak(string userId)
     {
-        UserStreak user = await _streakRepository.GetUserStreak(id);
+        UserStreak user = await _streakRepository.GetUserStreak(userId);
         return user;
     }
 

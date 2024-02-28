@@ -16,11 +16,11 @@ public class StreakController : ControllerBase
 	}
 
     [HttpPut("UpdateStreak")]
-    public async Task<ActionResult> UpdateStreak(string id)
+    public async Task<ActionResult> UpdateStreak(string userId)
     {
         try
         {
-            await _streakService.UpdateStreak(id);
+            await _streakService.UpdateStreak(userId);
             return Ok();
 
         }
@@ -31,11 +31,11 @@ public class StreakController : ControllerBase
     }
 
     [HttpPut("ResetStreak")]
-    public async Task<ActionResult> ResetStreak(string id)
+    public async Task<ActionResult> ResetStreak(string userId)
     {
         try
         {
-            await _streakService.ResetStreak(id);
+            await _streakService.ResetStreak(userId);
             return Ok();
 
         }
