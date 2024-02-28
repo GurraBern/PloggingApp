@@ -368,3 +368,6 @@ FodyWeavers.xsd
 bin/
 obj/
 /PloggingApp/appsettings.Development.json
+.vscode/launch.json
+PloggingApp/.DS_Store
+.DS_Store

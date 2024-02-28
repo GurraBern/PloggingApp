@@ -6,4 +6,5 @@ public class PloggingDatabaseSettings
     public string DatabaseName { get; set; } = null!;
     public string RankingCollectionName { get; set; } = null!;
     public string PloggingSessionsCollectionName { get; set; } = null!;
+    public string StreakCollectionName { get; set; } = null!;
 }

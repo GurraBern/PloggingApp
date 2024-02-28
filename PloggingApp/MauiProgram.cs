@@ -62,6 +62,7 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
+        builder.Services.AddTransient<DashBoardViewModel>();
         builder.Services.AddTransient<MapPageViewModel>();
 
         builder.Services.AddScoped<removeViewmodel>();
@@ -69,6 +70,7 @@ public static class MauiProgram
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+        builder.Services.AddTransient<StreakViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -79,6 +81,7 @@ public static class MauiProgram
     private static void AddPages(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<MapPage>();
 
@@ -91,6 +94,7 @@ public static class MauiProgram
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
+        builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
@@ -103,6 +107,7 @@ public static class MauiProgram
         {
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
         }
     }
 
