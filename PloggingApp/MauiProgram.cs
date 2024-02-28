@@ -14,7 +14,6 @@ using PloggingApp.MVVM.ViewModels;
 using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
 using PloggingApp.Pages.Dashboard;
-using PloggingApp.Pages.Leaderboard;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;

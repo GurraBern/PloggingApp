@@ -4,7 +4,7 @@ namespace PloggingApp.Pages;
 
 public partial class DashboardPage : ContentPage
 {
-    public DashboardPage(DashBoardViewModel vm)
+    public DashboardPage(removeViewmodel vm)
     {
         InitializeComponent();
         BindingContext = vm;
