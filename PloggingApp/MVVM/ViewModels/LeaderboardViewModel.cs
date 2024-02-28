@@ -113,5 +113,10 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
             Rankings.ClearAndAddRange(_allRankings);
         }
     }
+    [RelayCommand]
+    private async Task GoToProfilePage()
+    {
+        await Shell.Current.GoToAsync($"//{nameof(OthersProfilePage)}");
+    }
 
 }

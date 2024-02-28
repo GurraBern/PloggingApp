@@ -68,7 +68,7 @@ public static class MauiProgram
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
-        builder.Services.AddTransient<OthersProfilePageViewModel>();
+        builder.Services.AddScoped<OthersProfilePageViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -80,12 +80,10 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<RankingPage>();
 
-        builder.Services.AddTransient<OthersProfilePage>();
-
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
-        builder.Services.AddTransient<OthersProfilePage>();
+        builder.Services.AddScoped<OthersProfilePage>();
 
     }
 

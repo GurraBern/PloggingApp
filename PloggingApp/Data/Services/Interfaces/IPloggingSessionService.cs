@@ -7,6 +7,6 @@ namespace PloggingApp.Data.Services.Interfaces
     {
         Task SavePloggingSession(PloggingSession ploggingSession);
 
-        Task<IEnumerable<PloggingSession>> GetUserSessions(DateTime startDate, DateTime endDate, SortProperty sortProperty);
+        Task<IEnumerable<PloggingSession>> GetUserSessions(string UserId, DateTime startDate, DateTime endDate);
     }
 }

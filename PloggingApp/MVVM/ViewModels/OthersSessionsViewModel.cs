@@ -1,47 +1,45 @@
 ﻿
 using Plogging.Core.Models;
 using System.Collections.ObjectModel;
-using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
+using System;
+using PloggingApp.Extensions;
+using CommunityToolkit.Mvvm.Input;
+using Plogging.Core.Enums;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class OthersSessionsViewModel
+public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitialization
 {
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
+    private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
 
+    private readonly IPloggingSessionService _sessionService;
+    private IRelayCommand? RecentSessionCommand { get; set; }
+    public Task Initialization { get; private set; }
 
-    private readonly IPloggingSessionService _ploggingService;
-
-
-
-    private IEnumerable<PloggingSession> _allSessesions = new ObservableCollection<PloggingSession>();
-    public OthersSessionsViewModel(UserRanking UserRank)
+    public OthersSessionsViewModel(IPloggingSessionService SessionService)
     {
-
-
-
-        PloggingSessions.Add(new PloggingSession
-        {
-            UserId = "user1",
-            DisplayName = "Session 1",
-            StartDate = DateTime.UtcNow,
-            EndDate = DateTime.UtcNow.AddHours(1)
-        });
-
-        PloggingSessions.Add(new PloggingSession
-        {
-            UserId = "user2",
-            DisplayName = "Session 2",
-            StartDate = DateTime.UtcNow.AddHours(2),
-            EndDate = DateTime.UtcNow.AddHours(3)
-        }); 
+        _sessionService = SessionService;
+        Initialization = GetSessions();
     }
 
-    public async void Hello()
+    [RelayCommand]
+    public async Task UpdatePage()
     {
-        _allSessesions = await _ploggingService.GetUserSessions();
+
+        GetSessions();
+
     }
+
+    public async Task GetSessions()
+    {
+        IsBusy = true;
+        _allSessions = await _sessionService.GetUserSessions("TODOsetUserId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        PloggingSessions.ClearAndAddRange(_allSessions);
+        IsBusy = false;
+    }
+ 
 
 }
 

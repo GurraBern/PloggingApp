@@ -46,7 +46,7 @@
 
                                     <Label x:Name ="NameOfOtherUser" VerticalOptions="Center" Text="{Binding DisplayName}">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="GoToOtherUserProfile"/>
+                                            <TapGestureRecognizer Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"/>
                                         </Label.GestureRecognizers>
                                     </Label>
 

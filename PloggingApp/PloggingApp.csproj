@@ -71,7 +71,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\canpin.png" />
 	  <None Remove="Resources\Images\FinishPin.png" />
-	  <None Remove="Resources\Images\NeedHelpTrashPin.png" />
+	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\StartPin.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
 	</ItemGroup>

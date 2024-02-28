@@ -9,6 +9,7 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
 
     <StackLayout>
+        <Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>
         <Label Text="Total" Padding="6,0"></Label>
         <Frame  Margin="0">
             <VerticalStackLayout>

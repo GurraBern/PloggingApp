@@ -12,10 +12,9 @@ public partial class LeaderboardView : ContentView
         InitializeComponent();
     }
 
-    void GoToOtherUserProfile(object sender, TappedEventArgs args)
-    {
-        UserRanking UserRank = ((LeaderboardViewModel)BindingContext).GetUserRank();
-        OthersProfilePageViewModel vm = new OthersProfilePageViewModel(UserRank);
-        Navigation.PushAsync(new OthersProfilePage(vm, UserRank));
-    }
+    //void GoToOtherUserProfile(object sender, TappedEventArgs args)
+    //{
+    //    OthersProfilePageViewModel vm = new OthersProfilePageViewModel();
+    //    Navigation.PushAsync(new OthersProfilePage(vm));
+    //}
 }

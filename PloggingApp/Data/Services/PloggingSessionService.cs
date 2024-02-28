@@ -3,7 +3,6 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Data.Services.Interfaces;
 using RestSharp;
-
 namespace PloggingApp.Data.Services;
 
 public class PloggingSessionService : IPloggingSessionService
@@ -16,33 +15,19 @@ public class PloggingSessionService : IPloggingSessionService
         _ploggingApiClient = ploggingApiClient;
     }
 
-    public async Task<IEnumerable<PloggingSession>> GetUserSessions(DateTime startDate, DateTime endDate, SortProperty sortProperty)
+    public async Task<IEnumerable<PloggingSession>> GetUserSessions(string UserId,DateTime startDate, DateTime endDate)
     {
         try
         {
-            var request = new RestRequest("api/PloggingSession/Summary");
+            var request = new RestRequest("api/PloggingSession/UserSessions");
+            request.AddParameter("userId", UserId);
             request.AddParameter("startDate", startDate);
             request.AddParameter("endDate", endDate);
-            request.AddParameter(nameof(SortDirection), SortDirection.Descending);
-            request.AddParameter(nameof(SortProperty), sortProperty);
 
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(request);
+            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
+          
 
-
-            var sessions = new List<PloggingSession>();
-            foreach (var summary in ploggingSummaries)
-            {
-                var userSession = new PloggingSession()
-                {
-                    DisplayName = summary.DisplayName,
-                    UserId = summary.UserId,
-                    PloggingData = summary.PloggingData,
-
-                };
-
-                sessions.Add(userSession);
-            }
-            return sessions;
+            return ploggingSessions;
         }
         catch (Exception)
         {
