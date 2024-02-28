@@ -15,11 +15,6 @@ public partial class PloggingSessionViewModel: ObservableObject
 {
     private const int DISTANCE_THRESHOLD = 50;
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
-    public Polyline Polyline = new Polyline
-    {
-        StrokeColor = Colors.Blue,
-        StrokeWidth = 15
-    };
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
 
@@ -37,7 +32,7 @@ public partial class PloggingSessionViewModel: ObservableObject
         IsTracking = true;
         _ploggingSessionTracker.StartSession();
 
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking));
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
 
         await StartTrackingLocation();
     }
@@ -47,19 +42,18 @@ public partial class PloggingSessionViewModel: ObservableObject
     {
         IsTracking = false;
 
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking));
-
         var currentLocation = await CurrentLocationAsync();
         var FinishPin = new FinishPin()
         {
             Location = currentLocation,
             Label = "End"
         };
-        
+
         PlacedPins.Add(FinishPin);
         TrackingPositions.Add(currentLocation);
-        UpdatePolyline();
 
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
+        
         await _ploggingSessionTracker.EndSession();
     }
 
@@ -176,50 +170,11 @@ public partial class PloggingSessionViewModel: ObservableObject
 
     public async Task KeepTracking()
     {
-
         Location currentLocation = await CurrentLocationAsync();
         if (Distance.BetweenPositions(TrackingPositions.Last(), currentLocation).Meters > DISTANCE_THRESHOLD)
         {
             TrackingPositions.Add(currentLocation);
-            //var StartPin = new StartPin()
-            //{
-            //    Location = loc,
-            //    Label = "Start"
-            //};
-            //PlacedPins.Add(StartPin);
             //await Task.Delay(TimeSpan.FromSeconds(2));
-        }
-    }
-
-    //[RelayCommand]
-    //public async Task ResumeSession()
-    //{
-
-    //    PlacedPins.RemoveAt(PlacedPins.Count - 1);
-    //    IsTracking = true;
-    //    while (isTracking)
-    //    {
-    //        await KeepTracking();
-
-    //    }
-
-    //    Location loc = await CurrentLocationAsync();
-    //    var FinishPin = new FinishPin()
-    //    {
-    //        Location = loc,
-    //        Label = "End"
-    //    };
-    //    PlacedPins.Add(FinishPin);
-    //    TrackingPositions.Add(loc);
-    //    UpdatePolyline();
-    //}
-
-    public void UpdatePolyline()
-    {
-
-        foreach (Location TrackingPosition in TrackingPositions)
-        {
-            Polyline.Geopath.Add(new Location(TrackingPosition.Latitude, TrackingPosition.Longitude));
         }
     }
 

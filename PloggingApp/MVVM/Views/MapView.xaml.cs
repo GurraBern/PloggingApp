@@ -22,17 +22,21 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         MapViewModel = (MapViewModel)BindingContext;
     }
 
-    public void DrawPolyLine()
+    public void DrawPolyLine(IEnumerable<Location> locations)
     {
         PloggingMap.MapElements.Clear();
+        polyLine = new Polyline() 
+        { 
+            StrokeColor = Colors.Blue,
+            StrokeWidth = 10,
+        };
 
-        foreach (var location in MapViewModel.TrackingPositions)
+        foreach (var location in locations)
         {
-            polyLine.Add(location);
+            polyLine.Geopath.Add(location);
         }
-        //Polyline Polyline = ((MapViewModel)BindingContext).Polyline;
+
         PloggingMap.MapElements.Add(polyLine);
-        //Polyline.Geopath.Clear();
     }
 
     private async Task<Location> MoveMapToCurrentLocationAsync()
@@ -80,17 +84,19 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         }
         else
         {
-            DrawPolyLine();
+            DrawPolyLine(message.Locations);
         }
     }
 }
 
 public class PloggingSessionMessage : ValueChangedMessage<bool>
 {
-    public PloggingSessionMessage(bool isTracking) : base(isTracking)
+    public PloggingSessionMessage(bool isTracking, List<Location> locations) : base(isTracking)
     {
         IsTracking = isTracking;
+        Locations = locations;
     }
 
     public bool IsTracking { get; set; }
+    public List<Location> Locations { get; set; }
 }
