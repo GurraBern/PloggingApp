@@ -21,7 +21,6 @@ public class StreakService : IStreakService
             request.AddParameter("userId", id);
 
             var user = await _ploggingApiClient.GetAsync(request);
-            Console.WriteLine(user.UserId);
             return user;
         }
         catch (Exception ex)
