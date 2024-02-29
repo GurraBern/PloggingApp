@@ -92,7 +92,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IRankingService, RankingService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
-        builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

@@ -35,7 +35,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task GetSessions()
     {
         IsBusy = true;
-        _allSessions = await _sessionService.GetUserSessions("TODOsetUserId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        var test = _sessionService.UserId;
+        _allSessions = await _sessionService.GetUserSessions(test, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         PloggingSessions.ClearAndAddRange(_allSessions);
         IsBusy = false;
     }

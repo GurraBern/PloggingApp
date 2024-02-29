@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
+using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using PloggingApp.Pages;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IRankingService _rankingService;
+    private readonly IPloggingSessionService _sessionService;
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
     private IEnumerable<UserRanking> _allRankings = new ObservableCollection<UserRanking>();
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
@@ -40,10 +42,10 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService)
+    public LeaderboardViewModel(IRankingService rankingService, IPloggingSessionService sessionService)
     {
         _rankingService = rankingService;
-
+        _sessionService = sessionService;
         Initialization = InitializeAsync();
     }
 
@@ -114,8 +116,9 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
         }
     }
     [RelayCommand]
-    private async Task GoToProfilePage()
+    private async Task GoToProfilePage(string userId)
     {
+        _sessionService.UserId = userId;
         await Shell.Current.GoToAsync($"//{nameof(OthersProfilePage)}");
     }
 

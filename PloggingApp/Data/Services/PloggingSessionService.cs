@@ -52,5 +52,5 @@ public class PloggingSessionService : IPloggingSessionService
             throw;
         }
     }
-
+    public string UserId { get; set; }
 }
