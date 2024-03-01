@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False">
 
 
-        <ContentPage.Content>
+    <ContentPage.Content>
         <Grid
             BackgroundColor="#1C375C"
             HorizontalOptions="FillAndExpand"
@@ -25,7 +25,7 @@
 
             <Frame
                 Grid.Row="1"
-                Margin="0,0,0,-40"
+                Margin="0,60,0,-40"
                 BorderColor="#1C375C"
                 CornerRadius="50"
                 HasShadow="True"
@@ -64,23 +64,36 @@
                         Margin="0,20,0,0"
                         HorizontalOptions="FillAndExpand"
                         Placeholder="Email"
-                        TextColor = "Black"
-                        Text="{Binding RegEmail}" 
+                        TextColor="Black"
+                        Text="{Binding RegEmail}"
                         VerticalOptions="FillAndExpand" />
                     <Entry
                         Grid.Row="3"
                         HorizontalOptions="FillAndExpand"
                         IsPassword="True"
                         Placeholder="Password"
-                        TextColor = "Black"
-                        Text="{Binding RegPassword}" 
+                        TextColor="Black"
+                        Text="{Binding RegPassword}"
                         VerticalOptions="FillAndExpand" />
                     <Button
                         Grid.Row="4"
                         BackgroundColor="#1C375C"
-                        Command = "{Binding RegisterUser}"
+                        Command="{Binding RegisterUser}"
                         CornerRadius="20"
                         Text="Register using Email" />
+
+                    <Button
+                        Grid.Row="5"
+                        BackgroundColor="White"
+                        Command="{Binding BackToLogin}">
+                        <Button.ImageSource>
+                            <FontImageSource
+                                Glyph="&#x2190;"
+                                Size="40"
+                                Color="Black"/>
+                        </Button.ImageSource>
+
+                    </Button>
                 </Grid>
             </Frame>
         </Grid>

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PloggingApp", "PloggingApp\PloggingApp.csproj", "{C319B365-A497-409C-AE6A-B0610C014DCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PloggingAPI", "PloggingAPI\PloggingAPI.csproj", "{61EC3576-830F-4ACF-A1A9-023D29203EC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PloggingAPI", "PloggingAPI\PloggingAPI.csproj", "{61EC3576-830F-4ACF-A1A9-023D29203EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plogging.Core", "Plogging.Core\Plogging.Core.csproj", "{FEC31942-BC45-464D-8E7E-3688D9D4BB9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plogging.Core", "Plogging.Core\Plogging.Core.csproj", "{FEC31942-BC45-464D-8E7E-3688D9D4BB9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

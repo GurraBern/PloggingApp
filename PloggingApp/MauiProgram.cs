@@ -66,8 +66,6 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<IRankingService, RankingService>();
 
-        var apikey = builder.Configuration["AppSettings:FirebaseApiKey"];
-
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
             ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
@@ -98,6 +96,7 @@ public static class MauiProgram
     private static MauiAppBuilder AddAppSettings(this MauiAppBuilder builder)
     {
         var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
+        Trace.WriteLine($"E N V I R O N M E N T {environment}");
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"PloggingApp.appsettings.{environment}.json");
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

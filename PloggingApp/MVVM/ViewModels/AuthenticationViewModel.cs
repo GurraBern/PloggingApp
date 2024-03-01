@@ -12,6 +12,7 @@ public class AuthenticationViewModel
     public Command LoginBtn { get; }
     public Command RegisterBtn { get; }
     public Command RegisterUser { get; }
+    public Command BackToLogin { get; }
 
 
     public string RegEmail { get; set; }
@@ -21,6 +22,8 @@ public class AuthenticationViewModel
     public string LoginPassword { get; set; }
 
 
+
+
     public AuthenticationViewModel(FirebaseAuthClient firebaseAuthClient)
     {
         this._firebaseAuthClient = firebaseAuthClient;
@@ -28,8 +31,15 @@ public class AuthenticationViewModel
         LoginBtn = new Command(LoginBtnClickedAsync);
         RegisterBtn = new Command(RegisterBtnClickedAsync);
         RegisterUser = new Command(RegisterUserClickedAsync);
+        BackToLogin = new Command(BackButtonClickedAsync);
+
     }
 
+    private async void BackButtonClickedAsync(object obj)
+    {
+        await Shell.Current.GoToAsync("//LoginPage");
+
+    }
 
     private async void LoginBtnClickedAsync(object obj)
     {
@@ -37,25 +47,30 @@ public class AuthenticationViewModel
         var loginPassword = LoginPassword;
         bool switchStatus = isSwitchToggled;
 
-        if (switchStatus) {
-            await SecureStorage.SetAsync("loginEmail", loginEmail);
-            await SecureStorage.SetAsync("loginPassword", loginPassword);
-        }
-        else { 
-            SecureStorage.RemoveAll();
-        }
-
-        try
+        if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
         {
-            var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
+            if (switchStatus)
+            {
+                await SecureStorage.SetAsync("loginEmail", loginEmail);
+                await SecureStorage.SetAsync("loginPassword", loginPassword);
+            }
+            else
+            {
+                SecureStorage.RemoveAll();
+            }
 
-            await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
-            await Shell.Current.GoToAsync("//MainPage");
+            try
+            {
+                var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
 
-        }
-        catch (Exception ex)
-        {
-            await Application.Current.MainPage.DisplayAlert("Error", $"Error: {ex.Message}", "OK");
+                await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
+                await Shell.Current.GoToAsync("//MainPage");
+
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", $"Error: {ex.Message}", "OK");
+            }
         }
 
     }

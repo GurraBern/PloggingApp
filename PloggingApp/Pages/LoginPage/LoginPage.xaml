@@ -26,7 +26,7 @@
 
             <Frame
                 Grid.Row="1"
-                Margin="0,0,0,-40"
+                Margin="0,60,0,-40"
                 BorderColor="#1C375C"
                 CornerRadius="50"
                 HasShadow="True"
@@ -83,20 +83,12 @@
                         TextColor="White"
                         CornerRadius="20"
                         Text="Login" />
-                    <Button
-                        Grid.Row="5"
-                        BackgroundColor="#1C375C"
-                        Command="{Binding RegisterBtn}"
-                        TextColor="White"
-                        CornerRadius="20"
-                        Text="Register using Email" />
 
 
-                    <StackLayout Grid.Row="6" Orientation="Horizontal">
+                    <StackLayout Grid.Row="5" Orientation="Horizontal">
                         <Switch
                             Toggled="OnToggled"
-                            OnColor="Orange" 
-                            ThumbColor="Green"/>
+                            OnColor="LightGray" />
                         <Label 
                             Text="Remember Me"
                             TextColor="Black"
@@ -104,48 +96,21 @@
                             Margin="5,0,0,0" />
                     </StackLayout>
 
-
-
-                    <StackLayout
-                        Grid.Row="7"
-                        HorizontalOptions="CenterAndExpand"
-                        Orientation="Horizontal"
-                        Spacing="40">
-                        <Image
-                            Aspect="AspectFit"
-                            HeightRequest="30"
-                            Source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo626DNKJxdHM-VNRD0m7x_8Jim-r9kRalJQ"
-                            WidthRequest="30" />
-                        <Image
-                            Aspect="AspectFit"
-                            HeightRequest="30"
-                            Source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnLfAn36-LTYNHjioWgvu-0KUTIDDrW5lX_g"
-                            WidthRequest="30" />
-                        <Image
-                            Aspect="AspectFit"
-                            HeightRequest="30"
-                            Source="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png"
-                            WidthRequest="30" />
-                        <Image
-                            Aspect="AspectFit"
-                            HeightRequest="30"
-                            Source="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-                            WidthRequest="30" />
-                    </StackLayout>
-                    <Button
-                        Grid.Row="8"
-                        FontAttributes="Bold"
-                        HorizontalOptions="CenterAndExpand"
-                        TextColor="Black"
-                        Command="{Binding ForgotPwdBtn}"
-                        Text="Forgot Password" />
                     <Label
-                        Grid.Row="9"
+                        Grid.Row="7"
                         Margin="0,-15,0,0"
                         TextColor="Black"
                         HorizontalOptions="CenterAndExpand"
                         Text="Don't have an account? Sign up here" />
-                   
+
+                    <Button
+                        Grid.Row="10"
+                        BackgroundColor="#1C375C"
+                        Command="{Binding RegisterBtn}"
+                        TextColor="White"
+                        CornerRadius="20"
+                        Text="Register using Email" />
+
                 </Grid>
             </Frame>
         </Grid>
