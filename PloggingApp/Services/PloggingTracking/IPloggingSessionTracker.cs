@@ -6,5 +6,6 @@ public interface IPloggingSessionTracker
 {
     void StartSession();
     Task EndSession();
-    void AddLitterItem(LitterType litterType, double amount);
+    void AddLitterItem(LitterType litterType, double amount, Location location);
+    Location CurrentLocation { get; set; }
 }

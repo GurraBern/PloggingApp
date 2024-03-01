@@ -1,10 +1,11 @@
 ﻿using Plogging.Core.Models;
+using PloggingApp.Extensions;
 
 namespace PloggingApp.Helpers;
 
 public class LitterCalculator
 {
-    public static PloggingData CreatePloggingData(IEnumerable<Litter> litters)
+    public static PloggingData CreatePloggingData(IEnumerable<Litter> litters, IEnumerable<Location> locations)
     {
         var totalLitter = litters.GroupBy(l => l.LitterType)
             .Select(group =>
@@ -18,6 +19,7 @@ public class LitterCalculator
         var ploggingData = new PloggingData()
         {
             Litters = totalLitter,
+            LitterLocations = locations.ToLitterLocations()
         };
 
         return ploggingData;

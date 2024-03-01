@@ -16,18 +16,17 @@ public partial class AddLitterViewModel
     [RelayCommand]
     private void AddPlastic()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Plastics, 1);
+        _ploggingSessionTracker.AddLitterItem(LitterType.Plastics, 1, _ploggingSessionTracker.CurrentLocation);
     }
 
     [RelayCommand]
     private void AddCan()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Can, 1);
     }
 
     [RelayCommand]
     private void AddCigarette()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Cigarette, 1);
+        _ploggingSessionTracker.AddLitterItem(LitterType.Cigarette, 1, _ploggingSessionTracker.CurrentLocation);
     }
 }

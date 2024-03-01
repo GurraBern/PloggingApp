@@ -76,11 +76,11 @@
 		<PackageReference Include="Geolocator.Plugin" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.7" />
-		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.6" />
 		<PackageReference Include="RestSharp" Version="110.2.0" />
 	</ItemGroup>
 

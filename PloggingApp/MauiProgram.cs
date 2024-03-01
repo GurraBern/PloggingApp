@@ -2,10 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;

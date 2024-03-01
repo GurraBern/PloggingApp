@@ -8,10 +8,12 @@ namespace PloggingAPI.Services;
 public class PloggingSessionService : IPloggingSessionService
 {
     private readonly IPloggingSessionRepository _ploggingSessionRepository;
+    private readonly ILitterLocationsRepository _litterLocationsRepository;
 
-    public PloggingSessionService(IPloggingSessionRepository ploggingSessionRepository)
+    public PloggingSessionService(IPloggingSessionRepository ploggingSessionRepository, ILitterLocationsRepository litterLocationsRepository)
     {
         _ploggingSessionRepository = ploggingSessionRepository;
+        this._litterLocationsRepository = litterLocationsRepository;
     }
 
     public async Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query)
@@ -30,5 +32,6 @@ public class PloggingSessionService : IPloggingSessionService
     public async Task AddPloggingSession(PloggingSession ploggingSession)
     {
         await _ploggingSessionRepository.InsertPloggingSession(ploggingSession);
+        await _litterLocationsRepository.InsertLitterLocations(ploggingSession.PloggingData.LitterLocations);
     }
 }

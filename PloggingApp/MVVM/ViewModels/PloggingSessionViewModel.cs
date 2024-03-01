@@ -21,6 +21,16 @@ public partial class PloggingSessionViewModel: ObservableObject
     [ObservableProperty]
     private bool isTracking = false;
 
+    private Location currentLocation;
+    private Location CurrentLocation { 
+        get => currentLocation;
+        set 
+        {
+            currentLocation = value;
+            _ploggingSessionTracker.CurrentLocation = currentLocation;
+        } 
+    }
+
     public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
@@ -42,15 +52,15 @@ public partial class PloggingSessionViewModel: ObservableObject
     {
         IsTracking = false;
 
-        var currentLocation = await CurrentLocationAsync();
+        //var currentLocation = await CurrentLocationAsync();
         var FinishPin = new FinishPin()
         {
-            Location = currentLocation,
+            Location = CurrentLocation,
             Label = "End"
         };
 
         PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(currentLocation);
+        TrackingPositions.Add(CurrentLocation);
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
         
@@ -59,11 +69,11 @@ public partial class PloggingSessionViewModel: ObservableObject
 
     private async Task StartTrackingLocation()
     {
-        Location currentLocation = await CurrentLocationAsync();
-        TrackingPositions.Add(currentLocation);
+        CurrentLocation = await CurrentLocationAsync();
+        TrackingPositions.Add(CurrentLocation);
         var StartPin = new StartPin()
         {
-            Location = currentLocation,
+            Location = CurrentLocation,
             Label = "Start"
         };
 

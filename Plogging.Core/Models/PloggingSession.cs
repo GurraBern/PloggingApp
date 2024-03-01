@@ -15,4 +15,6 @@ public class PloggingSession
     public required string UserId { get; set; }
     public required string DisplayName { get; set; }
     public PloggingData PloggingData { get; set; } = new();
+    public IEnumerable<GeoLocation> PloggingRoute { get; set; } = [];
 }
+

@@ -11,6 +11,7 @@ using PloggingApp.MVVM.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 using Polyline = Microsoft.Maui.Controls.Maps.Polyline;
 
 namespace PloggingApp.MVVM.ViewModels;
