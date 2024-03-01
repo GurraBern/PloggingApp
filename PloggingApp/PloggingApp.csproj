@@ -76,6 +76,7 @@
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui.Maps" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Geolocator.Plugin" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
@@ -121,7 +122,13 @@
 	  <MauiXaml Update="Pages\Leaderboard\RankingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\LoginPage\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Map\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RegisterPage\RegisterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

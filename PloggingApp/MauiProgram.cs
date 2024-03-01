@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -68,6 +70,8 @@ public static class MauiProgram
         builder.Services.AddScoped<removeViewmodel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
 
+        builder.Services.AddSingleton<AuthenticationViewModel>();
+
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
@@ -89,6 +93,9 @@ public static class MauiProgram
 
         builder.Services.AddScoped<CheckoutImagePage>();
 
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
+
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -98,6 +105,13 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+
+        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
+            AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
+            Providers = [new EmailProvider()]
+        }));
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
