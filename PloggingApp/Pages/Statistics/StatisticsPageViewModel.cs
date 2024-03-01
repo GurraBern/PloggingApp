@@ -1,9 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microcharts;
+using Plogging.Core.Models;
+using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Extensions;
+using PloggingApp.MVVM;
 using PloggingApp.MVVM.ViewModels;
 using SkiaSharp;
+using System.Collections.ObjectModel;
+using System.Formats.Asn1;
 namespace PloggingApp.Pages;
-public partial class StatisticsPageViewModel : ObservableObject 
+public partial class StatisticsPageViewModel : BaseViewModel, IAsyncInitialization 
 {
     // Hardcoded some entries to test
     ChartEntry[] trashEntries =
@@ -26,46 +32,35 @@ public partial class StatisticsPageViewModel : ObservableObject
          ValueLabel = "14",
          Color = SKColor.Parse("#6e84ff")
      },
-
  ];
-    ChartEntry[] activityEntries =
-    [
-        new ChartEntry(1)
-     {
-         Label = "Vecka 4",
-         ValueLabel = "30",
-         Color = SKColor.Parse("#ffd86e")
-     },
-     new ChartEntry(2)
-     {
-         Label = "Vecka 5",
-         ValueLabel = "55",
-         Color = SKColor.Parse("#7aff6e")
-     },
-     new ChartEntry(3)
-     {
-         Label = "Vecka 6",
-         ValueLabel = "14",
-         Color = SKColor.Parse("#6e84ff")
-     },
 
- ];
-    public StatisticsPageViewModel()
+    public Task Initialization { get; private set; }
+    private readonly IPloggingSessionService _ploggingSessionService;
+    public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
+    private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+    public StatisticsPageViewModel(IPloggingSessionService ploggingSessionService)
     {
         TrashTypeChart = new DonutChart()
         {
             LabelTextSize = 40,
             Entries = trashEntries
         };
-        ActivityChart = new LineChart()
-        {
-            LabelTextSize = 40,
-            Entries = activityEntries
-        };
+        _ploggingSessionService = ploggingSessionService;
+        Initialization = InitializeAsync();
+    }
+    private async Task InitializeAsync()
+    {
+        await GetUserSessions();
+    }
+    private async Task GetUserSessions()
+    {
+        IsBusy = true;
+        _allUserSessions =  await _ploggingSessionService.GetUserSessions("TODOsetUserId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        UserSessions.ClearAndAddRange(_allUserSessions);
+        IsBusy = false;
     }
 
     [ObservableProperty]
     Chart trashTypeChart;
-    [ObservableProperty]
-    Chart activityChart;
+    
 }

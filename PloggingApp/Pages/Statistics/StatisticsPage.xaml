@@ -13,6 +13,5 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
-        <micro:ChartView Chart="{Binding ActivityChart}" HeightRequest="200" Grid.Row="1"/>
     </Grid>
 </ContentPage>
