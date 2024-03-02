@@ -1,14 +1,14 @@
 ﻿namespace Plogging.Core.Models;
 
-public class GeoLocation
+public class MapPoint
 {
-    public double Longitude { get; set; }
     public double Latitude { get; set; }
+    public double Longitude { get; set; }
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
 
-    public GeoLocation(double longitude, double latitude)
+    public MapPoint(double latitude, double longitude)
     {
-        Longitude = longitude;
         Latitude = latitude;
+        Longitude = longitude;
     }
 }

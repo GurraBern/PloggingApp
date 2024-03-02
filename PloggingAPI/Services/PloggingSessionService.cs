@@ -1,4 +1,5 @@
 ﻿using Plogging.Core.Models;
+using PloggingAPI.Helpers;
 using PloggingAPI.Models.Queries;
 using PloggingAPI.Repository.Interfaces;
 using PloggingAPI.Services.Interfaces;
@@ -29,9 +30,17 @@ public class PloggingSessionService : IPloggingSessionService
         return sessions;
     }
 
+    public async Task<IEnumerable<LitterLocation>> GetLitterLocations()
+    {
+        var litterLocations = await _litterLocationsRepository.GetLitterLocations();
+        return litterLocations;
+    }
+
     public async Task AddPloggingSession(PloggingSession ploggingSession)
     {
         await _ploggingSessionRepository.InsertPloggingSession(ploggingSession);
-        await _litterLocationsRepository.InsertLitterLocations(ploggingSession.PloggingData.LitterLocations);
+
+        var litterLocations = LitterConverter.ToLitterLocations(ploggingSession.PloggingData.Litters);
+        await _litterLocationsRepository.InsertLitterLocations(litterLocations);
     }
 }

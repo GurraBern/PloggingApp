@@ -89,6 +89,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -98,6 +99,7 @@ public static class MauiProgram
         {
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
         }
     }
 

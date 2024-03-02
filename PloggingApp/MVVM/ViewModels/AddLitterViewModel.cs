@@ -22,6 +22,7 @@ public partial class AddLitterViewModel
     [RelayCommand]
     private void AddCan()
     {
+        _ploggingSessionTracker.AddLitterItem(LitterType.Can, 1, _ploggingSessionTracker.CurrentLocation);
     }
 
     [RelayCommand]

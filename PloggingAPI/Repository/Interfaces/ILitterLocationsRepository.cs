@@ -4,5 +4,6 @@ namespace PloggingAPI.Repository.Interfaces;
 
 public interface ILitterLocationsRepository
 {
-    Task InsertLitterLocations(IEnumerable<GeoLocation> litterLocations);
+    Task InsertLitterLocations(IEnumerable<LitterLocation> litterLocations);
+    Task<IEnumerable<LitterLocation>> GetLitterLocations();
 }

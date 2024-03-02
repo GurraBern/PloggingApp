@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
+using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Services.PloggingTracking;
 
@@ -12,10 +13,10 @@ public partial class DashboardViewmodel
     public AddLitterViewModel AddLitterViewModel { get; set; }
     private readonly IPopupService _popupService;
 
-    public DashboardViewmodel(IPloggingSessionTracker ploggingSessionTracker, IPopupService popupService)
+    public DashboardViewmodel(IPloggingSessionTracker ploggingSessionTracker, ILitterLocationService litterLocationService, IPopupService popupService)
     {
         _popupService = popupService;
-        MapViewModel = new MapViewModel();
+        MapViewModel = new MapViewModel(litterLocationService);
         PloggingSessionViewModel = new PloggingSessionViewModel(ploggingSessionTracker);
         AddLitterViewModel = new AddLitterViewModel(ploggingSessionTracker);
     }
