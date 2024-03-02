@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Enums;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.PloggingTracking;
 
 namespace PloggingApp.MVVM.ViewModels;
@@ -16,18 +18,30 @@ public partial class AddLitterViewModel
     [RelayCommand]
     private void AddPlastic()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Plastics, 1, _ploggingSessionTracker.CurrentLocation);
+        AddLitter(LitterType.Plastics);
     }
 
     [RelayCommand]
     private void AddCan()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Can, 1, _ploggingSessionTracker.CurrentLocation);
+        AddLitter(LitterType.Can);
     }
 
     [RelayCommand]
     private void AddCigarette()
     {
-        _ploggingSessionTracker.AddLitterItem(LitterType.Cigarette, 1, _ploggingSessionTracker.CurrentLocation);
+        AddLitter(LitterType.Cigarette);
+    }
+
+    private void AddLitter(LitterType litterType)
+    {
+        var currentLocation = _ploggingSessionTracker.CurrentLocation;
+
+        if (currentLocation != null)
+        {
+            _ploggingSessionTracker.AddLitterItem(litterType, 1, currentLocation);
+
+            WeakReferenceMessenger.Default.Send(new LitterPlacedMessage(currentLocation));
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Controls.Shapes;
@@ -9,13 +10,14 @@ using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class MapViewModel : ObservableObject, IAsyncInitialization
+public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
@@ -28,6 +30,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization
     public MapViewModel(ILitterLocationService litterLocationService)
     {
         _litterLocationService = litterLocationService;
+
+        WeakReferenceMessenger.Default.Register(this);
 
         Initialization = Initialize();
     }
@@ -89,5 +93,10 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization
         double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
         double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
+    }
+
+    public void Receive(LitterPlacedMessage message)
+    {
+        PlaceTrashPin(message.LitterLocation);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Plogging.Core.Enums;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 
@@ -49,5 +50,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         var litterLocation = new MapPoint(location.Latitude, location.Longitude);
         var litter = new Litter(litterType, amount, litterLocation, weight);
         CurrentLitter.Add(litter);
+
     }
 }

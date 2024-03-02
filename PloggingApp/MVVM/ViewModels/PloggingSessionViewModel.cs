@@ -5,13 +5,14 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.MVVM.Views;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PloggingSessionViewModel: ObservableObject
+public partial class PloggingSessionViewModel : ObservableObject
 {
     private const int DISTANCE_THRESHOLD = 50;
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
@@ -52,7 +53,6 @@ public partial class PloggingSessionViewModel: ObservableObject
     {
         IsTracking = false;
 
-        //var currentLocation = await CurrentLocationAsync();
         var FinishPin = new FinishPin()
         {
             Location = CurrentLocation,
