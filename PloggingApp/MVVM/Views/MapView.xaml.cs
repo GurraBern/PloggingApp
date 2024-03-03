@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.MVVM.Views;
@@ -89,14 +89,3 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     }
 }
 
-public class PloggingSessionMessage : ValueChangedMessage<bool>
-{
-    public PloggingSessionMessage(bool isTracking, List<Location> locations) : base(isTracking)
-    {
-        IsTracking = isTracking;
-        Locations = locations;
-    }
-
-    public bool IsTracking { get; set; }
-    public List<Location> Locations { get; set; }
-}

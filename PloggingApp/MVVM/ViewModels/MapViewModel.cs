@@ -22,7 +22,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     private readonly ILitterLocationService _litterLocationService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
-    public bool isTracking = false;
     public int DISTANCE_THRESHOLD = 50;
     
     public Task Initialization { get; private set; }
@@ -62,12 +61,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
                 Longitude = location.Longitude 
             }
         });
-    }
-
-    [RelayCommand]
-    public void StopTracking()
-    {
-         isTracking = false;
     }
 
     public Location CalculateZoomOut()

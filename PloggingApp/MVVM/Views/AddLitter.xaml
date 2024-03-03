@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:AddLitterViewModel">
 
-    <Grid WidthRequest="150" HeightRequest="250">
+    <Grid WidthRequest="150" HeightRequest="250" IsVisible="{Binding IsTracking}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
