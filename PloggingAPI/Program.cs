@@ -24,6 +24,7 @@ else
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
+builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
 
 builder.Services.AddSingleton<IStreakService, StreakService>();
 

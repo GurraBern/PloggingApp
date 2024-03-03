@@ -51,7 +51,7 @@
                                 <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding PloggingData.ScrapCount}" FontSize="Small"/>
+                                            <!--<Span Text="{Binding PloggingData.ScrapCount}" FontSize="Small"/>-->
                                             <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -90,7 +90,7 @@
             <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="{Binding UserRank.PloggingData.ScrapCount}" FontSize="Small"/>
+                        <!--<Span Text="{Binding UserRank.PloggingData.ScrapCount}" FontSize="Small"/>-->
                         <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
                     </FormattedString>
                 </Label.FormattedText>

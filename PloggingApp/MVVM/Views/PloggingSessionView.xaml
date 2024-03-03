@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.PloggingSessionView"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:PloggingSessionViewModel"
+             xmlns:converters="clr-namespace:PloggingApp.Converters">
+    
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <VerticalStackLayout>
+        <Button IsVisible="{Binding IsTracking, Converter={converters:InverseBoolConverter}}"
+            Text="▶"
+            Margin="0,0,0,5" 
+            FontSize="Large" 
+            Style="{StaticResource RoundButton}" 
+            WidthRequest="60" 
+            HeightRequest="60" 
+            BackgroundColor="{StaticResource Green}" 
+            Command="{Binding StartPloggingSessionCommand}"/>
+
+        <Button IsVisible="{Binding IsTracking}" Text="||"
+            Margin="0,0,0,5" 
+            FontSize="Large" 
+            Style="{StaticResource RoundButton}" 
+            WidthRequest="60" 
+            HeightRequest="60" 
+            BackgroundColor="{StaticResource Red}" 
+            Command="{Binding EndPloggingSessionCommand}"/>
+
+    </VerticalStackLayout>
+</ContentView>

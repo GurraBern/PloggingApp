@@ -4,10 +4,7 @@ using CommunityToolkit.Maui.Maps;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
@@ -15,7 +12,6 @@ using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
-using PloggingApp.Pages.Dashboard;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
@@ -41,6 +37,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
         AddApiClients(builder);
         AddViewModels(builder);
         AddPopups(builder);
@@ -56,7 +53,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-
         return builder.Build();
     }
 
@@ -67,7 +63,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DashBoardViewModel>();
         builder.Services.AddTransient<MapPageViewModel>();
 
-        builder.Services.AddScoped<removeViewmodel>();
+        builder.Services.AddScoped<DashBoardViewModel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
 
         builder.Services.AddSingleton<AuthenticationViewModel>();
@@ -95,7 +91,6 @@ public static class MauiProgram
 
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
-
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -105,6 +100,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
@@ -122,6 +118,7 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
         }
     }
 
