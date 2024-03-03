@@ -26,6 +26,10 @@ builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>()
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
 
+builder.Services.AddSingleton<IStreakService, StreakService>();
+
+builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

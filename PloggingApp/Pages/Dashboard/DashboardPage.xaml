@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.Pages.DashboardPage"
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="viewmodels:DashboardViewmodel"
+             x:DataType="viewmodels:DashBoardViewModel"
              Title="Dashboard">
     <Grid>
         <Grid.RowDefinitions>
