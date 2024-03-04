@@ -24,7 +24,7 @@ public static class SortDefinitionFactory
     {
         return property switch
         {
-            SortProperty.ScrapCount => x => x.PloggingData.ScrapCount,
+            //SortProperty.ScrapCount => x => x.PloggingData.ScrapCount,
             SortProperty.Distance => x => x.PloggingData.Distance,
             SortProperty.Steps => x => x.PloggingData.Steps,
             _ => throw new ArgumentException("Invalid sort property", nameof(property))

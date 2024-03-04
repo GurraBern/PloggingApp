@@ -45,7 +45,7 @@ public class StreakController : ControllerBase
         }
     }
 
-    [HttpGet("UserStreak")]
+    [HttpGet("GetUserStreak")]
     public async Task<ActionResult<UserStreak>> GetUserStreak(string userId)
     {
         try

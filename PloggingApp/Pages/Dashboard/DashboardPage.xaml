@@ -3,10 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.Pages.DashboardPage"
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodels:DashBoardViewModel"
              Title="Dashboard">
-    <VerticalStackLayout>
-        <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>
-        <Button Text="Done" Command="{Binding DisplayPopupCommand}"></Button>
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
+
+        <views:AddLitter BindingContext="{Binding AddLitterViewModel}" HorizontalOptions="End" Margin="5,0"/>
+
+        <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
+    </Grid>
 </ContentPage>

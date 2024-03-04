@@ -26,9 +26,11 @@ public class StreakRepository : IStreakRepository
 		DateTime currentDate = DateTime.UtcNow;
         DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
 
-        DateTime currentWeekStartDate = currentDateMidnight.AddDays(-(int)currentDateMidnight.DayOfWeek + (int)DayOfWeek.Monday);
+		int daysUntilMonday = (currentDateMidnight.DayOfWeek - DayOfWeek.Monday + 7) % 7;
 
-		if (user.LastPlogged < currentWeekStartDate)
+		DateTime currentWeekStartDate = currentDateMidnight.AddDays(-daysUntilMonday);
+
+        if (user.LastPlogged < currentWeekStartDate)
 		{
 			user.Streak += 1;
 		}
@@ -45,7 +47,9 @@ public class StreakRepository : IStreakRepository
 		DateTime currentDate = DateTime.UtcNow;
 		DateTime currentDateMidnight = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 0, 0, 0, DateTimeKind.Utc);
 
-        DateTime previousWeekStartDate = currentDateMidnight.AddDays(-(int)currentDateMidnight.DayOfWeek + (int)DayOfWeek.Monday - 7);
+        int daysUntilMonday = (currentDateMidnight.DayOfWeek - DayOfWeek.Monday + 7) % 7;
+
+        DateTime previousWeekStartDate = currentDateMidnight.AddDays(-daysUntilMonday - 7);
 
         if (user.LastPlogged < previousWeekStartDate)
         {

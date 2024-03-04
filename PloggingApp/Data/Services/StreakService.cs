@@ -17,7 +17,7 @@ public class StreakService : IStreakService
     {
         try
         {
-            var request = new RestRequest("api/Streak/UserStreak");
+            var request = new RestRequest("api/Streak/GetUserStreak");
             request.AddParameter("userId", id);
 
             var user = await _ploggingApiClient.GetAsync(request);
@@ -28,6 +28,38 @@ public class StreakService : IStreakService
             //TODO display toast
             Console.WriteLine($"An error occurred: {ex.Message}");
             return null;
+        }
+    }
+
+    public async Task ResetStreak(string userId)
+    {
+        try
+        {
+            var request = new RestRequest("api/Streak/ResetSreak");
+            request.AddParameter("userId", userId);
+
+            await _ploggingApiClient.PostAsync(request);
+        }
+        catch (Exception ex)
+        {
+            //TODO display toast
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+    public async Task UpdateStreak(string userId)
+    {
+        try
+        {
+            var request = new RestRequest("api/Streak/UpdateSreak");
+            request.AddParameter("userId", userId);
+
+            await _ploggingApiClient.PostAsync(request);
+        }
+        catch (Exception ex)
+        {
+            //TODO display toast
+            Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
 }

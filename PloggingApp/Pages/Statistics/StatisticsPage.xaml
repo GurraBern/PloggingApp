@@ -9,6 +9,6 @@
              Title="StatisticsPage">
     <VerticalStackLayout>
         <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
-        <Label Style="{StaticResource Headline}" Text="{Binding TotalSteps, StringFormat='Total steps: {0}'}"/>
+        <Label Style="{StaticResource Headline}" Text="{Binding TotalDistance, StringFormat='Total steps: {0} meters'}"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -58,7 +58,7 @@ public class PloggingSessionController : ControllerBase
     }
 
     [HttpPost("UserSessions")]
-    public async Task<ActionResult> CreatePloggingSession([FromBody] PloggingSession ploggingSession)
+    public async Task<IActionResult> CreatePloggingSession([FromBody] PloggingSession ploggingSession)
     {
         try
         {
@@ -69,5 +69,12 @@ public class PloggingSessionController : ControllerBase
         {
             return StatusCode(500, "An error occurred while processing your request.");
         }
+    }
+
+    [HttpGet("LitterLocations")]
+    public async Task<ActionResult<IEnumerable<LitterLocation>>> GetLitterLocations()
+    {
+        var litterLocations = await _ploggingSessionService.GetLitterLocations();
+        return Ok(litterLocations);
     }
 }

@@ -57,7 +57,7 @@ public class PloggingSessionRepository : IPloggingSessionRepository
                    DisplayName = g.First().DisplayName,
                    PloggingData = new()
                    {
-                       ScrapCount = g.Sum(f => f.PloggingData.ScrapCount),
+                       //ScrapCount = g.Sum(f => f.PloggingData.ScrapCount),
                        Distance = g.Sum(f => f.PloggingData.Distance),
                        Steps = g.Sum(f => f.PloggingData.Steps)
                    },

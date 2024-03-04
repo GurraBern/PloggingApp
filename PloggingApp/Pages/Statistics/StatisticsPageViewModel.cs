@@ -55,11 +55,11 @@ public partial class StatisticsPageViewModel : BaseViewModel, IAsyncInitializati
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions("123ajsldkfjasödjfk34", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow.AddDays(-7));
+        _allUserSessions = await _ploggingSessionService.GetUserSessions("TODOsetUserId", new DateTime(2024,3,2), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
         foreach(PloggingSession sesh in _allUserSessions)
         {
-            TotalSteps += sesh.PloggingData.Steps;
+            TotalDistance += sesh.PloggingData.Distance;
         }
         IsBusy = false;
     }
@@ -67,6 +67,6 @@ public partial class StatisticsPageViewModel : BaseViewModel, IAsyncInitializati
     [ObservableProperty]
     Chart trashTypeChart;
     [ObservableProperty]
-    int totalSteps; 
+    double totalDistance; 
     
 }

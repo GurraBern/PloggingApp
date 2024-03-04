@@ -2,11 +2,10 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
 using Microcharts.Maui;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.ApiClients;
@@ -14,7 +13,6 @@ using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
-using PloggingApp.Pages.Dashboard;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
@@ -43,6 +41,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+
         AddApiClients(builder);
         AddViewModels(builder);
         AddPopups(builder);
@@ -58,7 +57,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-
         return builder.Build();
     }
 
@@ -70,13 +68,19 @@ public static class MauiProgram
         builder.Services.AddTransient<MapPageViewModel>();
         builder.Services.AddTransient<StatisticsPageViewModel>();
 
-        builder.Services.AddScoped<removeViewmodel>();
+        builder.Services.AddScoped<DashBoardViewModel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
+
+        builder.Services.AddSingleton<AuthenticationViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
+
+        builder.Services.AddTransient<MapViewModel>();
+        builder.Services.AddTransient<AddLitterViewModel>();
+        builder.Services.AddTransient<PloggingSessionViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -97,6 +101,8 @@ public static class MauiProgram
 
         builder.Services.AddScoped<CheckoutImagePage>();
 
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -106,6 +112,14 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
+
+        //builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        //{
+        //    ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
+        //    AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
+        //    Providers = [new EmailProvider()]
+        //}));
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -116,6 +130,7 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
         }
     }
 
