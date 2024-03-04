@@ -55,12 +55,18 @@ public partial class StatisticsPageViewModel : BaseViewModel, IAsyncInitializati
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions =  await _ploggingSessionService.GetUserSessions("TODOsetUserId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions("123ajsldkfjasödjfk34", DateTime.UtcNow.AddYears(-1), );
         UserSessions.ClearAndAddRange(_allUserSessions);
+        foreach(PloggingSession sesh in _allUserSessions)
+        {
+            TotalSteps += sesh.PloggingData.Steps;
+        }
         IsBusy = false;
     }
 
     [ObservableProperty]
     Chart trashTypeChart;
+    [ObservableProperty]
+    int totalSteps; 
     
 }

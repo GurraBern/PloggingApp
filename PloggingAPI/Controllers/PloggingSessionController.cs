@@ -40,7 +40,7 @@ public class PloggingSessionController : ControllerBase
         }
     }
 
-    [HttpGet("UserSessions/{userId}")]
+    [HttpGet("UserSessions")]
     public async Task<ActionResult<IEnumerable<PloggingSession>>> GetUserSessions(string userId, DateTime startDate, DateTime endDate)
     {
 

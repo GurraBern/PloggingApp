@@ -7,11 +7,8 @@
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:DataType="viewmodel:StatisticsPageViewModel"
              Title="StatisticsPage">
-    <Grid VerticalOptions="FillAndExpand">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
+    <VerticalStackLayout>
         <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
-    </Grid>
+        <Label Style="{StaticResource Headline}" Text="{Binding TotalSteps, StringFormat='Total steps: {0}'}"/>
+    </VerticalStackLayout>
 </ContentPage>

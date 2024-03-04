@@ -34,7 +34,7 @@ public class PloggingSessionService : IPloggingSessionService
     {
         try
         {
-            var request = new RestRequest("api/PloggingSession/UserSessions/");
+            var request = new RestRequest("api/PloggingSession/UserSessions");
             request.AddParameter("userId", UserId);
             request.AddParameter("startDate", startDate);
             request.AddParameter("endDate", endDate);

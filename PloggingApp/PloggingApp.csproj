@@ -60,6 +60,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="appsettings.Development.json" />
 		<EmbeddedResource Include="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
@@ -68,6 +69,10 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<DependentUpon>appsettings.json</DependentUpon>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="appsettings.Development.json" />
 	</ItemGroup>
 
 	<ItemGroup>
