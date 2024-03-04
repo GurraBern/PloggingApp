@@ -1,6 +1,4 @@
-﻿
-namespace PloggingApp;
-using CoreLocation;
+﻿using CoreLocation;
 using MapKit;
 using Microsoft.Maui;
 using Microsoft.Maui.Maps;
@@ -8,6 +6,10 @@ using Microsoft.Maui.Maps.Handlers;
 using Microsoft.Maui.Maps.Platform;
 using Microsoft.Maui.Platform;
 using UIKit;
+using IMap = Microsoft.Maui.Maps.IMap;
+
+namespace PloggingApp;
+
 public class CustomMapHandler : MapHandler
 {
     private static UIView? _lastTouchedView;

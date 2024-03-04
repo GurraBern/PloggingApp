@@ -1,4 +1,5 @@
-﻿using PloggingApp.MVVM.ViewModels;
+﻿using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.Pages;
 
@@ -6,8 +7,8 @@ public class MapPageViewModel
 {
     public MapViewModel MapViewModel { get; set; }
 
-    public MapPageViewModel()
+    public MapPageViewModel(ILitterLocationService litterLocationService)
     {
-        MapViewModel = new MapViewModel();
+        MapViewModel = new MapViewModel(litterLocationService);
     }
 }
