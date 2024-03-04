@@ -9,8 +9,15 @@
     <Grid VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
+        <HorizontalStackLayout Spacing="5" Margin="0,0,0,20" Grid.Row="0">
+            <Button Style="{StaticResource CapsuleButton}" Command="{Binding TestCommand}"  Text="This Year"></Button>
+            <Button Style="{StaticResource CapsuleButton}" Command="{Binding TestCommand}" Text="This Month"></Button>
+            <Button Style="{StaticResource CapsuleButton}" Command="{Binding TestCommand}" Text="All Time"></Button>
+        </HorizontalStackLayout>
+        <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="300" Grid.Row="1"/>
     </Grid>
-</ContentView>
+       
+       </ContentView>

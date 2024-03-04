@@ -18,6 +18,7 @@ using PloggingApp.Services.PloggingTracking;
 using RestSharp;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
+using PloggingApp.Services.Statistics;
 
 namespace PloggingApp;
 
@@ -113,6 +114,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
+        builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
         //builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         //{
