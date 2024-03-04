@@ -4,11 +4,9 @@
              x:Class="PloggingApp.Pages.StatisticsPage"
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
-             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:DataType="viewmodel:StatisticsPageViewModel"
              Title="StatisticsPage">
     <VerticalStackLayout>
-        <micro:ChartView Chart="{Binding TrashTypeChart}" HeightRequest="200" Grid.Row="0"/>
-        <Label Style="{StaticResource Headline}" Text="{Binding TotalDistance, StringFormat='Total steps: {0} meters'}"/>
+        <views:StatisticsView BindingContext="{Binding StatisticsViewModel}"></views:StatisticsView>
     </VerticalStackLayout>
 </ContentPage>
