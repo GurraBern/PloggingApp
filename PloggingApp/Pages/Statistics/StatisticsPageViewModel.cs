@@ -55,7 +55,7 @@ public partial class StatisticsPageViewModel : BaseViewModel, IAsyncInitializati
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions("123ajsldkfjasödjfk34", DateTime.UtcNow.AddYears(-1), );
+        _allUserSessions = await _ploggingSessionService.GetUserSessions("123ajsldkfjasödjfk34", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow.AddDays(-7));
         UserSessions.ClearAndAddRange(_allUserSessions);
         foreach(PloggingSession sesh in _allUserSessions)
         {
