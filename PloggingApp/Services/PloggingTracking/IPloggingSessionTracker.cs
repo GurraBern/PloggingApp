@@ -8,4 +8,5 @@ public interface IPloggingSessionTracker
     Task EndSession();
     void AddLitterItem(LitterType litterType, double amount, Location location);
     Location CurrentLocation { get; set; }
+    event EventHandler<Location> LocationUpdated;
 }

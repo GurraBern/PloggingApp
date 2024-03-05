@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="viewmodels:DashBoardViewModel"
+             x:DataType="viewmodels:DashboardViewModel"
              Title="Dashboard">
     <Grid>
         <Grid.RowDefinitions>

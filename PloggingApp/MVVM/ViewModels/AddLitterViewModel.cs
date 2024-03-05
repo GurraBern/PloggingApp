@@ -13,33 +13,24 @@ public partial class AddLitterViewModel : ObservableObject, IRecipient<PloggingS
 
     [ObservableProperty]
     private bool isTracking;
+    private Location CurrentLocation { get; set; }
 
     public AddLitterViewModel(IPloggingSessionTracker ploggingSessionTracker)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
 
+        _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
+
         WeakReferenceMessenger.Default.Register(this);
     }
 
-    [RelayCommand]
-    private void AddPlastic()
+    private void OnLocationUpdated(object? sender, Location location)
     {
-        AddLitter(LitterType.Plastics);
+        CurrentLocation = location;
     }
 
     [RelayCommand]
-    private void AddCan()
-    {
-        AddLitter(LitterType.Can);
-    }
-
-    [RelayCommand]
-    private void AddCigarette()
-    {
-        AddLitter(LitterType.Cigarette);
-    }
-
-    private void AddLitter(LitterType litterType)
+    public void AddLitter(LitterType litterType)
     {
         var currentLocation = _ploggingSessionTracker.CurrentLocation;
 

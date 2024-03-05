@@ -1,20 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.MVVM.Views;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PloggingSessionViewModel : ObservableObject
+public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>
 {
-    private const int DISTANCE_THRESHOLD = 50;
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
@@ -22,30 +18,21 @@ public partial class PloggingSessionViewModel : ObservableObject
     [ObservableProperty]
     private bool isTracking = false;
 
-    private Location currentLocation;
-    private Location CurrentLocation { 
-        get => currentLocation;
-        set 
-        {
-            currentLocation = value;
-            _ploggingSessionTracker.CurrentLocation = currentLocation;
-        } 
-    }
-
     public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
+
+        WeakReferenceMessenger.Default.Register(this);
     }
 
     [RelayCommand]
-    private async Task StartPloggingSession()
+    private void StartPloggingSession()
     {
         IsTracking = true;
+
         _ploggingSessionTracker.StartSession();
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
-
-        await StartTrackingLocation();
     }
 
     [RelayCommand]
@@ -55,34 +42,16 @@ public partial class PloggingSessionViewModel : ObservableObject
 
         var FinishPin = new FinishPin()
         {
-            Location = CurrentLocation,
+            Location = _ploggingSessionTracker.CurrentLocation,
             Label = "End"
         };
 
         PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(CurrentLocation);
+        TrackingPositions.Add(_ploggingSessionTracker.CurrentLocation);
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
         
         await _ploggingSessionTracker.EndSession();
-    }
-
-    private async Task StartTrackingLocation()
-    {
-        CurrentLocation = await CurrentLocationAsync();
-        TrackingPositions.Add(CurrentLocation);
-        var StartPin = new StartPin()
-        {
-            Location = CurrentLocation,
-            Label = "Start"
-        };
-
-        PlacedPins.Add(StartPin);
-
-        while (IsTracking)
-        {
-            await KeepTracking();
-        }
     }
 
     public async Task<Location> CurrentLocationAsync()
@@ -118,11 +87,10 @@ public partial class PloggingSessionViewModel : ObservableObject
         int LastElement = PlacedPins.Count - 1;
         if (PlacedPins.ElementAt(LastElement).GetType() != typeof(StartPin) && PlacedPins.ElementAt(LastElement).GetType() != typeof(FinishPin))
         {
-
             PlacedPins.RemoveAt(LastElement);
         }
-
     }
+
     [RelayCommand]
     public async Task AddCanCollectedPin()
     {
@@ -178,16 +146,6 @@ public partial class PloggingSessionViewModel : ObservableObject
         return Steps;
     }
 
-    public async Task KeepTracking()
-    {
-        Location currentLocation = await CurrentLocationAsync();
-        if (Distance.BetweenPositions(TrackingPositions.Last(), currentLocation).Meters > DISTANCE_THRESHOLD)
-        {
-            TrackingPositions.Add(currentLocation);
-            //await Task.Delay(TimeSpan.FromSeconds(2));
-        }
-    }
-
     [RelayCommand]
     public void StopTracking()
     {
@@ -223,5 +181,11 @@ public partial class PloggingSessionViewModel : ObservableObject
     {
         double distance = Distance.BetweenPositions(loc1, loc2).Meters;
         return distance;
+    }
+
+    public void Receive(LitterPlacedMessage message)
+    {
+        var location = message.LitterLocation;
+        TrackingPositions.Add(new Location(location.Latitude, location.Longitude));
     }
 }

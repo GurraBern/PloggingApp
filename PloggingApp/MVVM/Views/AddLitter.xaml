@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.AddLitter"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             xmlns:enumCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
              x:DataType="viewmodel:AddLitterViewModel">
 
     <Grid WidthRequest="150" HeightRequest="250" IsVisible="{Binding IsTracking}">
@@ -12,8 +13,8 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding AddPlasticCommand}" Grid.Row="0" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Plastics"></Button>
-        <Button Command="{Binding AddCanCommand}" Grid.Row="1" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cans"></Button>
-        <Button Command="{Binding AddCigaretteCommand}" Grid.Row="2" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cigarette"></Button>
+        <Button Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Plastics}" Grid.Row="0" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Plastics"></Button>
+        <Button Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Can}" Grid.Row="1" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cans"></Button>
+        <Button Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Cigarette}" Grid.Row="2" WidthRequest="80" HeightRequest="80" HorizontalOptions="End" Text="Cigarette"></Button>
     </Grid>
 </ContentView>

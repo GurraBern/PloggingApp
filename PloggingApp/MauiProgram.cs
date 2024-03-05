@@ -60,10 +60,9 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<RankingViewmodel>();
-        builder.Services.AddTransient<DashBoardViewModel>();
+        builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<MapPageViewModel>();
 
-        builder.Services.AddScoped<DashBoardViewModel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
 
         builder.Services.AddSingleton<AuthenticationViewModel>();
@@ -98,7 +97,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IRankingService, RankingService>();
         builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
-        builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
+        builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
 
