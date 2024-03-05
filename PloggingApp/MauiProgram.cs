@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Maps;
+using Microcharts.Maui;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,9 @@ using PloggingApp.Pages;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
+using PloggingApp.Services.Statistics;
 
 namespace PloggingApp;
 
@@ -29,6 +32,8 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
             .AddAppSettings()
+            .UseMicrocharts()
+            .UseSkiaSharp()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*android och IOS specific*/
 
@@ -62,6 +67,7 @@ public static class MauiProgram
         builder.Services.AddTransient<RankingViewmodel>();
         builder.Services.AddTransient<DashBoardViewModel>();
         builder.Services.AddTransient<MapPageViewModel>();
+        builder.Services.AddTransient<StatisticsPageViewModel>();
 
         builder.Services.AddScoped<DashBoardViewModel>();
         builder.Services.AddScoped<CheckoutImageViewModel>();
@@ -70,7 +76,12 @@ public static class MauiProgram
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
+        builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
+
+        builder.Services.AddTransient<MapViewModel>();
+        builder.Services.AddTransient<AddLitterViewModel>();
+        builder.Services.AddTransient<PloggingSessionViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -87,6 +98,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<DashboardPage>();
 
+        builder.Services.AddTransient<StatisticsPage>();
+
         builder.Services.AddScoped<CheckoutImagePage>();
 
         builder.Services.AddTransient<LoginPage>();
@@ -101,6 +114,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
+        builder.Services.AddTransient<IChartService, ChartService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {

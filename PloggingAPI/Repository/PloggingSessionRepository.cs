@@ -28,7 +28,7 @@ public class PloggingSessionRepository : IPloggingSessionRepository
     {
         var matchFilter = Builders<PloggingSession>.Filter.Eq(f => f.UserId, userId) &
             Builders<PloggingSession>.Filter.Gte(f => f.StartDate, startDate) &
-            Builders<PloggingSession>.Filter.Lte(f => f.StartDate, endDate);
+            Builders<PloggingSession>.Filter.Lte(f => f.EndDate, endDate);
 
         var sortDefinition = Builders<PloggingSession>.Sort.Descending(x => x.StartDate);
 
