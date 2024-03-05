@@ -71,6 +71,9 @@ public static class MauiProgram
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
+        builder.Services.AddTransient<MapViewModel>();
+        builder.Services.AddTransient<AddLitterViewModel>();
+        builder.Services.AddTransient<PloggingSessionViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
