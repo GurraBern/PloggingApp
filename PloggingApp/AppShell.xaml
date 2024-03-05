@@ -7,10 +7,10 @@
     Shell.FlyoutBehavior="Disabled"
     Title="PloggingApp">
 
-    <!--<ShellItem>
+    <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
         <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate views:RegisterPage}" />
-    </ShellItem>-->
+    </ShellItem>
 
     <TabBar>
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>

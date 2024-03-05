@@ -2,22 +2,50 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.StatisticsView"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels" 
              x:DataType="viewmodel:StatisticsViewModel"
              >
-    <Grid VerticalOptions="FillAndExpand">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <HorizontalStackLayout Spacing="5" Margin="0,0,0,0" Grid.Row="0">
-            <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Year"></Button>
-        </HorizontalStackLayout>
-        <micro:ChartView Chart="{Binding DistanceChart}" Grid.Row="1" HeightRequest="200"/>
-        <micro:ChartView Chart="{Binding StepsChart}" Grid.Row="2" HeightRequest="200"/>
-    </Grid>
-    
-       
-       </ContentView>
+
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="FillAndExpand">
+            <Label Text="Filter:"/>
+            <HorizontalStackLayout Spacing="5" Margin="20">
+                <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetYearChartCommand}"  Text="This Year"></Button>
+                <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Month "></Button>
+            </HorizontalStackLayout>
+            <Label Text="Distance" Style="{StaticResource SubHeadline}" Margin= "20" HorizontalOptions="StartAndExpand"/>
+            <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="500" HorizontalOptions="Start"/>
+            <Label Text="Littertypes" Style="{StaticResource SubHeadline}" Margin="20" HorizontalOptions="StartAndExpand"/>
+            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="500" HorizontalOptions="Start"/>
+            <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="20" ColumnSpacing="10" RowSpacing="10">
+                <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="0" BackgroundColor ="#5c5aa8">
+                    <VerticalStackLayout>
+                        <Label Text="Trash Collected" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>               
+                    </VerticalStackLayout>
+                </Border>
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="#5c5aa8">
+                    <VerticalStackLayout>
+                        <Label Text="CO2 Saved" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding TotalCO2Saved}" TextColor="White" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="#5c5aa8">
+                    <VerticalStackLayout>
+                        <Label Text="Distance" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding TotalDistance, StringFormat='{0} km'}" TextColor="White" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="#5c5aa8">
+                    <VerticalStackLayout>
+                        <Label Text="Steps" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding TotalSteps, StringFormat='{0} steps'}" TextColor="White" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

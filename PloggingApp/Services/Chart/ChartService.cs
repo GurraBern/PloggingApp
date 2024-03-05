@@ -4,7 +4,7 @@ using Plogging.Core.Models;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 namespace PloggingApp.Services.Statistics;
-public class StatisticsService : IStatisticsService
+public class ChartService : IChartService
 {
     // TODO reorganize, simplify
     private int currentMonth;
@@ -19,7 +19,7 @@ public class StatisticsService : IStatisticsService
         {LitterType.SmallMetal, SKColor.Parse("#be26ff")},
         {LitterType.Cardboard, SKColor.Parse("#874b01")},
     };
-    public StatisticsService(IEnumerable<PloggingSession> Sessions)
+    public ChartService(IEnumerable<PloggingSession> Sessions)
     {
         sessions = Sessions;
         currentMonth = DateTime.UtcNow.Month;
@@ -41,9 +41,11 @@ public class StatisticsService : IStatisticsService
         List<ChartEntry> chartEntries =
             keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = colors[lv.Key]}).ToList();
 
-        var graph = new PieChart()
+        var graph = new DonutChart()
         {
             IsAnimated = true,
+            LabelMode = LabelMode.LeftAndRight,
+            GraphPosition = GraphPosition.AutoFill,
             Entries = chartEntries,
             LabelTextSize = 20
         };
@@ -128,7 +130,7 @@ public class StatisticsService : IStatisticsService
         {
             Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = kv.Key.ToString(), ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = SKColor.Parse("#6100b0") }).ToList(),
             LineMode = LineMode.Straight,
-            PointMode = PointMode.Square,
+            PointMode = PointMode.Circle,
             LabelOrientation = Orientation.Horizontal,
             ValueLabelOrientation = Orientation.Horizontal,
         };
@@ -148,6 +150,6 @@ public class StatisticsService : IStatisticsService
                 limit = new DateTime(currentYear, 1, 1);
                 break;
         }
-        return sessions.Where(s => s.StartDate >= limit);
+        return sessions.Where(s => s.StartDate > limit);
     }
  }

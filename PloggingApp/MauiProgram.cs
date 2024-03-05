@@ -114,14 +114,14 @@ public static class MauiProgram
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
-        builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+        builder.Services.AddTransient<IChartService, ChartService>();
 
-        //builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
-        //{
-        //    ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
-        //    AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
-        //    Providers = [new EmailProvider()]
-        //}));
+        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = builder.Configuration["AppSettings:FirebaseApiKey"],
+            AuthDomain = builder.Configuration["AppSettings:FirebaseUrl"],
+            Providers = [new EmailProvider()]
+        }));
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
