@@ -28,4 +28,25 @@ public class PloggingSessionService : IPloggingSessionService
             throw;
         }
     }
+
+    public async Task<IEnumerable<PloggingSession>> GetUserSessions(string UserId, DateTime startDate, DateTime endDate)
+    {
+        try
+        {
+            var request = new RestRequest("api/PloggingSession/UserSessions");
+            request.AddParameter("userId", UserId);
+            request.AddParameter("startDate", startDate);
+            request.AddParameter("endDate", endDate);
+
+            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
+
+
+            return ploggingSessions;
+        }
+        catch (Exception)
+        {
+            //TODO display toast
+            return Enumerable.Empty<PloggingSession>();
+        }
+    }
 }
