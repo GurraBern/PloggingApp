@@ -101,7 +101,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IRankingService, RankingService>();
         builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
-        builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
+        builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
 
