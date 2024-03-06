@@ -52,7 +52,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private void PlaceTrashPin(MapPoint location)
     {
-        PlacedPins.Add(new TrashCollectedPin()
+        PlacedPins.Add(new CanPin()
         {
             Label = "Litter",
             Location = new Location()

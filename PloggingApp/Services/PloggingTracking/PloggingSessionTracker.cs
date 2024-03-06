@@ -8,9 +8,13 @@ namespace PloggingApp.Services.PloggingTracking;
 public class PloggingSessionTracker : IPloggingSessionTracker
 {
     private readonly IPloggingSessionService _ploggingSessionService;
+    private const int DISTANCE_THRESHOLD = 20;
+    private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
     private DateTime StartTime { get; set; }
     public Location CurrentLocation { get; set; }
+    public bool IsTracking { get; set; }
+    public event EventHandler<Location> LocationUpdated;
 
     public PloggingSessionTracker(IPloggingSessionService ploggingSessionService)
     {
@@ -19,11 +23,51 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
     public void StartSession()
     {
+        IsTracking = true;
         StartTime = DateTime.UtcNow;
+
+        _updateSession = Task.Run(UpdateSession);
+    }
+
+    private async Task UpdateSession()
+    {
+        //TODO add distance
+        while(IsTracking)
+        {
+            CurrentLocation = await CurrentLocationAsync();
+
+            LocationUpdated?.Invoke(this, CurrentLocation);
+
+            await Task.Delay(TimeSpan.FromSeconds(1));
+        }
+    }
+
+    public async Task<Location> CurrentLocationAsync()
+    {
+        try
+        {
+            var request = new GeolocationRequest(GeolocationAccuracy.Best);
+            var updatedLocation = await Geolocation.GetLocationAsync(request);
+
+            if(updatedLocation != null)
+            {
+                return updatedLocation;
+            } 
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     public async Task EndSession()
     {
+        IsTracking = false;
+
         var ploggingSession = new PloggingSession()
         {
             UserId = "TODOsetUserId",
@@ -35,6 +79,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 Litters = CurrentLitter
             } 
         };
+
+
 
         await _ploggingSessionService.SavePloggingSession(ploggingSession);
     }
