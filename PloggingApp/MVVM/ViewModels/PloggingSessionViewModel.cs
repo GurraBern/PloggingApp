@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
@@ -9,20 +10,23 @@ using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>
+public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>, IRecipient<PhotoTakenMessage>
 {
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
+    private readonly IPopupService _popupService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
 
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker)
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, IPopupService popupService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
+        _popupService = popupService;
 
-        WeakReferenceMessenger.Default.Register(this);
+        WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
+        WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
     }
 
     [RelayCommand]
@@ -38,20 +42,10 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [RelayCommand]
     private async Task EndPloggingSession()
     {
-        IsTracking = false;
+        await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
 
-        var FinishPin = new FinishPin()
-        {
-            Location = _ploggingSessionTracker.CurrentLocation,
-            Label = "End"
-        };
 
-        PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(_ploggingSessionTracker.CurrentLocation);
 
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
-        
-        await _ploggingSessionTracker.EndSession();
     }
 
     public async Task<Location> CurrentLocationAsync()
@@ -187,5 +181,21 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         var location = message.LitterLocation;
         TrackingPositions.Add(new Location(location.Latitude, location.Longitude));
+    }
+
+    public void Receive(PhotoTakenMessage message)
+    {
+        IsTracking = false;
+
+        var FinishPin = new FinishPin()
+        {
+            Location = _ploggingSessionTracker.CurrentLocation,
+            Label = "End"
+        };
+
+        PlacedPins.Add(FinishPin);
+        TrackingPositions.Add(_ploggingSessionTracker.CurrentLocation);
+
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
     }
 }

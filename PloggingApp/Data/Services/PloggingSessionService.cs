@@ -25,7 +25,7 @@ public class PloggingSessionService : IPloggingSessionService
         }
         catch (Exception ex)
         {
-            throw;
+            //TODO fix
         }
     }
 

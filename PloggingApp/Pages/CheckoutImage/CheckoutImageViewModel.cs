@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 
@@ -23,6 +25,8 @@ public partial class CheckoutImageViewModel : ObservableObject
     private async Task UsePhoto()
     {
         await _ploggingSessionTracker.EndSession();
+
+        WeakReferenceMessenger.Default.Send(new PhotoTakenMessage(ImagePath));
 
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }

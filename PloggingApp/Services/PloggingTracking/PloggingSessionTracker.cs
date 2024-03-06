@@ -80,6 +80,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             } 
         };
 
+
+
         await _ploggingSessionService.SavePloggingSession(ploggingSession);
     }
 
