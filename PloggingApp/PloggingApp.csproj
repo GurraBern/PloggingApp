@@ -77,6 +77,10 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
+	  <None Remove="Resources\Images\canpin.png" />
+	  <None Remove="Resources\Images\finishpin.png" />
+	  <None Remove="Resources\Images\needhelptrashpin.png" />
+	  <None Remove="Resources\Images\startpin.png" />
 	</ItemGroup>
 
 	<ItemGroup>

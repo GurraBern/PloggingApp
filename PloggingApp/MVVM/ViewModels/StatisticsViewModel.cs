@@ -81,6 +81,10 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         TimeRes = TimeResolution.ThisYear;
         DistanceChart.Chart = chartService.generateDistanceChart(TimeResolution.ThisYear);
         LitterChart.Chart = chartService.generateLitterChart(TimeResolution.ThisYear);
+        TotalDistance = PloggingStats.Distance.year;
+        TotalCO2Saved = PloggingStats.CO2Saved.year;
+        TotalSteps = PloggingStats.Steps.year;
+        TotalWeight = PloggingStats.Weight.year;
         IsBusy= false;
     }
     // Fulfix tills jag lyckas lösa Binding: property not found.

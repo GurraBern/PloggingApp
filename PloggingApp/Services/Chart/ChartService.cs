@@ -44,7 +44,7 @@ public class ChartService : IChartService
         var graph = new DonutChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.LeftAndRight,
+            LabelMode = LabelMode.RightOnly,
             GraphPosition = GraphPosition.AutoFill,
             Entries = chartEntries,
             LabelTextSize = 20
