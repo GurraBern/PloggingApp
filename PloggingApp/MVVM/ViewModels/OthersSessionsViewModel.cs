@@ -22,6 +22,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     {
         _sessionService = SessionService;
         Initialization = GetSessions();
+
     }
 
     [RelayCommand]
@@ -40,6 +41,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         PloggingSessions.ClearAndAddRange(_allSessions);
         IsBusy = false;
     }
+
+
  
 
 }
