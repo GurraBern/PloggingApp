@@ -31,6 +31,8 @@ public class StreakService : IStreakService
         }
     }
 
+
+    //make them return UserStreak?
     public async Task ResetStreak(string userId)
     {
         try
@@ -38,7 +40,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/ResetSreak");
             request.AddParameter("userId", userId);
 
-            await _ploggingApiClient.PostAsync(request);
+            await _ploggingApiClient.PatchAsync(request);
         }
         catch (Exception ex)
         {
@@ -54,7 +56,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/UpdateSreak");
             request.AddParameter("userId", userId);
 
-            await _ploggingApiClient.PostAsync(request);
+            await _ploggingApiClient.PatchAsync(request);
         }
         catch (Exception ex)
         {

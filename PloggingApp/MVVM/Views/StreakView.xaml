@@ -7,18 +7,18 @@
              x:DataType="viewmodel:StreakViewModel">
 
     <HorizontalStackLayout>
-
-        <Button Text="Get User Streak"
-                Command="{Binding GetUserStreakCommand}"/>
     
         <Image Source="streak_flame.png"
-               WidthRequest="50"
-               HeightRequest="50"/>
+               WidthRequest="30"
+               HeightRequest="30"
+               VerticalOptions="Start"
+               HorizontalOptions="Start"/>
 
         <Label Text="{Binding UserStreakCount.Streak}"
-               VerticalOptions="Center"
                FontSize="Large"
-               FontAttributes="Bold"/>
+               FontAttributes="Bold"
+               VerticalOptions="Start"
+               HorizontalOptions="Start"/>
 
     </HorizontalStackLayout>
 
