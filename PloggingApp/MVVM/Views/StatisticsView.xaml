@@ -16,7 +16,7 @@
                 <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Month "></Button>
             </HorizontalStackLayout>
             <Label Text="Distance" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
-            <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="500" HorizontalOptions="Start"/>
+            <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
             <Label Text="Littertypes" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
             <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
