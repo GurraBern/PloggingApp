@@ -15,7 +15,7 @@ public class StreakController : ControllerBase
 		_streakService = streakService;
 	}
 
-    [HttpPut("UpdateStreak")]
+    [HttpPatch("UpdateStreak")]
     public async Task<ActionResult> UpdateStreak(string userId)
     {
         try
@@ -30,7 +30,7 @@ public class StreakController : ControllerBase
         }
     }
 
-    [HttpPut("ResetStreak")]
+    [HttpPatch("ResetStreak")]
     public async Task<ActionResult> ResetStreak(string userId)
     {
         try

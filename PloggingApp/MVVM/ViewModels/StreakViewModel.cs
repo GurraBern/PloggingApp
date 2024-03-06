@@ -6,11 +6,12 @@ using PloggingApp.Data.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class StreakViewModel : BaseViewModel
+public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IStreakService _streakService;
 
     private IRelayCommand? RecentStreakCommand { get; set; }
+    public Task Initialization { get; private set; }
 
     [ObservableProperty]
     private UserStreak userStreakCount;
@@ -18,8 +19,13 @@ public partial class StreakViewModel : BaseViewModel
     public StreakViewModel(IStreakService streakService)
 	{
         _streakService = streakService;
+        Initialization = InitializeAsync();
     }
 
+    private async Task InitializeAsync()
+    {
+        await GetUserStreak();
+    }
 
     [RelayCommand]
     private async Task GetUserStreak()
