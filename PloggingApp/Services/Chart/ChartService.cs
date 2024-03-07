@@ -105,9 +105,9 @@ public class ChartService : IChartService
         {
             DateTime currentDate = new DateTime(currentYear, currentMonth, day);
             double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : 0;
-            valuePerDay.Add(currentDate.ToString("d/M"), acc);
+            valuePerDay.Add(currentDate.ToString("d "), acc);
         }
-        return generateLineChart(valuePerDay, yAxisLabel);
+        return generateLineChart(valuePerDay, yAxisLabel, SKColor.Parse("#9558a8"));
     }
 
     private Chart generateYearLineChart(Dictionary<DateTime,double> dict, string yAxisLabel)
@@ -119,20 +119,19 @@ public class ChartService : IChartService
             double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
             valuePerMonth.Add(thisMonth.ToString("MMMM"), acc);
         }
-        return generateLineChart(valuePerMonth, yAxisLabel);
+        return generateLineChart(valuePerMonth, yAxisLabel, SKColor.Parse("#6100b0"));
     }
 
     // General function
-    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel)
+    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel, SKColor color)
     {
-        Random rnd = new Random();
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = kv.Key.ToString(), ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = SKColor.Parse("#6100b0") }).ToList(),
-            LineMode = LineMode.Straight,
+            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = kv.Key.ToString(), ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = color }).ToList(),
+            LineMode = LineMode.Spline,
             PointMode = PointMode.Circle,
             LabelOrientation = Orientation.Horizontal,
-            ValueLabelOrientation = Orientation.Horizontal,
+            ValueLabelOrientation = Orientation.Horizontal
         };
         return lineChart;
     }

@@ -2,6 +2,7 @@
 public enum TimeResolution
 {
     ThisMonth,
-    ThisYear
+    ThisYear,
+    Alltime
 }
 

@@ -21,28 +21,28 @@
             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
             <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                 <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
-                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="0" BackgroundColor ="#5c5aa8">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
                     <VerticalStackLayout>
                         <Label Text="Trash Collected" TextColor="White" HorizontalOptions="Center"/>
-                        <Label Text= "{Binding TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>               
+                        <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>               
                     </VerticalStackLayout>
                 </Border>
-                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="#5c5aa8">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
                     <VerticalStackLayout>
                         <Label Text="CO2 Saved" TextColor="White" HorizontalOptions="Center"/>
-                        <Label Text= "{Binding TotalCO2Saved}" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding PloggingStats.TotalCO2Saved}" TextColor="White" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Border>
-                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="#5c5aa8">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
                     <VerticalStackLayout>
                         <Label Text="Distance" TextColor="White" HorizontalOptions="Center"/>
-                        <Label Text= "{Binding TotalDistance, StringFormat='{0} km'}" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} km'}" TextColor="White" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Border>
-                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="#5c5aa8">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
                     <VerticalStackLayout>
                         <Label Text="Steps" TextColor="White" HorizontalOptions="Center"/>
-                        <Label Text= "{Binding TotalSteps, StringFormat='{0} steps'}" TextColor="White" HorizontalOptions="Center"/>
+                        <Label Text= "{Binding PloggingStats.TotalSteps, StringFormat='{0} steps'}" TextColor="White" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Border>
             </Grid>
