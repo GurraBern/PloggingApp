@@ -15,6 +15,7 @@ using PloggingApp.MVVM.Views;
 using PloggingApp.Pages;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
+using PloggingApp.Services.Authentication;
 using RestSharp;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
@@ -114,6 +115,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
         builder.Services.AddTransient<IChartService, ChartService>();
+        builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
