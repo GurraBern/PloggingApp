@@ -6,7 +6,7 @@ public interface IPlogTogetherRepository
 {
     //Task<PlogTogether> FindOrCreateGroup(string ownerUserId);
 
-    Task AddUserToGroup(string ownerUserId, string addUserId);
+    Task AddUserToGroup(string ownerUserId, string userId);
 
     Task DeleteGroup(string ownerUserId);
 }

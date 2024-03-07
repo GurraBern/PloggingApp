@@ -23,7 +23,7 @@ public class PlogTogetherRepository : IPlogTogetherRepository
     //      if group does not exist: create a group and add the user
     //      if group does exist add the user to the existing list of users
 
-    public async Task AddUserToGroup(string ownerUserId, string addUserId)
+    public async Task AddUserToGroup(string ownerUserId, string userId)
     {
         var result = await _plogTogetherCollection.Find(result => result.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
 
@@ -31,7 +31,7 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         {
             List<string> userIds = new()
             {
-                addUserId
+                userId
             };
 
             var newGroup = new PlogTogether
@@ -44,7 +44,7 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         }
         else
         {
-            result.UserIds.Add(addUserId);
+            result.UserIds.Add(userId);
             await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, result);
         }
     }

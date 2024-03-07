@@ -15,11 +15,11 @@ public class PlogTogetherController : Controller
     }
 
     [HttpPatch("AddUserToGroup")]
-    public async Task<ActionResult> AddUserToGroup(string ownerUserId, string addUserId)
+    public async Task<ActionResult> AddUserToGroup(string ownerUserId, string userId)
     {
         try
         {
-            await _plogTogetherRepository.AddUserToGroup(ownerUserId, addUserId);
+            await _plogTogetherRepository.AddUserToGroup(ownerUserId, userId);
             return Ok();
         }
         catch (Exception ex)
