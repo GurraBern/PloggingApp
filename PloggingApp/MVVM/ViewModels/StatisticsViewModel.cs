@@ -37,12 +37,11 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions("TODOsetUserId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions("newId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
         chartService = new ChartService(UserSessions);
         PloggingStats = new PloggingStatistics(UserSessions);
         TimeRes = TimeResolution.ThisYear;
-        StatsBoxColor = colorDict[TimeRes];
         DistanceChart = new ChartContext
         {
             Chart = chartService.generateDistanceChart(TimeRes),
@@ -80,6 +79,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         StatsBoxColor = colorDict[TimeResolution.ThisYear];
         IsBusy= false;
     }
+    
     [ObservableProperty]
     ChartContext distanceChart;
     [ObservableProperty]

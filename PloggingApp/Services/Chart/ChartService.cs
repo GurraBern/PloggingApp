@@ -128,7 +128,7 @@ public class ChartService : IChartService
     {
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = (kv.Value !=  0) ? kv.Key.ToString() : null, ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = color }).ToList(),
+            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = kv.Key.ToString(), ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = color }).ToList(),
             LineMode = LineMode.Spline,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Horizontal,

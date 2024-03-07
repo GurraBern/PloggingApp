@@ -119,6 +119,22 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
         <Setter Property="StrokeThickness" Value="0"/>
         <Setter Property="BackgroundColor" Value="#9558a8"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="TimeResolutionState">
+                    <VisualState x:Name="Year">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#5c5aa8"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Month">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#5c5aa8"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
         
     <Style TargetType="CheckBox">
