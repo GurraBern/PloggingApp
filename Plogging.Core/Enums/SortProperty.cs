@@ -7,6 +7,7 @@ public enum SortProperty
 {
     ScrapCount,
     Distance,
-    Steps
+    Steps,
+    Weight
 }
 
