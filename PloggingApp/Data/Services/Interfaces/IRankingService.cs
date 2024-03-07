@@ -5,5 +5,5 @@ namespace PloggingApp.Data.Services;
 
 public interface IRankingService
 {
-    Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty = SortProperty.ScrapCount);
+    Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty = SortProperty.Weight);
 }

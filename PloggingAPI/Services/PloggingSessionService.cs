@@ -14,7 +14,7 @@ public class PloggingSessionService : IPloggingSessionService
     public PloggingSessionService(IPloggingSessionRepository ploggingSessionRepository, ILitterLocationsRepository litterLocationsRepository)
     {
         _ploggingSessionRepository = ploggingSessionRepository;
-        this._litterLocationsRepository = litterLocationsRepository;
+        _litterLocationsRepository = litterLocationsRepository;
     }
 
     public async Task<IEnumerable<PloggingSession>> GetSessionSummaries(SessionSummaryQuery query)

@@ -76,7 +76,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             EndDate = DateTime.UtcNow,
             PloggingData = new PloggingData()
             {
-                Litters = CurrentLitter
+                Litters = CurrentLitter,
+                Weight = CurrentLitter.Sum(x => x.Weight)
             } 
         };
 

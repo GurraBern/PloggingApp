@@ -18,7 +18,7 @@ public class PloggingSessionController : ControllerBase
     }
 
     [HttpGet("Summary")]
-    public async Task<ActionResult<IEnumerable<PloggingSession>>> GetSessionSummaries(DateTime startDate, DateTime endDate, SortDirection sortDirection = SortDirection.Descending, SortProperty sortProperty = SortProperty.ScrapCount)
+    public async Task<ActionResult<IEnumerable<PloggingSession>>> GetSessionSummaries(DateTime startDate, DateTime endDate, SortDirection sortDirection = SortDirection.Descending, SortProperty sortProperty = SortProperty.Weight)
     {
         var query = new SessionSummaryQuery()
         {
