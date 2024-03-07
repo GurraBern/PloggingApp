@@ -8,7 +8,7 @@ public static class UnitExtensions
     {
         return sortProperty switch
         {
-            SortProperty.ScrapCount => "pieces",
+            SortProperty.Weight => "kg",
             SortProperty.Distance => "meters",
             SortProperty.Steps => "steps",
             _ => ""

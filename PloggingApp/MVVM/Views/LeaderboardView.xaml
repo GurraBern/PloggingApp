@@ -48,7 +48,7 @@
 
                                 </HorizontalStackLayout>
 
-                                <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
+                                <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}" VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <!--<Span Text="{Binding PloggingData.ScrapCount}" FontSize="Small"/>-->
@@ -87,7 +87,7 @@
                 <Label VerticalOptions="Center" Text="{Binding UserRank.DisplayName}"></Label>
             </HorizontalStackLayout>
 
-            <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.ScrapCount}}" VerticalOptions="Center">
+            <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}" VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
                         <!--<Span Text="{Binding UserRank.PloggingData.ScrapCount}" FontSize="Small"/>-->
