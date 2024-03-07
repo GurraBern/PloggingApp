@@ -115,8 +115,10 @@
         </Setter>
     </Style>
         
-    <Style x:Key="StatsBorder", TargetType="Button">
-        
+    <Style x:Key="StatsBorder" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="BackgroundColor" Value="#9558a8"/>
     </Style>
         
     <Style TargetType="CheckBox">

@@ -28,6 +28,7 @@ public class ChartService : IChartService
     }
     
        // Split into subfunctions
+
     public Chart generateLitterChart(TimeResolution timeResolution)
     {
         Random rnd = new Random();
