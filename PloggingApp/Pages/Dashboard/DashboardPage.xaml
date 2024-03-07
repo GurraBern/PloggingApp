@@ -6,7 +6,10 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="Dashboard">
     <VerticalStackLayout>
-        <views:MapView BindingContext="{Binding MapViewModel}"></views:MapView>
-        <Button Text="Done" Command="{Binding DisplayPopupCommand}"></Button>
+  
+
+        <views:ScanQRButtonView/>
+        <views:GenerateQRcodeButtonView/>
+
     </VerticalStackLayout>
 </ContentPage>

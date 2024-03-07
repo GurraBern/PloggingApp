@@ -10,6 +10,8 @@ namespace PloggingApp
 
             Routing.RegisterRoute(nameof(CheckoutImagePage), typeof(CheckoutImagePage));
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
+            Routing.RegisterRoute(nameof(ScanQRcodePage), typeof(ScanQRcodePage));
+            Routing.RegisterRoute(nameof(GenerateQRcodePage), typeof(GenerateQRcodePage));
         }
     }
 }

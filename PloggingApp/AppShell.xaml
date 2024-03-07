@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="PloggingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -12,4 +12,7 @@
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
   
     </TabBar>
+
+    <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
+    <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
 </Shell>

@@ -44,6 +44,10 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         }
         else
         {
+            if (result.UserIds.Contains(userId))
+            {
+                return;
+            }
             result.UserIds.Add(userId);
             await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, result);
         }

@@ -18,6 +18,7 @@ using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using RestSharp;
 using System.Reflection;
+using ZXing.Net.Maui.Controls;
 
 namespace PloggingApp;
 
@@ -33,6 +34,7 @@ public static class MauiProgram
             .AddAppSettings()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*android och IOS specific*/
+            .UseBarcodeReader()
 
             .ConfigureFonts(fonts =>
             {
@@ -71,6 +73,8 @@ public static class MauiProgram
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
+        builder.Services.AddTransient<PlogTogetherViewModel>();
+        builder.Services.AddTransient<GenerateQRcodeViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -88,6 +92,8 @@ public static class MauiProgram
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
+        builder.Services.AddScoped<GenerateQRcodePage>();
+        builder.Services.AddScoped<ScanQRcodePage>();
 
     }
 
@@ -98,6 +104,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddTransient<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddTransient<IPlogTogetherService, PlogTogetherService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -108,6 +115,7 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
         }
     }
 
