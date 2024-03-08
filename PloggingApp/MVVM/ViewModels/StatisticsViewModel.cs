@@ -9,14 +9,17 @@ using System.Collections.ObjectModel;
 using PloggingApp.Services.Statistics;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
+using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.MVVM.ViewModels;
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 {
+
     public Task Initialization { get; private set; }
 
     private readonly IPloggingSessionService _ploggingSessionService;
     private IChartService chartService;
+    private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
@@ -25,9 +28,10 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         {TimeResolution.ThisMonth, "#9558a8"}
     };
  
-    public StatisticsViewModel(IPloggingSessionService ploggingSessionService)
+    public StatisticsViewModel(IPloggingSessionService ploggingSessionService, IAuthenticationService authenticationService)
     {
         _ploggingSessionService = ploggingSessionService;
+        _authenticationService = authenticationService;
         Initialization = InitializeAsync();
     }
     private async Task InitializeAsync()
@@ -37,7 +41,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions("newId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
         chartService = new ChartService(UserSessions);
         PloggingStats = new PloggingStatistics(UserSessions);

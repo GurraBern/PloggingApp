@@ -1,11 +1,11 @@
 ﻿using Firebase.Auth;
-
+using System.Diagnostics;
 namespace PloggingApp.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
     private UserCredential _userCredential;
-    public User CurrentUser => _userCredential?.User;
+    public User CurrentUser =>_userCredential?.User;
     
     private readonly FirebaseAuthClient _firebaseAuthClient;
 

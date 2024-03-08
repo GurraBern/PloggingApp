@@ -3,12 +3,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
+using PloggingApp.Services.Authentication;
+
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IStreakService _streakService;
+    private readonly IAuthenticationService _authenticationService;
 
     private IRelayCommand? RecentStreakCommand { get; set; }
     public Task Initialization { get; private set; }
@@ -16,9 +19,10 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserStreak userStreakCount;
 
-    public StreakViewModel(IStreakService streakService)
+    public StreakViewModel(IStreakService streakService, IAuthenticationService authenticationService)
 	{
         _streakService = streakService;
+        _authenticationService = authenticationService;
         Initialization = InitializeAsync();
     }
 
@@ -30,8 +34,7 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GetUserStreak()
     {
-        //TODO replace with actual id when user authentication is implemented
-        var currentUserId = "333ajsldkfjasödjfk34"; 
+        var currentUserId = _authenticationService.CurrentUser.Uid; 
 
         RecentStreakCommand = GetUserStreakCommand;
         IsBusy = true;

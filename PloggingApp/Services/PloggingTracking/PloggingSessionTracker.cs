@@ -2,12 +2,15 @@
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Services.Authentication;
+
 
 namespace PloggingApp.Services.PloggingTracking;
 
 public class PloggingSessionTracker : IPloggingSessionTracker
 {
     private readonly IPloggingSessionService _ploggingSessionService;
+    private readonly IAuthenticationService _authenticationService;
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
@@ -16,9 +19,10 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     public bool IsTracking { get; set; }
     public event EventHandler<Location> LocationUpdated;
 
-    public PloggingSessionTracker(IPloggingSessionService ploggingSessionService)
+    public PloggingSessionTracker(IPloggingSessionService ploggingSessionService, IAuthenticationService authenticationService)
     {
         _ploggingSessionService = ploggingSessionService;
+        _authenticationService = authenticationService;
     }
 
     public void StartSession()
@@ -70,8 +74,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
         var ploggingSession = new PloggingSession()
         {
-            UserId = "TODOsetUserId",
-            DisplayName = "TODOsetDisplayName",
+            UserId = _authenticationService.CurrentUser.Uid,
+            DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
             StartDate = StartTime,
             EndDate = DateTime.UtcNow,
             PloggingData = new PloggingData()

@@ -5,12 +5,14 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
+using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IRankingService _rankingService;
+    private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
     private IEnumerable<UserRanking> _allRankings = new ObservableCollection<UserRanking>();
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
@@ -39,10 +41,10 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService)
+    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService)
     {
         _rankingService = rankingService;
-
+        _authenticationService = authenticationService;
         Initialization = InitializeAsync();
     }
 
@@ -92,7 +94,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 
     private UserRanking GetUserRank()
     {
-        var currentUserId = "123ajsldkfjasödjfk34"; //TODO replace with actual id when user authentication is implemented
+        var currentUserId = _authenticationService.CurrentUser.Uid;
 
         var userRank = _allRankings.FirstOrDefault(user => user.Id.Equals(currentUserId, StringComparison.InvariantCultureIgnoreCase));
 
