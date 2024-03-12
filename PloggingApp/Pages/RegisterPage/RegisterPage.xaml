@@ -80,14 +80,14 @@
                     <Button
                         Grid.Row="4"
                         BackgroundColor="#1C375C"
-                        Command="{Binding RegisterUser}"
+                        Command="{Binding RegisterCommand}"
                         CornerRadius="20"
                         Text="Register using Email" />
 
                     <Button
                         Grid.Row="5"
                         BackgroundColor="White"
-                        Command="{Binding BackBtn}">
+                        Command="{Binding GoToLoginPageCommand}">
                         <Button.ImageSource>
                             <FontImageSource
                                 Glyph="&#x2190;"

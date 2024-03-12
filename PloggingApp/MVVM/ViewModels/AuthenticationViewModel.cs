@@ -1,105 +1,111 @@
-﻿using Firebase.Auth;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Firebase.Auth;
 using PloggingApp.Services.Authentication;
 using System.Diagnostics;
+using PloggingApp.Pages;
 namespace PloggingApp.MVVM.ViewModels;
 
 //TODO Fix error messages, logout button 
 //More information on Firebase package used: https://www.nuget.org/packages/FirebaseAuthentication.net 
-public class AuthenticationViewModel
+public partial class AuthenticationViewModel : ObservableObject, IAsyncInitialization
 {
-    public bool isSwitchToggled { get; set; }
-    public Command LoginBtn { get; }
-    public Command RegisterBtn { get; }
-    public Command RegisterUser { get; }
-    public Command BackBtn { get; }
-    public Command LogoutBtn { get; }
+    private readonly IAuthenticationService _authenticationService;
 
+    [ObservableProperty]
+    private bool rememberMeEnabled;
     public string RegEmail { get; set; }
     public string RegPassword { get; set; }
     public string LoginEmail { get; set; }
     public string LoginPassword { get; set; }
 
-
-    private readonly IAuthenticationService _authenticationService;
-
+    public Task Initialization { get; }
     public AuthenticationViewModel(IAuthenticationService authenticationService)
     {
         _authenticationService = authenticationService;
 
-        BackBtn = new Command(BackButtonClickedAsync);
-        LoginBtn = new Command(LoginBtnClickedAsync);
-        RegisterBtn = new Command(RegisterBtnClickedAsync);
-        RegisterUser = new Command(RegisterUserClickedAsync);
+        Initialization = Initialize();
     }
 
-    private async void BackButtonClickedAsync(object obj)
+    private async Task Initialize()
     {
-        await Shell.Current.GoToAsync("//LoginPage");
+        await AutoLoginAsync();
     }
 
-    private async void LoginBtnClickedAsync(object obj)
+    [RelayCommand]
+    private async Task Logout()
     {
-        var loginEmail = LoginEmail;
-        var loginPassword = LoginPassword;
-        bool switchStatus = isSwitchToggled;
+        _authenticationService.SignOut();
+        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+    }
 
-        if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
+
+    [RelayCommand]
+    private async Task GoToLoginPage()
+    {
+        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+    }
+
+    [RelayCommand]
+    private async Task Login()
+    {
+        if (!string.IsNullOrEmpty(LoginEmail) && !string.IsNullOrEmpty(LoginPassword))
         {
-            if (switchStatus)
+            if (RememberMeEnabled)
             {
-                await SecureStorage.SetAsync("loginEmail", loginEmail);
-                await SecureStorage.SetAsync("loginPassword", loginPassword);
+                await SecureStorage.SetAsync("loginEmail", LoginEmail);
+                await SecureStorage.SetAsync("loginPassword", LoginPassword);
             }
             else
             {
-                SecureStorage.RemoveAll();
+                SecureStorage.Remove("loginEmail");
+                SecureStorage.Remove("loginPassword");
             }
 
             try
             {
-                await _authenticationService.SignInWithEmailAndPasswordAsync(loginEmail, loginPassword);
+                await _authenticationService.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
 
                 await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
-                await Shell.Current.GoToAsync("//DashboardPage");
-
+                await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
             }
             catch (Exception ex)
             {
-                //await Application.Current.MainPage.DisplayAlert("Error", $"Error: {ex.Message}", "OK");
                 await Application.Current.MainPage.DisplayAlert("Error", $"Invalid login credentials", "OK");
             }
         }
     }
 
 
-    private async void RegisterBtnClickedAsync(object obj)
+    [RelayCommand]
+    private async Task GoToRegisterPage()
     {
-        await Shell.Current.GoToAsync("//RegisterPage");
+        await Shell.Current.GoToAsync($"//{nameof(RegisterPage)}");
     }
 
 
-    public async void RegisterUserClickedAsync(object obj)
+    [RelayCommand]
+    public async Task Register()
     {
-        var regEmail = RegEmail;
-        var regPassword = RegPassword;
-
-        if (!string.IsNullOrEmpty(regEmail) && !string.IsNullOrEmpty(regPassword)) {
+        if (!string.IsNullOrEmpty(RegEmail) && !string.IsNullOrEmpty(RegPassword))
+        {
             try
             {
-                await _authenticationService.CreateUserWithEmailAndPasswordAsync(regEmail, regPassword);
-                await Application.Current.MainPage.DisplayAlert("Success", "Account created.", "OK");
+                await _authenticationService.CreateUserWithEmailAndPasswordAsync(RegEmail, RegPassword);
+                await _authenticationService.SignInWithEmailAndPasswordAsync(RegEmail, RegPassword);
+                await Application.Current.MainPage.DisplayAlert("Success", "Account created. You are being logged in.", "OK");
+                await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
             }
             catch (Exception ex)
             {
                 Trace.WriteLine($"ERROR: {ex.Message}");
-                //await Application.Current.MainPage.DisplayAlert("Error", $"Error: {ex.Message}", "OK");
                 await Application.Current.MainPage.DisplayAlert("Error", $"Email exists or password too short.", "OK");
             }
         }
     }
 
 
-    public async Task AutoLoginAsync()
+    private async Task AutoLoginAsync()
     {
         var loginEmail = await SecureStorage.GetAsync("loginEmail");
         var loginPassword = await SecureStorage.GetAsync("loginPassword");
@@ -107,7 +113,7 @@ public class AuthenticationViewModel
         if (!string.IsNullOrEmpty(loginEmail) && !string.IsNullOrEmpty(loginPassword))
         {
             await _authenticationService.SignInWithEmailAndPasswordAsync(loginEmail, loginPassword);
-            await Shell.Current.GoToAsync("//DashboardPage");
+            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
         }
         else
         {
