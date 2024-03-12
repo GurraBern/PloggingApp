@@ -1,5 +1,8 @@
 ﻿using Firebase.Auth;
 using System.Diagnostics;
+using PloggingApp.Pages;
+using Microsoft.Maui.ApplicationModel.Communication;
+using CommunityToolkit.Mvvm.ComponentModel;
 namespace PloggingApp.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
@@ -14,15 +17,47 @@ public class AuthenticationService : IAuthenticationService
         _firebaseAuthClient = firebaseAuthClient;
     }
 
-    public async Task SignInWithEmailAndPasswordAsync(string email, string password)
+    public async Task LoginUser(string email, string password)
     {
         _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
+        await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
+        await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
 
-    public async Task CreateUserWithEmailAndPasswordAsync(string email, string password)
+    public async Task CreateUser(string email, string password)
     {
         _userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password);
     }
+
+    public async Task AutoLogin()
+    {
+        var email = await SecureStorage.GetAsync("email");
+        var password = await SecureStorage.GetAsync("password");
+
+        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+        {
+            _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
+            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
+        } else
+        {
+            Trace.WriteLine("Autologin failed.");
+        }
+    }
+
+    public async Task SaveCredentials(bool rememberMe, string email, string password)
+    {
+        if (rememberMe)
+        {
+            await SecureStorage.SetAsync("email", email);
+            await SecureStorage.SetAsync("password", password);
+        }
+        else
+        {
+            SecureStorage.Remove("email");
+            SecureStorage.Remove("password");
+        }
+    }
+
     public void SignOut()
     {
         _userCredential = null;
