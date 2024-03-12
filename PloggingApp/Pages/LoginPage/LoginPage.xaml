@@ -10,7 +10,7 @@
 
     <ContentPage.Content>
         <Grid
-            BackgroundColor="#1C375C"
+            BackgroundColor="White"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
@@ -26,98 +26,24 @@
                     WidthRequest="80" />
             </StackLayout>
 
-            <Frame
-                Grid.Row="1"
-                Margin="0,60,0,-40"
-                BorderColor="#1C375C"
-                CornerRadius="50"
-                HasShadow="True"
-                HeightRequest="700">
-                <Grid
-                    Padding="20,50,20,0"
-                    HorizontalOptions="FillAndExpand"
-                    RowSpacing="20"
-                    VerticalOptions="FillAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Label
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="24"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="Welcome Back!"
-                        TextColor="#1C375C" />
-                    <Label
-                        Grid.Row="1"
-                        Margin="0,-15,0,0"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="Login in to account"
-                        TextColor="#1C375C" />
-                    <Entry
-                        Grid.Row="2"
-                        Margin="0,20,0,0"
-                        HorizontalOptions="FillAndExpand"
-                        Placeholder="Username"
-                        TextColor="Black"
-                        Text="{Binding LoginEmail}"
-                        VerticalOptions="FillAndExpand" />
-                    <Entry
-                        Grid.Row="3"
-                        HorizontalOptions="FillAndExpand"
-                        IsPassword="True"
-                        Placeholder="Password"
-                        TextColor="Black"
-                        Text="{Binding LoginPassword}"
-                        VerticalOptions="FillAndExpand" />
-                    <Button
-                        Grid.Row="4"
-                        BackgroundColor="#1C375C"
-                        Command="{Binding LoginCommand}"
-                        TextColor="White"
-                        CornerRadius="20"
-                        Text="Login" />
+            <BoxView Color="White" Grid.Row="1" />
 
+            <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0">
+                <Label FontAttributes="Bold" FontSize="24" HorizontalOptions="CenterAndExpand" Text="Welcome Back!" TextColor="#1C375C" />
+                <Label Margin="0,15,0,0" HorizontalOptions="CenterAndExpand" Text="Login in to account" TextColor="#1C375C" />
+                <Entry Margin="0,25,0,0" HorizontalOptions="FillAndExpand" Placeholder="Username" TextColor="Black" Text="{Binding LoginEmail}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
+                <Entry Margin="0,15,0,0" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" TextColor="Black" Text="{Binding LoginPassword}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
+                <Button Margin="0,15,0,0" BackgroundColor="#1C375C" Command="{Binding LoginCommand}" TextColor="White" CornerRadius="20" Text="Login"  WidthRequest="300" />
 
-                    <StackLayout Grid.Row="5" Orientation="Horizontal">
-                        <Switch
-                            IsToggled="{Binding RememberMeEnabled}"
-                            OnColor="LightGray" />
-                        <Label 
-                            Text="Remember Me"
-                            TextColor="Black"
-                            VerticalOptions="Center" 
-                            Margin="5,0,0,0" />
-                    </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="95,10,20,0">
+                    <Switch IsToggled="{Binding RememberMeEnabled}" OnColor="LightGray"/>
+                    <Label Text="Remember Me" TextColor="Black" VerticalOptions="Center" Margin="5,0,0,0"/>
+                </StackLayout>
 
-                    <Label
-                        Grid.Row="7"
-                        Margin="0,-15,0,0"
-                        TextColor="Black"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="Don't have an account? Sign up here" />
+                <Label Margin="0,55,0,0" TextColor="Black" HorizontalOptions="Center" Text="Don't have an account? Sign up here" />
 
-                    <Button
-                        Grid.Row="10"
-                        BackgroundColor="#1C375C"
-                        Command="{Binding GoToRegisterPageCommand}"
-                        TextColor="White"
-                        CornerRadius="20"
-                        Text="Register using Email" />
-
-                </Grid>
-            </Frame>
+                <Button Margin="0,15,0,0" BackgroundColor="#1C375C" Command="{Binding GoToRegisterPageCommand}" TextColor="White" CornerRadius="20" Text="Register using Email" WidthRequest="300" />
+            </VerticalStackLayout>
         </Grid>
     </ContentPage.Content>
-
-
-
 </ContentPage>
