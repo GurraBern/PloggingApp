@@ -7,7 +7,6 @@
              x:DataType="viewmodel:StreakViewModel">
 
     <HorizontalStackLayout>
-    
         <Image Source="streak_flame.png"
                WidthRequest="30"
                HeightRequest="30"
@@ -19,11 +18,6 @@
                FontAttributes="Bold"
                VerticalOptions="Start"
                HorizontalOptions="Start"/>
-
     </HorizontalStackLayout>
-
-    
-
-
 </ContentView>
 
