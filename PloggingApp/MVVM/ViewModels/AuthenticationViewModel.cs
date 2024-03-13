@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
 using System.Diagnostics;
 using PloggingApp.Pages;
+using PloggingApp.Data.Services;
+
 namespace PloggingApp.MVVM.ViewModels;
 
 //TODO: Logout button, error messages
@@ -10,6 +12,7 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class AuthenticationViewModel : ObservableObject, IAsyncInitialization
 {
     private readonly IAuthenticationService _authenticationService;
+    private readonly IStreakService _streakService;
 
     [ObservableProperty]
     private bool rememberMeEnabled;
@@ -19,9 +22,10 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     public string LoginPassword { get; set; }
     public Task Initialization { get; }
 
-    public AuthenticationViewModel(IAuthenticationService authenticationService)
+    public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService)
     {
         _authenticationService = authenticationService;
+        _streakService = streakService;
 
         Initialization = Initialize();
     }
@@ -81,6 +85,10 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
             try
             {
                 await _authenticationService.CreateUser(RegEmail, RegPassword);
+
+                string userId = _authenticationService.CurrentUser.Uid;
+                await _streakService.CreateUser(userId);
+
                 await Application.Current.MainPage.DisplayAlert("Success", "Account created.", "OK");
                 await _authenticationService.LoginUser(RegEmail, RegPassword);
             }

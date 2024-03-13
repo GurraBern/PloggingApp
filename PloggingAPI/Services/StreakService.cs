@@ -31,10 +31,9 @@ public class StreakService : IStreakService
         return user;
     }
 
-    public async Task<UserStreak> CreateUser(UserStreak user)
+    public async Task CreateUser(UserStreak user)
     {
         await _streakRepository.CreateUser(user);
-        return user;
     }
 }
 

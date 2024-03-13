@@ -64,6 +64,27 @@ public class StreakService : IStreakService
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
+
+    public async Task CreateUser(string userId)
+    {
+        UserStreak user = new UserStreak {
+            DisplayName = "RemoveDisplayName",
+            UserId = userId,
+            Streak = 0};
+
+        try
+        {
+            var request = new RestRequest("api/Streak/CreateUser");
+            request.AddBody(user);
+
+            await _ploggingApiClient.PostAsync(request);
+        }
+        catch (Exception ex)
+        {
+            //TODO display toast
+            Console.WriteLine($"An error occured: {ex.Message}");
+        }
+    }
 }
 
 

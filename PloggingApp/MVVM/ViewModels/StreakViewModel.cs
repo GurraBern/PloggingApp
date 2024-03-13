@@ -13,7 +13,6 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
     private readonly IStreakService _streakService;
     private readonly IAuthenticationService _authenticationService;
 
-    private IRelayCommand? RecentStreakCommand { get; set; }
     public Task Initialization { get; private set; }
 
     [ObservableProperty]
@@ -36,12 +35,9 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization
     {
         var currentUserId = _authenticationService.CurrentUser.Uid; 
 
-        RecentStreakCommand = GetUserStreakCommand;
         IsBusy = true;
         UserStreakCount = await _streakService.GetUserStreak(currentUserId);
         IsBusy = false;
-        
-        
     }
 }
 

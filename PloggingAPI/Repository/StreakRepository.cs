@@ -65,14 +65,8 @@ public class StreakRepository : IStreakRepository
 		return user;
     }
 
-
-
-
-    //------------- temporary methods ------------
-
-	public async Task<UserStreak> CreateUser(UserStreak user)
+	public async Task CreateUser(UserStreak user)
 	{
 		await _ploggingStreakCollection.InsertOneAsync(user);
-		return user;
 	}
 }

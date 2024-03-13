@@ -60,7 +60,7 @@ public class StreakController : ControllerBase
     }
 
     [HttpPost("CreateUser")]
-    public async Task<ActionResult> CreateUser(UserStreak user)
+    public async Task<ActionResult> CreateUser([FromBody]UserStreak user)
     {
         try
         {

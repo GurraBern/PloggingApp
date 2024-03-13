@@ -10,6 +10,8 @@ public interface IStreakService
     Task UpdateStreak(string id);
 
     Task ResetStreak(string id);
+
+    Task CreateUser(string userId);
 }
 
 

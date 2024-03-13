@@ -18,5 +18,7 @@
         <views:AddLitter BindingContext="{Binding AddLitterViewModel}" HorizontalOptions="End" Margin="5,0"/>
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
+
+        <views:StreakView BindingContext="{Binding StreakViewModel}"/>
     </Grid>
 </ContentPage>
