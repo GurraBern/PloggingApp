@@ -37,8 +37,7 @@ public class StreakService : IStreakService
     {
         try
         {
-            var request = new RestRequest("api/Streak/ResetSreak");
-            request.AddParameter("userId", userId);
+            var request = new RestRequest($"api/Streak/ResetStreak/{userId}");
 
             await _ploggingApiClient.PatchAsync(request);
         }
@@ -47,14 +46,13 @@ public class StreakService : IStreakService
             //TODO display toast
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
-    }
+    }   
 
     public async Task UpdateStreak(string userId)
     {
         try
         {
-            var request = new RestRequest("api/Streak/UpdateSreak");
-            request.AddParameter("userId", userId);
+            var request = new RestRequest($"api/Streak/UpdateStreak/{userId}");
 
             await _ploggingApiClient.PatchAsync(request);
         }

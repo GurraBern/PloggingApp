@@ -3,8 +3,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
+using PloggingApp.Data.Services;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Services.Authentication;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
 
@@ -14,16 +16,21 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 {
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
     private readonly IPopupService _popupService;
+    private readonly IStreakService _streakService;
+    private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
 
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, IPopupService popupService)
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, IPopupService popupService,
+        IStreakService streakService, IAuthenticationService authenticationService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
         _popupService = popupService;
+        _streakService = streakService;
+        _authenticationService = authenticationService;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
@@ -44,6 +51,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
 
+        string userId = _authenticationService.CurrentUser.Uid;
+        await _streakService.UpdateStreak(userId);
 
 
     }

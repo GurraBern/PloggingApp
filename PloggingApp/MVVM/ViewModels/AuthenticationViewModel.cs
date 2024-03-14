@@ -61,6 +61,9 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
             {
                 await _authenticationService.LoginUser(LoginEmail, LoginPassword);
                 await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
+
+                string userId = _authenticationService.CurrentUser.Uid;
+                await _streakService.ResetStreak(userId);
             }
             catch (Exception)
             {
