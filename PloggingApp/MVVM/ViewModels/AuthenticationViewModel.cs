@@ -4,10 +4,11 @@ using PloggingApp.Services.Authentication;
 using System.Diagnostics;
 using PloggingApp.Pages;
 using PloggingApp.Data.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-//TODO: Logout button, error messages
+//TODO: Logout button
 //More information on Firebase package used: https://www.nuget.org/packages/FirebaseAuthentication.net 
 public partial class AuthenticationViewModel : ObservableObject, IAsyncInitialization
 {
@@ -62,9 +63,24 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
                 await _authenticationService.LoginUser(LoginEmail, LoginPassword);
                 await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"Invalid login credentials", "OK");
+                //Trace.WriteLine($"ERROR: {ex.Message}");
+
+                string errorMessage = ex.Message;
+
+                if (errorMessage.Contains("INVALID_LOGIN_CREDENTIALS"))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Invalid login credentials", "OK");
+                }
+                else if (errorMessage.Contains("INVALID_EMAIL"))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Invalid email.", "OK");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "An error occurred.", "OK");
+                }
             }
         }
     }
@@ -94,7 +110,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
             }
             catch (Exception ex)
             {
-                Trace.WriteLine($"ERROR: {ex.Message}");
+                //Trace.WriteLine($"ERROR: {ex.Message}");
 
                 string errorMessage = ex.Message;
 
