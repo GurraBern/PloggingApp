@@ -14,7 +14,7 @@ public class PlogTogetherController : Controller
         _plogTogetherRepository = plogTogetherRepository;
     }
 
-    [HttpPatch("AddUserToGroup")]
+    [HttpPost("AddUserToGroup")]
     public async Task<ActionResult> AddUserToGroup(string ownerUserId, string userId)
     {
         try

@@ -20,7 +20,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest("api/PlogTogether/AddUserToGroup");
             request.AddParameter("ownerUserId", ownerUserId);
-            request.AddParameter("addUserId", userId);
+            request.AddParameter("userId", userId);
 
             await _ploggingApiClient.PostAsync(request);
         }
@@ -39,7 +39,7 @@ public class PlogTogetherService : IPlogTogetherService
             var request = new RestRequest("api/PlogTogether/DeleteGroup");
             request.AddParameter("ownerUserId", ownerUserId);
 
-            await _ploggingApiClient.PostAsync(request);
+            await _ploggingApiClient.DeleteAsync(request);
         }
         catch (Exception ex)
         {
