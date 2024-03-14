@@ -13,14 +13,11 @@ public class PlogTogetherService : IPlogTogetherService
         _ploggingApiClient = ploggingApiClient;
 	}
 
-    // Post, patch or put?
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
         try
         {
-            var request = new RestRequest("api/PlogTogether/AddUserToGroup");
-            request.AddParameter("ownerUserId", ownerUserId);
-            request.AddParameter("userId", userId);
+            var request = new RestRequest($"api/PlogTogether/AddUserToGroup/{ownerUserId}/{userId}");
 
             await _ploggingApiClient.PostAsync(request);
         }
@@ -31,7 +28,6 @@ public class PlogTogetherService : IPlogTogetherService
 
     }
 
-    // change to DeleteAsync when in main
     public async Task DeleteGroup(string ownerUserId)
     {
         try

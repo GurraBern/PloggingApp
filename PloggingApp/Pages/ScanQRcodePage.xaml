@@ -6,6 +6,8 @@
 
     <zxing:CameraBarcodeReaderView
         x:Name="barcodeReader"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
         BarcodesDetected="barcodeReader_BarcodesDetected"/>
 
 </ContentPage>

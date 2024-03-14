@@ -20,7 +20,7 @@ public partial class PlogTogetherViewModel : BaseViewModel
         IsBusy = true;
 
         //TODO replace with actual id when user authentication is implemented
-        var ownerUserId = "333ajsldkfjasödjfk34";
+        var ownerUserId = "99eLQV5Du9OJ95kHLOUjnKjse2z2";
 
 		await _plogTogetherService.AddUserToGroup(ownerUserId, addUserId);
 		IsBusy = false;
@@ -32,7 +32,7 @@ public partial class PlogTogetherViewModel : BaseViewModel
         IsBusy = true;
 
         //TODO replace with actual id when user authentication is implemented
-        var ownerUserId = "333ajsldkfjasödjfk34";
+        var ownerUserId = "99eLQV5Du9OJ95kHLOUjnKjse2z2";
 
 		await _plogTogetherService.DeleteGroup(ownerUserId);
 
