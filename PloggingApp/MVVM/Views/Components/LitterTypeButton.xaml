@@ -15,7 +15,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" x:Name="counterLabel" TextColor="White"></Label>
-            <Image Grid.RowSpan="2" Source="{Binding ImageSource, Source={x:Reference Name=Self}}"></Image>
+            <Image Grid.RowSpan="2" Scale="0.8" Source="{Binding ImageSource, Source={x:Reference Name=Self}}"></Image>
         </Grid>
     </Border>
 </ContentView>

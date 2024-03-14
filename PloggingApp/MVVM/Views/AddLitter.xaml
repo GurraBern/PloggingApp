@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <views:LitterTypeButton Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Plastics}" ImageSource="pet_bottle_icon.png" Grid.Row="0" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-        <views:LitterTypeButton Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Can}" ImageSource="smoking_icon.png" Grid.Row="1" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-        <views:LitterTypeButton Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Cigarette}" Grid.Row="2" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
+        <views:LitterTypeButton Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Can}" ImageSource="soda_cans_icon.png" Grid.Row="1" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
+        <views:LitterTypeButton Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Cigarette}" ImageSource="smoking_icon.png" Grid.Row="2" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
     </Grid>
 </ContentView>
