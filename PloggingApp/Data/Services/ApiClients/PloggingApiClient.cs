@@ -47,6 +47,20 @@ public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T
             throw;
         }
     }
+
+    public async Task<T> DeleteAsync(RestRequest request, string bearerToken)
+    {
+        try
+        {
+            request.AddHeader("Authorization", $"Bearer {bearerToken}");
+            return await restClient.DeleteAsync<T>(request);
+        }
+        catch (Exception ex)
+        {
+            //Add logging
+            throw;
+        }
+    }
 }
 
 public interface IPloggingApiClient<T>
@@ -56,4 +70,6 @@ public interface IPloggingApiClient<T>
     Task<IEnumerable<T>> GetAllAsync(RestRequest request, string bearerToken = "");
 
     Task<T> PostAsync(RestRequest request, string bearerToken = "");
+
+    Task<T> DeleteAsync(RestRequest request, string bearerToken = "");
 }
