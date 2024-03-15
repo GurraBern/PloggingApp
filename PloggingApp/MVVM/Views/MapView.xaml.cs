@@ -69,10 +69,10 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     {
         await MoveMapToCurrentLocationAsync();
 
-        Location ZoomLoc = ((MapViewModel)BindingContext).CalculateZoomOut();
-        var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
-        MapSpan MapSpan = new MapSpan(ZoomLoc, Longitude * 1.8, Latitude * 1.4);
-        PloggingMap.MoveToRegion(MapSpan);
+        //Location ZoomLoc = ((MapViewModel)BindingContext).CalculateZoomOut();
+        //var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
+        //MapSpan MapSpan = new MapSpan(ZoomLoc, Longitude * 1.8, Latitude * 1.4);
+        //PloggingMap.MoveToRegion(MapSpan);
     }
 
     private async Task GetLastKnownLocation()
