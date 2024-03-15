@@ -1,4 +1,5 @@
-﻿using Plogging.Core.Models;
+﻿using CommunityToolkit.Maui.Alerts;
+using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Data.Services.Interfaces;
 using RestSharp;
@@ -25,8 +26,7 @@ public class PloggingSessionService : IPloggingSessionService
         }
         catch (Exception ex)
         {
-            var t = 5;
-            //TODO fix
+            Toast.Make("Could not save plogging session");
         }
     }
 
@@ -40,8 +40,6 @@ public class PloggingSessionService : IPloggingSessionService
             request.AddParameter("endDate", endDate);
 
             var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
-
-
             return ploggingSessions;
         }
         catch (Exception)

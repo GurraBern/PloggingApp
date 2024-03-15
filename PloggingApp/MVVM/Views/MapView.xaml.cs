@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using AsyncAwaitBestPractices;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using PloggingApp.MVVM.Models.Messages;
@@ -14,7 +15,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     {
         InitializeComponent();
 
-        MoveMapToCurrentLocationAsync();
+        GetLastKnownLocation().SafeFireAndForget();
 
         WeakReferenceMessenger.Default.Register(this);
     }
@@ -72,6 +73,15 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
         MapSpan MapSpan = new MapSpan(ZoomLoc, Longitude * 1.8, Latitude * 1.4);
         PloggingMap.MoveToRegion(MapSpan);
+    }
+
+    private async Task GetLastKnownLocation()
+    {
+        var location = await Geolocation.GetLastKnownLocationAsync();
+        if (location != null)
+        {
+            PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(location.Latitude, location.Longitude), Distance.FromMiles(1)));
+        }
     }
 
     //Bad solution should use data binding if possible
