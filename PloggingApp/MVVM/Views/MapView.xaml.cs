@@ -14,6 +14,8 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     {
         InitializeComponent();
 
+        MoveMapToCurrentLocationAsync();
+
         WeakReferenceMessenger.Default.Register(this);
     }
 

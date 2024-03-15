@@ -32,8 +32,8 @@ public class RankingService : IRankingService
             {
                 var userRank = new UserRanking()
                 {
-                    DisplayName = summary.DisplayName,
                     Id = summary.UserId,
+                    DisplayName = "DisplayName",
                     PloggingData = summary.PloggingData,
                     Rank = rank++
                 };

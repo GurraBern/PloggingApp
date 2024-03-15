@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Maps;
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
@@ -75,7 +76,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         var ploggingSession = new PloggingSession()
         {
             UserId = _authenticationService.CurrentUser.Uid,
-            DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
             StartDate = StartTime,
             EndDate = DateTime.UtcNow,
             PloggingData = new PloggingData()
@@ -84,8 +84,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 Weight = CurrentLitter.Sum(x => x.Weight)
             } 
         };
-
-
 
         await _ploggingSessionService.SavePloggingSession(ploggingSession);
     }
@@ -103,4 +101,17 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         CurrentLitter.Add(litter);
 
     }
+
+    //private double CalculateTotalDistance()
+    //{
+    //    double totalDistance = 0;
+
+    //    for (int i = 0; i < TrackingPositions.Count - 1; i++)
+    //    {
+    //        double distance = Distance.BetweenPositions(TrackingPositions.ElementAt(i), TrackingPositions.ElementAt(i + 1)).Meters;
+    //        totalDistance += distance;
+    //    }
+
+    //    return totalDistance;
+    //}
 }
