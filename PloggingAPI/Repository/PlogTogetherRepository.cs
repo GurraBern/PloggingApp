@@ -18,44 +18,43 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         _plogTogetherCollection = mongoDataBase.GetCollection<PlogTogether>(settings.Value.PlogTogetherCollectionName);
     }
 
-
-    // try to add user to your group
-    //      if group does not exist: create a group and add the user
-    //      if group does exist add the user to the existing list of users
-
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
-        var result = await _plogTogetherCollection.Find(result => result.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+        var userExistsInGroup = await _plogTogetherCollection.Find(a => a.UserIds.Contains(userId) || a.OwnerUserId == userId).FirstOrDefaultAsync();
 
-        if (result == null)
+        if (userExistsInGroup == null)
         {
-            List<string> userIds = new()
+            var userOwnsGroup = await _plogTogetherCollection.Find(a => a.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+
+            if (userOwnsGroup == null)
+            {
+                List<string> userIds = new()
             {
                 userId
             };
 
-            var newGroup = new PlogTogether
-            {
-                OwnerUserId = ownerUserId,
-                UserIds = userIds
-            };
+                var newGroup = new PlogTogether
+                {
+                    OwnerUserId = ownerUserId,
+                    UserIds = userIds
+                };
 
-            await _plogTogetherCollection.InsertOneAsync(newGroup);
+                await _plogTogetherCollection.InsertOneAsync(newGroup);
+            }
+            else
+            {
+                if (!userOwnsGroup.UserIds.Contains(userId))
+                {
+                    userOwnsGroup.UserIds.Add(userId);
+                    await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, userOwnsGroup);
+                }
+            }
         }
         else
         {
-            if (result.UserIds.Contains(userId))
-            {
-                return;
-            }
-            result.UserIds.Add(userId);
-            await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, result);
+            return;
         }
     }
-
-
-    // if finished adding the plogging session to group members
-    //      delete the document from the collection
 
     public async Task DeleteGroup(string ownerUserId)
     {

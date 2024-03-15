@@ -11,5 +11,10 @@
         <views:ScanQRButtonView/>
         <views:GenerateQRcodeButtonView/>
 
+        <Button Text="Test Scan"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="TestScan"/>
+
     </VerticalStackLayout>
 </ContentPage>

@@ -12,10 +12,10 @@
         <zxing:BarcodeGeneratorView
             Format="QrCode"
             Value="{Binding CurrentUserId}"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand"
-            WidthRequest="200"
-            HeightRequest="200"/>
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="400"
+            HeightRequest="400"/>
 
     </VerticalStackLayout>
 </ContentPage>
