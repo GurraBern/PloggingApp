@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
 
@@ -13,20 +14,30 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>, IRecipient<PhotoTakenMessage>
 {
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
+    private readonly ICameraService _cameraService;
     private readonly IPopupService _popupService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
+    private Location CurrentLocation { get; set; }
 
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, IPopupService popupService)
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, ICameraService cameraService, IPopupService popupService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
+        _cameraService = cameraService;
         _popupService = popupService;
+
+        _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
+    }
+
+    private void OnLocationUpdated(object? sender, Location location)
+    {
+        CurrentLocation = location;
     }
 
     [RelayCommand]
@@ -43,36 +54,6 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private async Task EndPloggingSession()
     {
         await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
-
-
-
-    }
-
-    public async Task<Location> CurrentLocationAsync()
-    {
-        try
-        {
-            var Request = new GeolocationRequest(GeolocationAccuracy.Best);
-            var UpdatedLocation = await Geolocation.GetLocationAsync(Request);
-
-            if (UpdatedLocation != null)
-            {
-                return UpdatedLocation;
-            }
-            else
-            {
-                // Handle case where location is null
-                return null;
-            }
-        }
-        catch (FeatureNotSupportedException fnsEx)
-        {
-            return null;
-        }
-        catch (PermissionException pEx)
-        {
-            return null;
-        }
     }
 
     [RelayCommand]
@@ -86,28 +67,28 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     }
 
     [RelayCommand]
-    public async Task AddCanCollectedPin()
+    public void AddCanCollectedPin()
     {
-        Location loc = await CurrentLocationAsync();
         var pin = new CanPin()
         {
             Label = "COLLECTED",
-            Location = loc,
+            Location = CurrentLocation,
             Address = "!!"
         };
+
         PlacedPins.Add(pin);
     }
 
     [RelayCommand]
-    public async Task AddNeedHelpToCollectPin()
+    public void AddNeedHelpToCollectPin()
     {
-        Location location = await CurrentLocationAsync();
         var pin = new NeedHelpToCollectPin()
         {
             Label = "HELP",
-            Location = location,
+            Location = CurrentLocation,
             Address = "!!"
         };
+
         PlacedPins.Add(pin);
     }
 
@@ -116,6 +97,19 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         TrackingPositions.Clear();
         PlacedPins.Clear();
+    }
+
+    [RelayCommand]
+    private async Task MarkTrashForCollection()
+    {
+        var imagePath = await _cameraService.TakePhoto();
+
+        if(imagePath.Equals(""))
+        {
+            var t = 5;
+            //If image taken send set current location
+            //_ploggingSessionTracker.AddTrashCollectionPoint();
+        }
     }
 
     private double CalculateTotalDistance()

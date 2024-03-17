@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         <ScrollView Grid.Row="0" Padding="10, 0" VerticalOptions="FillAndExpand">
             <VerticalStackLayout>
-                <SearchBar x:Name="searchBar" SearchCommand="{Binding SearchUsersCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" Placeholder="search..."></SearchBar>
+                <SearchBar x:Name="searchBar" SearchCommand="{Binding SearchUsersCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" TextChanged="searchBar_TextChanged" Placeholder="search..."></SearchBar>
                 <HorizontalStackLayout Spacing="5" Margin="0,0,0,20">
                     <Button Style="{StaticResource CapsuleButton}" Text="This Year" Command="{Binding GetYearlyRankingsCommand}"></Button>
                     <Button Style="{StaticResource CapsuleButton}" Text="This Month" Command="{Binding GetMonthlyRankingsCommand}"></Button>
@@ -51,7 +51,7 @@
                                 <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}" VerticalOptions="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <!--<Span Text="{Binding PloggingData.ScrapCount}" FontSize="Small"/>-->
+                                            <Span Text="{Binding PloggingData.Weight}" FontSize="Small"/>
                                             <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -90,7 +90,7 @@
             <Label IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}" VerticalOptions="Center">
                 <Label.FormattedText>
                     <FormattedString>
-                        <!--<Span Text="{Binding UserRank.PloggingData.ScrapCount}" FontSize="Small"/>-->
+                        <Span Text="{Binding UserRank.PloggingData.Weight}" FontSize="Small"/>
                         <Span Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" FontSize="Caption" />
                     </FormattedString>
                 </Label.FormattedText>
