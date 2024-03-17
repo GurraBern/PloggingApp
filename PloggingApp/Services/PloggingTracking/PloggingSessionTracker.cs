@@ -97,9 +97,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         if (location == null)
             return; //TODO show toast that not able to 
 
-        //var weight = LitterCalculator.CalculateWeight(litterType, amount); //TODO add something similar
-        var weight = 1; //TODO replace with above!
-
+        var weight = LitterCalculator.CalculateWeight(litterType);
         var litterLocation = new MapPoint(location.Latitude, location.Longitude);
         var litter = new Litter(litterType, amount, litterLocation, weight);
         CurrentLitter.Add(litter);
