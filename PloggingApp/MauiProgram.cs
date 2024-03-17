@@ -20,6 +20,7 @@ using RestSharp;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
 using PloggingApp.Services.Statistics;
+using PloggingApp.Services;
 
 namespace PloggingApp;
 
@@ -108,6 +109,7 @@ public static class MauiProgram
 
     private static void AddServices(MauiAppBuilder builder)
     {
+        builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddTransient<IRankingService, RankingService>();
         builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddScoped<ICameraService, CameraService>();

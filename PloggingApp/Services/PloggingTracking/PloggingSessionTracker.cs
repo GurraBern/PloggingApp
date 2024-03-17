@@ -1,10 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Maui.Maps;
+﻿using Microsoft.Maui.Maps;
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Services.Authentication;
-
 
 namespace PloggingApp.Services.PloggingTracking;
 
@@ -15,6 +13,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
+    private List<Location> Route { get; set; } = [];
     private DateTime StartTime { get; set; }
     public Location CurrentLocation { get; set; }
     public bool IsTracking { get; set; }
@@ -36,14 +35,18 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
     private async Task UpdateSession()
     {
-        //TODO add distance
         while(IsTracking)
         {
             CurrentLocation = await CurrentLocationAsync();
 
-            LocationUpdated?.Invoke(this, CurrentLocation);
+            if(CurrentLocation != null)
+            {
+                LocationUpdated?.Invoke(this, CurrentLocation);
 
-            await Task.Delay(TimeSpan.FromSeconds(1));
+                TrackRoute();
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+            }
         }
     }
 
@@ -81,7 +84,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             PloggingData = new PloggingData()
             {
                 Litters = CurrentLitter,
-                Weight = CurrentLitter.Sum(x => x.Weight)
+                Weight = CurrentLitter.Sum(x => x.Weight),
+                Distance = CalculateTotalDistance(Route)
             } 
         };
 
@@ -93,25 +97,39 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         if (location == null)
             return; //TODO show toast that not able to 
 
-        //var weight = LitterCalculator.CalculateWeight(litterType, amount); //TODO add something similar
-        var weight = 1; //TODO replace with above!
-
+        var weight = LitterCalculator.CalculateWeight(litterType);
         var litterLocation = new MapPoint(location.Latitude, location.Longitude);
         var litter = new Litter(litterType, amount, litterLocation, weight);
         CurrentLitter.Add(litter);
-
     }
 
-    //private double CalculateTotalDistance()
-    //{
-    //    double totalDistance = 0;
+    private void TrackRoute()
+    {
+        var previousLocation = Route.LastOrDefault();
+        if (previousLocation == null)
+        {
+            Route.Add(CurrentLocation);
+            return;
+        }
 
-    //    for (int i = 0; i < TrackingPositions.Count - 1; i++)
-    //    {
-    //        double distance = Distance.BetweenPositions(TrackingPositions.ElementAt(i), TrackingPositions.ElementAt(i + 1)).Meters;
-    //        totalDistance += distance;
-    //    }
+        var distance = Distance.BetweenPositions(CurrentLocation, new Location(previousLocation.Latitude, previousLocation.Longitude)).Meters;
 
-    //    return totalDistance;
-    //}
+        if (DISTANCE_THRESHOLD < distance)
+        {
+            Route.Add(CurrentLocation);
+        }
+    }
+
+    private double CalculateTotalDistance(List<Location> locations)
+    {
+        double totalDistance = 0;
+
+        for (int i = 0; i < locations.Count - 1; i++)
+        {
+            double distance = Distance.BetweenPositions(Route.ElementAt(i), locations.ElementAt(i + 1)).Meters;
+            totalDistance += distance;
+        }
+
+        return Math.Round(totalDistance);
+    }
 }

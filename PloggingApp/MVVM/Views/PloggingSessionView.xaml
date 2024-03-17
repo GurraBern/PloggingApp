@@ -12,23 +12,31 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
-    <VerticalStackLayout>
-        <Button IsVisible="{Binding IsTracking, Converter={converters:InverseBoolConverter}}"
-            Text="▶"
-            Margin="0,0,0,5" 
-            FontSize="Large" 
-            Style="{StaticResource RoundButton}" 
-            WidthRequest="60" 
-            HeightRequest="60" 
-            BackgroundColor="{StaticResource Green}" 
-            Command="{Binding StartPloggingSessionCommand}"/>
+    <VerticalStackLayout WidthRequest="150">
+        <VerticalStackLayout IsVisible="{Binding IsTracking, Converter={converters:InverseBoolConverter}}">
+            <VerticalStackLayout x:Name="menuActions" Spacing="5" Opacity="0">
+                <Button Text="Start plogging" Command="{Binding StartPloggingSessionCommand}"/>
+                <Button Text="Mark Litter bag" Command="{Binding MarkTrashForCollectionCommand}"/>
+            </VerticalStackLayout>
 
-        <Button IsVisible="{Binding IsTracking}" Text="||"
+            <ImageButton 
+            x:Name="menuBtn"
+            Clicked="OpenMenuActions"
+            Source="walking_icon.png" 
+            BackgroundColor="{StaticResource Primary}" 
+            CornerRadius="10" 
+            HeightRequest="50" 
+            WidthRequest="50"
+            Margin="0,2,0,5"/>
+        </VerticalStackLayout>
+
+        <Button IsVisible="{Binding IsTracking}"
+            Text="End Plogging"
             Margin="0,0,0,5" 
-            FontSize="Large" 
+            FontSize="Medium" 
             Style="{StaticResource RoundButton}" 
-            WidthRequest="60" 
-            HeightRequest="60" 
+            HeightRequest="50"
+            WidthRequest="220"
             BackgroundColor="{StaticResource Red}" 
             Command="{Binding EndPloggingSessionCommand}"/>
 

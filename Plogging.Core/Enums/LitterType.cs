@@ -3,8 +3,10 @@
 public enum LitterType
 {
     Plastics,
+    LargePlastics,
     Cigarette,
-    Can,
     SmallMetal,
-    Cardboard
+    Cardboard,
+    Can,
+    Fabric
 }

@@ -102,7 +102,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [RelayCommand]
-    private void SearchUsers(string userName)
+    public void SearchUsers(string userName)
     {
         if (!userName.Equals(""))
         {
