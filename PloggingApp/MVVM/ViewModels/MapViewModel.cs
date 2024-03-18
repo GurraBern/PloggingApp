@@ -21,9 +21,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 {
     private readonly ILitterLocationService _litterLocationService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
-    public List<Location> TrackingPositions { get; set; } = [];
-    public int DISTANCE_THRESHOLD = 50;
-    
+    //public List<Location> TrackingPositions { get; set; } = [];
     public Task Initialization { get; private set; }
 
     public MapViewModel(ILitterLocationService litterLocationService)
@@ -63,30 +61,30 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         });
     }
 
-    public Location CalculateZoomOut()
-    {
-        double Longitude = 0;
-        double Latitude = 0;
-        foreach(Location loc in TrackingPositions)
-        {
-            Longitude += loc.Longitude;
-            Latitude += loc.Latitude;
-        }
-        Longitude = Longitude / TrackingPositions.Count;
-        Latitude = Latitude / TrackingPositions.Count;
-        Location ZoomLoc = new Location(Latitude, Longitude);
-        return ZoomLoc;
-    }
+    //public Location CalculateZoomOut()
+    //{
+    //    double Longitude = 0;
+    //    double Latitude = 0;
+    //    foreach(Location loc in TrackingPositions)
+    //    {
+    //        Longitude += loc.Longitude;
+    //        Latitude += loc.Latitude;
+    //    }
+    //    Longitude = Longitude / TrackingPositions.Count;
+    //    Latitude = Latitude / TrackingPositions.Count;
+    //    Location ZoomLoc = new Location(Latitude, Longitude);
+    //    return ZoomLoc;
+    //}
 
-    public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
-    {
+    //public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
+    //{
 
-        double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
-        double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
-        double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
-        double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
-       return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
-    }
+    //    double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
+    //    double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
+    //    double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
+    //    double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
+    //   return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
+    //}
 
     public void Receive(LitterPlacedMessage message)
     {

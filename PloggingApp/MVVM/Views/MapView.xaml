@@ -10,7 +10,7 @@
              x:Class="PloggingApp.MVVM.Views.MapView"
              x:DataType="viewmodel:MapViewModel">
 
-    <maps:Map ItemsSource="{Binding PlacedPins}" IsShowingUser="true" x:Name="PloggingMap">
+    <maps:Map ItemsSource="{Binding PlacedPins}" IsShowingUser="true" x:Name="PloggingMap" MapType="Street">
         <maps:Map.MapElements>
             <maps:Polyline x:Name="polyLine" StrokeColor="Blue" StrokeWidth="15">
                 <maps:Polyline.Geopath/>
