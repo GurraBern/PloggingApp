@@ -2,16 +2,19 @@
 using Plogging.Core.Models;
 using PloggingApp.Data.Factories;
 using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.Services;
 
 namespace PloggingApp.Data.Services;
 
 public class RankingService : IRankingService
 {
     private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
+    private readonly IToastService _toastService;
 
-    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient)
+    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService)
     {
         _ploggingApiClient = ploggingApiClient;
+        _toastService = toastService;
     }
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
@@ -41,7 +44,7 @@ public class RankingService : IRankingService
         }
         catch (Exception)
         {
-            //TODO display toast
+            await _toastService.MakeToast("Could not fetch user rankings"); 
             return Enumerable.Empty<UserRanking>();
         }
     }
