@@ -56,6 +56,7 @@ public class PloggingSessionRepository : IPloggingSessionRepository
                g => new PloggingSession
                {
                    UserId = g.Key,
+                   DisplayName = g.First().DisplayName,
                    PloggingData = new()
                    {
                        Weight = g.Sum(f => f.PloggingData.Weight),

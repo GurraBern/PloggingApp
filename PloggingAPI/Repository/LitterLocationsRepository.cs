@@ -19,7 +19,8 @@ public class LitterLocationsRepository : ILitterLocationsRepository
 
     public async Task InsertLitterLocations(IEnumerable<LitterLocation> litterLocations)
     {
-        await _litterLocationsCollection.InsertManyAsync(litterLocations);
+        if (litterLocations.Any())
+            await _litterLocationsCollection.InsertManyAsync(litterLocations);
     }
 
     //TODO should add radius and datefilter

@@ -1,7 +1,7 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
+using PloggingApp.Data.Factories;
 using PloggingApp.Data.Services.ApiClients;
-using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
@@ -18,13 +18,9 @@ public class RankingService : IRankingService
     {
         try
         {
-            var request = new RestRequest("api/PloggingSession/Summary");
-            request.AddParameter("startDate", startDate);
-            request.AddParameter("endDate", endDate);
-            request.AddParameter(nameof(SortDirection), SortDirection.Descending);
-            request.AddParameter(nameof(SortProperty), sortProperty);
+            var sessionsRequest = SessionRequestFactory.CreateRequest(startDate, endDate, SortDirection.Descending, sortProperty);
 
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(request);
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest);
 
             var rankings = new List<UserRanking>();
             var rank = 1;
@@ -33,7 +29,7 @@ public class RankingService : IRankingService
                 var userRank = new UserRanking()
                 {
                     Id = summary.UserId,
-                    DisplayName = "DisplayName",
+                    DisplayName = summary.DisplayName,
                     PloggingData = summary.PloggingData,
                     Rank = rank++
                 };
