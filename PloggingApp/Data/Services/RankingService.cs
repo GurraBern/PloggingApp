@@ -1,30 +1,29 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
+using PloggingApp.Data.Factories;
 using PloggingApp.Data.Services.ApiClients;
-using RestSharp;
+using PloggingApp.Services;
 
 namespace PloggingApp.Data.Services;
 
 public class RankingService : IRankingService
 {
     private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
+    private readonly IToastService _toastService;
 
-    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient)
+    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService)
     {
         _ploggingApiClient = ploggingApiClient;
+        _toastService = toastService;
     }
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
     {
         try
         {
-            var request = new RestRequest("api/PloggingSession/Summary");
-            request.AddParameter("startDate", startDate);
-            request.AddParameter("endDate", endDate);
-            request.AddParameter(nameof(SortDirection), SortDirection.Descending);
-            request.AddParameter(nameof(SortProperty), sortProperty);
+            var sessionsRequest = SessionRequestFactory.CreateRequest(startDate, endDate, SortDirection.Descending, sortProperty);
 
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(request);
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest);
 
             var rankings = new List<UserRanking>();
             var rank = 1;
@@ -33,7 +32,7 @@ public class RankingService : IRankingService
                 var userRank = new UserRanking()
                 {
                     Id = summary.UserId,
-                    DisplayName = "DisplayName",
+                    DisplayName = summary.DisplayName,
                     PloggingData = summary.PloggingData,
                     Rank = rank++
                 };
@@ -45,7 +44,7 @@ public class RankingService : IRankingService
         }
         catch (Exception)
         {
-            //TODO display toast
+            await _toastService.MakeToast("Could not fetch user rankings"); 
             return Enumerable.Empty<UserRanking>();
         }
     }

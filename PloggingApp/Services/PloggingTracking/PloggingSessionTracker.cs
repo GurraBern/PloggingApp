@@ -76,9 +76,14 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     {
         IsTracking = false;
 
+        //TODO remove below
+        _authenticationService.CurrentUser.Info.DisplayName = "DisplayName";
+        //
+
         var ploggingSession = new PloggingSession()
         {
             UserId = _authenticationService.CurrentUser.Uid,
+            DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
             StartDate = StartTime,
             EndDate = DateTime.UtcNow,
             PloggingData = new PloggingData()
