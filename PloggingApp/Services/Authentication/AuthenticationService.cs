@@ -24,9 +24,9 @@ public class AuthenticationService : IAuthenticationService
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
 
-    public async Task CreateUser(string email, string password)
+    public async Task CreateUser(string email, string password, string displayName)
     {
-        _userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password);
+        _userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password, displayName);
     }
 
     public async Task AutoLogin()
