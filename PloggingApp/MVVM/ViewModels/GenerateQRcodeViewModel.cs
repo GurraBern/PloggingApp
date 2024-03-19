@@ -1,15 +1,18 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class GenerateQRcodeViewModel : BaseViewModel
 {
     public Task Initialization { get; private set; }
+    private readonly IAuthenticationService _authenticationService;
 
-    public GenerateQRcodeViewModel()
+    public GenerateQRcodeViewModel(IAuthenticationService authenticationService)
 	{
+        _authenticationService = authenticationService;
         Initialization = InitializeAsync();
     }
 
@@ -26,8 +29,7 @@ public partial class GenerateQRcodeViewModel : BaseViewModel
     {
         IsBusy = true;
 
-        //TODO replace with actual id when user authentication is implemented
-        CurrentUserId = "444ajsldkfjasödjfk34";
+        CurrentUserId = _authenticationService.CurrentUser.Uid;
 
 		IsBusy = false;
         return Task.CompletedTask;

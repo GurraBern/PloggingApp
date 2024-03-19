@@ -31,5 +31,10 @@ public partial class ScanQRcodePage : ContentPage
 		
 		var userId = first.Value;
 		await vm.AddUserToGroup(userId);
+
+        _ = Dispatcher.DispatchAsync(async () =>
+        {
+            await DisplayAlert("User added to group", first.Value, "OK");
+        });
     }
 }

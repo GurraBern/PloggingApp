@@ -2,16 +2,19 @@
 using CommunityToolkit.Mvvm.Input;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
+using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class PlogTogetherViewModel : BaseViewModel
 {
 	private readonly IPlogTogetherService _plogTogetherService;
+	private readonly IAuthenticationService _authenticationService;
 
-    public PlogTogetherViewModel(IPlogTogetherService plogTogetherService)
+    public PlogTogetherViewModel(IPlogTogetherService plogTogetherService, IAuthenticationService authenticationService)
 	{
 		_plogTogetherService = plogTogetherService;
+		_authenticationService = authenticationService;
 	}
 
 	[RelayCommand]
@@ -19,8 +22,7 @@ public partial class PlogTogetherViewModel : BaseViewModel
 	{
         IsBusy = true;
 
-        //TODO replace with actual id when user authentication is implemented
-        var ownerUserId = "44eLQV5Du9OJ95kHLOUjnKjse2z2";
+		var ownerUserId = _authenticationService.CurrentUser.Uid;
 
 		await _plogTogetherService.AddUserToGroup(ownerUserId, addUserId);
 		IsBusy = false;
@@ -31,10 +33,9 @@ public partial class PlogTogetherViewModel : BaseViewModel
 	{
         IsBusy = true;
 
-        //TODO replace with actual id when user authentication is implemented
-        var ownerUserId = "44eLQV5Du9OJ95kHLOUjnKjse2z2";
+        var ownerUserId = _authenticationService.CurrentUser.Uid;
 
-		await _plogTogetherService.DeleteGroup(ownerUserId);
+        await _plogTogetherService.DeleteGroup(ownerUserId);
 
 		IsBusy = false;
     }
