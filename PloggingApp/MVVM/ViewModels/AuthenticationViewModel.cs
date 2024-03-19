@@ -13,6 +13,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IStreakService _streakService;
+    private readonly IUserInfoService _userInfoService;
 
     [ObservableProperty]
     private bool rememberMeEnabled;
@@ -23,10 +24,12 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     public string DisplayName { get; set; }
     public Task Initialization { get; }
 
-    public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService)
+    public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService,
+                                    IUserInfoService userInfoService)
     {
         _authenticationService = authenticationService;
         _streakService = streakService;
+        _userInfoService = userInfoService;
 
         Initialization = Initialize();
     }
@@ -104,6 +107,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
 
                 string userId = _authenticationService.CurrentUser.Uid;
                 await _streakService.CreateUser(userId);
+                await _userInfoService.CreateUser(userId, DisplayName);
 
                 await Application.Current.MainPage.DisplayAlert("Success", "Account created.", "OK");
                 await _authenticationService.LoginUser(RegEmail, RegPassword);

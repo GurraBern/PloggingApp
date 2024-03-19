@@ -135,6 +135,7 @@ public static class MauiProgram
         }));
 
         builder.Services.AddTransient<IPlogTogetherService, PlogTogetherService>();
+        builder.Services.AddTransient<IUserInfoService, UserInfoService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -149,6 +150,7 @@ public static class MauiProgram
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
 
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
         }
     }
 

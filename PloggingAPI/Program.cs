@@ -32,6 +32,8 @@ builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
 
 builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>();
 
+builder.Services.AddSingleton<IUserInfoRepository, UserInfoRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
