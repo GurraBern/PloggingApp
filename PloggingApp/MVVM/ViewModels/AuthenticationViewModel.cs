@@ -4,7 +4,6 @@ using PloggingApp.Services.Authentication;
 using System.Diagnostics;
 using PloggingApp.Pages;
 using PloggingApp.Data.Services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -21,6 +20,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     public string RegPassword { get; set; }
     public string LoginEmail { get; set; }
     public string LoginPassword { get; set; }
+    public string DisplayName { get; set; }
     public Task Initialization { get; }
 
     public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService)
@@ -96,11 +96,11 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     [RelayCommand]
     private async Task Register()
     {
-        if (!string.IsNullOrEmpty(RegEmail) && !string.IsNullOrEmpty(RegPassword))
+        if (!string.IsNullOrEmpty(RegEmail) && !string.IsNullOrEmpty(RegPassword) && !string.IsNullOrEmpty(DisplayName))
         {
             try
             {
-                await _authenticationService.CreateUser(RegEmail, RegPassword);
+                await _authenticationService.CreateUser(RegEmail, RegPassword, DisplayName);
 
                 string userId = _authenticationService.CurrentUser.Uid;
                 await _streakService.CreateUser(userId);
