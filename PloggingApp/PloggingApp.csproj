@@ -164,6 +164,9 @@
 	  <MauiXaml Update="Pages\Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\MyProfilePage\MyProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Statistics\StatisticsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

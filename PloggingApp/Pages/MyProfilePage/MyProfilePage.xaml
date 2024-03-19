@@ -1,0 +1,52 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:MyProfileViewModel"
+             x:Class="PloggingApp.Pages.MyProfilePage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+
+    <VerticalStackLayout Margin="15" >
+
+        <HorizontalStackLayout Margin="0,10">
+            <Label 
+                Text="My Profile"
+                FontSize="Title"
+                VerticalOptions="Start" />
+            <Button 
+                Text="Logout"
+                Command="{Binding LogoutCommand}"
+                Margin="140, 0"
+                CornerRadius="20"/>
+        </HorizontalStackLayout>
+
+        <StackLayout Orientation="Vertical" HeightRequest="100">
+            <Label Text="Display Name" FontSize="Medium"/>
+            <Label Text="Rank" FontSize="Medium"/>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <views:StreakView HeightRequest="40" VerticalOptions="Start" HorizontalOptions="Start" BindingContext="{Binding StreakViewModel}"/>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Margin="0, 10" Orientation="Vertical" HeightRequest="100">
+            <Label Text="This Month"  FontSize="Medium"/>
+        </StackLayout>
+
+        <StackLayout Margin="0, 10" Orientation="Vertical" HeightRequest="100">
+            <Label Text="History"  FontSize="Medium"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical" HeightRequest="100">
+            <Label Text="Badge Collection"  FontSize="Medium"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical" HeightRequest="100" Margin="0, -60">
+            <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"></views:PloggingSessionView>
+        </StackLayout>
+        
+
+    </VerticalStackLayout>
+</ContentPage>

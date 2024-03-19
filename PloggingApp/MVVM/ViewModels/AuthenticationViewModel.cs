@@ -79,6 +79,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
                 }
                 else
                 {
+                    Trace.WriteLine($"ERROR: {ex.Message}");
                     await Application.Current.MainPage.DisplayAlert("Error", "An error occurred.", "OK");
                 }
             }

@@ -77,6 +77,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
+        builder.Services.AddTransient<MyProfileViewModel>();
+
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
@@ -112,6 +114,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
+
+        builder.Services.AddTransient<MyProfilePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
