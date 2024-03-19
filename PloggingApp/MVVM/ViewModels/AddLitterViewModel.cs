@@ -32,13 +32,11 @@ public partial class AddLitterViewModel : ObservableObject, IRecipient<PloggingS
     [RelayCommand]
     public void AddLitter(LitterType litterType)
     {
-        var currentLocation = _ploggingSessionTracker.CurrentLocation;
-
-        if (currentLocation != null)
+        if (CurrentLocation != null)
         {
-            _ploggingSessionTracker.AddLitterItem(litterType, 1, currentLocation);
+            _ploggingSessionTracker.AddLitterItem(litterType, 1, CurrentLocation);
 
-            WeakReferenceMessenger.Default.Send(new LitterPlacedMessage(currentLocation));
+            WeakReferenceMessenger.Default.Send(new LitterPlacedMessage(CurrentLocation));
         }
     }
 

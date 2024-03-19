@@ -1,32 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Devices.Sensors;
-using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
+    private readonly ILitterBagPlacementService _litterBagPlacementService;
+
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
-    //public List<Location> TrackingPositions { get; set; } = [];
     public Task Initialization { get; private set; }
 
-    public MapViewModel(ILitterLocationService litterLocationService)
+    public MapViewModel(ILitterLocationService litterLocationService, ILitterBagPlacementService litterBagPlacementService)
     {
         _litterLocationService = litterLocationService;
+        _litterBagPlacementService = litterBagPlacementService;
 
         WeakReferenceMessenger.Default.Register(this);
 
@@ -36,6 +29,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     private async Task Initialize()
     {
         await AddTrashPinsToMap();
+        await AddLitterBagPlacementsToMap();
     }
 
     private async Task AddTrashPinsToMap()
@@ -61,6 +55,29 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         });
     }
 
+    private async Task AddLitterBagPlacementsToMap()
+    {
+        var litterBagPlacements = await _litterBagPlacementService.GetLitterBagPlacements();
+
+        foreach (var litterBagPlacement in litterBagPlacements)
+        {
+            PlaceLitterBag(litterBagPlacement);
+        }
+    }
+
+    private void PlaceLitterBag(LitterBagPlacement litterBagPlacement)
+    {
+        var location = litterBagPlacement.Location;
+
+        PlacedPins.Add(new LitterBagPlacementPin()
+        {
+            Location = new Location()
+            {
+                Latitude = location.Latitude,
+                Longitude = location.Longitude
+            }
+        });
+    }
     //public Location CalculateZoomOut()
     //{
     //    double Longitude = 0;

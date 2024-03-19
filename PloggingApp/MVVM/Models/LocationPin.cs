@@ -28,6 +28,14 @@ public class TrashCollectedPin : LocationPin
 
 }
 
+public class LitterBagPlacementPin: LocationPin
+{
+    public LitterBagPlacementPin()
+    {
+        ImageSource = ImageSource.FromFile("handshake_color_icon.png");
+    }
+}
+
 public class FinishPin : LocationPin
 {
     public FinishPin()

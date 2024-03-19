@@ -48,8 +48,6 @@ public class PloggingSessionRepository : IPloggingSessionRepository
         var matchFilter = Builders<PloggingSession>.Filter.Gte(f => f.StartDate, query.StartDate) &
             Builders<PloggingSession>.Filter.Lte(f => f.EndDate, query.EndDate);
 
-        //TODO look up user id to fetch displayName
-
         var pipeline = new EmptyPipelineDefinition<PloggingSession>()
             .Match(matchFilter)
             .Group(f => f.UserId,

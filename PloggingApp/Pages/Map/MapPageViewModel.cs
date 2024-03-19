@@ -7,8 +7,8 @@ public class MapPageViewModel
 {
     public MapViewModel MapViewModel { get; set; }
 
-    public MapPageViewModel(ILitterLocationService litterLocationService)
+    public MapPageViewModel(ILitterLocationService litterLocationService, ILitterBagPlacementService litterBagPlacementService)
     {
-        MapViewModel = new MapViewModel(litterLocationService);
+        MapViewModel = new MapViewModel(litterLocationService, litterBagPlacementService);
     }
 }

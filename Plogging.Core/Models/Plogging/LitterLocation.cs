@@ -22,6 +22,6 @@ public class LitterLocation
 
     public LitterLocation()
     {
-        
+
     }
 }

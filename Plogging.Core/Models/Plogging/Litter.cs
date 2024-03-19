@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using Plogging.Core.Enums;
+﻿using Plogging.Core.Enums;
 
 namespace Plogging.Core.Models;
 

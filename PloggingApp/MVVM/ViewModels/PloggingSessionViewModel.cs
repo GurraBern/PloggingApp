@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
+using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Camera;
@@ -104,11 +105,20 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         var imagePath = await _cameraService.TakePhoto();
 
-        if(imagePath.Equals(""))
+        var request = new GeolocationRequest(GeolocationAccuracy.Best);
+        var markLocation = await Geolocation.GetLocationAsync(request);
+
+        if(!imagePath.Equals("") && markLocation != null)
         {
-            var t = 5;
-            //If image taken send set current location
-            //_ploggingSessionTracker.AddTrashCollectionPoint();
+            //TODO Add message for collectionpoint
+            var litterBagPlacement = new LitterBagPlacement()
+            {
+                Location = new MapPoint(markLocation.Latitude, markLocation.Longitude),
+                Image = imagePath,
+                Description = "Could not recycle so I left the bag"
+            };
+
+            await _ploggingSessionTracker.AddTrashCollectionPoint(litterBagPlacement);
         }
     }
 
@@ -183,12 +193,12 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         var FinishPin = new FinishPin()
         {
-            Location = _ploggingSessionTracker.CurrentLocation,
+            Location = CurrentLocation,
             Label = "End"
         };
 
         PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(_ploggingSessionTracker.CurrentLocation);
+        TrackingPositions.Add(CurrentLocation);
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
     }

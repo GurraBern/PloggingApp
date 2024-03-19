@@ -21,6 +21,7 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
+using Plogging.Core.Models;
 
 namespace PloggingApp;
 
@@ -46,10 +47,10 @@ public static class MauiProgram
             });
 
         AddApiClients(builder);
+        AddServices(builder);
         AddViewModels(builder);
         AddPopups(builder);
         AddPages(builder);
-        AddServices(builder);
 
         builder.ConfigureMauiHandlers(handlers =>
         {
@@ -116,6 +117,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
+        builder.Services.AddTransient<ILitterBagPlacementService, LitterBagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
@@ -136,6 +138,7 @@ public static class MauiProgram
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterBagPlacement>(ploggingApiClient);
         }
     }
 

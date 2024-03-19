@@ -8,4 +8,5 @@ public class PloggingDatabaseSettings
     public string PloggingSessionsCollectionName { get; set; } = null!;
     public string StreakCollectionName { get; set; } = null!;
     public string LitterLocationsCollectionName { get; set; } = null!;
+    public string LitterBagPlacementCollectionName { get; set; } = null!;
 }
