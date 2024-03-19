@@ -41,5 +41,19 @@ public class PlogTogetherController : Controller
             return StatusCode(500, "An error occurred while processing your request.");
         }
     }
+
+    [HttpGet("GetPlogTogether")]
+    public async Task<ActionResult> GetPlogTogether(string ownerUserId)
+    {
+        try
+        {
+            await _plogTogetherRepository.GetPlogTogether(ownerUserId);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
 }
 

@@ -18,6 +18,13 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         _plogTogetherCollection = mongoDataBase.GetCollection<PlogTogether>(settings.Value.PlogTogetherCollectionName);
     }
 
+    public async Task<PlogTogether> GetPlogTogether(string ownerUserId)
+    {
+        var plogTogether = await _plogTogetherCollection.Find(u => u.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+
+        return plogTogether;
+    }
+
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
         var userExistsInGroup = await _plogTogetherCollection.Find(a => a.UserIds.Contains(userId) || a.OwnerUserId == userId).FirstOrDefaultAsync();
