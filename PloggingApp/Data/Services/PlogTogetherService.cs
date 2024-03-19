@@ -42,5 +42,22 @@ public class PlogTogetherService : IPlogTogetherService
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
+
+    public async Task<PlogTogether> GetPlogTogether(string ownerUserId)
+    {
+        try
+        {
+            var request = new RestRequest("api/PlogTogether/GetPlogTogether");
+            request.AddParameter("ownerUserId", ownerUserId);
+
+            var plogTogether = await _ploggingApiClient.GetAsync(request);
+            return plogTogether;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return null;
+        }
+    }
 }
 
