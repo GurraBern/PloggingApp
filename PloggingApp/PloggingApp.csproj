@@ -82,10 +82,18 @@
 	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
 	  <None Remove="Resources\Images\canpin.png" />
+	  <None Remove="Resources\Images\distancebadge.svg" />
+	  <None Remove="Resources\Images\distancebadgebronze.svg" />
+	  <None Remove="Resources\Images\distancebadgegold.svg" />
+	  <None Remove="Resources\Images\distancebadgesilver.svg" />
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\startpin.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
+	  <None Remove="Resources\Images\weightbadge.svg" />
+	  <None Remove="Resources\Images\weightbadgebronze.svg" />
+	  <None Remove="Resources\Images\weightbadgegold.svg" />
+	  <None Remove="Resources\Images\weightbadgesilver.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -137,6 +145,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AddLitter.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BadgesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Components\LitterTypeButton.xaml">

@@ -7,8 +7,8 @@
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              x:Class="PloggingApp.MVVM.Views.OthersSessionsView"
              x:DataType="viewmodel:OthersSessionsViewModel">
-
-    <StackLayout>
+    
+        <StackLayout>
         <Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>
         <Label Text="Total" Padding="6,0"></Label>
         <Frame  Margin="0">
@@ -42,7 +42,8 @@
 
 
         <Label Text="Recent Sessions" Padding="6,0"></Label>
-        <CollectionView ItemsSource="{Binding PloggingSessions}">
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding PloggingSessions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="modelsCore:PloggingSession">
                     <Frame Margin="2,3" Padding="0">
@@ -62,5 +63,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        </ScrollView>
     </StackLayout>
+    
 </ContentView>

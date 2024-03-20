@@ -85,7 +85,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MapViewModel>();
         builder.Services.AddTransient<AddLitterViewModel>();
         builder.Services.AddTransient<PloggingSessionViewModel>();
-
+        builder.Services.AddTransient<BadgesViewModel>();
         builder.Services.AddTransient<PlogTogetherViewModel>();
         builder.Services.AddTransient<GenerateQRcodeViewModel>();
     }

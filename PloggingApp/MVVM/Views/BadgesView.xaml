@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.BadgesView"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:BadgesViewModel">
+    <CollectionView ItemsSource="{Binding Badges}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate  x:DataType="models:Badge">
+                <HorizontalStackLayout>
+                    <Image Source="{Binding Image}" HeightRequest="500" WidthRequest="500" Margin="0" />
+                </HorizontalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentView>
