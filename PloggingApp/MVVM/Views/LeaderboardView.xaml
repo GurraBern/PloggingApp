@@ -44,7 +44,12 @@
                                         </Border.StrokeShape>
                                     </Border>
 
-                                    <Label VerticalOptions="Center" Text="{Binding DisplayName}"></Label>
+                                    <Label x:Name ="NameOfOtherUser" VerticalOptions="Center" Text="{Binding DisplayName}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"
+                               CommandParameter="{Binding Id}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
 
                                 </HorizontalStackLayout>
 

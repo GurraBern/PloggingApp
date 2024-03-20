@@ -76,11 +76,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
 	  <None Remove="Resources\Images\canpin.png" />
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\startpin.png" />
+	  <None Remove="Resources\Images\trashbag.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -137,6 +142,9 @@
 	  <MauiXaml Update="MVVM\Views\Components\LitterTypeButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\OthersSessionsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -162,6 +170,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Map\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\OthersProfile\OthersProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Statistics\StatisticsPage.xaml">
