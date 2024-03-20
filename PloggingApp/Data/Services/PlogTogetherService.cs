@@ -47,8 +47,7 @@ public class PlogTogetherService : IPlogTogetherService
     {
         try
         {
-            var request = new RestRequest("api/PlogTogether/GetPlogTogether");
-            request.AddParameter("ownerUserId", ownerUserId);
+            var request = new RestRequest($"api/PlogTogether/GetPlogTogether/{ownerUserId}");
 
             var plogTogether = await _ploggingApiClient.GetAsync(request);
             return plogTogether;
