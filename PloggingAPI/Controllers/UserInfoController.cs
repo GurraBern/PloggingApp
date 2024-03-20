@@ -16,7 +16,7 @@ public class UserInfoController : Controller
         _userInfoRepository = userInfoRepository;
     }
 
-    [HttpGet("GetUserInfo")]
+    [HttpGet("GetUserInfo/{userId}")]
     public async Task<ActionResult> GetUserInfo(string userId)
     {
         try
