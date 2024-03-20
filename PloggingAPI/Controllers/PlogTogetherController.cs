@@ -19,8 +19,8 @@ public class PlogTogetherController : Controller
     {
         try
         {
-            await _plogTogetherRepository.GetPlogTogether(ownerUserId);
-            return Ok();
+            var user = await _plogTogetherRepository.GetPlogTogether(ownerUserId);
+            return Ok(user);
         }
         catch (Exception ex)
         {
