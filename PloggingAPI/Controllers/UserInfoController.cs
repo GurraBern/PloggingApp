@@ -21,8 +21,8 @@ public class UserInfoController : Controller
     {
         try
         {
-            await _userInfoRepository.GetUser(userId);
-            return Ok();
+            var user = await _userInfoRepository.GetUser(userId);
+            return Ok(user);
         }
         catch (Exception ex)
         {
