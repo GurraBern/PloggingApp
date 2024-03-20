@@ -22,6 +22,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _sessionService = SessionService;
         Initialization = GetSessions();
 
+
+
     }
 
     [RelayCommand]

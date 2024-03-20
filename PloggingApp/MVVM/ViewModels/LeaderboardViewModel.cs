@@ -44,10 +44,11 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService)
+    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService, IPloggingSessionService sessionService)
     {
         _rankingService = rankingService;
         _authenticationService = authenticationService;
+        _sessionService = sessionService;
         Initialization = InitializeAsync();
     }
 
