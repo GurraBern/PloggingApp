@@ -14,6 +14,20 @@ public class PlogTogetherController : Controller
         _plogTogetherRepository = plogTogetherRepository;
     }
 
+    [HttpGet("GetPlogTogether")]
+    public async Task<ActionResult> GetPlogTogether(string ownerUserId)
+    {
+        try
+        {
+            var user = await _plogTogetherRepository.GetPlogTogether(ownerUserId);
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
     [HttpPost("AddUserToGroup/{ownerUserId}/{userId}")]
     public async Task<ActionResult> AddUserToGroup(string ownerUserId, string userId)
     {

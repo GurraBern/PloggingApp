@@ -9,4 +9,5 @@ public class PloggingDatabaseSettings
     public string StreakCollectionName { get; set; } = null!;
     public string LitterLocationsCollectionName { get; set; } = null!;
     public string PlogTogetherCollectionName { get; set; } = null!;
+    public string UserInfoCollectionName { get; set; } = null!;
 }

@@ -60,5 +60,12 @@ public class PlogTogetherRepository : IPlogTogetherRepository
     {
         await _plogTogetherCollection.DeleteOneAsync(u => u.OwnerUserId == ownerUserId);
     }
+
+    public async Task<PlogTogether> GetPlogTogether(string ownerUserId)
+    {
+        var plogTogether = await _plogTogetherCollection.Find(u => u.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+
+        return plogTogether;
+    }
 }
 

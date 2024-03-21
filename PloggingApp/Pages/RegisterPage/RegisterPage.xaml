@@ -29,8 +29,9 @@
             <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0">
                 <Label FontAttributes="Bold" FontSize="24" HorizontalOptions="CenterAndExpand" Text="Registration" TextColor="#1C375C" />
                 <Label Margin="0,15,0,0" HorizontalOptions="CenterAndExpand" Text="Register using Email" TextColor="#1C375C" />
-                <Entry Margin="0,15,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" TextColor="Black" Text="{Binding RegEmail}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
+                <Entry Margin="0,25,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" TextColor="Black" Text="{Binding RegEmail}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
                 <Entry Margin="0,25,0,0" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" TextColor="Black" Text="{Binding RegPassword}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
+                <Entry Margin="0,25,0,0" HorizontalOptions="FillAndExpand" Placeholder="Username" TextColor="Black" Text="{Binding DisplayName}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
                 <Button Margin="0,25,0,0" BackgroundColor="#1C375C" Command="{Binding RegisterCommand}" CornerRadius="20" Text="Register using Email" WidthRequest="300" />
 
                 <Button BackgroundColor="White" Command="{Binding GoToLoginPageCommand}" >
