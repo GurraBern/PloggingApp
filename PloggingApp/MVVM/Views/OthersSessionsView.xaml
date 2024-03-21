@@ -46,7 +46,7 @@
             <CollectionView ItemsSource="{Binding PloggingSessions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="modelsCore:PloggingSession">
-                    <Frame Margin="2,3" Padding="0">
+                    <Border Margin="2,3" Padding="0">
                         <HorizontalStackLayout >
                             <Image Source="trashbag.png"  HeightRequest="40" WidthRequest="40"></Image>
                             <VerticalStackLayout Margin="0,8">
@@ -59,7 +59,7 @@
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

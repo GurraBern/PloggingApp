@@ -74,14 +74,14 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticsPageViewModel>();
 
         builder.Services.AddScoped<CheckoutImageViewModel>();
-        builder.Services.AddScoped<OthersProfilePageViewModel>();
+        builder.Services.AddTransient<OthersProfilePageViewModel>();
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
-        builder.Services.AddScoped<OthersSessionsViewModel>();
+        builder.Services.AddTransient<OthersSessionsViewModel>();
         builder.Services.AddTransient<MapViewModel>();
         builder.Services.AddTransient<AddLitterViewModel>();
         builder.Services.AddTransient<PloggingSessionViewModel>();
@@ -113,7 +113,7 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
 
-        builder.Services.AddScoped<OthersProfilePage>();
+        builder.Services.AddTransient<OthersProfilePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)

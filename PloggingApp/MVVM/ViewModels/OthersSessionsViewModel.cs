@@ -23,6 +23,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public double totalCO2Saved;
     [ObservableProperty]
     public double totalWeight;
+    [ObservableProperty]
+    public string userProfileName;
 
 
     private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
@@ -58,6 +60,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
+        UserProfileName = test;
         PloggingSessions.ClearAndAddRange(_allSessions);
         IsBusy = false;
     }

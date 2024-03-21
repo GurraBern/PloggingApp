@@ -76,10 +76,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Remove="Resources\Images\streak_flame.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
 	  <None Remove="Resources\Images\canpin.png" />
 	  <None Remove="Resources\Images\distancebadge.svg" />
@@ -89,6 +85,7 @@
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\startpin.png" />
+	  <None Remove="Resources\Images\streak_flame.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
 	  <None Remove="Resources\Images\weightbadge.svg" />
 	  <None Remove="Resources\Images\weightbadgebronze.svg" />
