@@ -14,7 +14,7 @@ public class PlogTogetherController : Controller
         _plogTogetherRepository = plogTogetherRepository;
     }
 
-    [HttpGet("GetPlogTogether")]
+    [HttpGet("GetPlogTogether/{ownerUserId}")]
     public async Task<ActionResult> GetPlogTogether(string ownerUserId)
     {
         try

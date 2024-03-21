@@ -16,13 +16,13 @@ public class UserInfoController : Controller
         _userInfoRepository = userInfoRepository;
     }
 
-    [HttpGet("GetUserInfo")]
+    [HttpGet("GetUserInfo/{userId}")]
     public async Task<ActionResult> GetUserInfo(string userId)
     {
         try
         {
-            await _userInfoRepository.GetUser(userId);
-            return Ok();
+            var user = await _userInfoRepository.GetUser(userId);
+            return Ok(user);
         }
         catch (Exception ex)
         {

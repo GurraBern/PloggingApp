@@ -17,8 +17,7 @@ public class UserInfoService : IUserInfoService
     {
         try
         {
-            var request = new RestRequest("api/UserInfo/GetUserInfo");
-            request.AddParameter("userId", userId);
+            var request = new RestRequest($"api/UserInfo/GetUserInfo/{userId}");
 
             var user = await _ploggingApiClient.GetAsync(request);
             return user;
