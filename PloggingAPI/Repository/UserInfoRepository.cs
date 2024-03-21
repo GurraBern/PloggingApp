@@ -30,7 +30,7 @@ public class UserInfoRepository : IUserInfoRepository
 
     public async Task<UserInfo> GetUser(string userId)
     {
-        var user = await _userInfoCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
+        var user = await _userInfoCollection.Find(u => u.UserId == userId).FirstOrDefaultAsync();
         return user;
     }
 }
