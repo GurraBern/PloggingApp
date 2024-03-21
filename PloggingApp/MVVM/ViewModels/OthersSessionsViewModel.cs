@@ -44,7 +44,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task UpdatePage()
     {
 
-        GetSessions();
+        await GetSessions();
 
     }
 
@@ -54,10 +54,10 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         var test = _sessionService.UserId;
         _allSessions = await _sessionService.GetUserSessions(test, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         var stats = new PloggingStatistics(_allSessions);
-        totalSteps = stats.TotalSteps;
-        totalDistance = stats.TotalDistance;
-        totalCO2Saved = stats.TotalCO2Saved;
-        totalWeight = stats.TotalWeight;
+        TotalSteps = Math.Round(stats.TotalSteps);
+        TotalDistance = Math.Round(stats.TotalDistance);
+        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
+        TotalWeight = Math.Round(stats.TotalWeight);
         PloggingSessions.ClearAndAddRange(_allSessions);
         IsBusy = false;
     }
