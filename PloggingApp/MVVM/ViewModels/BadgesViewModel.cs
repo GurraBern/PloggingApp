@@ -14,6 +14,7 @@ public partial class BadgesViewModel : BaseViewModel
 
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+
     public Task Initialization { get; private set; }
     public ObservableCollection<Badge> Badges { get; set; } = [];
     public BadgesViewModel(IPloggingSessionService ploggingSessionService)
