@@ -22,7 +22,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Text="Trash Collected" Grid.Column="0"  />
                         <Label Text="Distance" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
-                        <Label Text="Time Spent" Grid.Column="2" />
+                        <Label Text="CO2" Grid.Column="2" />
                     </Grid>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
@@ -32,9 +32,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="{Binding _PloggingStatistics.totalDistance}" Grid.Column="0"  />
-                        <Label Text="{Binding _PloggingStatistics.totalDistance}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
-                        <Label Text="{Binding _PloggingStatistics.totalWeight}" Grid.Column="2" />
+                        <Label Text="{Binding TotalWeight}" Grid.Column="0"  />
+                        <Label Text="{Binding TotalDistance}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
+                        <Label Text="{Binding TotalCO2Saved}" Grid.Column="2" />
                     </Grid>
                 </HorizontalStackLayout>
             </VerticalStackLayout>

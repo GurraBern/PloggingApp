@@ -14,7 +14,17 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
 {
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
-    public ObservableObject _PloggingStatistics{ get; set; }
+
+    [ObservableProperty]
+    public double totalSteps;
+    [ObservableProperty]
+    public double totalDistance;
+    [ObservableProperty]
+    public double totalCO2Saved;
+    [ObservableProperty]
+    public double totalWeight;
+
+
     private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
 
     private readonly IPloggingSessionService _sessionService;
@@ -43,8 +53,11 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         IsBusy = true;
         var test = _sessionService.UserId;
         _allSessions = await _sessionService.GetUserSessions(test, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        _PloggingStatistics = new PloggingStatistics(_allSessions);
-        
+        var stats = new PloggingStatistics(_allSessions);
+        totalSteps = stats.TotalSteps;
+        totalDistance = stats.TotalDistance;
+        totalCO2Saved = stats.TotalCO2Saved;
+        totalWeight = stats.TotalWeight;
         PloggingSessions.ClearAndAddRange(_allSessions);
         IsBusy = false;
     }
