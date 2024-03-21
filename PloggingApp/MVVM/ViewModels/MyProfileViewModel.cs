@@ -1,33 +1,76 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
-using System.Diagnostics;
+using PloggingApp.Extensions;
+using Plogging.Core.Models;
 using PloggingApp.Pages;
+using System.Collections.ObjectModel;
 using PloggingApp.Data.Services;
+using PloggingApp.Data.Services.Interfaces;
+using System.Diagnostics;
+using PloggingApp.MVVM.Models;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class MyProfileViewModel : ObservableObject, IAsyncInitialization
+public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 {
+    public Task Initialization { get; private set; }
+    private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
-    public StreakViewModel StreakViewModel { get; set; }
-    public PloggingSessionViewModel PloggingSessionViewModel { get; }
-    public StatisticsViewModel StatisticsViewModel { get; }
-    public Task Initialization { get; }
+    private readonly IRankingService _rankingService;
 
-    public MyProfileViewModel(IAuthenticationService authenticationService, StreakViewModel streakViewModel, PloggingSessionViewModel ploggingSessionViewModel, StatisticsViewModel statisticsViewModel)
+    public PloggingSessionViewModel PloggingSessionViewModel { get; }
+    public StreakViewModel StreakViewModel { get; set; }
+
+    public LeaderboardViewModel LeaderboardViewModel { get; }
+
+    public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
+    private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+
+    [ObservableProperty]
+    public string displayName;
+    [ObservableProperty]
+    public double totalSteps;
+    [ObservableProperty]
+    public double totalDistance;
+    [ObservableProperty]
+    public double totalCO2Saved;
+    [ObservableProperty]
+    public double totalWeight;
+    [ObservableProperty]
+    public double totalTime;
+    [ObservableProperty]
+    private UserRanking userRank;
+
+    public MyProfileViewModel(IAuthenticationService authenticationService, IRankingService rankingService, StreakViewModel streakViewModel, IPloggingSessionService ploggingSessionService, PloggingSessionViewModel ploggingSessionViewModel, LeaderboardViewModel leaderboardViewModel)
     {
         _authenticationService = authenticationService;
-        PloggingSessionViewModel = ploggingSessionViewModel;
+        _rankingService = rankingService;
+        _ploggingSessionService = ploggingSessionService;
         StreakViewModel = streakViewModel;
-        StatisticsViewModel = statisticsViewModel;
+        PloggingSessionViewModel = ploggingSessionViewModel;
+        LeaderboardViewModel = leaderboardViewModel;
 
-        Initialization = Initialize();
+        Initialization = GetSessions();
     }
 
-    private async Task Initialize()
+    public async Task GetSessions()
     {
-        Debug.WriteLine("MyProfileViewModel initialized.");
+        IsBusy = true;
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
+        PloggingSessions.ClearAndAddRange(_allUserSessions);
+        //userRank = LeaderboardViewModel.UserRank.Rank;
+        //Debug.WriteLine(userRank);
+
+        var stats = new PloggingStatistics(_allUserSessions);
+        TotalSteps = Math.Round(stats.TotalSteps);
+        TotalDistance = Math.Round(stats.TotalDistance);
+        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
+        TotalWeight = Math.Round(stats.TotalWeight);
+
+
+        IsBusy = false;
     }
 
     [RelayCommand]
@@ -39,3 +82,4 @@ public partial class MyProfileViewModel : ObservableObject, IAsyncInitialization
 
 
 }
+

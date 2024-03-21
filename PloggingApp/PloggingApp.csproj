@@ -81,6 +81,7 @@
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\startpin.png" />
+	  <None Remove="Resources\Images\user.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -124,6 +125,11 @@
 	  </Compile>
 	  <Compile Update="Pages\Leaderboard\RankingPage.xaml.cs">
 	    <DependentUpon>RankingPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -189,5 +195,11 @@
 	  <BundleResource Include="Resources\Images\leaderboard.svg" />
 	  <BundleResource Include="Resources\Images\map_icon.svg" />
 	  <BundleResource Include="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 </Project>

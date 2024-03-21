@@ -21,7 +21,7 @@ public class AuthenticationService : IAuthenticationService
     {
         _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
         await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
-        await Shell.Current.GoToAsync($"//{nameof(MyProfilePage)}"); //TO BE CHANGED BACK TO DASHBOARD
+        await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
 
     public async Task CreateUser(string email, string password, string displayName)
@@ -37,7 +37,7 @@ public class AuthenticationService : IAuthenticationService
         if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
         {
             _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
-            await Shell.Current.GoToAsync($"//{nameof(MyProfilePage)}"); //TO BE CHANGED BACK TO DASHBOARD
+            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}"); 
         } else
         {
             Trace.WriteLine("Autologin failed.");

@@ -7,6 +7,11 @@
     Shell.FlyoutBehavior="Disabled"
     Title="PloggingApp">
 
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="My Profile" IconImageSource="user.svg"
+                     Order="Primary" Priority="0" />
+    </Shell.ToolbarItems>
+    
     <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
         <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate views:RegisterPage}" />
@@ -16,9 +21,11 @@
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
+        <ShellContent Route="MyProfilePage" Title="My Profile" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
+
     </TabBar>
 
     <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
     <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
-    <ShellContent Route="MyProfilePage" Title="MyProfile" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
+
 </Shell>
