@@ -68,7 +68,6 @@ public class StreakService : IStreakService
     public async Task CreateUser(string userId)
     {
         UserStreak user = new UserStreak {
-            DisplayName = "RemoveDisplayName",
             UserId = userId,
             Streak = 0};
 

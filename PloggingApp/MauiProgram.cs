@@ -21,6 +21,7 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
+using ZXing.Net.Maui.Controls;
 using Plogging.Core.Models;
 
 namespace PloggingApp;
@@ -39,6 +40,7 @@ public static class MauiProgram
             .UseSkiaSharp()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
             .UseMauiMaps() /*android och IOS specific*/
+            .UseBarcodeReader()
 
             .ConfigureFonts(fonts =>
             {
@@ -84,6 +86,9 @@ public static class MauiProgram
         builder.Services.AddTransient<MapViewModel>();
         builder.Services.AddTransient<AddLitterViewModel>();
         builder.Services.AddTransient<PloggingSessionViewModel>();
+
+        builder.Services.AddTransient<PlogTogetherViewModel>();
+        builder.Services.AddTransient<GenerateQRcodeViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -103,6 +108,8 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticsPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
+        builder.Services.AddScoped<GenerateQRcodePage>();
+        builder.Services.AddScoped<ScanQRcodePage>();
 
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
@@ -127,6 +134,9 @@ public static class MauiProgram
             AuthDomain = builder.Configuration["FirebaseUrl"],
             Providers = [new EmailProvider()]
         }));
+
+        builder.Services.AddTransient<IPlogTogetherService, PlogTogetherService>();
+        builder.Services.AddTransient<IUserInfoService, UserInfoService>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)
@@ -137,7 +147,11 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
+
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
+
+            builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterBagPlacement>(ploggingApiClient);
         }
     }

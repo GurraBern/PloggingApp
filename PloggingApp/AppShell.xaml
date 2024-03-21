@@ -17,4 +17,7 @@
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
     </TabBar>
+
+    <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
+    <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
 </Shell>
