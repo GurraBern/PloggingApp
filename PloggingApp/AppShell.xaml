@@ -16,9 +16,10 @@
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
+        <ShellContent Route="SessionStatisticsPage" Title="Session" Icon="stats.png" ContentTemplate="{DataTemplate views:SessionStatisticsPage}"></ShellContent>
     </TabBar>
 
     <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
     <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
     <ShellContent Route="OthersProfilePage" Title="OTHER PROFILE"  ContentTemplate="{DataTemplate views:OthersProfilePage}"></ShellContent>
-</Shell>
+</Shell> 
