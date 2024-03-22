@@ -6,6 +6,8 @@ using PloggingApp.Data.Services;
 using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Pages;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -13,6 +15,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IRankingService _rankingService;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IPloggingSessionService _sessionService;
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
     private IEnumerable<UserRanking> _allRankings = new ObservableCollection<UserRanking>();
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
@@ -41,10 +44,11 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService)
+    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService, IPloggingSessionService sessionService)
     {
         _rankingService = rankingService;
         _authenticationService = authenticationService;
+        _sessionService = sessionService;
         Initialization = InitializeAsync();
     }
 
@@ -113,5 +117,12 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
         {
             Rankings.ClearAndAddRange(_allRankings);
         }
+    }
+
+    [RelayCommand]
+    private async Task GoToProfilePage(string userId)
+    {
+        _sessionService.UserId = userId;
+        await Shell.Current.GoToAsync($"//{nameof(OthersProfilePage)}");
     }
 }

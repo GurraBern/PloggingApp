@@ -20,4 +20,5 @@
 
     <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
     <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
+    <ShellContent Route="OthersProfilePage" Title="OTHER PROFILE"  ContentTemplate="{DataTemplate views:OthersProfilePage}"></ShellContent>
 </Shell>

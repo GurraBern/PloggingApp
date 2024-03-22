@@ -74,18 +74,17 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticsPageViewModel>();
 
         builder.Services.AddScoped<CheckoutImageViewModel>();
-
+        builder.Services.AddTransient<OthersProfilePageViewModel>();
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<StreakViewModel>();
-
+        builder.Services.AddTransient<OthersSessionsViewModel>();
         builder.Services.AddTransient<MapViewModel>();
         builder.Services.AddTransient<AddLitterViewModel>();
         builder.Services.AddTransient<PloggingSessionViewModel>();
-
         builder.Services.AddTransient<PlogTogetherViewModel>();
         builder.Services.AddTransient<GenerateQRcodeViewModel>();
     }
@@ -112,6 +111,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
+
+        builder.Services.AddTransient<OthersProfilePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -121,7 +122,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
-        builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
+        builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
         builder.Services.AddTransient<IChartService, ChartService>();
