@@ -10,6 +10,7 @@ using PloggingApp.Services.Statistics;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Pages;
 
 namespace PloggingApp.MVVM.ViewModels;
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
@@ -42,7 +43,8 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        //_allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions("newId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
         chartService = new ChartService(UserSessions);
         PloggingStats = new PloggingStatistics(UserSessions);
@@ -85,7 +87,15 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         StatsBoxColor = colorDict[TimeResolution.ThisYear];
         IsBusy= false;
     }
-    
+    [RelayCommand]
+    private async Task GoToSessionStats(PloggingSession session)
+    {
+        if (session is null)
+            return;
+        _ploggingSessionService.SessionId = session.Id;
+        await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}");
+    }
+
     [ObservableProperty]
     ChartContext distanceChart;
     [ObservableProperty]

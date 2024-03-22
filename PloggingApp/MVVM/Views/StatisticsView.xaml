@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.StatisticsView"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:modelscore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels" 
              x:DataType="viewmodel:StatisticsViewModel"
@@ -28,25 +29,38 @@
                                 <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
-                    <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
                             <VerticalStackLayout>
                                 <Label Text="CO2 Saved" TextColor="White" HorizontalOptions="Center"/>
                                 <Label Text= "{Binding PloggingStats.TotalCO2Saved }" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
-                    <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
                             <VerticalStackLayout>
                                 <Label Text="Distance" TextColor="White" HorizontalOptions="Center"/>
                                 <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} km'}" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
-                    <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
                             <VerticalStackLayout>
                                 <Label Text="Steps" TextColor="White" HorizontalOptions="Center"/>
                                 <Label Text= "{Binding PloggingStats.TotalSteps, StringFormat='{0} steps'}" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
+                <Label Style="{StaticResource SubHeadline}" Text="Sessions"/>
+                <CollectionView ItemsSource="{Binding UserSessions}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelscore:PloggingSession">
+                            <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#5c5aa8" Margin="10,10" Padding="10, 10">
+                                <Label Text="{Binding StartDate, StringFormat='{0:D}'}" TextColor="White"/>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
         </ScrollView>
     </Grid>
