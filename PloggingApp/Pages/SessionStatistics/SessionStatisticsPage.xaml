@@ -5,11 +5,10 @@
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
              x:DataType="viewmodel:SessionStatisticsViewModel"
-             Title="SessionStatisticsPage">
+             >
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Style="{StaticResource Headline}" Text="{Binding PloggingSession.StartDate, StringFormat='{0:D}'}"/>
+        <Label Style="{StaticResource SubHeadline}" Text="{Binding PloggingSession.DisplayName}"/>
+        <Label Text="{Binding PloggingSession.Id}" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>

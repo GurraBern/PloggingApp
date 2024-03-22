@@ -13,6 +13,7 @@ using PloggingApp.Services.Authentication;
 using PloggingApp.Pages;
 
 namespace PloggingApp.MVVM.ViewModels;
+
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 {
 
@@ -93,7 +94,11 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         if (session is null)
             return;
         _ploggingSessionService.SessionId = session.Id;
-        await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}");
+        await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}", true, 
+            new Dictionary<string, object>
+            {
+                {"PloggingSession", session}
+            });
     }
 
     [ObservableProperty]
