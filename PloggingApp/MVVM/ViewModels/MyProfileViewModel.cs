@@ -14,7 +14,7 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 {
-    public Task Initialization { get; private set; }
+
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IRankingService _rankingService;
@@ -25,8 +25,13 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public LeaderboardViewModel LeaderboardViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
-    private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-
+    public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+    [ObservableProperty]
+    public DateTime recentStartDate0;
+    [ObservableProperty]
+    public DateTime recentStartDate1;
+    [ObservableProperty]
+    public DateTime recentStartDate2;
     [ObservableProperty]
     public string displayName;
     [ObservableProperty]
@@ -40,7 +45,9 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public double totalTime;
     [ObservableProperty]
-    private UserRanking userRank;
+    public int userRankInt;
+    //[ObservableProperty]
+    //public UserRanking userRank;
 
     public MyProfileViewModel(IAuthenticationService authenticationService, IRankingService rankingService, StreakViewModel streakViewModel, IPloggingSessionService ploggingSessionService, PloggingSessionViewModel ploggingSessionViewModel, LeaderboardViewModel leaderboardViewModel)
     {
@@ -51,24 +58,35 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         PloggingSessionViewModel = ploggingSessionViewModel;
         LeaderboardViewModel = leaderboardViewModel;
 
-        Initialization = GetSessions();
+        Initialization = InitializeAsync();
     }
 
+    public Task Initialization { get; private set; }
+
+    private async Task InitializeAsync()
+    {
+        await GetSessions();
+    }
     public async Task GetSessions()
     {
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        
+        RecentStartDate0 = _allUserSessions.ElementAt(0).StartDate;
+        RecentStartDate1 = _allUserSessions.ElementAt(1).StartDate;
+        RecentStartDate2 = _allUserSessions.ElementAt(2).StartDate;
+
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
         PloggingSessions.ClearAndAddRange(_allUserSessions);
-        //userRank = LeaderboardViewModel.UserRank.Rank;
-        //Debug.WriteLine(userRank);
+        UserRankInt = LeaderboardViewModel.UserRank.Rank;
+        //UserRank = LeaderboardViewModel.UserRank;
 
         var stats = new PloggingStatistics(_allUserSessions);
         TotalSteps = Math.Round(stats.TotalSteps);
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
-
+        
 
         IsBusy = false;
     }
