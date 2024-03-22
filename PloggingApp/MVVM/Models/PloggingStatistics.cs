@@ -44,5 +44,6 @@ public partial class PloggingStatistics : ObservableObject
         TotalWeight = weight.GetValue(tr);
     }
 
+
 }
 

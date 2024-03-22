@@ -7,6 +7,9 @@ using CommunityToolkit.Mvvm.Input;
 using Plogging.Core.Enums;
 using PloggingApp.MVVM.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PloggingApp.Data.Services;
+using Firebase.Auth.Requests;
+using Firebase.Auth;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -14,6 +17,9 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
 {
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
+
+    public ObservableCollection<Badge> Badges { get; set; } = [];
+    public List<Badge> _Badges { get; set; } = [];
 
     [ObservableProperty]
     public double totalSteps;
@@ -24,46 +30,58 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     [ObservableProperty]
     public double totalWeight;
     [ObservableProperty]
-    public string userProfileName;
+    public string displayName;
 
 
     private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
 
     private readonly IPloggingSessionService _sessionService;
+    private readonly IUserInfoService _userInfo;
     private IRelayCommand? RecentSessionCommand { get; set; }
     public Task Initialization { get; private set; }
 
-    public OthersSessionsViewModel(IPloggingSessionService SessionService)
+    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo)
     {
         _sessionService = SessionService;
-        Initialization = GetSessions();
-
-
-
+        _userInfo = UserInfo;
+        Initialization =GetSessionsAndBadges(); //Dela upp i två funktioner?
     }
 
     [RelayCommand]
     public async Task UpdatePage()
     {
 
-        await GetSessions();
+        await GetSessionsAndBadges();
 
     }
 
-    public async Task GetSessions()
+    public async Task GetSessionsAndBadges()
     {
         IsBusy = true;
-        var test = _sessionService.UserId;
-        _allSessions = await _sessionService.GetUserSessions(test, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        var userId = _sessionService.UserId;
+        var user = await _userInfo.GetUser(userId);
+        DisplayName = user.DisplayName;
+        _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         var stats = new PloggingStatistics(_allSessions);
         TotalSteps = Math.Round(stats.TotalSteps);
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
-        UserProfileName = test;
         PloggingSessions.ClearAndAddRange(_allSessions);
+        await GetBadges(userId, _allSessions, stats);
         IsBusy = false;
     }
+
+    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats)
+    {
+
+        _Badges.Add(new TrashCollectedBadge(stats));
+        _Badges.Add(new DistanceBadge(stats));
+        _Badges.Add(new TimeSpentBadge(stats));
+        Badges.ClearAndAddRange(_Badges);
+        _Badges.Clear();
+    }
+
 
 
 

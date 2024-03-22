@@ -7,8 +7,7 @@
 
     <VerticalStackLayout>
         <VerticalStackLayout>
-            <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
-                <Button Text="Go back" Command="{Binding GoBackCommand}"></Button>
+            <Button Text="Go back" Command="{Binding GoBackCommand}"></Button>
             <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"></views:OthersSessionsView>
         </VerticalStackLayout>
     </VerticalStackLayout>

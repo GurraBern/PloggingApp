@@ -10,43 +10,44 @@
     
         <StackLayout>
         <Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>
-        <Label Text="Total" Padding="6,0"></Label>
+        <HorizontalStackLayout>
+            <Label Text="{Binding DisplayName}" FontSize="50"></Label>
+            <CollectionView ItemsSource="{Binding Badges}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Badge">
+                        <StackLayout Margin="-25,-10,-30,0">
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </HorizontalStackLayout>
+        <Label Text="Total" FontSize="Large" Padding="6,0"></Label>
         <Border Margin="0">
             <VerticalStackLayout>
                 <HorizontalStackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Label Text="Trash Weight" Grid.Column="0"  />
+                     <Label Text="Trash Weight" Grid.Column="0"  />
                         <Label Text="Distance" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
                         <Label Text="CO2" Grid.Column="2" />
-                    </Grid>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" Grid.Column="0" HorizontalOptions="Center"  />
+                    <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" Grid.Column="0" HorizontalOptions="Center"  />
                         <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
-                        <Label Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Grid.Column="2" HorizontalOptions="Center" />
-                    </Grid>
+                    <Label Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Grid.Column="2" HorizontalOptions="Center" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
 
 
-        <Label Text="Recent Sessions" Padding="6,0"></Label>
+        <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
         <ScrollView>
             <CollectionView ItemsSource="{Binding PloggingSessions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="modelsCore:PloggingSession">
-                    <Border Margin="2,3" Padding="0">
+                    <Frame Margin="2,3" Padding="0">
                         <HorizontalStackLayout >
                             <Image Source="trashbag.png"  HeightRequest="40" WidthRequest="40"></Image>
                             <VerticalStackLayout Margin="0,8">
@@ -59,7 +60,7 @@
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
-                    </Border>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
