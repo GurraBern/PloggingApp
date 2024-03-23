@@ -76,7 +76,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
+	  <None Remove="Resources\Images\badges\CO2\co2badge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2bronzebadge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2goldbadge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2silverbadge.png" />
 	  <None Remove="Resources\Images\badges\distance\distancebadge.png" />
 	  <None Remove="Resources\Images\badges\distance\distancebadgebronze.png" />
 	  <None Remove="Resources\Images\badges\distance\distancebadgegold.png" />
@@ -100,7 +108,6 @@
 	  <None Remove="Resources\Images\soda_cans_icon.svg" />
 	  <None Remove="Resources\Images\startpin.png" />
 	  <None Remove="Resources\Images\stats.svg" />
-	  <None Remove="Resources\Images\streak_flame.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
 	  <None Remove="Resources\Images\walking_icon.svg" />
 	  <None Remove="Resources\Images\weightbadgegold.png" />
@@ -215,6 +222,10 @@
 	  <BundleResource Include="Resources\Images\streak_flame.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <MauiImage Include="Resources\Images\badges\CO2\co2badge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2bronzebadge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2goldbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2silverbadge.png" />
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadge.png" />
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadgebronze.png" />
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadgegold.png" />

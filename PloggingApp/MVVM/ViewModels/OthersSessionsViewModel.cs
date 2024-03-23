@@ -78,10 +78,28 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _Badges.Add(new TrashCollectedBadge(stats));
         _Badges.Add(new DistanceBadge(stats));
         _Badges.Add(new TimeSpentBadge(stats));
+        _Badges.Add(new CO2Badge(stats));
         Badges.ClearAndAddRange(_Badges);
         _Badges.Clear();
     }
 
+    [RelayCommand]
+    public async Task TapBadge(Badge Badge)
+    {
+
+        if (Badge.Level == "Gold")
+        {
+            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement  + ", this is the highest level", "OK");
+        }
+        else if (Badge.Level == "null")
+        {
+            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user has currently not reached a level and need " + Badge.ToNextLevel.ToString() +" more " + Badge.Measurement + " for the next level", "OK");
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " , the user need " + Badge.ToNextLevel.ToString() +" more " + Badge.Measurement + " for the next level", "OK");
+        }
+    }
 
 
 

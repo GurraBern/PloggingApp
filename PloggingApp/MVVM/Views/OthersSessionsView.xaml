@@ -19,7 +19,14 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Badge">
                         <StackLayout Margin="-25,-10,-30,0">
-                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill"/>
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+
+                                </Image.GestureRecognizers>
+
+                            </Image>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -35,7 +42,7 @@
                 </HorizontalStackLayout>
                 <HorizontalStackLayout>
                     <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" Grid.Column="0" HorizontalOptions="Center"  />
-                        <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
+                        <Label Text="{Binding TotalDistance, StringFormat='{0}km'}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
                     <Label Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Grid.Column="2" HorizontalOptions="Center" />
                 </HorizontalStackLayout>
             </VerticalStackLayout>
