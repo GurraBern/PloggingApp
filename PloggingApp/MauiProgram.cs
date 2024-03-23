@@ -94,6 +94,7 @@ public static class MauiProgram
     private static void AddPopups(MauiAppBuilder builder)
     {
         builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
+        builder.Services.AddTransientPopup<LitterBagPlacementPopup, LitterBagPlacementViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)

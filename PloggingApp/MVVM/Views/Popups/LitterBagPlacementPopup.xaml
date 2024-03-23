@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+             xmlns:viewmodels="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:Class="PloggingApp.MVVM.Views.LitterBagPlacementPopup"
+             x:DataType="viewmodels:LitterBagPlacementViewModel">
+
+    <toolkit:Popup.Resources>
+        <Style TargetType="{x:Type views:LitterBagPlacementPopup}">
+            <Setter Property="Size" Value="250,300" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Start" />
+            <Setter Property="Color" Value="Transparent"/>
+            <Setter Property="CanBeDismissedByTappingOutsideOfPopup" Value="True" />
+        </Style>
+    </toolkit:Popup.Resources>
+    
+    <Border Style="{StaticResource RoundBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="Litter Pickup Request" HorizontalOptions="Center"/>
+            <Image Grid.Row="1" Source="dotnet_bot.png"/>
+            <Button Grid.Row="2" Text="Collect Trash"/>
+
+
+        </Grid>
+        <!--<VerticalStackLayout>
+                   </VerticalStackLayout>-->
+    </Border>
+</toolkit:Popup>

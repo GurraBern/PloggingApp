@@ -128,7 +128,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="MVVM\Views\AcceptPopup.xaml">
+	  <MauiXaml Update="MVVM\Views\Popups\AcceptPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AddLitter.xaml">
@@ -138,6 +138,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Popups\LitterBagPlacementPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MapView.xaml">
@@ -186,5 +189,8 @@
 	  <BundleResource Include="Resources\Images\leaderboard.svg" />
 	  <BundleResource Include="Resources\Images\map_icon.svg" />
 	  <BundleResource Include="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\PinImages\handshake_color_icon.svg" />
 	</ItemGroup>
 </Project>

@@ -34,6 +34,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
+
     }
 
     private void OnLocationUpdated(object? sender, Location location)
@@ -118,7 +119,15 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
                 Description = "Could not recycle so I left the bag"
             };
 
-            await _ploggingSessionTracker.AddTrashCollectionPoint(litterBagPlacement);
+            try
+            {
+				await _ploggingSessionTracker.AddTrashCollectionPoint(litterBagPlacement);
+                WeakReferenceMessenger.Default.Send(new LitterBagPlacedMessage(litterBagPlacement));
+			}
+			catch (Exception ex)
+            {
+                //TODO show toast
+            }
         }
     }
 
