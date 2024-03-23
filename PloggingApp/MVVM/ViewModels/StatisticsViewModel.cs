@@ -22,6 +22,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
     {
         {TimeResolution.ThisYear,"#5c5aa8" },
@@ -46,6 +47,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         chartService = new ChartService(UserSessions);
         PloggingStats = new PloggingStatistics(UserSessions);
         TimeRes = TimeResolution.ThisYear;
+        StatsBoxColor = colorDict[TimeRes];
         DistanceChart = new ChartContext
         {
             Chart = chartService.generateDistanceChart(TimeRes),
