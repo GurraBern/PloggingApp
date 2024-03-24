@@ -22,13 +22,13 @@ else
 
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
-builder.Services.AddSingleton<ILitterBagPlacementService, LitterBagPlacementService>();
+builder.Services.AddSingleton<ILitterbagPlacementService, LitterbagPlacementService>();
 builder.Services.AddSingleton<IStreakService, StreakService>();
 
 //Register Repositories
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
-builder.Services.AddSingleton<ILitterBagRepository, LitterBagRepository>();
+builder.Services.AddSingleton<ILitterbagRepository, LitterbagRepository>();
 builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
 
 

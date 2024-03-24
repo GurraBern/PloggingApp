@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:PloggingApp.Converters"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodels="clr-namespace:PloggingApp.MVVM.ViewModels"
-             x:Class="PloggingApp.MVVM.Views.LitterBagPlacementPopup"
-             x:DataType="viewmodels:LitterBagPlacementViewModel">
+             x:Class="PloggingApp.MVVM.Views.LitterbagPlacementPopup"
+             x:DataType="viewmodels:LitterbagPlacementViewModel">
 
     <toolkit:Popup.Resources>
-        <Style TargetType="{x:Type views:LitterBagPlacementPopup}">
+            <ResourceDictionary>
+                <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            </ResourceDictionary>
+
+            <Style TargetType="{x:Type views:LitterBagPlacementPopup}">
             <Setter Property="Size" Value="250,300" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="VerticalOptions" Value="Start" />
@@ -20,18 +25,23 @@
     <Border Style="{StaticResource RoundBorder}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Text="Litter Pickup Request" HorizontalOptions="Center"/>
-            <Image Grid.Row="1" Source="dotnet_bot.png"/>
-            <Button Grid.Row="2" Text="Collect Trash"/>
-
-
+            <Label Grid.Row="0" Text="Litter Pickup Request" FontSize="Medium" HorizontalOptions="Center"/>
+            <Label Grid.Row="1" Text="{Binding DistanceToLitterBag, StringFormat='{0}m away'}" FontSize="Caption" HorizontalOptions="Center"/>
+            <Image Grid.Row="2" Source="dotnet_bot.png"/>
+            <Button Grid.Row="3" Command="{Binding CollectLitterbagCommand}" Text="Collect Trash">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanPickup}" Value="False">
+                        <Setter Property="Text" Value="Out of range" />
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
         </Grid>
-        <!--<VerticalStackLayout>
-                   </VerticalStackLayout>-->
     </Border>
 </toolkit:Popup>

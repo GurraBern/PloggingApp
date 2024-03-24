@@ -9,7 +9,7 @@ namespace PloggingApp.Services.PloggingTracking;
 public class PloggingSessionTracker : IPloggingSessionTracker
 {
     private readonly IPloggingSessionService _ploggingSessionService;
-    private readonly ILitterBagPlacementService _litterBagPlacementService;
+    private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IAuthenticationService _authenticationService;
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
@@ -22,11 +22,11 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
     public PloggingSessionTracker(
         IPloggingSessionService ploggingSessionService,
-        ILitterBagPlacementService litterBagPlacementService,
+        ILitterbagPlacementService litterBagPlacementService,
         IAuthenticationService authenticationService)
     {
         _ploggingSessionService = ploggingSessionService;
-        _litterBagPlacementService = litterBagPlacementService;
+        _litterbagPlacementService = litterBagPlacementService;
         _authenticationService = authenticationService;
     }
 
@@ -77,9 +77,9 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         }
     }
 
-    public async Task AddTrashCollectionPoint(LitterBagPlacement litterBagPlacement)
+    public async Task AddTrashCollectionPoint(LitterbagPlacement litterBagPlacement)
     {
-        await _litterBagPlacementService.AddTrashCollectionPoint(litterBagPlacement);
+        await _litterbagPlacementService.AddTrashCollectionPoint(litterBagPlacement);
     }
 
     public async Task EndSession()

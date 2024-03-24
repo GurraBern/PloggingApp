@@ -3,9 +3,9 @@ using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.MVVM.Views;
 
-public partial class LitterBagPlacementPopup : Popup
+public partial class LitterbagPlacementPopup : Popup
 {
-	public LitterBagPlacementPopup(LitterBagPlacementViewModel vm)
+	public LitterbagPlacementPopup(LitterbagPlacementViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = vm;

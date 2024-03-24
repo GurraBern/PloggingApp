@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace Plogging.Core.Models;
 
-public class LitterBagPlacement
+public class LitterbagPlacement
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -12,9 +12,4 @@ public class LitterBagPlacement
     public MapPoint Location { get; set; }
     public string Image {  get; set; }
     public string Description { get; set; }
-
-    public LitterBagPlacement()
-    {
-        
-    }
 }

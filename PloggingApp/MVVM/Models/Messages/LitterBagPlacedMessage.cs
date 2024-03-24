@@ -4,10 +4,10 @@ namespace PloggingApp.MVVM.Models.Messages;
 
 public class LitterBagPlacedMessage 
 {
-    public LitterBagPlacedMessage(LitterBagPlacement litterBagPlacement)
+    public LitterBagPlacedMessage(LitterbagPlacement litterbagPlacement)
     {
-        LitterBagPlacement = litterBagPlacement;
+        LitterbagPlacement = litterbagPlacement;
     }
 
-    public LitterBagPlacement LitterBagPlacement { get; private set; }
+    public LitterbagPlacement LitterbagPlacement { get; private set; }
 }

@@ -22,7 +22,6 @@ using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
-using Plogging.Core.Models;
 
 namespace PloggingApp;
 
@@ -94,7 +93,7 @@ public static class MauiProgram
     private static void AddPopups(MauiAppBuilder builder)
     {
         builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
-        builder.Services.AddTransientPopup<LitterBagPlacementPopup, LitterBagPlacementViewModel>();
+        builder.Services.AddTransientPopup<LitterbagPlacementPopup, LitterbagPlacementViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)
@@ -125,7 +124,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddTransient<IPloggingSessionService, PloggingSessionService>();
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
-        builder.Services.AddTransient<ILitterBagPlacementService, LitterBagPlacementService>();
+        builder.Services.AddTransient<ILitterbagPlacementService, LitterbagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
@@ -153,7 +152,7 @@ public static class MauiProgram
 
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
             builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
-            builder.RegisterPloggingApiClient<LitterBagPlacement>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);
         }
     }
 

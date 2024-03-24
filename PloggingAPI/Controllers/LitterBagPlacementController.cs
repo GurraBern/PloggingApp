@@ -8,19 +8,19 @@ namespace PloggingAPI.Controllers
     [ApiController]
     public class LitterBagPlacementController : ControllerBase
     {
-        private readonly ILitterBagPlacementService _litterBagPlacementService;
+        private readonly ILitterbagPlacementService _litterbagPlacementService;
 
-        public LitterBagPlacementController(ILitterBagPlacementService litterBagPlacementService)
+        public LitterBagPlacementController(ILitterbagPlacementService litterbagPlacementService)
         {
-            _litterBagPlacementService = litterBagPlacementService;
+            _litterbagPlacementService = litterbagPlacementService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLitterBagPlacement([FromBody] LitterBagPlacement litterBagPlacement)
+        public async Task<IActionResult> CreateLitterbagPlacement([FromBody] LitterbagPlacement litterbagPlacement)
         {
             try
             {
-                await _litterBagPlacementService.CreateLitterBagPlacement(litterBagPlacement);
+                await _litterbagPlacementService.CreateLitterbagPlacement(litterbagPlacement);
                 return Ok();
             }
             catch (Exception ex)
@@ -30,11 +30,33 @@ namespace PloggingAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LitterBagPlacement>>> GetLitterBagPlacements()
+        public async Task<ActionResult<IEnumerable<LitterbagPlacement>>> GetLitterbagPlacements()
         {
-            var litterBagPlacements = await _litterBagPlacementService.GetLitterBagPlacements();
+            try
+            {
+                var litterBagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
 
-            return Ok(litterBagPlacements);
+                return Ok(litterBagPlacements);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> CollectLitterbagPlacement(string litterbagPlacementId, int distanceToLitterbag)
+        {
+            try
+            {
+                await _litterbagPlacementService.CollectLitterbagPlacement(litterbagPlacementId, distanceToLitterbag);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
     }
 }

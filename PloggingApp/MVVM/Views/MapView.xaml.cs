@@ -110,8 +110,8 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 
         switch (pin?.BindingContext)
         {
-            case LitterBagPlacementPin litterBagPlacementPin:
-                litterBagPlacementPin.Command.Execute(litterBagPlacementPin.LitterBagPlacement);
+            case LitterbagPlacementPin litterbagPlacementPin:
+                litterbagPlacementPin.Command.Execute(litterbagPlacementPin.LitterBagPlacement);
                 break;
             case CanPin canPin:
                 canPin.Command.Execute("");

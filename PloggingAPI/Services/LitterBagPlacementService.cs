@@ -3,24 +3,33 @@ using PloggingAPI.Services.Interfaces;
 
 namespace PloggingAPI.Services;
 
-public class LitterBagPlacementService : ILitterBagPlacementService
+public class LitterbagPlacementService : ILitterbagPlacementService
 {
-    private readonly ILitterBagRepository _litterBagRepository;
+    private readonly ILitterbagRepository _litterbagRepository;
 
-    public LitterBagPlacementService(ILitterBagRepository litterBagRepository)
+    private const int LITTERBAG_DISTANCE_THRESHOLD = 40;
+    public LitterbagPlacementService(ILitterbagRepository litterbagRepository)
     {
-        _litterBagRepository = litterBagRepository;
+        _litterbagRepository = litterbagRepository;
     }
 
-    public async Task CreateLitterBagPlacement(LitterBagPlacement litterBagPlacement)
+    public async Task CollectLitterbagPlacement(string litterbagPlacementId, int distanceToLitterbag)
     {
-        await _litterBagRepository.InsertLitterBagPlacement(litterBagPlacement);
+        if (distanceToLitterbag < LITTERBAG_DISTANCE_THRESHOLD)
+        {
+            await _litterbagRepository.DeleteLitterbagPlacement(litterbagPlacementId);
+        }
     }
 
-    public async Task<IEnumerable<LitterBagPlacement>> GetLitterBagPlacements()
+    public async Task CreateLitterbagPlacement(LitterbagPlacement litterbagPlacement)
     {
-        var litterBagPlacements = await _litterBagRepository.GetAllLitterBagPlacements();
+        await _litterbagRepository.InsertLitterbagPlacement(litterbagPlacement);
+    }
 
-        return litterBagPlacements;
+    public async Task<IEnumerable<LitterbagPlacement>> GetLitterbagPlacements()
+    {
+        var litterbagPlacements = await _litterbagRepository.GetAllLitterbagPlacements();
+
+        return litterbagPlacements;
     }
 }

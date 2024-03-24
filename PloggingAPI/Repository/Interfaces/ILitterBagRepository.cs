@@ -2,8 +2,9 @@
 
 namespace PloggingAPI.Services;
 
-public interface ILitterBagRepository
+public interface ILitterbagRepository
 {
-    Task InsertLitterBagPlacement(LitterBagPlacement litterBagPlacement);
-    Task<IEnumerable<LitterBagPlacement>> GetAllLitterBagPlacements(); 
+    Task InsertLitterbagPlacement(LitterbagPlacement litterbagPlacement);
+    Task<IEnumerable<LitterbagPlacement>> GetAllLitterbagPlacements();
+    Task DeleteLitterbagPlacement(string litterbagPlacementId);
 }

@@ -33,14 +33,14 @@ public class TrashCollectedPin : LocationPin
 
 }
 
-public class LitterBagPlacementPin: LocationPin
+public class LitterbagPlacementPin: LocationPin
 {
-    public LitterBagPlacement LitterBagPlacement { get; set; }
-    public LitterBagPlacementPin(ICommand command, LitterBagPlacement litterBagPlacement)
+    public LitterbagPlacement LitterBagPlacement { get; set; }
+    public LitterbagPlacementPin(ICommand command, LitterbagPlacement litterbagPlacement)
     {
         ImageSource = ImageSource.FromFile("handshake_color_icon.png");
         Command = command;
-        LitterBagPlacement = litterBagPlacement;
+        LitterBagPlacement = litterbagPlacement;
     }
 }
 

@@ -6,26 +6,31 @@ using PloggingAPI.Services;
 
 namespace PloggingAPI.Repository;
 
-public class LitterBagRepository : ILitterBagRepository
+public class LitterbagRepository : ILitterbagRepository
 {
-    private readonly IMongoCollection<LitterBagPlacement> _litterBagPlacementCollection;
+    private readonly IMongoCollection<LitterbagPlacement> _litterbagPlacementCollection;
 
-    public LitterBagRepository(IOptions<PloggingDatabaseSettings> settings)
+    public LitterbagRepository(IOptions<PloggingDatabaseSettings> settings)
     {
         var mongoClient = new MongoClient(settings.Value.ConnectionString);
         var mongoDatabase = mongoClient.GetDatabase(settings.Value.DatabaseName);
-        _litterBagPlacementCollection = mongoDatabase.GetCollection<LitterBagPlacement>(settings.Value.LitterBagPlacementCollectionName);
+        _litterbagPlacementCollection = mongoDatabase.GetCollection<LitterbagPlacement>(settings.Value.LitterbagPlacementCollectionName);
     }
 
-    public async Task<IEnumerable<LitterBagPlacement>> GetAllLitterBagPlacements()
+    public async Task DeleteLitterbagPlacement(string litterbagPlacementId)
     {
-        var litterBagPlacements = await _litterBagPlacementCollection.FindAsync(_ => true);
-
-        return litterBagPlacements.ToList();
+        await _litterbagPlacementCollection.DeleteOneAsync(litterbagPlacement => litterbagPlacement.Id.Equals(litterbagPlacementId));
     }
 
-    public async Task InsertLitterBagPlacement(LitterBagPlacement litterBagPlacement)
+    public async Task<IEnumerable<LitterbagPlacement>> GetAllLitterbagPlacements()
     {
-        await _litterBagPlacementCollection.InsertOneAsync(litterBagPlacement);
+        var litterbagPlacements = await _litterbagPlacementCollection.FindAsync(_ => true);
+
+        return litterbagPlacements.ToList();
+    }
+
+    public async Task InsertLitterbagPlacement(LitterbagPlacement litterbagPlacement)
+    {
+        await _litterbagPlacementCollection.InsertOneAsync(litterbagPlacement);
     }
 }

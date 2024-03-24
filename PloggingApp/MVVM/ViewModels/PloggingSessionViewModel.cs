@@ -111,8 +111,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         if(!imagePath.Equals("") && markLocation != null)
         {
-            //TODO Add message for collectionpoint
-            var litterBagPlacement = new LitterBagPlacement()
+            var litterbagPlacement = new LitterbagPlacement()
             {
                 Location = new MapPoint(markLocation.Latitude, markLocation.Longitude),
                 Image = imagePath,
@@ -121,8 +120,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
             try
             {
-				await _ploggingSessionTracker.AddTrashCollectionPoint(litterBagPlacement);
-                WeakReferenceMessenger.Default.Send(new LitterBagPlacedMessage(litterBagPlacement));
+				await _ploggingSessionTracker.AddTrashCollectionPoint(litterbagPlacement);
+                WeakReferenceMessenger.Default.Send(new LitterBagPlacedMessage(litterbagPlacement));
 			}
 			catch (Exception ex)
             {

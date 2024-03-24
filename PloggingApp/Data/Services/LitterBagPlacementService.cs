@@ -5,29 +5,38 @@ using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class LitterBagPlacementService : ILitterBagPlacementService
+public class LitterbagPlacementService : ILitterbagPlacementService
 {
-    private readonly IPloggingApiClient<LitterBagPlacement> _ploggingApiClient;
+    private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient;
 
-    public LitterBagPlacementService(IPloggingApiClient<LitterBagPlacement> ploggingApiClient)
+    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient)
     {
         _ploggingApiClient = ploggingApiClient;
     }
 
-    public async Task AddTrashCollectionPoint(LitterBagPlacement litterBagPlacement)
+    public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
     {
-        var request = new RestRequest("api/LitterBagPlacement");
-        request.AddBody(litterBagPlacement);
+        var request = new RestRequest("api/LitterbagPlacement");
+        request.AddBody(litterbagPlacement);
 
         await _ploggingApiClient.PostAsync(request, ""); 
     }
 
-    public async Task<IEnumerable<LitterBagPlacement>> GetLitterBagPlacements()
+    public async Task CollectLitterbagPlacement(string id, int distance)
     {
-        var request = new RestRequest("api/LitterBagPlacement");
+        var request = new RestRequest("api/LitterbagPlacement");
+        request.AddParameter("litterbagPlacementId", id);
+        request.AddParameter("distanceToLitterbag", distance);
 
-        var litterBagPlacements = await _ploggingApiClient.GetAllAsync(request);
+        await _ploggingApiClient.DeleteAsync(request);
+    }
 
-        return litterBagPlacements;
+    public async Task<IEnumerable<LitterbagPlacement>> GetLitterbagPlacements()
+    {
+        var request = new RestRequest("api/LitterbagPlacement");
+
+        var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request);
+
+        return litterbagPlacements;
     }
 }

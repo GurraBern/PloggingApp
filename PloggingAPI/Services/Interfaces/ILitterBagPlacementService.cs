@@ -2,8 +2,9 @@
 
 namespace PloggingAPI.Services.Interfaces;
 
-public interface ILitterBagPlacementService
+public interface ILitterbagPlacementService
 {
-    Task CreateLitterBagPlacement(LitterBagPlacement litterBagPlacement);
-    Task<IEnumerable<LitterBagPlacement>> GetLitterBagPlacements();
+    Task CollectLitterbagPlacement(string litterbagPlacementId, int distanceToLitterbag);
+    Task CreateLitterbagPlacement(LitterbagPlacement litterbagPlacement);
+    Task<IEnumerable<LitterbagPlacement>> GetLitterbagPlacements();
 }

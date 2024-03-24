@@ -14,17 +14,17 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
-    private readonly ILitterBagPlacementService _litterBagPlacementService;
+    private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
 
     public Task Initialization { get; private set; }
 
-    public MapViewModel(ILitterLocationService litterLocationService, ILitterBagPlacementService litterBagPlacementService, IPopupService popupService, IToastService toastService)
+    public MapViewModel(ILitterLocationService litterLocationService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
     {
         _litterLocationService = litterLocationService;
-        _litterBagPlacementService = litterBagPlacementService;
+        _litterbagPlacementService = litterbagPlacementService;
         _popupService = popupService;
         _toastService = toastService;
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
@@ -65,18 +65,18 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task AddLitterBagPlacementsToMap()
     {
-        var litterBagPlacements = await _litterBagPlacementService.GetLitterBagPlacements();
-        foreach (var litterBagPlacement in litterBagPlacements)
+        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+        foreach (var litterbagPlacement in litterbagPlacements)
         {
-            PlaceLitterBag(litterBagPlacement);
+            PlaceLitterbag(litterbagPlacement);
         }
     }
 
-    private void PlaceLitterBag(LitterBagPlacement litterBagPlacement)
+    private void PlaceLitterbag(LitterbagPlacement litterbagPlacement)
     {
-        var location = litterBagPlacement.Location;
+        var location = litterbagPlacement.Location;
 
-        var litterBagPlacementPin = new LitterBagPlacementPin(PlacedLitterBagCommand, litterBagPlacement)
+        var litterbagPlacementPin = new LitterbagPlacementPin(PressedLitterbagPlacementCommand, litterbagPlacement)
         {
             Label = "Pickup Trashbag",
             Location = new Location()
@@ -86,14 +86,20 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
             }
         };
 
-        PlacedPins.Add(litterBagPlacementPin);
+        PlacedPins.Add(litterbagPlacementPin);
     }
 
     [RelayCommand]
-    private async Task PlacedLitterBag(LitterBagPlacement litterBagPlacement)
+    private async Task PressedLitterbagPlacement(LitterbagPlacement litterbagPlacement)
     {
-        await _popupService.ShowPopupAsync<LitterBagPlacementViewModel>(onPresenting: viewModel =>
-            viewModel.LitterBagPlacement = litterBagPlacement);
+        var request = new GeolocationRequest(GeolocationAccuracy.Best);
+        var currentLocation = await Geolocation.GetLocationAsync(request);
+
+        await _popupService.ShowPopupAsync<LitterbagPlacementViewModel>(onPresenting: viewModel =>
+        {
+            viewModel.LitterbagPlacement = litterbagPlacement;
+            viewModel.CalculateDistance(currentLocation);
+        });
     }
 
     [RelayCommand]
@@ -134,6 +140,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
 	public void Receive(LitterBagPlacedMessage message)
 	{
-        PlaceLitterBag(message.LitterBagPlacement);
+        PlaceLitterbag(message.LitterbagPlacement);
 	}
 }
