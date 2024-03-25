@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microcharts;
+using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.MVVM.ViewModels;
+using PloggingApp.Services.Statistics;
 
 namespace PloggingApp.Pages;
 [QueryProperty(nameof(PloggingSession), nameof(PloggingSession))]
@@ -8,8 +11,11 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
 {
     [ObservableProperty]
     PloggingSession ploggingSession;
-    public SessionStatisticsViewModel()
+
+    private IChartService chartService;
+    public SessionStatisticsViewModel(IChartService ChartService)
     {
+        this.chartService = ChartService;
     }
 
     private async void Init()
@@ -21,6 +27,9 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
 
         Area = await GetArea(PloggingSession.PloggingData.Litters.FirstOrDefault().LitterLocation.Latitude,
             PloggingSession.PloggingData.Litters.FirstOrDefault().LitterLocation.Longitude);
+
+        LitterChart = chartService.generateLitterChart(TimeResolution.Alltime, new List<PloggingSession> { PloggingSession });
+        LitterWeight = PloggingSession.PloggingData.Litters.Sum(x => x.Weight);
     }
     
     // Using a makeshift constructor as the class constructor executes before ApplyQueryAttributes
@@ -38,10 +47,14 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
         if (placemark != null)
             return $"{placemark.AdminArea}, {placemark.SubLocality}";
         return "N/A";
-    } 
+    }
 
+    [ObservableProperty]
+    Chart litterChart;
     [ObservableProperty]
     private string timeSpan;
     [ObservableProperty]
     private string area;
+    [ObservableProperty]
+    private double litterWeight;
 }

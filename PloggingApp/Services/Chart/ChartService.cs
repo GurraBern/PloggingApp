@@ -10,7 +10,6 @@ public class ChartService : IChartService
     private int currentMonth;
     private int currentYear;
     private DateTime currentDate;
-    private IEnumerable<PloggingSession> sessions;
     private Dictionary<LitterType, SKColor> colors = new Dictionary<LitterType, SKColor>
     {
         {LitterType.Plastics, SKColor.Parse("#2bb5ff")},
@@ -19,9 +18,8 @@ public class ChartService : IChartService
         {LitterType.SmallMetal, SKColor.Parse("#be26ff")},
         {LitterType.Cardboard, SKColor.Parse("#874b01")},
     };
-    public ChartService(IEnumerable<PloggingSession> Sessions)
+    public ChartService()
     {
-        sessions = Sessions;
         currentMonth = DateTime.UtcNow.Month;
         currentYear = DateTime.UtcNow.Year;
         currentDate = DateTime.UtcNow.Date;
@@ -29,10 +27,10 @@ public class ChartService : IChartService
     
        // Split into subfunctions
 
-    public Chart generateLitterChart(TimeResolution timeResolution)
+    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
         Random rnd = new Random();
-        var sortedSessions = filterSessions(timeResolution);
+        var sortedSessions = filterSessions(timeResolution, sessions);
 
         Dictionary<LitterType, double> keyValuePairs = sortedSessions
             .SelectMany(x => x.PloggingData.Litters)
@@ -52,10 +50,10 @@ public class ChartService : IChartService
         };
         return graph;
     }
-    public Chart generateDistanceChart(TimeResolution timeResolution)
+    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
         Dictionary<DateTime, double> distancePerTimePeriod;
-        var filteredSessions = filterSessions(timeResolution);
+        var filteredSessions = filterSessions(timeResolution, sessions);
         if (timeResolution.Equals(TimeResolution.ThisMonth))
         {
             distancePerTimePeriod = filteredSessions
@@ -75,10 +73,10 @@ public class ChartService : IChartService
             return generateYearLineChart(distancePerTimePeriod, "m");
         }
     }
-    public Chart generateStepsChart(TimeResolution timeResolution)
+    public Chart generateStepsChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
         Dictionary<DateTime, double> distancePerTimePeriod;
-        var filteredSessions = filterSessions(timeResolution);
+        var filteredSessions = filterSessions(timeResolution, sessions);
         if (timeResolution.Equals(TimeResolution.ThisMonth))
         {
             distancePerTimePeriod = filteredSessions
@@ -138,12 +136,15 @@ public class ChartService : IChartService
     }
     
     // Helper functions
-    private IEnumerable<PloggingSession> filterSessions(TimeResolution timeResolution)
+    private IEnumerable<PloggingSession> filterSessions(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
         DateTime limit;
         switch (timeResolution)
         {
-                case TimeResolution.ThisMonth:
+            case TimeResolution.Alltime:
+                limit = DateTime.MinValue;
+                break;
+            case TimeResolution.ThisMonth:
                 limit = new DateTime(currentYear, currentMonth, 1);
                 break;
             default:
@@ -152,4 +153,4 @@ public class ChartService : IChartService
         }
         return sessions.Where(s => s.StartDate > limit);
     }
- }
+}
