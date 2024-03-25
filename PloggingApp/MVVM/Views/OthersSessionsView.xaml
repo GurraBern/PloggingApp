@@ -10,8 +10,8 @@
     
         <StackLayout>
         <Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>
-        <HorizontalStackLayout>
-            <Label Text="{Binding DisplayName}" FontSize="50"></Label>
+        <HorizontalStackLayout Margin="0,0,0,-50">
+            <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,-100"></Label>
             <CollectionView ItemsSource="{Binding Badges}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
@@ -19,26 +19,38 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Badge">
                         <StackLayout Margin="-25,-10,-30,0">
-                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill"/>
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+
+                                </Image.GestureRecognizers>
+
+                            </Image>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowBadgesCommand}"/>
+
+                </Image.GestureRecognizers>
+            </Image>
         </HorizontalStackLayout>
         <Label Text="Total" FontSize="Large" Padding="6,0"></Label>
-        <Border Margin="0">
-            <VerticalStackLayout>
-                <HorizontalStackLayout>
-                     <Label Text="Trash Weight" Grid.Column="0"  />
-                        <Label Text="Distance" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
-                        <Label Text="CO2" Grid.Column="2" />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" Grid.Column="0" HorizontalOptions="Center"  />
-                        <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" Grid.Column="1" HorizontalOptions="Center" Margin="30,0,30,0" />
-                    <Label Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Grid.Column="2" HorizontalOptions="Center" />
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
+        <Border>
+            <Grid ColumnDefinitions="*, *, *, *" RowDefinitions="20,30">
+                <Label Grid.Row="0" Grid.Column="0" Text="Trash Weight" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Distance" Margin="10,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Text="CO2" Margin="10,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Text="Biggest Streak" Margin="0,0,0,0" />
+
+                <Label Grid.Row="1" Grid.Column="0" Text="{Binding TotalWeight, StringFormat='{0}kg'}" Margin="0,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding TotalDistance, StringFormat='{0}km'}" Margin="10,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="2" Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Margin="10,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="3" Text="{Binding StreakString, StringFormat='{0} weeks'}" Margin="10,10,0,0" />
+            </Grid>
         </Border>
 
 

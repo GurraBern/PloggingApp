@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Input;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
@@ -8,9 +9,9 @@ namespace PloggingApp.Pages;
 public partial class OthersProfilePageViewModel
 {
     public OthersSessionsViewModel OthersSessionsViewModel { get; set; }
-    public OthersProfilePageViewModel(IPloggingSessionService sessionService, IUserInfoService userService)
+    public OthersProfilePageViewModel(IPloggingSessionService sessionService, IUserInfoService userService, IStreakService streakService, IPopupService popupService)
     {
-        OthersSessionsViewModel = new OthersSessionsViewModel(sessionService, userService);
+        OthersSessionsViewModel = new OthersSessionsViewModel(sessionService, userService, streakService, popupService);
 
 
     }
