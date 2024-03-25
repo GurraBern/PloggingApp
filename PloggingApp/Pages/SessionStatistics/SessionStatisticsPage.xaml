@@ -4,11 +4,23 @@
              x:Class="PloggingApp.Pages.SessionStatisticsPage"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
+             xmlns:converter="clr-namespace:PloggingApp.Converters"
              x:DataType="viewmodel:SessionStatisticsViewModel"
+             Title="PloggingSession"
              >
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Resources>
+        <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
+    </ContentPage.Resources>
     <VerticalStackLayout>
-        <Label Style="{StaticResource Headline}" Text="{Binding PloggingSession.StartDate, StringFormat='{0:D}'}"/>
-        <Label Style="{StaticResource SubHeadline}" Text="{Binding PloggingSession.DisplayName}"/>
-        <Label Text="{Binding PloggingSession.Id}" HorizontalOptions="Center"/>
+        <Label Margin="10,0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
+        
+        <HorizontalStackLayout Margin="10,0" VerticalOptions="Center">
+            <Image Source="map_icon.png"/>
+            <Label FontSize="15" FontAttributes="Bold" Text="{Binding Area}" Margin="10,0" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
     </VerticalStackLayout>
 </ContentPage>

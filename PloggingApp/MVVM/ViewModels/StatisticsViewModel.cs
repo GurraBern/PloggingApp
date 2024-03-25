@@ -97,7 +97,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}", true, 
             new Dictionary<string, object>
             {
-                {"PloggingSession", session}
+                {nameof(PloggingSession), session}
             });
     }
 
