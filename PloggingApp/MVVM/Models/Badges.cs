@@ -1,4 +1,5 @@
 ﻿
+using PloggingApp.Data.Services;
 using RestSharp.Authenticators;
 
 namespace PloggingApp.MVVM.Models;
@@ -90,13 +91,27 @@ public class DistanceBadge : Badge
 
 public class CO2Badge : Badge
 {
-    public double CO2 { get; set; }
     public CO2Badge(PloggingStatistics stats)
     {
         Measurement = "kilograms(s)";
         Type = "CO2 Saved Badge";
         progression = stats.totalCO2Saved;
         createBadge(progression, "co2", 5, 10, 15);
+
+
+    }
+
+
+}
+
+public class StreakBadge : Badge
+{
+    public StreakBadge(int streak)
+    {
+        Measurement = "week(s)";
+        Type = "Weekly Streak Badge";
+        progression = streak;
+        createBadge(progression, "streak", 5, 10, 15);
 
 
     }

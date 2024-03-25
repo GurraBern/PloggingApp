@@ -10,6 +10,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
 using Firebase.Auth.Requests;
 using Firebase.Auth;
+using System.Runtime.CompilerServices;
+using PloggingApp.Pages;
+using CommunityToolkit.Maui.Core;
+using Syncfusion.Maui.Core.Carousel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -32,18 +36,25 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     [ObservableProperty]
     public string displayName;
 
+    [ObservableProperty]
+    public string streakString;
+
 
     private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
 
     private readonly IPloggingSessionService _sessionService;
+    private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfo;
+    private readonly IPopupService _popupService;
     private IRelayCommand? RecentSessionCommand { get; set; }
     public Task Initialization { get; private set; }
 
-    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo)
+    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo, IStreakService StreakService, IPopupService PopupService)
     {
         _sessionService = SessionService;
         _userInfo = UserInfo;
+        _streakService = StreakService;
+        _popupService = PopupService;
         Initialization =GetSessionsAndBadges(); //Dela upp i två funktioner?
     }
 
@@ -58,7 +69,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task GetSessionsAndBadges()
     {
         IsBusy = true;
-        var userId = _sessionService.UserId;
+        string userId = _sessionService.UserId;
         var user = await _userInfo.GetUser(userId);
         DisplayName = user.DisplayName;
         _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
@@ -68,17 +79,19 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
         PloggingSessions.ClearAndAddRange(_allSessions);
-        await GetBadges(userId, _allSessions, stats);
+        int streak = (await _streakService.GetUserStreak(userId)).Streak;
+        StreakString = streak.ToString();
+        await GetBadges(userId, _allSessions, stats, streak);
         IsBusy = false;
     }
 
-    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats)
+    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
     {
-
         _Badges.Add(new TrashCollectedBadge(stats));
         _Badges.Add(new DistanceBadge(stats));
         _Badges.Add(new TimeSpentBadge(stats));
         _Badges.Add(new CO2Badge(stats));
+        _Badges.Add(new StreakBadge(streak));
         Badges.ClearAndAddRange(_Badges);
         _Badges.Clear();
     }
@@ -101,7 +114,12 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         }
     }
 
+    [RelayCommand]
+    public async Task ShowBadges()
+    {
+        await _popupService.ShowPopupAsync<BadgesPopUpViewModel>(onPresenting: viewModel => viewModel.Badges = Badges);
 
+    }
 
 
 }

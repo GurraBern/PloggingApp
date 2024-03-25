@@ -89,6 +89,10 @@
 	  <None Remove="Resources\Images\badges\distance\distancebadgebronze.png" />
 	  <None Remove="Resources\Images\badges\distance\distancebadgegold.png" />
 	  <None Remove="Resources\Images\badges\distance\distancebadgesilver.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadge.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgebronze.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgegold.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgesilver.png" />
 	  <None Remove="Resources\Images\badges\timespent\timespentbadge.png" />
 	  <None Remove="Resources\Images\badges\timespent\timespentbadgebronze.png" />
 	  <None Remove="Resources\Images\badges\timespent\timespentbadgegold.png" />
@@ -102,12 +106,14 @@
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\leaderboard.svg" />
 	  <None Remove="Resources\Images\map_icon.svg" />
+	  <None Remove="Resources\Images\moreBadges.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\pet_bottle_icon.svg" />
 	  <None Remove="Resources\Images\smoking_icon.svg" />
 	  <None Remove="Resources\Images\soda_cans_icon.svg" />
 	  <None Remove="Resources\Images\startpin.png" />
 	  <None Remove="Resources\Images\stats.svg" />
+	  <None Remove="Resources\Images\threedots.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
 	  <None Remove="Resources\Images\walking_icon.svg" />
 	  <None Remove="Resources\Images\weightbadgegold.png" />
@@ -162,6 +168,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\AddLitter.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BadgesPopUpView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Components\LitterTypeButton.xaml">
@@ -230,6 +239,10 @@
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadgebronze.png" />
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadgegold.png" />
 	  <MauiImage Include="Resources\Images\badges\distance\distancebadgesilver.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgebronze.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgegold.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgesilver.png" />
 	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadge.png" />
 	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadgebronze.png" />
 	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadgegold.png" />
