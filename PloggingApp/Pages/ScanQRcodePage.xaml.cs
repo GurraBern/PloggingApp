@@ -6,6 +6,7 @@ namespace PloggingApp.Pages;
 public partial class ScanQRcodePage : ContentPage
 {
     private readonly PlogTogetherViewModel vm;
+    private bool isScanning = true;
 
     public ScanQRcodePage(PlogTogetherViewModel vm)
 	{
@@ -14,7 +15,8 @@ public partial class ScanQRcodePage : ContentPage
 		barcodeReader.Options = new ZXing.Net.Maui.BarcodeReaderOptions
 		{
 			Formats = ZXing.Net.Maui.BarcodeFormat.QrCode,
-			AutoRotate = true
+			AutoRotate = true,
+			Multiple = true
 		};
 		BindingContext = vm;
         this.vm = vm;
@@ -22,9 +24,16 @@ public partial class ScanQRcodePage : ContentPage
 
     private async void barcodeReader_BarcodesDetected(System.Object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
     {
+        if (!isScanning)
+        {
+            return; // If scanning is disabled, exit the method
+        }
+
         var first = e.Results?.FirstOrDefault();
 
-		if(first is null)
+        barcodeReader.BarcodesDetected -= barcodeReader_BarcodesDetected;
+
+        if (first is null)
 		{
 			return;
 		}
@@ -32,9 +41,8 @@ public partial class ScanQRcodePage : ContentPage
 		var userId = first.Value;
 		await vm.AddUserToGroup(userId);
 
-        _ = Dispatcher.DispatchAsync(async () =>
-        {
-            await DisplayAlert("User added to group", first.Value, "OK");
-        });
+        
+
+        isScanning = true;
     }
 }

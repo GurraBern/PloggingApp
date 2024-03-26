@@ -9,5 +9,7 @@ public interface IPlogTogetherRepository
     Task DeleteGroup(string ownerUserId);
 
     Task<PlogTogether> GetPlogTogether(string ownerUserId);
+
+    Task RemoveUserFromGroup(string ownerUserId, string userId);
 }
 

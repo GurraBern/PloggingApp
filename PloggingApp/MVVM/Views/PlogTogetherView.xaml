@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             x:DataType="viewmodel:PlogTogetherViewModel"
+             x:Class="PloggingApp.MVVM.Views.PlogTogetherView">
+
+    <CollectionView ItemsSource="{Binding Group}">
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="modelsCore:UserInfo">
+
+                    <Label Text="{Binding DisplayName}"
+                           FontSize="Large"/>
+                </DataTemplate>
+
+        </CollectionView.ItemTemplate>
+
+    </CollectionView>
+
+</ContentView>
+

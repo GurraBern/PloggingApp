@@ -107,12 +107,13 @@ public static class MauiProgram
 
         builder.Services.AddScoped<CheckoutImagePage>();
         builder.Services.AddScoped<GenerateQRcodePage>();
-        builder.Services.AddScoped<ScanQRcodePage>();
+        builder.Services.AddTransient<ScanQRcodePage>();
 
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
 
         builder.Services.AddTransient<OthersProfilePage>();
+        builder.Services.AddTransient<PlogTogetherPage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
