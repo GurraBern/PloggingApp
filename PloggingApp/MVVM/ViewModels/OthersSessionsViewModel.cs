@@ -46,15 +46,18 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfo;
     private readonly IPopupService _popupService;
+    public Plogging.Core.Models.UserInfo user;
+    string userPassed;
     private IRelayCommand? RecentSessionCommand { get; set; }
     public Task Initialization { get; private set; }
 
-    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo, IStreakService StreakService, IPopupService PopupService)
+    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo, IStreakService StreakService, IPopupService PopupService, string userPassed_)
     {
         _sessionService = SessionService;
         _userInfo = UserInfo;
         _streakService = StreakService;
         _popupService = PopupService;
+        this.userPassed = userPassed_;
         Initialization =GetSessionsAndBadges(); //Dela upp i två funktioner?
     }
 
@@ -69,23 +72,23 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task GetSessionsAndBadges()
     {
         IsBusy = true;
-        string userId = _sessionService.UserId;
-        var user = await _userInfo.GetUser(userId);
+        //string userId = _sessionService.UserId;
+        user = await _userInfo.GetUser(userPassed);
         DisplayName = user.DisplayName;
-        _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allSessions = await _sessionService.GetUserSessions(userPassed, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         var stats = new PloggingStatistics(_allSessions);
         TotalSteps = Math.Round(stats.TotalSteps);
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
         PloggingSessions.ClearAndAddRange(_allSessions);
-        int streak = (await _streakService.GetUserStreak(userId)).Streak;
+        int streak = (await _streakService.GetUserStreak(userPassed)).BiggestStreak;
         StreakString = streak.ToString();
-        await GetBadges(userId, _allSessions, stats, streak);
+        await GetBadges(userPassed, _allSessions, stats, streak);
         IsBusy = false;
     }
 
-    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
+    public async Task GetBadges(string userPassed, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
     {
         _Badges.Add(new TrashCollectedBadge(stats));
         _Badges.Add(new DistanceBadge(stats));
