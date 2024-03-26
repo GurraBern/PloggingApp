@@ -82,7 +82,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         //UserRank = LeaderboardViewModel.UserRank;
 
         var stats = new PloggingStatistics(_allUserSessions);
-        TotalSteps = Math.Round(stats.TotalSteps);
+        //TotalSteps = Math.Round(stats.TotalSteps);
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
