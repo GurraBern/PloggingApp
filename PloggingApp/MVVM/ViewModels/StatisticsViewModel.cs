@@ -68,32 +68,29 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private void GetMonthChart()
     {
-        IsBusy = true;
-        TimeRes = TimeResolution.ThisMonth;
-        DistanceChart.Chart = chartService.generateDistanceChart(TimeResolution.ThisMonth, UserSessions);
-        LitterChart.Chart = chartService.generateLitterChart(TimeResolution.ThisMonth, UserSessions);
-        PloggingStats.changeTimeResolution(TimeRes);
-        StatsBoxColor = colorDict[TimeRes];
-        IsBusy = false;
+        Update(TimeResolution.ThisMonth);
     }
 
     [RelayCommand]
     private void GetYearChart()
     {
-        IsBusy= true;
-        TimeRes = TimeResolution.ThisYear;
-        DistanceChart.Chart = chartService.generateDistanceChart(TimeResolution.ThisYear, UserSessions);
-        LitterChart.Chart = chartService.generateLitterChart(TimeResolution.ThisYear, UserSessions);
-        PloggingStats.changeTimeResolution(TimeRes);
-        StatsBoxColor = colorDict[TimeResolution.ThisYear];
-        IsBusy= false;
+        Update(TimeResolution.ThisYear);
+    }
+
+    private void Update(TimeResolution tr)
+    {
+        IsBusy = true;
+        DistanceChart.Chart = chartService.generateDistanceChart(tr, UserSessions);
+        LitterChart.Chart = chartService.generateLitterChart(tr, UserSessions);
+        PloggingStats.changeTimeResolution(tr);
+        StatsBoxColor = colorDict[tr];
+        IsBusy = false;
     }
     [RelayCommand]
     private async Task GoToSessionStats(PloggingSession session)
     {
         if (session is null)
             return;
-        _ploggingSessionService.SessionId = session.Id;
         await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}", true, 
             new Dictionary<string, object>
             {
@@ -114,6 +111,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 
     [ObservableProperty]
     PloggingStatistics ploggingStats;
+
     [ObservableProperty]
     string statsBoxColor;
 }

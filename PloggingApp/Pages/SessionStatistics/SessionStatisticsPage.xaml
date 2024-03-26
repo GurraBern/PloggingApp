@@ -32,18 +32,18 @@
                         <Image Source="walking_icon.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingSession.PloggingData.Distance, StringFormat='{0} m'}"
+                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}"
                            Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
-            <!--Steps-->
+            <!--Time-->
             <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
                 <Grid Style="{StaticResource StatsGrid}">
                     <Border Grid.RowSpan="2" Grid.Column="0" Margin="5" StrokeShape="RoundRectangle 50" StrokeThickness="0" BackgroundColor="White">
-                        <Image Source="walking_icon.svg"/>
+                        <Image Source="clock.svg"/>
                     </Border>
-                    <Label Style="{StaticResource StatsLabelText}" Text="Steps" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingSession.PloggingData.Steps, StringFormat='{0} steps'}"
+                    <Label Style="{StaticResource StatsLabelText}" Text="Time plogged" Grid.Row="0" Grid.Column="1"/>
+                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} hrs'}"
                Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
@@ -51,7 +51,7 @@
             <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
                 <Grid Style="{StaticResource StatsGrid}">
                     <Border Grid.RowSpan="2" Grid.Column="0" Margin="5" StrokeShape="RoundRectangle 50" StrokeThickness="0" BackgroundColor="White">
-                        <Image Source="walking_icon.svg"/>
+                        <Image Source="trashcan.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Litter pieces" Grid.Row="0" Grid.Column="1"/>
                     <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingSession.PloggingData.Litters.Count,
@@ -63,10 +63,10 @@
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
                 <Grid Style="{StaticResource StatsGrid}">
                     <Border Grid.RowSpan="2" Grid.Column="0" Margin="5" StrokeShape="RoundRectangle 50" StrokeThickness="0" BackgroundColor="White">
-                        <Image Source="walking_icon.svg"/>
+                        <Image Source="scale.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Litter weight" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding LitterWeight,
+                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalWeight,
                         StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
