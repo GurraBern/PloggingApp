@@ -3,17 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:model="clr-namespace:PloggingApp.MVVM.Models"
              x:DataType="viewmodel:PlogTogetherViewModel"
              x:Class="PloggingApp.MVVM.Views.PlogTogetherView">
 
-    <CollectionView ItemsSource="{Binding Group}">
+    <CollectionView
+        ItemsSource="{Binding NewGroup}">
+
             <CollectionView.ItemTemplate>
 
-                <DataTemplate x:DataType="modelsCore:UserInfo">
+                <DataTemplate
+
+                x:DataType="model:PlogUser">
 
                     <Label Text="{Binding DisplayName}"
                            FontSize="Large"/>
+
+
                 </DataTemplate>
 
         </CollectionView.ItemTemplate>
