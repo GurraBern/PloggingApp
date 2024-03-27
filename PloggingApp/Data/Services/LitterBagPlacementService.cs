@@ -16,10 +16,19 @@ public class LitterbagPlacementService : ILitterbagPlacementService
 
     public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
     {
-        var request = new RestRequest("api/LitterbagPlacement");
-        request.AddBody(litterbagPlacement);
 
-        await _ploggingApiClient.PostAsync(request, ""); 
+        var fileRequest = new RestRequest("api/LitterbagPlacement/Image");
+        fileRequest.AddFile("image", litterbagPlacement.ImageUrl);
+
+        await _ploggingApiClient.PostAsync(fileRequest);
+
+
+
+
+        //var request = new RestRequest("api/LitterbagPlacement");
+        //request.AddBody(litterbagPlacement);
+
+        //await _ploggingApiClient.PostAsync(request, "");
     }
 
     public async Task CollectLitterbagPlacement(string id, int distance)
@@ -38,5 +47,14 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request);
 
         return litterbagPlacements;
+    }
+
+    private static byte[] ConvertUsingMemoryStream(string filePath)
+    {
+        using var fs = File.OpenRead(filePath);
+        using var ms = new MemoryStream();
+        fs.CopyTo(ms);
+
+        return ms.ToArray();
     }
 }

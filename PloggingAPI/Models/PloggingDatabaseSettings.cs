@@ -11,4 +11,5 @@ public class PloggingDatabaseSettings
     public string LitterbagPlacementCollectionName { get; set; } = null!;
     public string PlogTogetherCollectionName { get; set; } = null!;
     public string UserInfoCollectionName { get; set; } = null!;
+    public string ImagesPath { get; set; } = null!;
 }

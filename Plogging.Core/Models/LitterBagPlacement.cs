@@ -10,6 +10,6 @@ public class LitterbagPlacement
     public string? Id { get; set; }
 
     public MapPoint Location { get; set; }
-    public string Image {  get; set; }
-    public string Description { get; set; }
+    public DateTime PlacementDate { get; set; }
+    public string ImageUrl {  get; set; }
 }

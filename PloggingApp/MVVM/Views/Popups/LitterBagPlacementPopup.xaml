@@ -13,7 +13,7 @@
                 <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             </ResourceDictionary>
 
-            <Style TargetType="{x:Type views:LitterBagPlacementPopup}">
+            <Style TargetType="{x:Type views:LitterbagPlacementPopup}">
             <Setter Property="Size" Value="250,300" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="VerticalOptions" Value="Start" />
@@ -33,7 +33,7 @@
 
             <Label Grid.Row="0" Text="Litter Pickup Request" FontSize="Medium" HorizontalOptions="Center"/>
             <Label Grid.Row="1" Text="{Binding DistanceToLitterBag, StringFormat='{0}m away'}" FontSize="Caption" HorizontalOptions="Center"/>
-            <Image Grid.Row="2" Source="dotnet_bot.png"/>
+            <Image Grid.Row="2" Source="{Binding ImageSource}"/>
             <Button Grid.Row="3" Command="{Binding CollectLitterbagCommand}" Text="Collect Trash">
                 <Button.Triggers>
                     <DataTrigger TargetType="Button" Binding="{Binding CanPickup}" Value="False">

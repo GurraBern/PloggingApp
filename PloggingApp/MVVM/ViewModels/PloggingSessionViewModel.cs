@@ -114,8 +114,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
             var litterbagPlacement = new LitterbagPlacement()
             {
                 Location = new MapPoint(markLocation.Latitude, markLocation.Longitude),
-                Image = imagePath,
-                Description = "Could not recycle so I left the bag"
+                PlacementDate = DateTime.UtcNow,
+                ImageUrl = imagePath,
             };
 
             try

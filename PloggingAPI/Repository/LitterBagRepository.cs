@@ -19,18 +19,26 @@ public class LitterbagRepository : ILitterbagRepository
 
     public async Task DeleteLitterbagPlacement(string litterbagPlacementId)
     {
-        await _litterbagPlacementCollection.DeleteOneAsync(litterbagPlacement => litterbagPlacement.Id.Equals(litterbagPlacementId));
+        var filter = Builders<LitterbagPlacement>.Filter.Eq(litterbagPlacement => litterbagPlacement.Id, litterbagPlacementId);
+
+        await _litterbagPlacementCollection.DeleteOneAsync(filter);
     }
 
     public async Task<IEnumerable<LitterbagPlacement>> GetAllLitterbagPlacements()
     {
-        var litterbagPlacements = await _litterbagPlacementCollection.FindAsync(_ => true);
+        var litterbagPlacements = await _litterbagPlacementCollection.FindAsync(litterbagPlacement => litterbagPlacement.PlacementDate.AddDays(10) > DateTime.Now);
 
         return litterbagPlacements.ToList();
     }
 
     public async Task InsertLitterbagPlacement(LitterbagPlacement litterbagPlacement)
     {
+        //TODO SaveImage
+
+
+
+
+
         await _litterbagPlacementCollection.InsertOneAsync(litterbagPlacement);
     }
 }
