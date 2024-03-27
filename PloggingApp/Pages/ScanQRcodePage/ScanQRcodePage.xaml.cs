@@ -5,10 +5,10 @@ namespace PloggingApp.Pages;
 
 public partial class ScanQRcodePage : ContentPage
 {
-    private readonly PlogTogetherViewModel vm;
+    private readonly ScanQRcodePageViewModel vm;
     private bool isScanning = true;
 
-    public ScanQRcodePage(PlogTogetherViewModel vm)
+    public ScanQRcodePage(ScanQRcodePageViewModel vm)
 	{
 		InitializeComponent();
 
@@ -38,10 +38,8 @@ public partial class ScanQRcodePage : ContentPage
 			return;
 		}
 		
-		var userId = first.Value;
+		string userId = first.Value;
 		await vm.AddUserToGroup(userId);
-
-        
 
         isScanning = true;
     }

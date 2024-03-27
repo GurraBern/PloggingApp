@@ -1,17 +1,24 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Input;
+﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+
+
+using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.Models.Messages;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Pages;
 using PloggingApp.Services.Authentication;
-using PloggingApp.MVVM.Models;
+using System.Diagnostics;
+
+
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
+public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization, IRecipient<AddUserMessage>
 {
 	private readonly IPlogTogetherService _plogTogetherService;
 	private readonly IAuthenticationService _authenticationService;
@@ -33,6 +40,8 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 		_userInfoService = userInfoService;
         Initialization = InitializeAsync();
         RemoveUserCommand = new Command<string>(async (userId) => await RemoveUser(userId));
+
+        WeakReferenceMessenger.Default.Register<AddUserMessage>(this);
     }
 
     private async Task InitializeAsync()
@@ -40,33 +49,28 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         await GetGroup();
     }
 
-	[RelayCommand]
-    public async Task AddUserToGroup(string addUserId)
+    public void Receive(AddUserMessage message)
     {
         IsBusy = true;
 
-        var ownerUserId = _authenticationService.CurrentUser.Uid;
-        var user = await _userInfoService.GetUser(addUserId);
+        var user = message.AddUser;
 
-        
-        await _plogTogetherService.AddUserToGroup(ownerUserId, addUserId);
-        usersInGroupId.Add(user.UserId);
-
-        PlogUser plogUser = new()
+        if (usersInGroupId.Contains(user.UserId))
         {
-            DisplayName = user.DisplayName,
-            UserId = user.UserId
-        };
-
-        
-        NewGroup.Add(plogUser);
-        
-        await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
-        MainThread.BeginInvokeOnMainThread(async () =>
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", $"{user.DisplayName} is already a member of this group!", "OK");
+            });
+        }
+        else
         {
-            await Application.Current.MainPage.DisplayAlert("Success", $"{user.DisplayName} added to group", "OK");
-        });
-        
+            usersInGroupId.Add(user.UserId);
+            NewGroup.Add(user);
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", $"{user.DisplayName} added to group!", "OK");
+            });
+        }
 
         IsBusy = false;
     }
@@ -78,6 +82,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
         var ownerUserId = _authenticationService.CurrentUser.Uid;
         await _plogTogetherService.DeleteGroup(ownerUserId);
+        usersInGroupId.Clear();
 		NewGroup.Clear();
 		
 		IsBusy = false;

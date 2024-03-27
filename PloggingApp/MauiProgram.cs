@@ -87,6 +87,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PloggingSessionViewModel>();
         builder.Services.AddTransient<PlogTogetherViewModel>();
         builder.Services.AddTransient<GenerateQRcodeViewModel>();
+        builder.Services.AddTransient<ScanQRcodePageViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)

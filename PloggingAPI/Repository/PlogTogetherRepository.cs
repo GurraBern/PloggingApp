@@ -20,7 +20,7 @@ public class PlogTogetherRepository : IPlogTogetherRepository
 
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
-        var userExistsInGroup = await _plogTogetherCollection.Find(a => a.UserIds.Contains(userId) || a.OwnerUserId == userId).FirstOrDefaultAsync();
+        var userExistsInGroup = await _plogTogetherCollection.Find(a => a.UserIds.Contains(userId) || a.OwnerUserId == userId || a.UserIds.Contains(ownerUserId)).FirstOrDefaultAsync();
 
         if (userExistsInGroup == null)
         {
