@@ -95,7 +95,7 @@ public class CO2Badge : Badge
     {
         Measurement = "kilograms(s)";
         Type = "CO2 Saved Badge";
-        progression = stats.totalCO2Saved;
+        progression = stats.TotalCO2Saved;
         createBadge(progression, "co2", 5, 10, 15);
 
 

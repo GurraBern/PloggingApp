@@ -16,6 +16,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     private readonly IRankingService _rankingService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IPloggingSessionService _sessionService;
+    private readonly IUserInfoService _userInfo;
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
     private IEnumerable<UserRanking> _allRankings = new ObservableCollection<UserRanking>();
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
@@ -44,11 +45,12 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService, IPloggingSessionService sessionService)
+    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService, IPloggingSessionService sessionService, IUserInfoService userInfo)
     {
         _rankingService = rankingService;
         _authenticationService = authenticationService;
         _sessionService = sessionService;
+        _userInfo = userInfo;
         Initialization = InitializeAsync();
     }
 
@@ -122,6 +124,11 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GoToProfilePage(string userId)
     {
+        var user = await _userInfo.GetUser(userId);
+        if (user == null)
+        {
+            return;
+        }
         _sessionService.UserId = userId;
         await Shell.Current.GoToAsync($"//{nameof(OthersProfilePage)}");
     }
