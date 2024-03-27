@@ -77,6 +77,8 @@ public static class MauiProgram
         builder.Services.AddTransient<OthersProfilePageViewModel>();
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
+        builder.Services.AddTransient<SessionStatisticsViewModel>();
+
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
@@ -106,6 +108,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<StatisticsPage>();
+        builder.Services.AddTransient<SessionStatisticsPage>();
 
         builder.Services.AddScoped<CheckoutImagePage>();
         builder.Services.AddScoped<GenerateQRcodePage>();

@@ -10,8 +10,10 @@ using PloggingApp.Services.Statistics;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Pages;
 
 namespace PloggingApp.MVVM.ViewModels;
+
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 {
 
@@ -43,20 +45,21 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        //_allUserSessions = await _ploggingSessionService.GetUserSessions("newId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
-        chartService = new ChartService(UserSessions);
+        chartService = new ChartService();
         PloggingStats = new PloggingStatistics(UserSessions);
         TimeRes = TimeResolution.ThisYear;
         StatsBoxColor = colorDict[TimeRes];
         DistanceChart = new ChartContext
         {
-            Chart = chartService.generateDistanceChart(TimeRes),
+            Chart = chartService.generateDistanceChart(TimeRes,UserSessions),
             Name = "Distance",
             Unit = "km"
         };
         LitterChart = new ChartContext
         {
-            Chart = chartService.generateLitterChart(TimeRes),
+            Chart = chartService.generateLitterChart(TimeRes, UserSessions),
             Name = "Litter",
             Unit = "pcs"
         };
@@ -65,27 +68,36 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private void GetMonthChart()
     {
-        IsBusy = true;
-        TimeRes = TimeResolution.ThisMonth;
-        DistanceChart.Chart = chartService.generateDistanceChart(TimeResolution.ThisMonth);
-        LitterChart.Chart = chartService.generateLitterChart(TimeResolution.ThisMonth);
-        PloggingStats.changeTimeResolution(TimeRes);
-        StatsBoxColor = colorDict[TimeRes];
-        IsBusy = false;
+        Update(TimeResolution.ThisMonth);
     }
 
     [RelayCommand]
     private void GetYearChart()
     {
-        IsBusy= true;
-        TimeRes = TimeResolution.ThisYear;
-        DistanceChart.Chart = chartService.generateDistanceChart(TimeResolution.ThisYear);
-        LitterChart.Chart = chartService.generateLitterChart(TimeResolution.ThisYear);
-        PloggingStats.changeTimeResolution(TimeRes);
-        StatsBoxColor = colorDict[TimeResolution.ThisYear];
-        IsBusy= false;
+        Update(TimeResolution.ThisYear);
     }
-    
+
+    private void Update(TimeResolution tr)
+    {
+        IsBusy = true;
+        DistanceChart.Chart = chartService.generateDistanceChart(tr, UserSessions);
+        LitterChart.Chart = chartService.generateLitterChart(tr, UserSessions);
+        PloggingStats.changeTimeResolution(tr);
+        StatsBoxColor = colorDict[tr];
+        IsBusy = false;
+    }
+    [RelayCommand]
+    private async Task GoToSessionStats(PloggingSession session)
+    {
+        if (session is null)
+            return;
+        await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}", true, 
+            new Dictionary<string, object>
+            {
+                {nameof(PloggingSession), session}
+            });
+    }
+
     [ObservableProperty]
     ChartContext distanceChart;
     [ObservableProperty]
@@ -99,6 +111,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 
     [ObservableProperty]
     PloggingStatistics ploggingStats;
+
     [ObservableProperty]
     string statsBoxColor;
 }

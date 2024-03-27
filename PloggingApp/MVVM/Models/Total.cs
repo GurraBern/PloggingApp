@@ -5,24 +5,24 @@ using PloggingApp.Extensions;
 using System.Linq;
 
 namespace PloggingApp.MVVM.Models;
-public class Total 
+public class Total<T>
 {
-    public double month { get; set; }
-    public double year { get; set; }
-    public double allTime { get; set; }
+    public T month { get; set; }
+    public T year { get; set; }
+    public T allTime { get; set; }
 
     public Total()
     {
         month = default; year = default; allTime = default;
     }
 
-    public Total(IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> member)
+    public Total(IEnumerable<PloggingSession> sessions, Func<PloggingSession, T> member)
     {
         month = CalculateSum(sessions.Where(s => s.StartDate > DateTime.UtcNow.FirstDateInMonth()), member);
         year = CalculateSum(sessions.Where(s => s.StartDate > DateTime.UtcNow.FirstDateInYear()), member);
         allTime = CalculateSum(sessions, member);
     }
-    public double GetValue(TimeResolution tr)
+    public T GetValue(TimeResolution tr)
     {
         switch (tr)
         {
@@ -31,9 +31,14 @@ public class Total
             default: return year;
         }
     }
-    public static double CalculateSum(IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> member)
+    public static T CalculateSum(IEnumerable<PloggingSession> sessions, Func<PloggingSession, T> member)
     {
-        return sessions.Sum(member);
+        dynamic acc = default(T);
+        foreach(PloggingSession session in sessions)
+        {
+            acc += member(session);
+        }
+        return acc;
     }
 }
     
