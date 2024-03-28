@@ -90,6 +90,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PlogTogetherViewModel>();
         builder.Services.AddTransient<GenerateQRcodeViewModel>();
         builder.Services.AddTransient<ScanQRcodePageViewModel>();
+        builder.Services.AddTransient<MyProfileViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -120,6 +121,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<OthersProfilePage>();
         builder.Services.AddTransient<PlogTogetherPage>();
+
+        builder.Services.AddTransient<MyProfilePage>();
     }
 
     private static void AddServices(MauiAppBuilder builder)

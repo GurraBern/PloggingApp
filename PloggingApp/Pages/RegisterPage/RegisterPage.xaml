@@ -4,7 +4,8 @@
              x:Class="PloggingApp.Pages.RegisterPage"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:AuthenticationViewModel"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.Content>
         <Grid

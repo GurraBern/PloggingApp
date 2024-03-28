@@ -105,6 +105,7 @@
 	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\leaderboard.svg" />
+	  <None Remove="Resources\Images\logout.svg" />
 	  <None Remove="Resources\Images\map_icon.svg" />
 	  <None Remove="Resources\Images\moreBadges.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
@@ -115,6 +116,7 @@
 	  <None Remove="Resources\Images\stats.svg" />
 	  <None Remove="Resources\Images\threedots.png" />
 	  <None Remove="Resources\Images\trashbag.png" />
+	  <None Remove="Resources\Images\user.svg" />
 	  <None Remove="Resources\Images\walking_icon.svg" />
 	  <None Remove="Resources\Images\weightbadgegold.png" />
 	  <None Remove="Pages\ScanQRcodePage\" />
@@ -177,6 +179,9 @@
 	  <MauiXaml Update="MVVM\Views\Components\LitterTypeButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\MyProfileView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\OthersSessionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -205,6 +210,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Map\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\MyProfilePage\MyProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\OthersProfile\OthersProfilePage.xaml">

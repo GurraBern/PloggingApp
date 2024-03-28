@@ -5,8 +5,10 @@ namespace PloggingApp.Pages;
 public class RankingViewmodel
 {
     public LeaderboardViewModel LeaderboardViewModel { get; set; }
-    public RankingViewmodel(LeaderboardViewModel leaderboardViewModel)
+    public MyProfileViewModel MyProfileViewModel { get; set; }
+    public RankingViewmodel(LeaderboardViewModel leaderboardViewModel, MyProfileViewModel myProfileViewModel)
     {
         LeaderboardViewModel = leaderboardViewModel;
+        MyProfileViewModel = myProfileViewModel;
     }
 }

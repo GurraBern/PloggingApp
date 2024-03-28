@@ -5,7 +5,8 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:AuthenticationViewModel"
              BackgroundColor="{DynamicResource SecondaryColor}"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
 
     <ContentPage.Content>
