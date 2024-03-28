@@ -6,6 +6,7 @@ using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Services;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
@@ -17,6 +18,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
     private readonly ICameraService _cameraService;
     private readonly IPopupService _popupService;
+    private readonly IToastService _toastService;
+
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
     private Location CurrentLocation { get; set; }
@@ -24,12 +27,15 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, ICameraService cameraService, IPopupService popupService)
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, 
+        ICameraService cameraService, 
+        IPopupService popupService,
+        IToastService toastService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
         _cameraService = cameraService;
         _popupService = popupService;
-
+        _toastService = toastService;
         _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
@@ -125,7 +131,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 			}
 			catch (Exception ex)
             {
-                //TODO show toast
+                await _toastService.MakeToast("Could not place litterbag request");
             }
         }
     }
