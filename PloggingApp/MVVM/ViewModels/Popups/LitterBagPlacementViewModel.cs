@@ -20,14 +20,9 @@ public partial class LitterbagPlacementViewModel : ObservableObject
     [ObservableProperty]
     private bool canPickup = false;
 
-    [ObservableProperty]
-    private ImageSource imageSource;
-
     public LitterbagPlacementViewModel(ILitterbagPlacementService litterbagPlacementService)
     {
         _litterbagPlacementService = litterbagPlacementService;
-
-        ImageSource = ImageSource.FromUri(new Uri("https://aka.ms/campus.jpg"));
     }
 
     [RelayCommand]

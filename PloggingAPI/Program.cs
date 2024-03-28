@@ -20,10 +20,13 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
+builder.Services.Configure<GoogleDriveSettings>(builder.Configuration.GetSection("GoogleDriveSettings"));
+
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 builder.Services.AddSingleton<ILitterbagPlacementService, LitterbagPlacementService>();
 builder.Services.AddSingleton<IStreakService, StreakService>();
+builder.Services.AddTransient<GoogleDriveService>();
 
 //Register Repositories
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();

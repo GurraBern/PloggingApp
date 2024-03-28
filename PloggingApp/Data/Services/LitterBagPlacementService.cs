@@ -8,27 +8,33 @@ namespace PloggingApp.Data.Services;
 public class LitterbagPlacementService : ILitterbagPlacementService
 {
     private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient;
+    private readonly IPloggingApiClient<PloggingImage> _imageApiClient;
 
-    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient)
+    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingApiClient<PloggingImage> imageApiClient)
     {
         _ploggingApiClient = ploggingApiClient;
+        _imageApiClient = imageApiClient;
     }
 
     public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
     {
+        litterbagPlacement = await SaveLitterbagImage(litterbagPlacement);
 
-        var fileRequest = new RestRequest("api/LitterbagPlacement/Image");
-        fileRequest.AddFile("image", litterbagPlacement.ImageUrl);
+        var placementRequest = new RestRequest("api/LitterbagPlacement");
+        placementRequest.AddBody(litterbagPlacement);
+        await _ploggingApiClient.PostAsync(placementRequest);
+    }
 
-        await _ploggingApiClient.PostAsync(fileRequest);
+    private async Task<LitterbagPlacement> SaveLitterbagImage(LitterbagPlacement litterbagPlacement)
+    {
+        var imageRequest = new RestRequest("api/Image");
+        imageRequest.AddFile("image", litterbagPlacement.ImageUrl);
 
+        var response = await _imageApiClient.PostAsync(imageRequest);
 
+        litterbagPlacement.ImageUrl = response.ImageUrl;
 
-
-        //var request = new RestRequest("api/LitterbagPlacement");
-        //request.AddBody(litterbagPlacement);
-
-        //await _ploggingApiClient.PostAsync(request, "");
+        return litterbagPlacement;
     }
 
     public async Task CollectLitterbagPlacement(string id, int distance)
@@ -47,14 +53,5 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request);
 
         return litterbagPlacements;
-    }
-
-    private static byte[] ConvertUsingMemoryStream(string filePath)
-    {
-        using var fs = File.OpenRead(filePath);
-        using var ms = new MemoryStream();
-        fs.CopyTo(ms);
-
-        return ms.ToArray();
     }
 }

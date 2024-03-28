@@ -33,12 +33,6 @@ public class LitterbagRepository : ILitterbagRepository
 
     public async Task InsertLitterbagPlacement(LitterbagPlacement litterbagPlacement)
     {
-        //TODO SaveImage
-
-
-
-
-
         await _litterbagPlacementCollection.InsertOneAsync(litterbagPlacement);
     }
 }

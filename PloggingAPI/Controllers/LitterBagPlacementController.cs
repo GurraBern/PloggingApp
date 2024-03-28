@@ -16,39 +16,18 @@ namespace PloggingAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLitterbagPlacement([FromBody] LitterbagPlacement litterbagPlacement, [FromForm] IFormFile image)
+        public async Task<IActionResult> CreateLitterbagPlacement([FromBody] LitterbagPlacement litterbagPlacement)
         {
             try
             {
-
+                await _litterbagPlacementService.CreateLitterbagPlacement(litterbagPlacement);
                 return Ok();
-            }
+                           }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-
-        [HttpPost("Image")]
-        public async Task<IActionResult> Test([FromForm] IFormFile image)
-        {
-            try
-            {
-                //TODO upload to google drive
-                DriveIntegration driveIntegration = new DriveIntegration();
-
-                driveIntegration.CreateFolder("Images", "test2");
-
-
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while processing your request.");
-            }
-        }
-
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LitterbagPlacement>>> GetLitterbagPlacements()

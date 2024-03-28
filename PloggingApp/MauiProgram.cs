@@ -153,6 +153,7 @@ public static class MauiProgram
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
             builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<PloggingImage>(ploggingApiClient);
         }
     }
 
