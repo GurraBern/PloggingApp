@@ -1,34 +1,34 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Devices.Sensors;
-using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Services;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>
+public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
+    private readonly ILitterbagPlacementService _litterbagPlacementService;
+    private readonly IPopupService _popupService;
+    private readonly IToastService _toastService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
-    //public List<Location> TrackingPositions { get; set; } = [];
+
     public Task Initialization { get; private set; }
 
-    public MapViewModel(ILitterLocationService litterLocationService)
+    public MapViewModel(ILitterLocationService litterLocationService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
     {
         _litterLocationService = litterLocationService;
-
-        WeakReferenceMessenger.Default.Register(this);
+        _litterbagPlacementService = litterbagPlacementService;
+        _popupService = popupService;
+        _toastService = toastService;
+        WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
+        WeakReferenceMessenger.Default.Register<LitterBagPlacedMessage>(this);
 
         Initialization = Initialize();
     }
@@ -36,6 +36,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     private async Task Initialize()
     {
         await AddTrashPinsToMap();
+        await AddLitterBagPlacementsToMap();
     }
 
     private async Task AddTrashPinsToMap()
@@ -53,12 +54,58 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         PlacedPins.Add(new CanPin()
         {
             Label = "Litter",
+            Command = PressedLitterCommand,
             Location = new Location()
             {
                 Latitude = location.Latitude,
                 Longitude = location.Longitude 
             }
         });
+    }
+
+    private async Task AddLitterBagPlacementsToMap()
+    {
+        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+        foreach (var litterbagPlacement in litterbagPlacements)
+        {
+            PlaceLitterbag(litterbagPlacement);
+        }
+    }
+
+    private void PlaceLitterbag(LitterbagPlacement litterbagPlacement)
+    {
+        var location = litterbagPlacement.Location;
+
+        var litterbagPlacementPin = new LitterbagPlacementPin(PressedLitterbagPlacementCommand, litterbagPlacement)
+        {
+            Label = "Pickup Trashbag",
+            Location = new Location()
+            {
+                Latitude = location.Latitude,
+                Longitude = location.Longitude
+            }
+        };
+
+        PlacedPins.Add(litterbagPlacementPin);
+    }
+
+    [RelayCommand]
+    private async Task PressedLitterbagPlacement(LitterbagPlacement litterbagPlacement)
+    {
+        var request = new GeolocationRequest(GeolocationAccuracy.Best);
+        var currentLocation = await Geolocation.GetLocationAsync(request);
+
+        await _popupService.ShowPopupAsync<LitterbagPlacementViewModel>(onPresenting: viewModel =>
+        {
+            viewModel.LitterbagPlacement = litterbagPlacement;
+            viewModel.CalculateDistance(currentLocation);
+        });
+    }
+
+    [RelayCommand]
+    private async Task PressedLitter()
+    {
+        await _toastService.MakeToast("Litter");
     }
 
     //public Location CalculateZoomOut()
@@ -90,4 +137,9 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     {
         PlaceTrashPin(message.LitterLocation);
     }
+
+	public void Receive(LitterBagPlacedMessage message)
+	{
+        PlaceLitterbag(message.LitterbagPlacement);
+	}
 }

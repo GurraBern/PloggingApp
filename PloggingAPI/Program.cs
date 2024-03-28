@@ -20,15 +20,27 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
+builder.Services.Configure<GoogleDriveSettings>(options =>
+{
+    builder.Configuration.GetSection("GoogleDriveSettings").Bind(options);
+    options.ServiceAccount = File.ReadAllText("/etc/secrets/serviceaccountgoogledrive.json");
+    options.DirectoryId = "1Vc_R08GhzScbik-Y7RO0tj6id-ENMwSF";
+});
+
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
+builder.Services.AddSingleton<ILitterbagPlacementService, LitterbagPlacementService>();
+builder.Services.AddSingleton<IStreakService, StreakService>();
+builder.Services.AddTransient<GoogleDriveService>();
 
+//Register Repositories
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
-
-builder.Services.AddSingleton<IStreakService, StreakService>();
-
+builder.Services.AddSingleton<ILitterbagRepository, LitterbagRepository>();
 builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
+
+
+
 
 builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>();
 

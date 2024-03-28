@@ -48,10 +48,10 @@ public static class MauiProgram
             });
 
         AddApiClients(builder);
+        AddServices(builder);
         AddViewModels(builder);
         AddPopups(builder);
         AddPages(builder);
-        AddServices(builder);
 
         builder.ConfigureMauiHandlers(handlers =>
         {
@@ -98,6 +98,7 @@ public static class MauiProgram
         builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
         builder.Services.AddTransientPopup<BadgesPopUpView,BadgesPopUpViewModel>();
 
+        builder.Services.AddTransientPopup<LitterbagPlacementPopup, LitterbagPlacementViewModel>();
     }
 
     private static void AddPages(MauiAppBuilder builder)
@@ -133,8 +134,8 @@ public static class MauiProgram
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
-
         builder.Services.AddSingleton<ILitterLocationService, LitterLocationService>();
+        builder.Services.AddTransient<ILitterbagPlacementService, LitterbagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
@@ -162,6 +163,8 @@ public static class MauiProgram
 
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
             builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<PloggingImage>(ploggingApiClient);
         }
     }
 

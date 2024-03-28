@@ -3,8 +3,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
+using Plogging.Core.Models;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Services;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
@@ -16,6 +18,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private readonly IPloggingSessionTracker _ploggingSessionTracker;
     private readonly ICameraService _cameraService;
     private readonly IPopupService _popupService;
+    private readonly IToastService _toastService;
+
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
     private Location CurrentLocation { get; set; }
@@ -23,16 +27,20 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, ICameraService cameraService, IPopupService popupService)
+    public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, 
+        ICameraService cameraService, 
+        IPopupService popupService,
+        IToastService toastService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
         _cameraService = cameraService;
         _popupService = popupService;
-
+        _toastService = toastService;
         _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
+
     }
 
     private void OnLocationUpdated(object? sender, Location location)
@@ -104,11 +112,27 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         var imagePath = await _cameraService.TakePhoto();
 
-        if(imagePath.Equals(""))
+        var request = new GeolocationRequest(GeolocationAccuracy.Best);
+        var markLocation = await Geolocation.GetLocationAsync(request);
+
+        if(!imagePath.Equals("") && markLocation != null)
         {
-            var t = 5;
-            //If image taken send set current location
-            //_ploggingSessionTracker.AddTrashCollectionPoint();
+            var litterbagPlacement = new LitterbagPlacement()
+            {
+                Location = new MapPoint(markLocation.Latitude, markLocation.Longitude),
+                PlacementDate = DateTime.UtcNow,
+                ImageUrl = imagePath,
+            };
+
+            try
+            {
+				await _ploggingSessionTracker.AddTrashCollectionPoint(litterbagPlacement);
+                WeakReferenceMessenger.Default.Send(new LitterBagPlacedMessage(litterbagPlacement));
+			}
+			catch (Exception ex)
+            {
+                await _toastService.MakeToast("Could not place litterbag request");
+            }
         }
     }
 
@@ -183,12 +207,12 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         var FinishPin = new FinishPin()
         {
-            Location = _ploggingSessionTracker.CurrentLocation,
+            Location = CurrentLocation,
             Label = "End"
         };
 
         PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(_ploggingSessionTracker.CurrentLocation);
+        TrackingPositions.Add(CurrentLocation);
 
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
     }

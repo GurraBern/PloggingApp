@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.MVVM.ViewModels;
+using PloggingApp.MVVM.Views.Components;
 
 namespace PloggingApp.MVVM.Views;
 
@@ -84,6 +86,8 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         }
     }
 
+
+
     //Bad solution should use data binding if possible
     public void Receive(PloggingSessionMessage message)
     {
@@ -97,6 +101,23 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         else
         {
             DrawPolyLine(message.Locations);
+        }
+    }
+
+    private void CustomPin_MarkerClicked(object sender, PinClickedEventArgs e)
+    {
+        var pin = sender as CustomPin;
+
+        switch (pin?.BindingContext)
+        {
+            case LitterbagPlacementPin litterbagPlacementPin:
+                litterbagPlacementPin.Command.Execute(litterbagPlacementPin.LitterBagPlacement);
+                break;
+            case CanPin canPin:
+                canPin.Command.Execute("");
+                break;
+            default:
+                break;
         }
     }
 }

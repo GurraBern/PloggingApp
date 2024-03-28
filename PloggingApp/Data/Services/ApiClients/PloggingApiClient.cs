@@ -34,7 +34,7 @@ public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T
         }
     }
 
-    public async Task<T> PostAsync(RestRequest request, string bearerToken)
+    public async Task<T> PostAsync(RestRequest request, string bearerToken = "")
     {
         try
         {
@@ -48,7 +48,7 @@ public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T
         }
     }
 
-    public async Task<T> DeleteAsync(RestRequest request, string bearerToken)
+    public async Task<T> DeleteAsync(RestRequest request, string bearerToken = "")
     {
         try
         {
@@ -62,7 +62,7 @@ public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T
         }
     }
 
-    public async Task<T> PatchAsync(RestRequest request, string bearerToken)
+    public async Task<T> PatchAsync(RestRequest request, string bearerToken = "")
     {
         try
         {

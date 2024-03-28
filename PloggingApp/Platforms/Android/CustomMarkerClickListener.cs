@@ -10,7 +10,7 @@ internal class CustomMarkerClickListener(CustomMapHandler mapHandler)
     {
         var pin = mapHandler.Markers.FirstOrDefault(x => x.marker.Id == marker.Id);
         pin.pin?.SendMarkerClick();
-        marker.ShowInfoWindow();
+        //marker.ShowInfoWindow();
         return true;
     }
 }

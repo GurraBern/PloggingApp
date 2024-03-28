@@ -12,6 +12,7 @@ namespace PloggingApp.Services.PloggingTracking;
 public class PloggingSessionTracker : IPloggingSessionTracker
 {
     private readonly IPloggingSessionService _ploggingSessionService;
+    private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
@@ -24,10 +25,14 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     public bool IsTracking { get; set; }
     public event EventHandler<Location> LocationUpdated;
 
-    public PloggingSessionTracker(IPloggingSessionService ploggingSessionService, IAuthenticationService authenticationService,
-                                  IPlogTogetherService plogTogetherService, IUserInfoService userInfoService)
+    public PloggingSessionTracker(IPloggingSessionService ploggingSessionService,
+        ILitterbagPlacementService litterbagPlacementService,
+        IAuthenticationService authenticationService,
+        IPlogTogetherService plogTogetherService, 
+        IUserInfoService userInfoService)
     {
         _ploggingSessionService = ploggingSessionService;
+        _litterbagPlacementService = litterbagPlacementService;
         _authenticationService = authenticationService;
         _plogTogetherService = plogTogetherService;
         _userInfoService = userInfoService;
@@ -58,7 +63,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         }
     }
 
-    public async Task<Location> CurrentLocationAsync()
+    private async Task<Location> CurrentLocationAsync()
     {
         try
         {
@@ -78,6 +83,11 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         {
             return null;
         }
+    }
+
+    public async Task AddTrashCollectionPoint(LitterbagPlacement litterBagPlacement)
+    {
+        await _litterbagPlacementService.AddTrashCollectionPoint(litterBagPlacement);
     }
 
     public async Task EndSession()
