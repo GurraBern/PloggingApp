@@ -20,7 +20,12 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
-builder.Services.Configure<GoogleDriveSettings>(builder.Configuration.GetSection("GoogleDriveSettings"));
+builder.Services.Configure<GoogleDriveSettings>(options =>
+{
+    builder.Configuration.GetSection("GoogleDriveSettings").Bind(options);
+    options.ServiceAccount = File.ReadAllText("/etc/secrets/serviceaccountgoogledrive.json");
+    options.DirectoryId = "1Vc_R08GhzScbik-Y7RO0tj6id-ENMwSF";
+});
 
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();

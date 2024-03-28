@@ -15,8 +15,7 @@ public class GoogleDriveService
     {
         _options = options;
 
-        //todo change to from json?
-        var credential = GoogleCredential.FromFile(_options.Value.ServiceAccount)
+        var credential = GoogleCredential.FromJson(_options.Value.ServiceAccount)
             .CreateScoped(DriveService.ScopeConstants.Drive);
 
         _driveService = new DriveService(new BaseClientService.Initializer()
