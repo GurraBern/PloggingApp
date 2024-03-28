@@ -14,11 +14,5 @@ namespace PloggingApp
             Routing.RegisterRoute(nameof(GenerateQRcodePage), typeof(GenerateQRcodePage));
             Routing.RegisterRoute(nameof(MyProfilePage), typeof(MyProfilePage));
         }
-
-        private async void GoToMyProfilePage(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("MyProfilePage");
-
-        }
     }
 }

@@ -7,9 +7,7 @@
     Shell.FlyoutBehavior="Disabled"
     Title="PloggingApp">
 
-    <Shell.ToolbarItems>
-        <ToolbarItem IconImageSource="user.svg" Order="Primary" Clicked="GoToMyProfilePage" Priority="0"/>
-    </Shell.ToolbarItems>
+
 
     <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />

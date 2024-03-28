@@ -6,6 +6,8 @@
              x:Class="PloggingApp.Pages.MyProfilePage"
              Title="My Profile">
 
+    <!-- TODO: Fix mysterious title indentation? -->
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}"  Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>

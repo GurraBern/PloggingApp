@@ -1,3 +1,4 @@
+using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.Pages;

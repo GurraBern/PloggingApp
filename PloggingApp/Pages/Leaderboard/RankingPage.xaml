@@ -6,6 +6,11 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
              x:DataType="viewmodel:RankingViewmodel"
              Title="LeaderboardPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="user.svg" Order="Primary" Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}" Priority="0"/>
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout>
         <views:LeaderboardView BindingContext="{Binding LeaderboardViewModel}"></views:LeaderboardView>
     </VerticalStackLayout>

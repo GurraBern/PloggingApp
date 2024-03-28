@@ -21,17 +21,11 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
-
     public LeaderboardViewModel LeaderboardViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-    [ObservableProperty]
-    public DateTime recentStartDate0;
-    [ObservableProperty]
-    public DateTime recentStartDate1;
-    [ObservableProperty]
-    public DateTime recentStartDate2;
+
     [ObservableProperty]
     public string displayName;
     [ObservableProperty]
@@ -46,8 +40,18 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public double totalTime;
     [ObservableProperty]
     public int userRankInt;
-    //[ObservableProperty]
-    //public UserRanking userRank;
+    [ObservableProperty]
+    public DateTime recentStartDate0;
+    [ObservableProperty]
+    public DateTime recentStartDate1;
+    [ObservableProperty]
+    public DateTime recentStartDate2;
+    [ObservableProperty]
+    public double recentWeight0;
+    [ObservableProperty]
+    public double recentWeight1;
+    [ObservableProperty]
+    public double recentWeight2;
 
     public MyProfileViewModel(IAuthenticationService authenticationService, IRankingService rankingService, StreakViewModel streakViewModel, IPloggingSessionService ploggingSessionService, PloggingSessionViewModel ploggingSessionViewModel, LeaderboardViewModel leaderboardViewModel)
     {
@@ -76,13 +80,16 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         RecentStartDate1 = _allUserSessions.ElementAt(1).StartDate;
         RecentStartDate2 = _allUserSessions.ElementAt(2).StartDate;
 
+        RecentWeight0 = Math.Round(_allUserSessions.ElementAt(0).PloggingData.Weight);
+        RecentWeight1 = Math.Round(_allUserSessions.ElementAt(1).PloggingData.Weight);
+        RecentWeight2 = Math.Round(_allUserSessions.ElementAt(2).PloggingData.Weight);
+
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
         PloggingSessions.ClearAndAddRange(_allUserSessions);
+
         UserRankInt = LeaderboardViewModel.UserRank.Rank;
-        //UserRank = LeaderboardViewModel.UserRank;
 
         var stats = new PloggingStatistics(_allUserSessions);
-        //TotalSteps = Math.Round(stats.TotalSteps);
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
@@ -97,6 +104,13 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService.SignOut();
         await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
     }
+
+    [RelayCommand]
+    public async Task GoToMyProfilePage()
+    {
+        await Shell.Current.GoToAsync("MyProfilePage");
+    }
+
 
 
 }

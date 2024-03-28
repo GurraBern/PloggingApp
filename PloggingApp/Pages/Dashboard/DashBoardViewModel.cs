@@ -10,17 +10,21 @@ public class DashboardViewModel
     public StreakViewModel StreakViewModel { get; set; }
     public PlogTogetherViewModel PlogTogetherViewModel {get; set;}
 
+    public MyProfileViewModel MyProfileViewModel { get; set;}
+
 	public DashboardViewModel(MapViewModel mapViewModel,
         AddLitterViewModel addLitterViewModel,
         PloggingSessionViewModel ploggingSessionViewModel,
         StreakViewModel streakViewModel,
-        PlogTogetherViewModel plogTogetherViewModel)
+        PlogTogetherViewModel plogTogetherViewModel,
+        MyProfileViewModel myProfileViewModel)
 	{
         MapViewModel = mapViewModel;
         AddLitterViewModel = addLitterViewModel;
         PloggingSessionViewModel = ploggingSessionViewModel;
         StreakViewModel = streakViewModel;
         PlogTogetherViewModel = plogTogetherViewModel;
+        MyProfileViewModel = myProfileViewModel;
 	}
 }
 
