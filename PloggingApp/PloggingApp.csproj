@@ -117,6 +117,7 @@
 	  <None Remove="Resources\Images\trashbag.png" />
 	  <None Remove="Resources\Images\walking_icon.svg" />
 	  <None Remove="Resources\Images\weightbadgegold.png" />
+	  <None Remove="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -251,5 +252,8 @@
 	  <MauiImage Include="Resources\Images\badges\weight\weightbadgebronze.png" />
 	  <MauiImage Include="Resources\Images\badges\weight\weightbadgegold.png" />
 	  <MauiImage Include="Resources\Images\badges\weight\weightbadgesilver.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 </Project>

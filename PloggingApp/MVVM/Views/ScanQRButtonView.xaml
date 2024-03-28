@@ -2,13 +2,15 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.ScanQRButtonView">
-    <VerticalStackLayout>
+    <Grid>
 
         <Button Text="Scan QR code"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
+                WidthRequest="200"
+                HeightRequest="70"
                 Clicked="OnNavigateClicked"/>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentView>
 

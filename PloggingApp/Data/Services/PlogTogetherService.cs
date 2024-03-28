@@ -58,5 +58,19 @@ public class PlogTogetherService : IPlogTogetherService
             return null;
         }
     }
+
+    public async Task RemoveUserFromGroup(string ownerUserId, string userId)
+    {
+        try
+        {
+            var request = new RestRequest($"api/PlogTogether/RemoveUserFromGroup/{ownerUserId}/{userId}");
+
+            await _ploggingApiClient.PutAsync(request);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
 }
 
