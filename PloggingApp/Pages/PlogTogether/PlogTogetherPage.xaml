@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.Pages.PlogTogetherPage"
+             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:PlogTogetherViewModel"
+             xmlns:model="clr-namespace:PloggingApp.MVVM.Models"
+             Title="PlogTogetherPage">
+
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="10"
+          Padding="20"
+          RowDefinitions="Auto,Auto,Auto,*,Auto"
+          RowSpacing="10">
+
+        <Label Text="Plog together with friends! Scan a QR code to add to your group, or generate a QR code for your friend to scan!"
+               Grid.Column="0"
+               Grid.RowSpan="2"
+               FontSize="Small"/>
+
+        <Label Text="Your group:"
+               Grid.Row="2"
+               FontSize="Title"/>
+        <views:GenerateQRcodeButtonView
+            Grid.Column="1"
+            Grid.Row="0"/>   
+        <views:ScanQRButtonView
+            Grid.Column="1"
+            Grid.Row="1"
+            />  
+        <views:PlogTogetherView
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            />
+
+        <Button Text="Delete Group"
+                Command="{Binding DeleteGroupCommand}"
+                WidthRequest="200"
+                HeightRequest="70"
+                Grid.Column="1"
+                Grid.Row="4"/>
+    </Grid>
+</ContentPage>
+ 

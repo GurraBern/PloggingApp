@@ -8,20 +8,20 @@ public class DashboardViewModel
     public AddLitterViewModel AddLitterViewModel { get; }
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
-    public PlogTogetherViewModel PlogTogetherViewModel {get; set;}
+    public MyProfileViewModel MyProfileViewModel { get; set; }
 
-	public DashboardViewModel(MapViewModel mapViewModel,
+    public DashboardViewModel(MapViewModel mapViewModel,
         AddLitterViewModel addLitterViewModel,
         PloggingSessionViewModel ploggingSessionViewModel,
         StreakViewModel streakViewModel,
-        PlogTogetherViewModel plogTogetherViewModel)
+        MyProfileViewModel myProfileViewModel)
 	{
         MapViewModel = mapViewModel;
         AddLitterViewModel = addLitterViewModel;
         PloggingSessionViewModel = ploggingSessionViewModel;
         StreakViewModel = streakViewModel;
-        PlogTogetherViewModel = plogTogetherViewModel;
-	}
+        MyProfileViewModel = myProfileViewModel;
+    }
 }
 
 

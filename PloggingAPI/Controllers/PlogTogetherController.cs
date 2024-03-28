@@ -55,5 +55,19 @@ public class PlogTogetherController : Controller
             return StatusCode(500, "An error occurred while processing your request.");
         }
     }
+
+    [HttpPut("RemoveUserFromGroup/{ownerUserId}/{userId}")]
+    public async Task<ActionResult> RemoveUserFromGroup(string ownerUserId, string userId)
+    {
+        try
+        {
+            await _plogTogetherRepository.RemoveUserFromGroup(ownerUserId, userId);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
 }
 

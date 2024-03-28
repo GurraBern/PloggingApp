@@ -76,11 +76,50 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="appsettings.Development.json" />
+	  <None Remove="Resources\Images\badges\CO2\co2badge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2bronzebadge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2goldbadge.png" />
+	  <None Remove="Resources\Images\badges\CO2\co2silverbadge.png" />
+	  <None Remove="Resources\Images\badges\distance\distancebadge.png" />
+	  <None Remove="Resources\Images\badges\distance\distancebadgebronze.png" />
+	  <None Remove="Resources\Images\badges\distance\distancebadgegold.png" />
+	  <None Remove="Resources\Images\badges\distance\distancebadgesilver.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadge.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgebronze.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgegold.png" />
+	  <None Remove="Resources\Images\badges\streak\streakbadgesilver.png" />
+	  <None Remove="Resources\Images\badges\timespent\timespentbadge.png" />
+	  <None Remove="Resources\Images\badges\timespent\timespentbadgebronze.png" />
+	  <None Remove="Resources\Images\badges\timespent\timespentbadgegold.png" />
+	  <None Remove="Resources\Images\badges\timespent\timespentbadgesilver.png" />
+	  <None Remove="Resources\Images\badges\weight\weightbadge.png" />
+	  <None Remove="Resources\Images\badges\weight\weightbadgebronze.png" />
+	  <None Remove="Resources\Images\badges\weight\weightbadgegold.png" />
+	  <None Remove="Resources\Images\badges\weight\weightbadgesilver.png" />
 	  <None Remove="Resources\Images\canpin.png" />
+	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\finishpin.png" />
+	  <None Remove="Resources\Images\leaderboard.svg" />
+	  <None Remove="Resources\Images\logout.svg" />
+	  <None Remove="Resources\Images\map_icon.svg" />
+	  <None Remove="Resources\Images\moreBadges.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
+	  <None Remove="Resources\Images\pet_bottle_icon.svg" />
+	  <None Remove="Resources\Images\smoking_icon.svg" />
+	  <None Remove="Resources\Images\soda_cans_icon.svg" />
 	  <None Remove="Resources\Images\startpin.png" />
+	  <None Remove="Resources\Images\stats.svg" />
+	  <None Remove="Resources\Images\threedots.png" />
+	  <None Remove="Resources\Images\trashbag.png" />
+	  <None Remove="Resources\Images\user.svg" />
+	  <None Remove="Resources\Images\walking_icon.svg" />
+	  <None Remove="Resources\Images\weightbadgegold.png" />
+	  <None Remove="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -134,7 +173,16 @@
 	  <MauiXaml Update="MVVM\Views\AddLitter.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\BadgesPopUpView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Components\LitterTypeButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\MyProfileView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\OthersSessionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
@@ -167,6 +215,12 @@
 	  <MauiXaml Update="Pages\Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\MyProfilePage\MyProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\OthersProfile\OthersProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Statistics\StatisticsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -180,8 +234,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\leaderboard.svg" />
-	  <None Remove="Resources\Images\map_icon.svg" />
 	  <None Remove="Resources\Images\5aef423c06700a9afe62bfacfe1c74a9.png" />
 	  <None Remove="Resources\Images\flame-38705.png" />
 	</ItemGroup>
@@ -189,6 +241,31 @@
 	  <BundleResource Include="Resources\Images\leaderboard.svg" />
 	  <BundleResource Include="Resources\Images\map_icon.svg" />
 	  <BundleResource Include="Resources\Images\streak_flame.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\badges\CO2\co2badge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2bronzebadge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2goldbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\CO2\co2silverbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\distance\distancebadge.png" />
+	  <MauiImage Include="Resources\Images\badges\distance\distancebadgebronze.png" />
+	  <MauiImage Include="Resources\Images\badges\distance\distancebadgegold.png" />
+	  <MauiImage Include="Resources\Images\badges\distance\distancebadgesilver.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgebronze.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgegold.png" />
+	  <MauiImage Include="Resources\Images\badges\streak\streakbadgesilver.png" />
+	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadgebronze.png" />
+	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadgegold.png" />
+	  <MauiImage Include="Resources\Images\badges\timespent\timespentbadgesilver.png" />
+	  <MauiImage Include="Resources\Images\badges\weight\weightbadge.png" />
+	  <MauiImage Include="Resources\Images\badges\weight\weightbadgebronze.png" />
+	  <MauiImage Include="Resources\Images\badges\weight\weightbadgegold.png" />
+	  <MauiImage Include="Resources\Images\badges\weight\weightbadgesilver.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\PinImages\handshake_color_icon.svg" />

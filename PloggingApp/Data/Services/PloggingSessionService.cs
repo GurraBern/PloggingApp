@@ -51,4 +51,6 @@ public class PloggingSessionService : IPloggingSessionService
             return Enumerable.Empty<PloggingSession>();
         }
     }
+    public string UserId { get; set; }
+    public string SessionId { get; set; }
 }

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             x:Class="PloggingApp.MVVM.Views.OthersSessionsView"
+             x:DataType="viewmodel:OthersSessionsViewModel">
+    
+        <StackLayout>
+        <Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>
+        <HorizontalStackLayout Margin="0,0,0,-50">
+            <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,-100"></Label>
+            <CollectionView ItemsSource="{Binding Badges}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Badge">
+                        <StackLayout Margin="-25,-10,-30,0">
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+
+                                </Image.GestureRecognizers>
+
+                            </Image>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowBadgesCommand}"/>
+
+                </Image.GestureRecognizers>
+            </Image>
+        </HorizontalStackLayout>
+        <Label Text="Total" FontSize="Large" Padding="6,0"></Label>
+        <Border>
+            <Grid ColumnDefinitions="*, *, *, *" RowDefinitions="20,30">
+                <Label Grid.Row="0" Grid.Column="0" Text="Trash Weight" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Distance" Margin="10,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="2" Text="CO2" Margin="10,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="3" Text="Biggest Streak" Margin="0,0,0,0" />
+
+                <Label Grid.Row="1" Grid.Column="0" Text="{Binding TotalWeight, StringFormat='{0}kg'}" Margin="0,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding TotalDistance, StringFormat='{0}km'}" Margin="10,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="2" Text="{Binding TotalCO2Saved, StringFormat='{0}kg'}" Margin="10,10,10,0" />
+                <Label Grid.Row="1" Grid.Column="3" Text="{Binding StreakString, StringFormat='{0} weeks'}" Margin="10,10,0,0" />
+            </Grid>
+        </Border>
+
+
+        <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding PloggingSessions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="modelsCore:PloggingSession">
+                    <Frame Margin="2,3" Padding="0">
+                        <HorizontalStackLayout >
+                            <Image Source="trashbag.png"  HeightRequest="40" WidthRequest="40"></Image>
+                            <VerticalStackLayout Margin="0,8">
+                                <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" />
+                                <HorizontalStackLayout Margin="0,10">
+                                    <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  />
+                                    <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" />
+                                    <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}'}" />
+                                    <Image x:Name="Trashbag" Source="trashbag.png" HeightRequest="10" WidthRequest="10"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </ScrollView>
+    </StackLayout>
+    
+</ContentView>

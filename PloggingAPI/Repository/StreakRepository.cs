@@ -21,6 +21,7 @@ public class StreakRepository : IStreakRepository
 	// called when user ends plogging session
 	public async Task UpdateStreak(string userId)
 	{
+		//add null ref excep
         var user = await _ploggingStreakCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;
@@ -33,6 +34,11 @@ public class StreakRepository : IStreakRepository
         if (user.LastPlogged < currentWeekStartDate)
 		{
 			user.Streak += 1;
+		}
+
+		if (user.BiggestStreak < user.Streak)
+		{
+			user.BiggestStreak = user.Streak;
 		}
 
 		user.LastPlogged = currentDateMidnight;

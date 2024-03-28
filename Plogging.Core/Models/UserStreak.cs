@@ -10,6 +10,9 @@ public class UserStreak
     public string? Id { get; set; }
     public required string UserId { get; set; }
     public int Streak { get; set; }
+
+    public int BiggestStreak { get; set; } 
+
     public DateTime LastPlogged { get; set; }
 }
 

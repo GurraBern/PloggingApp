@@ -5,10 +5,10 @@ using Plogging.Core.Models;
 namespace PloggingApp.Services.Statistics;
 public interface IChartService
 {
-    public Chart generateLitterChart(TimeResolution timeResolution);
+    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions);
 
-    public Chart generateDistanceChart(TimeResolution timeResolution); 
+    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions); 
 
-    public Chart generateStepsChart(TimeResolution timeResolution);
+    public Chart generateStepsChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions);
 
 }

@@ -1,7 +1,10 @@
-﻿using Microsoft.Maui.Maps;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Maps;
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
+using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.Services.PloggingTracking;
@@ -11,6 +14,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IPlogTogetherService _plogTogetherService;
+    private readonly IUserInfoService _userInfoService;
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
@@ -20,14 +25,17 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     public bool IsTracking { get; set; }
     public event EventHandler<Location> LocationUpdated;
 
-    public PloggingSessionTracker(
-        IPloggingSessionService ploggingSessionService,
-        ILitterbagPlacementService litterBagPlacementService,
-        IAuthenticationService authenticationService)
+    public PloggingSessionTracker(IPloggingSessionService ploggingSessionService,
+        ILitterbagPlacementService litterbagPlacementService,
+        IAuthenticationService authenticationService,
+        IPlogTogetherService plogTogetherService, 
+        IUserInfoService userInfoService)
     {
         _ploggingSessionService = ploggingSessionService;
-        _litterbagPlacementService = litterBagPlacementService;
+        _litterbagPlacementService = litterbagPlacementService;
         _authenticationService = authenticationService;
+        _plogTogetherService = plogTogetherService;
+        _userInfoService = userInfoService;
     }
 
     public void StartSession()
@@ -86,21 +94,70 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     {
         IsTracking = false;
 
-        var ploggingSession = new PloggingSession()
+        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var userIsPloggingTogether = await _plogTogetherService.GetPlogTogether(currentUserId);
+
+        if (userIsPloggingTogether == null)
         {
-            UserId = _authenticationService.CurrentUser.Uid,
-            DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
-            StartDate = StartTime,
-            EndDate = DateTime.UtcNow,
-            PloggingData = new PloggingData()
+            var ploggingSession = new PloggingSession()
+            {
+                UserId = _authenticationService.CurrentUser.Uid,
+                DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
+                StartDate = StartTime,
+                EndDate = DateTime.UtcNow,
+                PloggingData = new PloggingData()
+                {
+                    Litters = CurrentLitter,
+                    Weight = CurrentLitter.Sum(x => x.Weight),
+                    Distance = CalculateTotalDistance(Route)
+                }
+            };
+
+            await _ploggingSessionService.SavePloggingSession(ploggingSession);
+        }
+        else
+        {
+            List<string> usersInGroup = userIsPloggingTogether.UserIds;
+
+            DateTime EndTime = DateTime.UtcNow;
+
+            PloggingData ploggingData = new PloggingData()
             {
                 Litters = CurrentLitter,
                 Weight = CurrentLitter.Sum(x => x.Weight),
                 Distance = CalculateTotalDistance(Route)
-            } 
-        };
+            };
 
-        await _ploggingSessionService.SavePloggingSession(ploggingSession);
+            var ownerPloggingSession = new PloggingSession() {
+                UserId = currentUserId,
+                DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
+                StartDate = StartTime,
+                EndDate = EndTime,
+                PloggingData = ploggingData
+            };
+
+            await _ploggingSessionService.SavePloggingSession(ownerPloggingSession);
+
+            foreach (var userId in usersInGroup)
+            {
+                var user = await _userInfoService.GetUser(userId);
+                var displayName = user.DisplayName;
+
+                var ploggingSession = new PloggingSession()
+                {
+                    UserId = userId,
+                    DisplayName = displayName,
+                    StartDate = StartTime,
+                    EndDate = EndTime,
+                    PloggingData = ploggingData
+                };
+
+                await _ploggingSessionService.SavePloggingSession(ploggingSession);
+            }
+
+            await _plogTogetherService.DeleteGroup(currentUserId);
+            WeakReferenceMessenger.Default.Send(new DeleteGroupMessage(currentUserId));
+        }
     }
 
     public void AddLitterItem(LitterType litterType, double amount, Location location)
