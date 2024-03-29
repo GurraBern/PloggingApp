@@ -16,6 +16,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     private readonly IAuthenticationService _authenticationService;
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
+    private readonly IStreakService _streakService;
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
@@ -29,13 +30,15 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         ILitterbagPlacementService litterbagPlacementService,
         IAuthenticationService authenticationService,
         IPlogTogetherService plogTogetherService, 
-        IUserInfoService userInfoService)
+        IUserInfoService userInfoService,
+        IStreakService streakService)
     {
         _ploggingSessionService = ploggingSessionService;
         _litterbagPlacementService = litterbagPlacementService;
         _authenticationService = authenticationService;
         _plogTogetherService = plogTogetherService;
         _userInfoService = userInfoService;
+        _streakService = streakService;
     }
 
     public void StartSession()
@@ -95,13 +98,14 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         IsTracking = false;
 
         var currentUserId = _authenticationService.CurrentUser.Uid;
+
         var userIsPloggingTogether = await _plogTogetherService.GetPlogTogether(currentUserId);
 
         if (userIsPloggingTogether == null)
         {
             var ploggingSession = new PloggingSession()
             {
-                UserId = _authenticationService.CurrentUser.Uid,
+                UserId = currentUserId,
                 DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
                 StartDate = StartTime,
                 EndDate = DateTime.UtcNow,
@@ -114,6 +118,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             };
 
             await _ploggingSessionService.SavePloggingSession(ploggingSession);
+            await _streakService.UpdateStreak(currentUserId);
         }
         else
         {
@@ -137,6 +142,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             };
 
             await _ploggingSessionService.SavePloggingSession(ownerPloggingSession);
+            await _streakService.UpdateStreak(currentUserId);
 
             foreach (var userId in usersInGroup)
             {
@@ -153,11 +159,13 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 };
 
                 await _ploggingSessionService.SavePloggingSession(ploggingSession);
+                await _streakService.UpdateStreak(userId);
             }
-
             await _plogTogetherService.DeleteGroup(currentUserId);
             WeakReferenceMessenger.Default.Send(new DeleteGroupMessage(currentUserId));
         }
+        var streakUser = await _streakService.GetUserStreak(currentUserId);
+        WeakReferenceMessenger.Default.Send(new UpdateStreakMessage(streakUser.Streak));
     }
 
     public void AddLitterItem(LitterType litterType, double amount, Location location)

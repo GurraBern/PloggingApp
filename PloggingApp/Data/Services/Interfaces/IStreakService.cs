@@ -5,11 +5,11 @@ namespace PloggingApp.Data.Services;
 
 public interface IStreakService
 {
-    Task<UserStreak> GetUserStreak(string id);
+    Task<UserStreak> GetUserStreak(string userId);
 
-    Task UpdateStreak(string id);
+    Task UpdateStreak(string userId);
 
-    Task ResetStreak(string id);
+    Task ResetStreak(string userId);
 
     Task CreateUser(string userId);
 }

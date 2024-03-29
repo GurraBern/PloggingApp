@@ -3,6 +3,8 @@ using System.Diagnostics;
 using PloggingApp.Pages;
 using Microsoft.Maui.ApplicationModel.Communication;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PloggingApp.Data.Services;
+
 namespace PloggingApp.Services.Authentication;
 
 public class AuthenticationService : IAuthenticationService
@@ -11,15 +13,21 @@ public class AuthenticationService : IAuthenticationService
     public User CurrentUser =>_userCredential?.User;
     
     private readonly FirebaseAuthClient _firebaseAuthClient;
+    private readonly IStreakService _streakService;
 
-    public AuthenticationService(FirebaseAuthClient firebaseAuthClient)
+    public AuthenticationService(FirebaseAuthClient firebaseAuthClient, IStreakService streakService)
     {
         _firebaseAuthClient = firebaseAuthClient;
+        _streakService = streakService;
     }
 
     public async Task LoginUser(string email, string password)
     {
         _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
+
+        var currentUserId = CurrentUser.Uid;
+        await _streakService.ResetStreak(currentUserId);
+
         await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
