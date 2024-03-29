@@ -7,29 +7,28 @@ using PloggingApp.Pages;
 using System.Collections.ObjectModel;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
-using System.Diagnostics;
 using PloggingApp.MVVM.Models;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 {
-
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IRankingService _rankingService;
+    private readonly IStreakService _streakService;
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
     public LeaderboardViewModel LeaderboardViewModel { get; }
+    public OthersSessionsViewModel OthersSessionsViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
 
+
     [ObservableProperty]
     public string displayName;
-    [ObservableProperty]
-    public double totalSteps;
     [ObservableProperty]
     public double totalDistance;
     [ObservableProperty]
@@ -52,8 +51,21 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public double recentWeight1;
     [ObservableProperty]
     public double recentWeight2;
+    [ObservableProperty]
+    private bool isRefreshing;
 
-    public MyProfileViewModel(IAuthenticationService authenticationService, IRankingService rankingService, StreakViewModel streakViewModel, IPloggingSessionService ploggingSessionService, PloggingSessionViewModel ploggingSessionViewModel, LeaderboardViewModel leaderboardViewModel)
+
+    public ObservableCollection<Badge> Badges { get; set; } = [];
+    public List<Badge> _Badges { get; set; } = [];
+
+    public MyProfileViewModel(IAuthenticationService authenticationService, 
+        IRankingService rankingService,
+        IStreakService StreakService,
+        StreakViewModel streakViewModel, 
+        IPloggingSessionService ploggingSessionService, 
+        PloggingSessionViewModel ploggingSessionViewModel, 
+        LeaderboardViewModel leaderboardViewModel,
+        OthersSessionsViewModel othersSessionsViewModel)
     {
         _authenticationService = authenticationService;
         _rankingService = rankingService;
@@ -61,6 +73,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         StreakViewModel = streakViewModel;
         PloggingSessionViewModel = ploggingSessionViewModel;
         LeaderboardViewModel = leaderboardViewModel;
+        OthersSessionsViewModel = othersSessionsViewModel;
+        _streakService = StreakService;
 
         Initialization = InitializeAsync();
     }
@@ -93,7 +107,11 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         TotalDistance = Math.Round(stats.TotalDistance);
         TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
         TotalWeight = Math.Round(stats.TotalWeight);
-        
+
+        int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
+
+        //BADGES
+        await OthersSessionsViewModel.GetBadges(_authenticationService.CurrentUser.Uid, _allUserSessions, stats, streak);
 
         IsBusy = false;
     }
@@ -101,8 +119,13 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task Logout()
     {
-        _authenticationService.SignOut();
-        await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        bool response = await Application.Current.MainPage.DisplayAlert("Signing out", "Are you sure you want to logout?", "Yes", "No");
+
+        if (response)
+        {
+            _authenticationService.SignOut();
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+        }
     }
 
     [RelayCommand]
@@ -111,7 +134,13 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         await Shell.Current.GoToAsync("MyProfilePage");
     }
 
-
+    [RelayCommand]
+    private async Task RefreshMyProfile()
+    {
+        IsRefreshing = true;
+        await GetSessions();
+        IsRefreshing = false;
+    }
 
 }
 

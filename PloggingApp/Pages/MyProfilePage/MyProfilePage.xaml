@@ -8,12 +8,23 @@
 
     <!-- TODO: Fix mysterious title indentation? -->
 
+
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="logout.svg" Command="{Binding LogoutCommand}"  Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>
 
-    <views:MyProfileView BindingContext="{Binding}"></views:MyProfileView>
-    
+
+    <StackLayout>
+
+        <RefreshView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RefreshColor="Red" 
+            IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshMyProfileCommand}">
+
+            <views:MyProfileView></views:MyProfileView>
+
+        </RefreshView>
+
+    </StackLayout>
+
 </ContentPage>
 
 

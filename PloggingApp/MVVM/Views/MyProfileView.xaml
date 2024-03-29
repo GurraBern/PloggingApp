@@ -12,11 +12,12 @@
 
     <!-- TODO: Add navigation from each part of page to stats/history page/badge page? -->
     <!-- TODO: Add badges -->
-    
+
     <ContentView.Resources>
         <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
     </ContentView.Resources>
 
+    <ScrollView>
     <VerticalStackLayout Margin="5" >
         <Border>
             <Grid>
@@ -128,9 +129,46 @@
 
 
         <Border>
-            <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="100">
+            <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="150">
                 <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
+
+
+
+
+
+                <!-- work in progress -->
+                    <CollectionView ItemsSource="{Binding Badges}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Badge">
+                            <StackLayout Margin="-25,-10,-30,0">
+                                <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+
+                                    </Image.GestureRecognizers>
+
+                                </Image>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OthersSessionsViewModel.ShowBadgesCommand}"/>
+
+                    </Image.GestureRecognizers>
+                </Image>
+
+                
+                
+                
+                
             </StackLayout>
+            
         </Border>
 
 
@@ -138,6 +176,6 @@
     </VerticalStackLayout>
 
 
-
+    </ScrollView>
 
 </ContentView>
