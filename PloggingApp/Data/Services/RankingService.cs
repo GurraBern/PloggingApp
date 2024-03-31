@@ -29,6 +29,8 @@ public class RankingService : IRankingService
             var rank = 1;
             foreach (var summary in ploggingSummaries)
             {
+                summary.PloggingData.Weight = Math.Round(summary.PloggingData.Weight, 1);
+                summary.PloggingData.Distance = Math.Round(summary.PloggingData.Distance);
                 var userRank = new UserRanking()
                 {
                     Id = summary.UserId,
