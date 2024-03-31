@@ -24,7 +24,7 @@
         </HorizontalStackLayout>
         <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
         <micro:ChartView Chart="{Binding LitterChart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
-        <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*">
+        <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
             <!--Distance--> 
             <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
                 <Grid Style="{StaticResource StatsGrid}">

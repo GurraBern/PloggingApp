@@ -28,28 +28,28 @@
                     <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
                     <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                         <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="Trash Collected" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Trash Collected" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="CO2 Saved" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="CO2 Saved" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="Distance" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Distance" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}"> 
                             <VerticalStackLayout>
-                                <Label Text="Time plogged" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>

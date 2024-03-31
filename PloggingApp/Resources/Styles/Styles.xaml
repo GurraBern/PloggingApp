@@ -120,7 +120,6 @@
         <Setter Property="StrokeThickness" Value="0"/>
         <Setter Property="BackgroundColor" Value="#5d5aa8"/>
         <Setter Property="HeightRequest" Value="50"/>
-        <Setter Property="Margin" Value="10"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="TimeResolutionState">
