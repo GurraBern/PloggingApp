@@ -20,39 +20,51 @@ public class PlogTogetherRepository : IPlogTogetherRepository
 
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
-        var userExistsInGroup = await _plogTogetherCollection.Find(a => a.UserIds.Contains(userId) || a.OwnerUserId == userId || a.UserIds.Contains(ownerUserId)).FirstOrDefaultAsync();
-
-        if (userExistsInGroup == null)
+        var userOwnsGroup = await _plogTogetherCollection.Find(u => u.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+        if (userOwnsGroup == null)
         {
-            var userOwnsGroup = await _plogTogetherCollection.Find(a => a.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
-
-            if (userOwnsGroup == null)
+            var ownerMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(ownerUserId)).FirstOrDefaultAsync();
+            if (ownerMemberInGroup == null)
             {
-                List<string> userIds = new()
-            {
-                userId
-            };
-
-                var newGroup = new PlogTogether
+                var userMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
+                if (userMemberInGroup == null)
                 {
-                    OwnerUserId = ownerUserId,
-                    UserIds = userIds
-                };
+                    List<string> userIds = new()
+                    {
+                         ownerUserId,
+                         userId
+                    };
 
-                await _plogTogetherCollection.InsertOneAsync(newGroup);
-            }
-            else
-            {
-                if (!userOwnsGroup.UserIds.Contains(userId))
+                    var newGroup = new PlogTogether
+                    {
+                        OwnerUserId = ownerUserId,
+                        UserIds = userIds
+                    };
+
+                    await _plogTogetherCollection.InsertOneAsync(newGroup);
+                }
+                else // user exists in another group
                 {
-                    userOwnsGroup.UserIds.Add(userId);
-                    await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, userOwnsGroup);
+                    return;
                 }
             }
+            else // owner exists in another group
+            {
+                return;
+            }
         }
-        else
+        else //owner har redan en grupp
         {
-            return;
+            var userMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
+            if (userMemberInGroup == null)
+            {
+                userOwnsGroup.UserIds.Add(userId);
+                await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, userOwnsGroup);
+            }
+            else // user exists in another group
+            {
+                return;
+            }
         }
     }
 
@@ -61,9 +73,9 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         await _plogTogetherCollection.DeleteOneAsync(u => u.OwnerUserId == ownerUserId);
     }
 
-    public async Task<PlogTogether> GetPlogTogether(string ownerUserId)
+    public async Task<PlogTogether> GetPlogTogether(string userId)
     {
-        var plogTogether = await _plogTogetherCollection.Find(u => u.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
+        var plogTogether = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
 
         return plogTogether;
     }
