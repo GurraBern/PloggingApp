@@ -112,7 +112,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     {
         if (!userName.Equals(""))
         {
-            var searchResults = _allRankings.Where(x => x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
+            var searchResults = _allRankings.Where(x => x.DisplayName != null && x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
             Rankings.ClearAndAddRange(searchResults);
         }
         else
