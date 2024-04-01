@@ -34,17 +34,17 @@ public partial class PloggingStatistics : ObservableObject
         cO2Saved = new Total<double>();
         weight = new Total<double>(sessions, s => s.PloggingData.Litters.Sum(l => l.Weight));
         time = new Total<TimeSpan>(sessions, s => s.EndDate - s.StartDate);
-        TotalSteps = steps.year;
-        TotalDistance = distance.year;
-        TotalCO2Saved = cO2Saved.year;
-        TotalWeight = weight.year;
+        TotalSteps = Math.Round(steps.year, 2);
+        TotalDistance = Math.Round(distance.year, 2);
+        TotalCO2Saved = Math.Round(cO2Saved.year, 2);
+        TotalWeight = Math.Round(weight.year, 2); 
         TotalTime = time.year;
     }
     public PloggingStatistics(PloggingSession session)
     {
         TotalSteps = session.PloggingData.Steps;
-        TotalDistance = session.PloggingData.Distance;
-        TotalWeight = session.PloggingData.Litters.Sum(s => s.Weight);
+        TotalDistance = Math.Round(session.PloggingData.Distance, 2);
+        TotalWeight = Math.Round(session.PloggingData.Litters.Sum(s => s.Weight), 2);
         TotalTime = session.EndDate - session.StartDate;
     }
     public void changeTimeResolution(TimeResolution tr)

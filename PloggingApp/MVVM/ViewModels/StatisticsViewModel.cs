@@ -24,7 +24,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-
+    public ObservableCollection<string> yearsActive = new ObservableCollection<string>();
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
     {
         {TimeResolution.ThisYear,"#5c5aa8" },
@@ -36,6 +36,9 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         _ploggingSessionService = ploggingSessionService;
         _authenticationService = authenticationService;
         Initialization = InitializeAsync();
+        TimeRes = TimeResolution.ThisYear;
+        YearMonth = DateTime.UtcNow;
+        IsRefreshing = false;
     }
     private async Task InitializeAsync()
     {
@@ -68,22 +71,24 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private void GetMonthChart()
     {
-        Update(TimeResolution.ThisMonth);
+        TimeRes = TimeResolution.ThisMonth;
+        Update();
     }
 
     [RelayCommand]
     private void GetYearChart()
     {
-        Update(TimeResolution.ThisYear);
+        TimeRes = TimeResolution.ThisYear;
+        Update();
     }
 
-    private void Update(TimeResolution tr)
+    private void Update()
     {
         IsBusy = true;
-        DistanceChart.Chart = chartService.generateDistanceChart(tr, UserSessions);
-        LitterChart.Chart = chartService.generateLitterChart(tr, UserSessions);
-        PloggingStats.changeTimeResolution(tr);
-        StatsBoxColor = colorDict[tr];
+        DistanceChart.Chart = chartService.generateDistanceChart(TimeRes, UserSessions);
+        LitterChart.Chart = chartService.generateLitterChart(TimeRes, UserSessions);
+        PloggingStats.changeTimeResolution(TimeRes);
+        StatsBoxColor = colorDict[TimeRes];
         IsBusy = false;
     }
     [RelayCommand]
@@ -98,6 +103,22 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
             });
     }
 
+    [RelayCommand]
+    private async Task Refresh()
+    {
+        // IsRefreshing = true
+        IsBusy = true;
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        UserSessions.ClearAndAddRange(_allUserSessions);
+        PloggingStats = new PloggingStatistics(UserSessions);
+        IsRefreshing = false;
+        IsBusy = false;
+    }
+
+    [ObservableProperty]
+    DateTime yearMonth;
+    [ObservableProperty]
+    bool isRefreshing;
     [ObservableProperty]
     ChartContext distanceChart;
     [ObservableProperty]

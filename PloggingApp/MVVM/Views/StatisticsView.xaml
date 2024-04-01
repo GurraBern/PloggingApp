@@ -12,47 +12,64 @@
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
-
-    <Grid RowDefinitions="*" ColumnDefinitions="*">
-        <ScrollView  Grid.Row="0" Grid.Column="0" HeightRequest="600" VerticalOptions="FillAndExpand">
-            <StackLayout>
-                <Label Text="Filter:"/>
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}" HeightRequest="600">
+        <ScrollView HeightRequest="600" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout  Spacing="10">
+                <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                     <HorizontalStackLayout Spacing="5" Margin="0">
+                        <Label Text="Filter:" VerticalOptions="Center"/>
                         <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetYearChartCommand}"  Text="This Year"></Button>
                         <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Month "></Button>
-
+                        <Border BackgroundColor ="LightGrey" StrokeShape="RoundRectangle 10">
+                            <HorizontalStackLayout>
+                                <DatePicker Date="{Binding YearMonth}"/>
+                                <Image Source="arrowdown.svg"/>
+                            </HorizontalStackLayout>
+                        </Border>
                     </HorizontalStackLayout>
-                    <Label Text="Distance" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
-                    <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
-                    <Label Text="Littertypes" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                    <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
-                    <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
+                </Border>
+                <Border Style="{StaticResource RoundBorder}">
+                    <VerticalStackLayout>
+                        <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
+                        <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="375" HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource RoundBorder}">
+                    <VerticalStackLayout>
+                        <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                        <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource RoundBorder}">
+                    <Grid RowDefinitions="20,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                         <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="Trash Collected" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Trash Collected" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} g'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="1" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="CO2 Saved" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="CO2 Saved" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="0" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="Distance" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Distance" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
-                        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0" Grid.Row="2" Grid.Column="1" BackgroundColor ="{Binding StatsBoxColor}">
+                        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
-                                <Label Text="Time plogged" TextColor="White" HorizontalOptions="Center"/>
-                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsLabelText}"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
+                </Border>
                 <Label Style="{StaticResource SubHeadline}" Text="Sessions" Margin="10,0" HorizontalOptions="Start"/>
                 <CollectionView ItemsSource="{Binding UserSessions}">
                     <CollectionView.ItemTemplate>
@@ -62,7 +79,7 @@
                                     <Label Text="{Binding StartDate, Converter={StaticResource TitleCaseConverter}}" Grid.Column="0" TextColor="White" VerticalOptions="Center"/>
                                     <Image Source="arrowright.svg" Grid.Column="1"/>
                                 </Grid>
-                                
+
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
                                 </Border.GestureRecognizers>
@@ -70,7 +87,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
-    </Grid>
+    </RefreshView>
 </ContentView>

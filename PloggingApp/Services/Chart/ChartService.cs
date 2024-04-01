@@ -116,7 +116,7 @@ public class ChartService : IChartService
         {
             DateTime thisMonth = new DateTime(currentYear, month, 1);
             double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
-            valuePerMonth.Add(thisMonth.ToString("MMMM"), acc);
+            valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
         }
         return generateLineChart(valuePerMonth, yAxisLabel, SKColor.Parse("#6100b0"));
     }
@@ -126,11 +126,15 @@ public class ChartService : IChartService
     {
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value) { Label = kv.Key.ToString(), ValueLabel = $"{kv.Value.ToString()} {yAxisLabel}", Color = color }).ToList(),
-            LineMode = LineMode.Spline,
+            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value)
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : " ", Color = color }).ToList(),
+            LineMode = LineMode.Straight,
             PointMode = PointMode.None,
-            LabelOrientation = Orientation.Horizontal,
-            ValueLabelOrientation = Orientation.Default
+            LabelOrientation = Orientation.Vertical,
+            ValueLabelOrientation = Orientation.Vertical,
+            EnableYFadeOutGradient = true,
+            IsAnimated = true,
+            LabelTextSize = 20f
         };
         return lineChart;
     }
