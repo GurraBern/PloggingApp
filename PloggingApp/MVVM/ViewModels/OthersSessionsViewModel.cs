@@ -3,17 +3,10 @@ using System.Collections.ObjectModel;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using CommunityToolkit.Mvvm.Input;
-
-using Plogging.Core.Enums;
 using PloggingApp.MVVM.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
-using Firebase.Auth.Requests;
-using Firebase.Auth;
-using System.Runtime.CompilerServices;
-using PloggingApp.Pages;
 using CommunityToolkit.Maui.Core;
-using Syncfusion.Maui.Core.Carousel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -23,24 +16,27 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
 
     public ObservableCollection<Badge> Badges { get; set; } = [];
-    public List<Badge> _Badges { get; set; } = [];
+    private readonly List<Badge> badges = [];
 
     [ObservableProperty]
-    public double totalSteps;
-    [ObservableProperty]
-    public double totalDistance;
-    [ObservableProperty]
-    public double totalCO2Saved;
-    [ObservableProperty]
-    public double totalWeight;
-    [ObservableProperty]
-    public string displayName;
+    private double totalSteps;
 
     [ObservableProperty]
-    public string streakString;
+    private double totalDistance;
 
+    [ObservableProperty]
+    private double totalCO2Saved;
 
-    private IEnumerable<PloggingSession> _allSessions = new ObservableCollection<PloggingSession>();
+    [ObservableProperty]
+    private double totalWeight;
+
+    [ObservableProperty]
+    private string displayName;
+
+    [ObservableProperty]
+    private string streakString;
+
+    private IEnumerable<PloggingSession> _allSessions = [];
 
     private readonly IPloggingSessionService _sessionService;
     private readonly IStreakService _streakService;
@@ -55,51 +51,54 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _userInfo = UserInfo;
         _streakService = StreakService;
         _popupService = PopupService;
-        Initialization =GetSessionsAndBadges(); //Dela upp i två funktioner?
+
+        Initialization = GetSessionsAndBadges(); //TODO Dela upp i två funktioner?
     }
 
     [RelayCommand]
     public async Task UpdatePage()
     {
-
         await GetSessionsAndBadges();
-
     }
 
     public async Task GetSessionsAndBadges()
     {
         IsBusy = true;
         string userId = _sessionService.UserId;
-        var user = await _userInfo.GetUser(userId);
-        DisplayName = user.DisplayName;
-        _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        var stats = new PloggingStatistics(_allSessions);
-        TotalSteps = Math.Round(stats.TotalSteps);
-        TotalDistance = Math.Round(stats.TotalDistance);
-        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-        TotalWeight = Math.Round(stats.TotalWeight);
-        PloggingSessions.ClearAndAddRange(_allSessions);
-        int streak = (await _streakService.GetUserStreak(userId)).Streak;
-        StreakString = streak.ToString();
-        await GetBadges(userId, _allSessions, stats, streak);
+
+        if(userId != null)
+        {
+            var user = await _userInfo.GetUser(userId);
+            DisplayName = user.DisplayName;
+            _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+            var stats = new PloggingStatistics(_allSessions);
+            TotalSteps = Math.Round(stats.TotalSteps);
+            TotalDistance = Math.Round(stats.TotalDistance);
+            TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
+            TotalWeight = Math.Round(stats.TotalWeight);
+            PloggingSessions.ClearAndAddRange(_allSessions);
+            int streak = (await _streakService.GetUserStreak(userId)).Streak;
+            StreakString = streak.ToString();
+            await GetBadges(userId, _allSessions, stats, streak);
+        }
+
         IsBusy = false;
     }
 
     public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
     {
-        _Badges.Add(new TrashCollectedBadge(stats));
-        _Badges.Add(new DistanceBadge(stats));
-        _Badges.Add(new TimeSpentBadge(stats));
-        _Badges.Add(new CO2Badge(stats));
-        _Badges.Add(new StreakBadge(streak));
-        Badges.ClearAndAddRange(_Badges);
-        _Badges.Clear();
+        badges.Add(new TrashCollectedBadge(stats));
+        badges.Add(new DistanceBadge(stats));
+        badges.Add(new TimeSpentBadge(stats));
+        badges.Add(new CO2Badge(stats));
+        badges.Add(new StreakBadge(streak));
+        Badges.ClearAndAddRange(badges);
+        badges.Clear();
     }
 
     [RelayCommand]
     public async Task TapBadge(Badge Badge)
     {
-
         if (Badge.Level == "Gold")
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement  + ", this is the highest level", "OK");
@@ -118,8 +117,5 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task ShowBadges()
     {
         await _popupService.ShowPopupAsync<BadgesPopUpViewModel>(onPresenting: viewModel => viewModel.Badges = Badges);
-
     }
-
-
 }
