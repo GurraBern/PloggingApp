@@ -13,12 +13,13 @@ using PloggingApp.Data.Services;
 using PloggingApp.Pages;
 using PloggingApp.Services.Authentication;
 using System.Diagnostics;
-
-
+using PloggingApp.Services.PloggingTracking;
+using Firebase.Auth;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization, IRecipient<AddUserMessage>, IRecipient<DeleteGroupMessage>
+public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization, IRecipient<AddUserMessage>, IRecipient<DeleteGroupMessage>,
+                                             IRecipient<PloggingSessionMessage>, IRecipient<AddFirstUserMessage>
 {
 	private readonly IPlogTogetherService _plogTogetherService;
 	private readonly IAuthenticationService _authenticationService;
@@ -28,7 +29,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
     public ObservableCollection<PlogUser> NewGroup { get; set; } = new ObservableCollection<PlogUser>();
 
-    public List<string> usersInGroupId = new();
+    private bool isTracking = false;
 
     public ICommand RemoveUserCommand { get; private set; }
 
@@ -38,11 +39,14 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 		_plogTogetherService = plogTogetherService;
 		_authenticationService = authenticationService;
 		_userInfoService = userInfoService;
+
         Initialization = InitializeAsync();
-        RemoveUserCommand = new Command<string>(async (userId) => await RemoveUser(userId));
+        //RemoveUserCommand = new Command<string>(async (userId) => await RemoveUser(userId));
 
         WeakReferenceMessenger.Default.Register<AddUserMessage>(this);
+        WeakReferenceMessenger.Default.Register<AddFirstUserMessage>(this);
         WeakReferenceMessenger.Default.Register<DeleteGroupMessage>(this);
+        WeakReferenceMessenger.Default.Register<PloggingSessionMessage>(this);
     }
 
     private async Task InitializeAsync()
@@ -55,25 +59,28 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         var user = message.AddUser;
+        NewGroup.Add(user);
 
-        if (usersInGroupId.Contains(user.UserId))
+        IsBusy = false;
+    }
+
+    public void Receive(AddFirstUserMessage message)
+    {
+        IsBusy = true;
+
+        var users = message.PlogUsers;
+        foreach (var member in users)
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", $"{user.DisplayName} is already a member of this group!", "OK");
-            });
-        }
-        else
-        {
-            usersInGroupId.Add(user.UserId);
-            NewGroup.Add(user);
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await Application.Current.MainPage.DisplayAlert("Success", $"{user.DisplayName} added to group!", "OK");
-            });
+            NewGroup.Add(member);
         }
 
         IsBusy = false;
+    }
+
+    // se om något IsTracking = false message skickas, verkar inte som det?
+    public void Receive(PloggingSessionMessage message)
+    {
+        isTracking = message.IsTracking;
     }
 
     [RelayCommand]
@@ -81,10 +88,30 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 	{
         IsBusy = true;
 
-        var ownerUserId = _authenticationService.CurrentUser.Uid;
-        await _plogTogetherService.DeleteGroup(ownerUserId);
-        usersInGroupId.Clear();
-		NewGroup.Clear();
+        if (isTracking == false)
+        {
+            var currentUserId = _authenticationService.CurrentUser.Uid;
+            var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+            if (plogGroup.OwnerUserId == currentUserId)
+            {
+                await _plogTogetherService.DeleteGroup(currentUserId);
+                NewGroup.Clear();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't delete group: only the owner can delete the group!", "OK");
+                });
+            }
+        }
+        else // OBS det skickas aldrig ett IsTracking = false meddelande efter session atm
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Can't delete group: active plogging session!", "OK");
+            });
+        }
 		
 		IsBusy = false;
     }
@@ -94,8 +121,6 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         var userId = message.Id;
-
-        usersInGroupId.Clear();
         NewGroup.Clear();
 
         IsBusy = false;
@@ -108,8 +133,8 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 		{
             IsBusy = true;
 
-            var ownerUserId = _authenticationService.CurrentUser.Uid;
-            var plogTogether = await _plogTogetherService.GetPlogTogether(ownerUserId);
+            var userId = _authenticationService.CurrentUser.Uid;
+            var plogTogether = await _plogTogetherService.GetPlogTogether(userId);
 
 			if (plogTogether == null)
 			{
@@ -121,7 +146,6 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 			foreach (var member in members)
 			{
 				var user = await _userInfoService.GetUser(member);
-                usersInGroupId.Add(user.UserId);
 
                 PlogUser plogUser = new()
                 {
@@ -143,22 +167,48 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         }
 	}
 
-    // not in use currently
-    public async Task RemoveUser(string userId)
+    // ska man kunna lämna under active session? bara att kolla isTracking isf
+    [RelayCommand]
+    public async Task LeaveGroup()
     {
         IsBusy = true;
 
-        var ownerUserId = _authenticationService.CurrentUser.Uid;
+        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+
+        if (plogGroup != null)
+        {
+            if (plogGroup.OwnerUserId != currentUserId)
+            {
+                await _plogTogetherService.LeaveGroup(currentUserId);
+                NewGroup.Clear();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't leave group: you are the leader!", "OK");
+                });
+            }
+        }
+
+        IsBusy = false;
+    }
+
+    // not in use currently. thought to be for the leader to remove a user
+    /*public async Task RemoveUser(string userId)
+    {
+        IsBusy = true;
+
+        var currentUserId = _authenticationService.CurrentUser.Uid;
         var user = await _userInfoService.GetUser(userId);
 
-        usersInGroupId.Remove(user.UserId);
-
-        await _plogTogetherService.RemoveUserFromGroup(ownerUserId, userId);
+        await _plogTogetherService.RemoveUserFromGroup(currentUserId, userId);
 
         var plogUser = NewGroup.FirstOrDefault(u => u.UserId == user.UserId);
         NewGroup.Remove(plogUser);
 
         IsBusy = false;
-    }
+    }*/
 }
 

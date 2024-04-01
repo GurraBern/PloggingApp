@@ -59,11 +59,11 @@ public class PlogTogetherService : IPlogTogetherService
         }
     }
 
-    public async Task RemoveUserFromGroup(string ownerUserId, string userId)
+    public async Task LeaveGroup(string userId)
     {
         try
         {
-            var request = new RestRequest($"api/PlogTogether/RemoveUserFromGroup/{ownerUserId}/{userId}");
+            var request = new RestRequest($"api/PlogTogether/LeaveGroup/{userId}");
 
             await _ploggingApiClient.PutAsync(request);
         }

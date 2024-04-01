@@ -122,6 +122,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         }
         else
         {
+
             List<string> usersInGroup = userIsPloggingTogether.UserIds;
 
             DateTime EndTime = DateTime.UtcNow;
@@ -133,19 +134,10 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 Distance = CalculateTotalDistance(Route)
             };
 
-            var ownerPloggingSession = new PloggingSession() {
-                UserId = currentUserId,
-                DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
-                StartDate = StartTime,
-                EndDate = EndTime,
-                PloggingData = ploggingData
-            };
-
-            await _ploggingSessionService.SavePloggingSession(ownerPloggingSession);
-            await _streakService.UpdateStreak(currentUserId);
-
             foreach (var userId in usersInGroup)
             {
+                await _streakService.UpdateStreak(userId);
+
                 var user = await _userInfoService.GetUser(userId);
                 var displayName = user.DisplayName;
 
@@ -159,7 +151,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 };
 
                 await _ploggingSessionService.SavePloggingSession(ploggingSession);
-                await _streakService.UpdateStreak(userId);
             }
             await _plogTogetherService.DeleteGroup(currentUserId);
             WeakReferenceMessenger.Default.Send(new DeleteGroupMessage(currentUserId));

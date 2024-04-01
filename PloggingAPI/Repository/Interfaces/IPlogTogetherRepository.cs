@@ -10,6 +10,6 @@ public interface IPlogTogetherRepository
 
     Task<PlogTogether> GetPlogTogether(string ownerUserId);
 
-    Task RemoveUserFromGroup(string ownerUserId, string userId);
+    Task LeaveGroup(string userId);
 }
 
