@@ -2,11 +2,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Firebase.Auth;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
+using PloggingApp.Data.Services;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services;
+using PloggingApp.Services.Authentication;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using System.Collections.ObjectModel;
@@ -19,6 +22,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private readonly ICameraService _cameraService;
     private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
+    private readonly IPlogTogetherService _plogTogetherService;
+    private readonly IAuthenticationService _authenticationService;
 
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Location> TrackingPositions { get; set; } = [];
@@ -30,12 +35,17 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     public PloggingSessionViewModel(IPloggingSessionTracker ploggingSessionTracker, 
         ICameraService cameraService, 
         IPopupService popupService,
-        IToastService toastService)
+        IToastService toastService,
+        IPlogTogetherService plogTogetherService,
+        IAuthenticationService authenticationService)
     {
         _ploggingSessionTracker = ploggingSessionTracker;
         _cameraService = cameraService;
         _popupService = popupService;
         _toastService = toastService;
+        _plogTogetherService = plogTogetherService;
+        _authenticationService = authenticationService;
+
         _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
@@ -49,19 +59,47 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     }
 
     [RelayCommand]
-    private void StartPloggingSession()
+    private async void StartPloggingSession()
     {
-        IsTracking = true;
+        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
 
-        _ploggingSessionTracker.StartSession();
+        if (plogGroup == null)
+        {
+            IsTracking = true;
 
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
+            _ploggingSessionTracker.StartSession();
+
+            WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
+        }
+        else
+        {
+            if (plogGroup.OwnerUserId == currentUserId)
+            {
+                IsTracking = true;
+
+                _ploggingSessionTracker.StartSession();
+
+                WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
+            }
+            else
+            {
+                // plog group exists but current user is not leader, cant start session!
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't start session: you are not leader of the group!", "OK");
+                });
+            }
+        }
     }
 
     [RelayCommand]
     private async Task EndPloggingSession()
     {
         await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
+
+        IsTracking = false;
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
     }
 
     [RelayCommand]

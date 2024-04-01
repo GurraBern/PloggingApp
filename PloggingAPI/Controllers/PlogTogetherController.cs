@@ -56,7 +56,21 @@ public class PlogTogetherController : Controller
         }
     }
 
-    [HttpPut("RemoveUserFromGroup/{ownerUserId}/{userId}")]
+    [HttpPut("LeaveGroup/{userId}")]
+    public async Task<ActionResult> LeaveGroup(string userId)
+    {
+        try
+        {
+            await _plogTogetherRepository.LeaveGroup(userId);
+            return Ok();
+        }
+        catch
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
+    /*[HttpPut("RemoveUserFromGroup/{ownerUserId}/{userId}")]
     public async Task<ActionResult> RemoveUserFromGroup(string ownerUserId, string userId)
     {
         try
@@ -68,6 +82,6 @@ public class PlogTogetherController : Controller
         {
             return StatusCode(500, "An error occurred while processing your request.");
         }
-    }
+    }*/
 }
 

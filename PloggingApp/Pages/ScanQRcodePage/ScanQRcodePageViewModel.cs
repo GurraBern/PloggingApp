@@ -26,48 +26,99 @@ public partial class ScanQRcodePageViewModel : ObservableObject
         _authenticationService = authenticationService;
 	}
 
-	public async Task AddUserToGroup(string userId)
+    public async Task AddUserToGroup(string userId)
     {
-        var ownerUserId = _authenticationService.CurrentUser.Uid;
-        var user = await _userInfoService.GetUser(userId);
+        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var userInfo = await _userInfoService.GetUser(userId);
 
-        await _plogTogetherService.AddUserToGroup(ownerUserId, userId);
+        var plogTogetherGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
 
-        // check if user got added to group, if not then owner or user is part of another group
-        // first case: user creates a group and could not add the user
-        var plogOwnerGroup = await _plogTogetherService.GetPlogTogether(ownerUserId);
-        if (plogOwnerGroup == null)
+        if (plogTogetherGroup == null)
         {
-            await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
-            MainThread.BeginInvokeOnMainThread(async () =>
+            var userAlreadyInGroup = await _plogTogetherService.GetPlogTogether(userId);
+            if (userAlreadyInGroup == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"You or {user.DisplayName} exists in another group!", "OK");
-            });
-            
+                await _plogTogetherService.AddUserToGroup(currentUserId, userId);
+
+                var ownerUserInfo = await _userInfoService.GetUser(currentUserId);
+
+                PlogUser plogUser1 = new()
+                {
+                    DisplayName = ownerUserInfo.DisplayName,
+                    UserId = ownerUserInfo.UserId
+                };
+
+                PlogUser plogUser2 = new()
+                {
+                    DisplayName = userInfo.DisplayName,
+                    UserId = userInfo.UserId
+                };
+
+                List<PlogUser> plogUsers = new()
+                {
+                    plogUser1,
+                    plogUser2
+                };
+
+                WeakReferenceMessenger.Default.Send(new AddFirstUserMessage(plogUsers));
+
+                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Success", $"{userInfo.DisplayName} added to group!", "OK");
+                });
+            }
+            else // user already in a group
+            {
+                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: user is already in a group", "OK");
+                });
+            }
         }
-        // second case: user owns a group and could not add the user
-        else if (!plogOwnerGroup.UserIds.Contains(user.UserId))
+        else // currentUser already in a group, check if current user is owner, then check if user trying to add is in group already
         {
-            await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
-            MainThread.BeginInvokeOnMainThread(async () =>
+            if (plogTogetherGroup.OwnerUserId == currentUserId)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", $"{user.DisplayName} exists in another group!", "OK");
-            });
-        }
-        else
-        {
-            // user has been added to this group, send update to view
-            PlogUser plogUser = new()
+                var userAlreadyInGroup = await _plogTogetherService.GetPlogTogether(userId);
+                if (userAlreadyInGroup == null)
+                {
+                    await _plogTogetherService.AddUserToGroup(currentUserId, userId);
+
+                    PlogUser plogUser = new()
+                    {
+                        DisplayName = userInfo.DisplayName,
+                        UserId = userInfo.UserId
+                    };
+
+                    AddUser = plogUser;
+
+                    WeakReferenceMessenger.Default.Send(new AddUserMessage(AddUser));
+
+                    await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Success", $"{userInfo.DisplayName} added to group!", "OK");
+                    });
+                }
+                else // user already in a group
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: user is already in a group", "OK");
+                    });
+                }
+            }
+            else //current user is not owner!!! 
             {
-                DisplayName = user.DisplayName,
-                UserId = user.UserId
-            };
-
-            AddUser = plogUser;
-
-            WeakReferenceMessenger.Default.Send(new AddUserMessage(AddUser));
-
-            await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: you are not the owner of the group", "OK");
+                });
+            }
         }
     }
 }

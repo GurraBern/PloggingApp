@@ -80,7 +80,19 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         return plogTogether;
     }
 
-    public async Task RemoveUserFromGroup(string ownerUserId, string userId)
+    public async Task LeaveGroup(string userId)
+    {
+        var plogGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
+        var groupOwnerId = plogGroup.OwnerUserId;
+
+        if (groupOwnerId != userId)
+        {
+            plogGroup.UserIds.Remove(userId);
+            await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == groupOwnerId, plogGroup);
+        }
+    }
+
+    /*public async Task RemoveUserFromGroup(string ownerUserId, string userId)
     {
         var plogGroup = await _plogTogetherCollection.Find(a => a.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
 
@@ -94,5 +106,5 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         {
             await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, plogGroup);
         }
-    }
+    }*/
 }

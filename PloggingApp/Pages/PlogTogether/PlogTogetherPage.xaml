@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:PlogTogetherViewModel"
-             xmlns:model="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:model="clr-namespace:PloggingApp.MVVM.ViewModels"
              Title="PlogTogetherPage">
 
     <Grid ColumnDefinitions="*,*"
@@ -40,6 +40,14 @@
                 HeightRequest="70"
                 Grid.Column="1"
                 Grid.Row="4"/>
+
+        <Button Text="Leave Group"
+                Command="{Binding LeaveGroupCommand}"
+                WidthRequest="200"
+                HeightRequest="70"
+                Grid.Column="0"
+                Grid.Row="4"
+                />
     </Grid>
 </ContentPage>
  
