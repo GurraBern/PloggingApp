@@ -24,7 +24,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-
+    public ObservableCollection<string> yearsActive = new ObservableCollection<string>();
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
     {
         {TimeResolution.ThisYear,"#5c5aa8" },
@@ -37,6 +37,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService = authenticationService;
         Initialization = InitializeAsync();
         TimeRes = TimeResolution.ThisYear;
+        YearMonth = DateTime.UtcNow;
         IsRefreshing = false;
     }
     private async Task InitializeAsync()
@@ -109,14 +110,15 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
-        Update();
+        PloggingStats = new PloggingStatistics(UserSessions);
         IsRefreshing = false;
         IsBusy = false;
     }
 
     [ObservableProperty]
+    DateTime yearMonth;
+    [ObservableProperty]
     bool isRefreshing;
-
     [ObservableProperty]
     ChartContext distanceChart;
     [ObservableProperty]
