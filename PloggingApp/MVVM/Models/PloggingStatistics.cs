@@ -43,8 +43,8 @@ public partial class PloggingStatistics : ObservableObject
     public PloggingStatistics(PloggingSession session)
     {
         TotalSteps = session.PloggingData.Steps;
-        TotalDistance = session.PloggingData.Distance;
-        TotalWeight = session.PloggingData.Litters.Sum(s => s.Weight);
+        TotalDistance = Math.Round(session.PloggingData.Distance, 2);
+        TotalWeight = Math.Round(session.PloggingData.Litters.Sum(s => s.Weight), 2);
         TotalTime = session.EndDate - session.StartDate;
     }
     public void changeTimeResolution(TimeResolution tr)
