@@ -12,47 +12,47 @@
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
-
-    <Grid RowDefinitions="*" ColumnDefinitions="*">
-        <ScrollView  Grid.Row="0" Grid.Column="0" HeightRequest="600" VerticalOptions="FillAndExpand">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}" HeightRequest="600">
+        <ScrollView HeightRequest="600" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <Label Text="Filter:"/>
-                    <HorizontalStackLayout Spacing="5" Margin="0">
-                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetYearChartCommand}"  Text="This Year"></Button>
-                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Month "></Button>
+                <HorizontalStackLayout Spacing="5" Margin="0">
+                    <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetYearChartCommand}"  Text="This Year"></Button>
+                    <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="This Month "></Button>
 
-                    </HorizontalStackLayout>
-                    <Label Text="Distance" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
-                    <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
-                    <Label Text="Littertypes" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                    <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
-                    <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
-                        <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
-                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
-                            <VerticalStackLayout>
-                                <Label Text="Trash Collected" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Style="{StaticResource StatsLabelText}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
-                            <VerticalStackLayout>
-                                <Label Text="CO2 Saved" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsLabelText}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
-                            <VerticalStackLayout>
-                                <Label Text="Distance" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsLabelText}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}"> 
-                            <VerticalStackLayout>
-                                <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsLabelText}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </Grid>
+                </HorizontalStackLayout>
+                <Label Text="Distance" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
+                <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Littertypes" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="150" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
+                    <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Trash Collected" Style="{StaticResource StatsLabelText}"/>
+                            <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Style="{StaticResource StatsLabelText}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="CO2 Saved" Style="{StaticResource StatsLabelText}"/>
+                            <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsLabelText}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Distance" Style="{StaticResource StatsLabelText}"/>
+                            <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsLabelText}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
+                            <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsLabelText}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
                 <Label Style="{StaticResource SubHeadline}" Text="Sessions" Margin="10,0" HorizontalOptions="Start"/>
                 <CollectionView ItemsSource="{Binding UserSessions}">
                     <CollectionView.ItemTemplate>
@@ -62,7 +62,7 @@
                                     <Label Text="{Binding StartDate, Converter={StaticResource TitleCaseConverter}}" Grid.Column="0" TextColor="White" VerticalOptions="Center"/>
                                     <Image Source="arrowright.svg" Grid.Column="1"/>
                                 </Grid>
-                                
+
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
                                 </Border.GestureRecognizers>
@@ -72,5 +72,5 @@
                 </CollectionView>
             </StackLayout>
         </ScrollView>
-    </Grid>
+    </RefreshView>
 </ContentView>
