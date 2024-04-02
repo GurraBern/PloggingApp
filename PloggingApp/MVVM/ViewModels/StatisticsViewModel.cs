@@ -37,8 +37,11 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService = authenticationService;
         Initialization = InitializeAsync();
         TimeRes = TimeResolution.ThisYear;
-        YearMonth = DateTime.UtcNow;
         IsRefreshing = false;
+        FilterYear = DateTime.UtcNow.Year;
+        FilterMonth = DateTime.UtcNow.Month;
+        Years = new ObservableCollection<int>(Enumerable.Range(FilterYear - 2, 3));
+        Months = new ObservableCollection<int>(Enumerable.Range(1, 12));
     }
     private async Task InitializeAsync()
     {
@@ -116,7 +119,17 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [ObservableProperty]
-    DateTime yearMonth;
+    ObservableCollection<int> months;
+
+    [ObservableProperty]
+    ObservableCollection<int> years;
+
+    [ObservableProperty]
+    int filterYear;
+
+    [ObservableProperty]
+    int filterMonth;
+
     [ObservableProperty]
     bool isRefreshing;
     [ObservableProperty]
@@ -126,9 +139,6 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 
     [ObservableProperty]
     TimeResolution timeRes;
-
-    [ObservableProperty]
-    ObservableCollection<ChartContext> charts;
 
     [ObservableProperty]
     PloggingStatistics ploggingStats;
