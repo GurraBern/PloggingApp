@@ -66,7 +66,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         TimeRes = TimeResolution.ThisYear;
         StatsBoxColor = colorDict[TimeRes];
         SelectedYear = DateTime.UtcNow.Year;
-        SelectedMonth = DateTime.UtcNow.Month;
+        SelectedMonth = 4;
 
     }
     private async Task InitializeAsync()

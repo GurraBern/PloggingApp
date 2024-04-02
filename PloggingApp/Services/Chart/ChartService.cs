@@ -99,8 +99,8 @@ public class ChartService : IChartService
         Dictionary<string, double> valuePerDay = new Dictionary<string, double>();
         for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
         {
-            DateTime currentDate = new DateTime(currentYear, currentMonth, day);
-            double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : 0;
+            DateTime currentDate = new DateTime(year, month, day);
+            double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
             valuePerDay.Add(currentDate.ToString("d "), acc);
         }
         return generateLineChart(valuePerDay, yAxisLabel, SKColor.Parse("#9558a8"));
@@ -121,10 +121,13 @@ public class ChartService : IChartService
     // General function
     private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel, SKColor color)
     {
+        //For some reason, if every value in the graph == 0. Skiasharp throws an exception, 
+        // claiming that "shaderA is null". This is an ugly workaround for this.
+        float offset = (dict.Values.All(v => v == 0)) ? 0.005f : 0f;
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value)
-            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : " ", Color = color }).ToList(),
+            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value + offset)
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : "", Color = color }).ToList(),
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
@@ -136,7 +139,7 @@ public class ChartService : IChartService
         return lineChart;
     }
 
-    private Chart generateEmptyLineChart(TimeResolution tr, int year, int month)
+    public Chart generateEmptyLineChart(TimeResolution tr, int year, int month)
     {
         List<ChartEntry> entries = new List<ChartEntry>();
         if (tr is TimeResolution.ThisYear)
@@ -144,7 +147,8 @@ public class ChartService : IChartService
             for (int m = 1; m <= 12; m++)
             {
                 var dateTime = new DateTime(year, m, 1);
-                var newEntry = new ChartEntry(0f)
+                // Exception is thrown when 0f is passed into the ChartEntry (???)
+                var newEntry = new ChartEntry((float?)1)
                 {
                     Label = dateTime.ToString("MMM"),
                     ValueLabel = "", 
@@ -157,7 +161,7 @@ public class ChartService : IChartService
         {
             for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
             {
-                var newEntry = new ChartEntry(0f)
+                var newEntry = new ChartEntry(1f)
                 {
                     Label = new DateTime(year, month, day).ToString("d "),
                     ValueLabel = "",
@@ -173,7 +177,7 @@ public class ChartService : IChartService
             LabelOrientation = Orientation.Vertical,
             ValueLabelOrientation = Orientation.Vertical,
             EnableYFadeOutGradient = true,
-            IsAnimated = true,
+            IsAnimated = false,
             LabelTextSize = 20f,
             Entries = entries
         };

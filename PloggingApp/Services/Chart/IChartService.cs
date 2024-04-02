@@ -7,6 +7,8 @@ public interface IChartService
 {
     public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions);
 
-    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month); 
+    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month);
+
+    public Chart generateEmptyLineChart(TimeResolution tr, int year, int month);
 
 }
