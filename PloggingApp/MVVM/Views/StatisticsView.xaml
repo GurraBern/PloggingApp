@@ -19,17 +19,17 @@
                 <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                     <HorizontalStackLayout Spacing="5" Margin="0">
                         <Label Text="Filter by:" VerticalOptions="Center"/>
-                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetYearChartCommand}"  Text="Year"></Button>
-                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding GetMonthChartCommand}"  Text="Month "></Button>
+                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding ShowYearCommand}"  Text="Year"></Button>
+                        <Button Style="{StaticResource CapsuleButton}" Command="{Binding ShowMonthCommand}"  Text="Month "></Button>
                         <Border BackgroundColor ="LightGrey" StrokeShape="RoundRectangle 10">
                             <HorizontalStackLayout>
-                                <Picker SelectedIndex="0" ItemsSource="{Binding Years}" Title="{Binding FilterYear, StringFormat='Year: {0}'}"/>
+                                <Picker BackgroundColor = "Transparent" TextColor= "{StaticResource Black}" ItemsSource="{Binding Years}" Title="{Binding FilterYear, StringFormat='Year: {0}'}" SelectedItem="{Binding SelectedYear}"/>
                                 <Image Source="arrowdown.svg"/>
                             </HorizontalStackLayout>
                         </Border>
                         <Border BackgroundColor ="LightGrey" StrokeShape="RoundRectangle 10">
                             <HorizontalStackLayout>
-                                <Picker SelectedIndex="0" ItemsSource="{Binding Months}" Title="{Binding FilterMonth, StringFormat='Month: {0}'}"/>
+                                <Picker BackgroundColor ="Transparent" TextColor="{StaticResource Black}" ItemsSource="{Binding Months}" Title="{Binding FilterMonth, StringFormat='Month: {0}'}" SelectedItem="{Binding SelectedMonth}"/>
                                 <Image Source="arrowdown.svg"/>
                             </HorizontalStackLayout>
                         </Border>

@@ -24,24 +24,50 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-    public ObservableCollection<string> yearsActive = new ObservableCollection<string>();
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
     {
         {TimeResolution.ThisYear,"#5c5aa8" },
         {TimeResolution.ThisMonth, "#9558a8"}
     };
- 
+    private bool _isInitialized = false;
+    private int _selectedYear;
+    private int _selectedMonth;
+    public int SelectedYear
+    {
+        get => _selectedYear;
+        set
+        {
+            _selectedYear = value;
+            
+            if (!_isInitialized)
+                return;
+            Update();
+        }
+    }
+    public int SelectedMonth
+    {
+        get => _selectedMonth;
+        set
+        {
+            _selectedMonth = value;
+           if (!_isInitialized)
+                return;
+            Update();
+        }
+    }
+
     public StatisticsViewModel(IPloggingSessionService ploggingSessionService, IAuthenticationService authenticationService)
     {
         _ploggingSessionService = ploggingSessionService;
         _authenticationService = authenticationService;
         Initialization = InitializeAsync();
-        TimeRes = TimeResolution.ThisYear;
-        IsRefreshing = false;
-        FilterYear = DateTime.UtcNow.Year;
-        FilterMonth = DateTime.UtcNow.Month;
-        Years = new ObservableCollection<int>(Enumerable.Range(FilterYear - 2, 3));
+        Years = new ObservableCollection<int>(Enumerable.Range(DateTime.UtcNow.Year - 2, 3));
         Months = new ObservableCollection<int>(Enumerable.Range(1, 12));
+        TimeRes = TimeResolution.ThisYear;
+        StatsBoxColor = colorDict[TimeRes];
+        SelectedYear = DateTime.UtcNow.Year;
+        SelectedMonth = DateTime.UtcNow.Month;
+
     }
     private async Task InitializeAsync()
     {
@@ -51,17 +77,14 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        //_allUserSessions = await _ploggingSessionService.GetUserSessions("newId", DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         UserSessions.ClearAndAddRange(_allUserSessions);
         chartService = new ChartService();
         PloggingStats = new PloggingStatistics(UserSessions);
-        TimeRes = TimeResolution.ThisYear;
-        StatsBoxColor = colorDict[TimeRes];
         DistanceChart = new ChartContext
         {
-            Chart = chartService.generateDistanceChart(TimeRes,UserSessions),
+            Chart = chartService.generateDistanceChart(TimeRes,UserSessions, SelectedYear, SelectedMonth),
             Name = "Distance",
-            Unit = "km"
+            Unit = "m"
         };
         LitterChart = new ChartContext
         {
@@ -69,27 +92,36 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
             Name = "Litter",
             Unit = "pcs"
         };
+        _isInitialized = true;
         IsBusy = false;
     }
     [RelayCommand]
-    private void GetMonthChart()
+    private void ShowMonth()
     {
         TimeRes = TimeResolution.ThisMonth;
         Update();
     }
 
     [RelayCommand]
-    private void GetYearChart()
+    private void ShowYear()
     {
         TimeRes = TimeResolution.ThisYear;
         Update();
     }
-
     private void Update()
     {
         IsBusy = true;
-        DistanceChart.Chart = chartService.generateDistanceChart(TimeRes, UserSessions);
+        if (TimeRes is TimeResolution.ThisYear)
+        {
+            UserSessions.ClearAndAddRange(_allUserSessions.Where(s => s.StartDate.Year == SelectedYear));
+        }
+        else
+        {
+            UserSessions.ClearAndAddRange(_allUserSessions.Where(s => s.StartDate.Year == SelectedYear && s.StartDate.Month == SelectedMonth));
+        }
         LitterChart.Chart = chartService.generateLitterChart(TimeRes, UserSessions);
+        DistanceChart.Chart = chartService.generateDistanceChart(TimeRes, UserSessions, SelectedYear, SelectedMonth);
+        PloggingStats = new PloggingStatistics(UserSessions);
         PloggingStats.changeTimeResolution(TimeRes);
         StatsBoxColor = colorDict[TimeRes];
         IsBusy = false;
@@ -112,8 +144,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         // IsRefreshing = true
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        UserSessions.ClearAndAddRange(_allUserSessions);
-        PloggingStats = new PloggingStatistics(UserSessions);
+        Update();
         IsRefreshing = false;
         IsBusy = false;
     }
@@ -132,8 +163,10 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 
     [ObservableProperty]
     bool isRefreshing;
+
     [ObservableProperty]
     ChartContext distanceChart;
+
     [ObservableProperty]
     ChartContext litterChart;
 

@@ -7,8 +7,6 @@ public interface IChartService
 {
     public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions);
 
-    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions); 
-
-    public Chart generateStepsChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions);
+    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month); 
 
 }
