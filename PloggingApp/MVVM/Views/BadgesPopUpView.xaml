@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PloggingApp.MVVM.Views.BadgesPopUpView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             x:DataType="viewmodel:BadgesPopUpViewModel">
+             x:DataType="viewmodel:Popups.BadgesPopUpViewModel">
     <VerticalStackLayout>
         <CollectionView ItemsSource="{Binding Badges}">
             <CollectionView.ItemsLayout>

@@ -1,9 +1,9 @@
 ﻿
-using PloggingApp.Data.Services;
-using RestSharp.Authenticators;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 
 namespace PloggingApp.MVVM.Models;
-public class Badge
+public class Badge : ObservableObject
 {
     public string Type { get; set; }   /*Distance, TrashInKilos, TimeSpent,  */
 

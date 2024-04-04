@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
+using PloggingApp.Extensions;
 using PloggingApp.MVVM.Models;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.MVVM.ViewModels.Popups;
 
 public partial class BadgesPopUpViewModel : ObservableObject
 {
-    private readonly IPopupService _popupService;
+    public IPopupService _popupService;
     public ObservableCollection<Badge> Badges { get; set; }
 
     public BadgesPopUpViewModel(IPopupService popupService)
     {
         _popupService = popupService;
-        Badges = new ObservableCollection<Badge>(); 
     }
 }

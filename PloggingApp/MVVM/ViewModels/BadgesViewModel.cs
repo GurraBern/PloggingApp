@@ -5,6 +5,7 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using PloggingApp.MVVM.Models;
+using PloggingApp.MVVM.ViewModels.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
