@@ -158,7 +158,7 @@
                 </CollectionView>
                 <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
                     <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OthersSessionsViewModel.ShowBadgesCommand}"/>
+                        <TapGestureRecognizer Command="{Binding BadgesViewModel.ShowBadgesCommand}"/>
 
                     </Image.GestureRecognizers>
                 </Image>

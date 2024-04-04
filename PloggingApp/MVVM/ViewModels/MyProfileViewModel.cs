@@ -21,7 +21,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
     public LeaderboardViewModel LeaderboardViewModel { get; }
-    public OthersSessionsViewModel OthersSessionsViewModel { get; }
+    public BadgesViewModel BadgesViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
@@ -65,7 +65,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IPloggingSessionService ploggingSessionService, 
         PloggingSessionViewModel ploggingSessionViewModel, 
         LeaderboardViewModel leaderboardViewModel,
-        OthersSessionsViewModel othersSessionsViewModel)
+        BadgesViewModel badgesViewModel)
     {
         _authenticationService = authenticationService;
         _rankingService = rankingService;
@@ -73,7 +73,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         StreakViewModel = streakViewModel;
         PloggingSessionViewModel = ploggingSessionViewModel;
         LeaderboardViewModel = leaderboardViewModel;
-        OthersSessionsViewModel = othersSessionsViewModel;
+        BadgesViewModel = badgesViewModel;
         _streakService = StreakService;
 
         Initialization = InitializeAsync();
@@ -111,7 +111,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
 
         //BADGES
-        await OthersSessionsViewModel.GetBadges(_authenticationService.CurrentUser.Uid, _allUserSessions, stats, streak);
+        await BadgesViewModel.GetBadges(_authenticationService.CurrentUser.Uid, _allUserSessions, stats, streak);
 
         IsBusy = false;
     }

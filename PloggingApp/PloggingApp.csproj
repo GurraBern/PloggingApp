@@ -156,6 +156,9 @@
 	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="MVVM\Views\BadgesView.xaml.cs">
+	    <DependentUpon>BadgesView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="MVVM\Views\PloggingSessionView.xaml.cs">
 	    <DependentUpon>PloggingSessionView.xaml</DependentUpon>
 	  </Compile>
@@ -168,6 +171,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="MVVM\Views\BadgesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\AcceptPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
