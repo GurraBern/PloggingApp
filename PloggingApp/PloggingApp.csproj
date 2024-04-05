@@ -102,6 +102,7 @@
 	  <None Remove="Resources\Images\badges\weight\weightbadgegold.png" />
 	  <None Remove="Resources\Images\badges\weight\weightbadgesilver.png" />
 	  <None Remove="Resources\Images\canpin.png" />
+	  <None Remove="Resources\Images\closepopup.png" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\leaderboard.svg" />

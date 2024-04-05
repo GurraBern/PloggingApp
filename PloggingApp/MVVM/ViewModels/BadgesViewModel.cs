@@ -5,7 +5,6 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using PloggingApp.MVVM.Models;
-using PloggingApp.MVVM.ViewModels.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,7 +42,7 @@ public partial class BadgesViewModel: BaseViewModel
         {
             var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
-            int streak = (await _streakService.GetUserStreak(userId)).Streak;
+            int streak = (await _streakService.GetUserStreak(userId)).BiggestStreak;
             await GetBadges(stats, streak);
         }
 
@@ -81,10 +80,6 @@ public partial class BadgesViewModel: BaseViewModel
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement + ", this is the highest level", "OK");
         }
-        else if (Badge.Level == Levels.Locked)
-        {
-            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user has currently not reached a level and need " + Badge.ToNextLevel.ToString() + " more " + Badge.Measurement + " for the next level", "OK");
-        }
         else
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " , the user need " + Badge.ToNextLevel.ToString() + " more " + Badge.Measurement + " for the next level", "OK");
@@ -94,7 +89,7 @@ public partial class BadgesViewModel: BaseViewModel
     [RelayCommand]
     public async Task ShowBadges()
     {
-        await _popupService.ShowPopupAsync<BadgesPopUpViewModel>(onPresenting: viewModel => viewModel.Badges = Badges);
+        await _popupService.ShowPopupAsync<BadgesPopUpViewModel>();
     }
 
 

@@ -1,5 +1,5 @@
 using CommunityToolkit.Maui.Views;
-using PloggingApp.MVVM.ViewModels.Popups;
+using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.MVVM.Views;
 
