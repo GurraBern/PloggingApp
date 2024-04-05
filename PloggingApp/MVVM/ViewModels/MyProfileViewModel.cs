@@ -111,7 +111,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
 
         //BADGES
-        await BadgesViewModel.GetBadges(_authenticationService.CurrentUser.Uid, _allUserSessions, stats, streak);
+        await BadgesViewModel.GetBadges(stats, streak);
 
         IsBusy = false;
     }

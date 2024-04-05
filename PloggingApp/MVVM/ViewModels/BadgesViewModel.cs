@@ -5,7 +5,6 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using PloggingApp.MVVM.Models;
-using PloggingApp.MVVM.ViewModels.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,7 +30,7 @@ public partial class BadgesViewModel: BaseViewModel
         _streakService = StreakService;
         _popupService = PopupService;
 
-        Initialization = Init(); //TODO Dela upp i två funktioner?
+        Initialization = Init(); 
     }
 
     public async Task Init()
@@ -43,34 +42,43 @@ public partial class BadgesViewModel: BaseViewModel
         {
             var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
-            int streak = (await _streakService.GetUserStreak(userId)).Streak;
-            await GetBadges(userId, _allSessions, stats, streak);
+            int streak = (await _streakService.GetUserStreak(userId)).BiggestStreak;
+            await GetBadges(stats, streak);
         }
 
         IsBusy = false;
     }
 
-    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
+    public async Task GetBadges(PloggingStatistics stats, int streak)
     {
+        Badges.Clear();
         badges.Add(new TrashCollectedBadge(stats));
         badges.Add(new DistanceBadge(stats));
         badges.Add(new TimeSpentBadge(stats));
         badges.Add(new CO2Badge(stats));
         badges.Add(new StreakBadge(streak));
-        Badges.ClearAndAddRange(badges);
+        foreach (Badge b in badges)
+        {
+            if (b.Level != Levels.Locked)
+            {
+                Badges.Add(b);
+            }
+
+            if (Badges.Count == 5)
+            {
+                return;
+            }
+        }
+
         badges.Clear();
     }
 
     [RelayCommand]
     public async Task TapBadge(Badge Badge)
     {
-        if (Badge.Level == "Gold")
+        if (Badge.Level == Levels.Gold)
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement + ", this is the highest level", "OK");
-        }
-        else if (Badge.Level == "null")
-        {
-            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user has currently not reached a level and need " + Badge.ToNextLevel.ToString() + " more " + Badge.Measurement + " for the next level", "OK");
         }
         else
         {
@@ -81,7 +89,7 @@ public partial class BadgesViewModel: BaseViewModel
     [RelayCommand]
     public async Task ShowBadges()
     {
-        await _popupService.ShowPopupAsync<BadgesPopUpViewModel>(onPresenting: viewModel => viewModel.Badges = Badges);
+        await _popupService.ShowPopupAsync<BadgesPopUpViewModel>();
     }
 
 

@@ -7,21 +7,43 @@
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             x:DataType="viewmodel:Popups.BadgesPopUpViewModel">
+             x:DataType="viewmodel:BadgesPopUpViewModel"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="white"
+             Size="450,500">
     <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding Badges}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal" />
-            </CollectionView.ItemsLayout>
+        <Image Source="closepopup.png" HeightRequest="10" WidthRequest="10" Aspect="AspectFill" Margin="380,0,0,0">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer  Command="{Binding CloseCommand}"  CommandParameter="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type toolkit:Popup}}}"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <CollectionView ItemsSource="{Binding Badges}" ItemsLayout="VerticalGrid, 5">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Badge">
-                    <StackLayout>
-                        <Image Source="{Binding Image}">
-                        </Image>
-                    </StackLayout>
+                    <Grid Padding="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <VerticalStackLayout>
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesPopUpViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <HorizontalStackLayout>
+                                
+                                <Label Text="{Binding Type}" HorizontalOptions="Center" FontSize="9"/>
+                               
+                            </HorizontalStackLayout>
+                            <ProgressBar Progress="{Binding percentage}" ProgressColor="{Binding color}"></ProgressBar>
+
+                        </VerticalStackLayout>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label Text="Här ska alla badges displayas men vill inte funka just nu :)"></Label>
     </VerticalStackLayout>
 </toolkit:Popup>

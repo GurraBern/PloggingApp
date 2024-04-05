@@ -22,7 +22,7 @@ using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
-using PloggingApp.MVVM.ViewModels.Popups;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace PloggingApp;
 
