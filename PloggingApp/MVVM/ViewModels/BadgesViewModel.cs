@@ -60,7 +60,7 @@ public partial class BadgesViewModel: BaseViewModel
         badges.Add(new StreakBadge(streak));
         foreach (Badge b in badges)
         {
-            if (b.Level != "null")
+            if (b.Level != Levels.Locked)
             {
                 Badges.Add(b);
             }
@@ -77,11 +77,11 @@ public partial class BadgesViewModel: BaseViewModel
     [RelayCommand]
     public async Task TapBadge(Badge Badge)
     {
-        if (Badge.Level == "Gold")
+        if (Badge.Level == Levels.Gold)
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement + ", this is the highest level", "OK");
         }
-        else if (Badge.Level == "null")
+        else if (Badge.Level == Levels.Locked)
         {
             await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user has currently not reached a level and need " + Badge.ToNextLevel.ToString() + " more " + Badge.Measurement + " for the next level", "OK");
         }

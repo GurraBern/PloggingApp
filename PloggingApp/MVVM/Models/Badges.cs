@@ -7,7 +7,7 @@ public class Badge : ObservableObject
 {
     public  string Type { get; set; } 
     public  string Measurement { get; set; }
-    public  string Level { get; set; }  
+    public  Levels Level { get; set; }  
     public  ImageSource Image { get; set; }
     public  double ToNextLevel { get; set; } 
     public double progression { get; set; }
@@ -16,27 +16,36 @@ public class Badge : ObservableObject
         if (progress >= th3)
         {
             Image = ImageSource.FromFile(png + "badgegold.png");
-            Level = "Gold";
+            Level = Levels.Gold;
         }
         else if (progress >= th2)
         {
             Image = ImageSource.FromFile(png + "badgesilver.png");
-            Level = "Silver";
+            Level = Levels.Silver;
             ToNextLevel = th3 - progress;
         }
         else if (progress >= th1)
         {
             Image = ImageSource.FromFile(png + "badgebronze.png");
-            Level = "Bronze";
+            Level = Levels.Bronze;
             ToNextLevel = th2 - progress;
         }
         else
         {
             Image = ImageSource.FromFile(png + "badge.png");
-            Level = "null";
+            Level = Levels.Locked;
             ToNextLevel = th1 - progress;
         }
     }
+}
+
+public enum Levels
+{
+    Locked,
+    Bronze,
+    Silver,
+    Gold
+
 }
 
 
