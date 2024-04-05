@@ -5,17 +5,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace PloggingApp.MVVM.Models;
 public class Badge : ObservableObject
 {
-    public string Type { get; set; }   /*Distance, TrashInKilos, TimeSpent,  */
-
-    public string Measurement { get; set; }
-    public string Level { get; set; }          /*lvl 0,1,2,3, represents nothing, Bronze, Silver, Gold */
-    public ImageSource Image { get; set; }
-    public DateTime AcquiredDate { get; set; }
-    public double Threshold { get; set; }
-    public double ToNextLevel { get; set; } /* A double dispalying how much left to reach next level */
-
+    public  string Type { get; set; } 
+    public  string Measurement { get; set; }
+    public  string Level { get; set; }  
+    public  ImageSource Image { get; set; }
+    public  double ToNextLevel { get; set; } 
     public double progression { get; set; }
-
     public void createBadge(double progress, string png, double th1, double th2, double th3)
     {
         if (progress >= th3)
@@ -41,8 +36,6 @@ public class Badge : ObservableObject
             Level = "null";
             ToNextLevel = th1 - progress;
         }
-
-        
     }
 }
 

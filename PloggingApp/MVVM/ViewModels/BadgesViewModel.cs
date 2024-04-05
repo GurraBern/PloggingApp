@@ -31,7 +31,7 @@ public partial class BadgesViewModel: BaseViewModel
         _streakService = StreakService;
         _popupService = PopupService;
 
-        Initialization = Init(); //TODO Dela upp i två funktioner?
+        Initialization = Init(); 
     }
 
     public async Task Init()
@@ -44,20 +44,33 @@ public partial class BadgesViewModel: BaseViewModel
             var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
             int streak = (await _streakService.GetUserStreak(userId)).Streak;
-            await GetBadges(userId, _allSessions, stats, streak);
+            await GetBadges(stats, streak);
         }
 
         IsBusy = false;
     }
 
-    public async Task GetBadges(string UserId, IEnumerable<PloggingSession> _allSessions, PloggingStatistics stats, int streak)
+    public async Task GetBadges(PloggingStatistics stats, int streak)
     {
+        Badges.Clear();
         badges.Add(new TrashCollectedBadge(stats));
         badges.Add(new DistanceBadge(stats));
         badges.Add(new TimeSpentBadge(stats));
         badges.Add(new CO2Badge(stats));
         badges.Add(new StreakBadge(streak));
-        Badges.ClearAndAddRange(badges);
+        foreach (Badge b in badges)
+        {
+            if (b.Level != "null")
+            {
+                Badges.Add(b);
+            }
+
+            if (Badges.Count == 5)
+            {
+                return;
+            }
+        }
+
         badges.Clear();
     }
 
