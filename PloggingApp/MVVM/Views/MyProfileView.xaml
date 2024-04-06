@@ -10,172 +10,128 @@
              xmlns:converters="clr-namespace:PloggingApp.Converters"
              x:DataType="viewmodel:MyProfileViewModel">
 
-    <!-- TODO: Add navigation from each part of page to stats/history page/badge page? -->
-    <!-- TODO: Add badges -->
+    <!-- TODO: Add navigation to stats/history page? -->
 
     <ContentView.Resources>
         <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
     </ContentView.Resources>
 
     <ScrollView>
-    <VerticalStackLayout Margin="5" >
-        <Border>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="90"/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
+        <VerticalStackLayout Margin="5" >
+            <Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
-                <Label Grid.Row="0" Grid.Column="0" 
+                    <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
+                    <Label Grid.Row="0" Grid.Column="0" 
                        Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" 
                        TextColor="Black" 
                        FontSize="Large"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"/>
 
-                <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" FontSize="Medium" BackgroundColor="White" VerticalOptions="Center"/>
-                <views:StreakView Grid.Row="0" Grid.Column="2" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" FontSize="Medium" BackgroundColor="White" VerticalOptions="Center"/>
+                    <views:StreakView Grid.Row="0" Grid.Column="2" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                <Label Grid.Row="1" Grid.Column="0" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" BackgroundColor="White" HorizontalOptions="Center"/>
-            </Grid>
-
-
-        </Border>
-
-        <Border>
-            <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
-                <Label Text="This Month" FontSize="Medium" FontAttributes="Bold" Margin="10,5"/>
-                <Grid Margin="10,5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="120" />
-                        </Grid.ColumnDefinitions>
-                        <StackLayout Grid.Column="0" Orientation="Vertical">
-                            <Label Text="Litter collected" VerticalOptions="Center"/>
-                            <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" />
-                        </StackLayout>
-                        <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
-                            <Label Text="Distance" VerticalOptions="Center"/>
-                            <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" />
-                        </StackLayout>
-                        <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
-                            <Label Text="Saved CO2" VerticalOptions="Center"/>
-                            <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
-                        </StackLayout>
-                    </Grid>
-                </Grid>
-            </StackLayout>
-        </Border>
-
-        <Border>
-            <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
-                <Label Text="History" FontSize="Medium" Margin="10,5" FontAttributes="Bold"/>
-                <Grid Margin="0,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="65" />
-                        <ColumnDefinition Width="45" />
-                        <ColumnDefinition Width="65" />
-                        <ColumnDefinition Width="45" />
-                        <ColumnDefinition Width="65" />
-                        <ColumnDefinition Width="45" />
-                    </Grid.ColumnDefinitions>
-
-                    <!-- TODO: Replace walking icon with image from each session -->
-                    <!-- TODO: Littercount instead of weight?  -->
-                    <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding RecentWeight0, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                    <Image Grid.Row="0" Grid.Column="1" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-                    <Image Grid.Row="0" Grid.Column="2" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding RecentWeight1, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                    <Image Grid.Row="0" Grid.Column="3" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-                    <Image Grid.Row="0" Grid.Column="4" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                    <Label Grid.Row="0" Grid.Column="5" Text="{Binding RecentWeight2, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                    <Image Grid.Row="0" Grid.Column="5" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="110" />
-                            <ColumnDefinition Width="110" />
-                            <ColumnDefinition Width="110" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding RecentStartDate0, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                        <Label Grid.Column="1" Text="{Binding RecentStartDate1, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                        <Label Grid.Column="2" Text="{Binding RecentStartDate2, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                    </Grid>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" BackgroundColor="White" HorizontalOptions="Center"/>
                 </Grid>
 
-            </StackLayout>
-        </Border>
 
+            </Border>
 
-        <Border>
-            <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="150">
-                <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
-
-
-
-
-
-                <!-- work in progress -->
-                    <CollectionView ItemsSource="{Binding Badges}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Badge">
-                            <StackLayout Margin="-25,-10,-30,0">
-                                <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
-
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
-
-                                    </Image.GestureRecognizers>
-
-                                </Image>
+            <Border>
+                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
+                    <Label Text="This Month" FontSize="Medium" FontAttributes="Bold" Margin="10,5"/>
+                    <Grid Margin="10,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="120" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Grid.Column="0" Orientation="Vertical">
+                                <Label Text="Litter collected" VerticalOptions="Center"/>
+                                <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" />
                             </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BadgesViewModel.ShowBadgesCommand}"/>
+                            <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
+                                <Label Text="Distance" VerticalOptions="Center"/>
+                                <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
+                                <Label Text="Saved CO2" VerticalOptions="Center"/>
+                                <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </StackLayout>
+            </Border>
 
-                    </Image.GestureRecognizers>
-                </Image>
+            <Border>
+                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
+                    <Label Text="History" FontSize="Medium" Margin="10,5" FontAttributes="Bold"/>
+                    <Grid Margin="0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65" />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
+                            <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="65" />
+                            <ColumnDefinition Width="45" />
+                        </Grid.ColumnDefinitions>
 
-                
-                
-                
-                
-            </StackLayout>
-            
-        </Border>
+                        <!-- TODO: Replace walking icon with image from each session -->
+                        <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding RecentWeight0, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
+                        <Image Grid.Row="0" Grid.Column="1" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
+
+                        <Image Grid.Row="0" Grid.Column="2" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
+                        <Label Grid.Row="0" Grid.Column="3" Text="{Binding RecentWeight1, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
+                        <Image Grid.Row="0" Grid.Column="3" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
+
+                        <Image Grid.Row="0" Grid.Column="4" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
+                        <Label Grid.Row="0" Grid.Column="5" Text="{Binding RecentWeight2, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
+                        <Image Grid.Row="0" Grid.Column="5" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
 
 
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="110" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding RecentStartDate0, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                            <Label Grid.Column="1" Text="{Binding RecentStartDate1, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                            <Label Grid.Column="2" Text="{Binding RecentStartDate2, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                        </Grid>
+                    </Grid>
 
-    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
 
 
+            <Border>
+                <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="150">
+                    <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
+                    <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
+                </StackLayout>
+            </Border>
+        </VerticalStackLayout>
     </ScrollView>
-
 </ContentView>

@@ -56,7 +56,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
 
     public ObservableCollection<Badge> Badges { get; set; } = [];
-    public List<Badge> _Badges { get; set; } = [];
+    private readonly List<Badge> badges = [];
 
     public MyProfileViewModel(IAuthenticationService authenticationService, 
         IRankingService rankingService,
