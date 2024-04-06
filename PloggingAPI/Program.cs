@@ -20,10 +20,17 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
+
+var serviceAccountPath = Environment.GetEnvironmentVariable("SERVICEACCOUNT_GOOGLEDRIVE", EnvironmentVariableTarget.Process);
+if(serviceAccountPath == null)
+{
+    serviceAccountPath = "/etc/secrets/serviceaccountgoogledrive.json";
+}
+
 builder.Services.Configure<GoogleDriveSettings>(options =>
 {
     builder.Configuration.GetSection("GoogleDriveSettings").Bind(options);
-    options.ServiceAccount = File.ReadAllText("/etc/secrets/serviceaccountgoogledrive.json");
+    options.ServiceAccount = File.ReadAllText(serviceAccountPath);
     options.DirectoryId = "1Vc_R08GhzScbik-Y7RO0tj6id-ENMwSF";
 });
 

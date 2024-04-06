@@ -30,6 +30,13 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
+
+
+    <Color x:Key="PlasticsColor">#678b59</Color>
+    <Color x:Key="CanColor">#848789</Color>
+    <Color x:Key="GlassColor">#a7c7cb</Color>
+    <Color x:Key="CigarettesColor">#e09123</Color>
+
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

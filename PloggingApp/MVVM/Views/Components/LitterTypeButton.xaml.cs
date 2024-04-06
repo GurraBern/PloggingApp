@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
 
 namespace PloggingApp.MVVM.Views;
@@ -29,7 +28,32 @@ public partial class LitterTypeButton : ContentView
         set { SetValue(ImageSourceProperty, value); }
     }
 
+    public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(LitterTypeButton), default(Color));
+
+    public new Color BackgroundColor 
+    {
+        get { return (Color)GetValue(BackgroundColorProperty); }
+        set { SetValue(BackgroundColorProperty, value); }
+    }
+
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(LitterTypeButton), default(string));
+
+    public string Text 
+    {
+        get { return (string)GetValue(TextProperty); }
+        set { SetValue(TextProperty, value); }
+    }
+
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(LitterTypeButton), 12.0);
+
+    public double FontSize 
+    {
+        get { return (double)GetValue(FontSizeProperty); }
+        set { SetValue(FontSizeProperty, value); }
+    }
+
     private int counter = 0; 
+
 	public LitterTypeButton()
 	{
 		InitializeComponent();
@@ -39,6 +63,7 @@ public partial class LitterTypeButton : ContentView
     {
 		counter++;
 		counterLabel.Text = counter.ToString();
+
         await this.ScaleTo(0.9, 30, Easing.CubicInOut);
         await this.ScaleTo(1, 30, Easing.CubicInOut);
     }

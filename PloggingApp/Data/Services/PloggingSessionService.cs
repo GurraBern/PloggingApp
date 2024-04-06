@@ -9,11 +9,13 @@ namespace PloggingApp.Data.Services;
 public class PloggingSessionService : IPloggingSessionService
 {
     private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
+    private readonly IPloggingImageService _ploggingImageService;
     private readonly IToastService _toastService;
 
-    public PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService)
+    public PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService)
     {
         _ploggingApiClient = ploggingApiClient;
+        _ploggingImageService = ploggingImageService;
         _toastService = toastService;
     }
 
@@ -21,6 +23,9 @@ public class PloggingSessionService : IPloggingSessionService
     {
         try
         {
+            var ploggingImage = await _ploggingImageService.SaveImage(ploggingSession.Image);
+
+            ploggingSession.Image = ploggingImage.ImageUrl; 
             var request = new RestRequest("api/PloggingSession/UserSessions");
             request.AddBody(ploggingSession);
 
