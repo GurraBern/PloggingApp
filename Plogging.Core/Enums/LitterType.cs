@@ -8,5 +8,7 @@ public enum LitterType
     SmallMetal,
     Cardboard,
     Can,
-    Fabric
+    Fabric,
+    Snus,
+    Glass
 }

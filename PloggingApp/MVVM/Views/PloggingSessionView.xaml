@@ -19,15 +19,15 @@
                 <Button Text="Mark Litter bag" Command="{Binding MarkTrashForCollectionCommand}"/>
             </VerticalStackLayout>
 
-        <ImageButton 
-            x:Name="menuBtn"
-            Clicked="OpenMenuActions"
-            Source="line_angle_down_icon.png" 
-            BackgroundColor="{StaticResource Primary}" 
-            CornerRadius="25" 
-            HeightRequest="50" 
-            WidthRequest="50"
-            Margin="0,2,0,5"/>
+            <ImageButton 
+                x:Name="menuBtn"
+                Clicked="OpenMenuActions"
+                Source="line_angle_down_icon.png" 
+                BackgroundColor="{StaticResource Primary}" 
+                CornerRadius="25" 
+                HeightRequest="50" 
+                WidthRequest="50"
+                Margin="0,2,0,5"/>
         </VerticalStackLayout>
 
         <Button IsVisible="{Binding IsTracking}"
