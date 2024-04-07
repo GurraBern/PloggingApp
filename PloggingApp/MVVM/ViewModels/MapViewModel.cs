@@ -41,7 +41,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task AddTrashPinsToMap()
     {
-        var litterLocations = await _litterLocationService.GetLitterLocations();
+        var litterLocations = await Task.Run(_litterLocationService.GetLitterLocations);
 
         foreach (var litterLocation in litterLocations)
         {

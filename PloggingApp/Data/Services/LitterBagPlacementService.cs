@@ -8,12 +8,12 @@ namespace PloggingApp.Data.Services;
 public class LitterbagPlacementService : ILitterbagPlacementService
 {
     private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient;
-    private readonly IPloggingApiClient<PloggingImage> _imageApiClient;
+    private readonly IPloggingImageService _ploggingImageService;
 
-    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingApiClient<PloggingImage> imageApiClient)
+    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingImageService ploggingImageService)
     {
         _ploggingApiClient = ploggingApiClient;
-        _imageApiClient = imageApiClient;
+        _ploggingImageService = ploggingImageService;
     }
 
     public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
@@ -22,17 +22,15 @@ public class LitterbagPlacementService : ILitterbagPlacementService
 
         var placementRequest = new RestRequest("api/LitterbagPlacement");
         placementRequest.AddBody(litterbagPlacement);
+
         await _ploggingApiClient.PostAsync(placementRequest);
     }
 
     private async Task<LitterbagPlacement> SaveLitterbagImage(LitterbagPlacement litterbagPlacement)
     {
-        var imageRequest = new RestRequest("api/Image");
-        imageRequest.AddFile("image", litterbagPlacement.ImageUrl);
+        var ploggingImage = await _ploggingImageService.SaveImage(litterbagPlacement.ImageUrl);
 
-        var response = await _imageApiClient.PostAsync(imageRequest);
-
-        litterbagPlacement.ImageUrl = response.ImageUrl;
+        litterbagPlacement.ImageUrl = ploggingImage.ImageUrl;
 
         return litterbagPlacement;
     }

@@ -133,6 +133,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddTransient<IRankingService, RankingService>();
         builder.Services.AddTransient<IStreakService, StreakService>();
+        builder.Services.AddTransient<IPloggingImageService, PloggingImageService>();
         builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddSingleton<IPloggingSessionTracker, PloggingSessionTracker>();
         builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
@@ -160,9 +161,7 @@ public static class MauiProgram
             var ploggingApiClient = new RestClient(apiUrl);
             builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
-
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
-
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
             builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);

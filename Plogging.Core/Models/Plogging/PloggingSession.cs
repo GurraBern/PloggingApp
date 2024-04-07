@@ -14,5 +14,6 @@ public class PloggingSession
     public required string UserId { get; set; }
     public PloggingData PloggingData { get; set; } = new();
     public List<MapPoint> PloggingRoute { get; set; } = [];
+    public string Image { get; set; }
 }
 

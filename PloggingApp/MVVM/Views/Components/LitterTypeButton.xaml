@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="Self"
              x:Class="PloggingApp.MVVM.Views.LitterTypeButton">
 
@@ -8,14 +9,21 @@
         <TapGestureRecognizer Tapped="IncrementCounter" Command="{Binding Command, Source={x:Reference Name=Self}}" CommandParameter="{Binding CommandParameter, Source={x:Reference Name=Self}}"></TapGestureRecognizer>
     </ContentView.GestureRecognizers>
 
-    <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource Primary}">
-        <Grid x:Name="buttonGrid" BackgroundColor="{StaticResource Primary}">
+    
+    <Border Style="{StaticResource RoundBorder}" BackgroundColor="{Binding BackgroundColor, Source={x:Reference Name=Self}}">
+        <Grid x:Name="buttonGrid" BackgroundColor="{Binding BackgroundColor, Source={x:Reference Name=Self}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" x:Name="counterLabel" TextColor="White"></Label>
-            <Image Grid.RowSpan="2" Scale="0.8" Source="{Binding ImageSource, Source={x:Reference Name=Self}}"></Image>
+            <Image Grid.RowSpan="2" Scale="0.8" Source="{Binding ImageSource, Source={x:Reference Name=Self}}">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="White" />
+                </Image.Behaviors>
+            </Image>
+            <Label Grid.Row="2" VerticalOptions="End" FontSize="{Binding FontSize, Source={x:Reference Name=Self}}" Text="{Binding Text, Source={x:Reference Name=Self}}" HorizontalOptions="Center"/>
         </Grid>
     </Border>
 </ContentView>

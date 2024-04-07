@@ -24,7 +24,7 @@ public partial class CheckoutImageViewModel : ObservableObject
     [RelayCommand]
     private async Task UsePhoto()
     {
-        await _ploggingSessionTracker.EndSession();
+        await _ploggingSessionTracker.EndSession(ImagePath);
 
         WeakReferenceMessenger.Default.Send(new PhotoTakenMessage(ImagePath));
 
