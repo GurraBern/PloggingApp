@@ -9,35 +9,10 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
     
         <StackLayout>
-        <!--<Button Text ="Update page" Command="{Binding UpdatePageCommand}"/>-->
-        <HorizontalStackLayout Margin="0,0,0,-50">
-            <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,-100"></Label>
-            <CollectionView ItemsSource="{Binding Badges}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Badge">
-                        <StackLayout Margin="-25,-10,-30,0">
-                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
 
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OthersSessionsViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+        <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,0" Padding="0,30,0,0"></Label>
 
-                                </Image.GestureRecognizers>
-
-                            </Image>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ShowBadgesCommand}"/>
-
-                </Image.GestureRecognizers>
-            </Image>
-        </HorizontalStackLayout>
+         
         <Label Text="Total" FontSize="Large" Padding="6,0"></Label>
         <Border>
             <Grid ColumnDefinitions="*, *, *, *" RowDefinitions="20,30">

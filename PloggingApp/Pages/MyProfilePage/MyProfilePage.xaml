@@ -19,7 +19,8 @@
         <RefreshView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RefreshColor="Red" 
             IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshMyProfileCommand}">
 
-            <views:MyProfileView></views:MyProfileView>
+         <views:MyProfileView></views:MyProfileView>
+
 
         </RefreshView>
 
