@@ -5,13 +5,18 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              Title="Others Profile">
 
-    <VerticalStackLayout>
-        <VerticalStackLayout>
-            
-            <Button Text="Go back" Command="{Binding GoBackCommand}"></Button>
-            <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
-            <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"></views:OthersSessionsView>
-            
-        </VerticalStackLayout>
-    </VerticalStackLayout>
+    <Grid>
+        <Image Source="profilepicture.png" HeightRequest="80" WidthRequest="80" Margin="0,0,30,0" VerticalOptions="Start" HorizontalOptions="End" />
+        <Image Source="leftarrow.png" HeightRequest="40" WidthRequest="40" Margin="5" VerticalOptions="Start" HorizontalOptions="Start" >
+        <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+        </Image.GestureRecognizers>
+        </Image>
+
+        <views:BadgesView BindingContext="{Binding BadgesViewModel}"  HorizontalOptions="Start" Padding="0,135,0,0" />
+
+        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}" />
+    </Grid>
+
+
 </ContentPage>

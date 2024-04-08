@@ -9,11 +9,9 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
     
         <StackLayout>
+        <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,0" HorizontalOptions="Center" />
 
-        <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,0" Padding="0,30,0,0"></Label>
-
-         
-        <Label Text="Total" FontSize="Large" Padding="6,0"></Label>
+        <Label Text="Total" FontSize="Large" Padding="6,0" ></Label>
         <Border>
             <Grid ColumnDefinitions="*, *, *, *" RowDefinitions="20,30">
                 <Label Grid.Row="0" Grid.Column="0" Text="Trash Weight" Margin="0,0,10,0" />
@@ -27,17 +25,18 @@
                 <Label Grid.Row="1" Grid.Column="3" Text="{Binding StreakString, StringFormat='{0} weeks'}" Margin="10,10,0,0" />
             </Grid>
         </Border>
+        <Label Text="Badges" FontSize="Large" Padding="6,0" Margin="0,0,0,50"></Label>
 
 
         <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
-        <ScrollView>
+        <ScrollView Orientation="Vertical">
             <CollectionView ItemsSource="{Binding PloggingSessions}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="modelsCore:PloggingSession">
                     <Frame Margin="2,3" Padding="0">
                         <HorizontalStackLayout >
                             <Image Source="trashbag.png"  HeightRequest="40" WidthRequest="40"></Image>
-                            <VerticalStackLayout Margin="0,8">
+                            <VerticalStackLayout Margin="0,0">
                                 <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" />
                                 <HorizontalStackLayout Margin="0,10">
                                     <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  />

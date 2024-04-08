@@ -106,11 +106,13 @@
 	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\finishpin.png" />
 	  <None Remove="Resources\Images\leaderboard.svg" />
+	  <None Remove="Resources\Images\leftarrow.png" />
 	  <None Remove="Resources\Images\logout.svg" />
 	  <None Remove="Resources\Images\map_icon.svg" />
 	  <None Remove="Resources\Images\moreBadges.png" />
 	  <None Remove="Resources\Images\needhelptrashpin.png" />
 	  <None Remove="Resources\Images\pet_bottle_icon.svg" />
+	  <None Remove="Resources\Images\profilepicture.png" />
 	  <None Remove="Resources\Images\smoking_icon.svg" />
 	  <None Remove="Resources\Images\soda_cans_icon.svg" />
 	  <None Remove="Resources\Images\startpin.png" />
