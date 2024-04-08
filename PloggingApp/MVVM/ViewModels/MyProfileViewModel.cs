@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
+using System.Diagnostics;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -24,6 +25,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public BadgesViewModel BadgesViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
+
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
 
 
@@ -40,23 +42,9 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public int userRankInt;
     [ObservableProperty]
-    public DateTime recentStartDate0;
-    [ObservableProperty]
-    public DateTime recentStartDate1;
-    [ObservableProperty]
-    public DateTime recentStartDate2;
-    [ObservableProperty]
-    public double recentWeight0;
-    [ObservableProperty]
-    public double recentWeight1;
-    [ObservableProperty]
-    public double recentWeight2;
-    [ObservableProperty]
     private bool isRefreshing;
-
-
-    public ObservableCollection<Badge> Badges { get; set; } = [];
-    private readonly List<Badge> badges = [];
+    [ObservableProperty]
+    public IEnumerable<PloggingSession> latestSessions;
 
     public MyProfileViewModel(IAuthenticationService authenticationService, 
         IRankingService rankingService,
@@ -89,17 +77,11 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        
-        RecentStartDate0 = _allUserSessions.ElementAt(0).StartDate;
-        RecentStartDate1 = _allUserSessions.ElementAt(1).StartDate;
-        RecentStartDate2 = _allUserSessions.ElementAt(2).StartDate;
-
-        RecentWeight0 = Math.Round(_allUserSessions.ElementAt(0).PloggingData.Weight);
-        RecentWeight1 = Math.Round(_allUserSessions.ElementAt(1).PloggingData.Weight);
-        RecentWeight2 = Math.Round(_allUserSessions.ElementAt(2).PloggingData.Weight);
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
         PloggingSessions.ClearAndAddRange(_allUserSessions);
+
+        LatestSessions = PloggingSessions.Take(3);
 
         UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
@@ -110,7 +92,6 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
         int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
 
-        //BADGES
         await BadgesViewModel.GetBadges(stats, streak);
 
         IsBusy = false;
