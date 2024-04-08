@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Pages;
+using System;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -49,7 +50,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         get => _selectedMonth;
         set
         {
-            _selectedMonth = value;
+            _selectedMonth = value + 1;
            if (!_isInitialized)
                 return;
             Update();
@@ -62,7 +63,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService = authenticationService;
         Initialization = InitializeAsync();
         Years = new ObservableCollection<int>(Enumerable.Range(DateTime.UtcNow.Year - 2, 3));
-        Months = new ObservableCollection<int>(Enumerable.Range(1, 12));
+        Months = new ObservableCollection<string>(Enum.GetNames(typeof(Month)).ToList());
         TimeRes = TimeResolution.ThisYear;
         StatsBoxColor = colorDict[TimeRes];
         SelectedYear = DateTime.UtcNow.Year;
@@ -151,7 +152,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [ObservableProperty]
-    ObservableCollection<int> months;
+    ObservableCollection<string> months;
 
     [ObservableProperty]
     ObservableCollection<int> years;

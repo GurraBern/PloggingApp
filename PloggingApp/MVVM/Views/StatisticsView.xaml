@@ -21,13 +21,13 @@
                     <Button Style="{StaticResource CapsuleButton}" Command="{Binding ShowMonthCommand}"  Text="Month "></Button>
                     <Border BackgroundColor ="LightGrey" StrokeShape="RoundRectangle 10" Padding="0">
                         <HorizontalStackLayout>
-                            <Picker BackgroundColor = "Transparent" TextColor= "{StaticResource Black}" ItemsSource="{Binding Years}" Title="{Binding FilterYear, StringFormat='Year: {0}'}" SelectedItem="{Binding SelectedYear}"/>
+                            <Picker BackgroundColor = "Transparent" TextColor= "{StaticResource Black}" ItemsSource="{Binding Years}" Title="Year" SelectedItem="{Binding SelectedYear}"/>
                             <Image Source="arrowdown.svg"/>
                         </HorizontalStackLayout>
                     </Border>
                     <Border BackgroundColor ="LightGrey" StrokeShape="RoundRectangle 10">
                         <HorizontalStackLayout>
-                            <Picker BackgroundColor ="Transparent" TextColor="{StaticResource Black}" ItemsSource="{Binding Months}" Title="{Binding FilterMonth}" SelectedItem="{Binding SelectedMonth}"/>
+                            <Picker BackgroundColor ="Transparent" TextColor="{StaticResource Black}" ItemsSource="{Binding Months}" Title="Month" SelectedIndex="{Binding SelectedMonth}"/>
                             <Image Source="arrowdown.svg"/>
                         </HorizontalStackLayout>
                     </Border>
@@ -43,7 +43,7 @@
             <Border Style="{StaticResource RoundBorder}">
                 <VerticalStackLayout>
                     <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
-                    <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="375" HorizontalOptions="FillAndExpand"/>
+                    <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
             </Border>
             <Border Style="{StaticResource RoundBorder}">
