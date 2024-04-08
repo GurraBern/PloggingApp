@@ -32,7 +32,7 @@
                         <Image Source="walking_icon.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}"
+                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}"
                            Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
@@ -43,7 +43,7 @@
                         <Image Source="clock.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Time plogged" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} hrs'}"
+                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} hrs'}"
                Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
@@ -54,7 +54,7 @@
                         <Image Source="trashcan.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Litter pieces" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingSession.PloggingData.Litters.Count,
+                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingSession.PloggingData.Litters.Count,
                         StringFormat='{0} pcs'}"
                Grid.Row="1" Grid.Column="1"/>
                 </Grid>
@@ -66,7 +66,7 @@
                         <Image Source="scale.svg"/>
                     </Border>
                     <Label Style="{StaticResource StatsLabelText}" Text="Litter weight" Grid.Row="0" Grid.Column="1"/>
-                    <Label Style="{StaticResource StatsLabelText}" Text="{Binding PloggingStats.TotalWeight,
+                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight,
                         StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>

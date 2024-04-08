@@ -143,8 +143,14 @@
     </Style>
 
     <Style x:Key="StatsLabelText" TargetType="Label">
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+        
+    <Style x:Key="StatsText" TargetType="Label">
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
     </Style>

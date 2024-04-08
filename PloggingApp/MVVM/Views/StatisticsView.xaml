@@ -49,30 +49,30 @@
                     </VerticalStackLayout>
                 </Border>
                 <Border Style="{StaticResource RoundBorder}">
-                    <Grid RowDefinitions="20,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
+                    <Grid RowDefinitions="30,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                         <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
                         <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
                                 <Label Text="Trash Collected" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} g'}" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalWeight, StringFormat='{0} g'}" Style="{StaticResource StatsText}"/>
                             </VerticalStackLayout>
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
                                 <Label Text="CO2 Saved" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalCO2Saved }" Style="{StaticResource StatsText}"/>
                             </VerticalStackLayout>
                         </Border>
                         <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
                                 <Label Text="Distance" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsText}"/>
                             </VerticalStackLayout>
                         </Border>
                         <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
                                 <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsLabelText}"/>
+                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsText}"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
