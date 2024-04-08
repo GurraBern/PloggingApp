@@ -14,8 +14,10 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
     PloggingSession ploggingSession;
 
     private IChartService chartService;
-    public SessionStatisticsViewModel(IChartService ChartService)
+    public SessionStatsMapViewModel SessionStatsMapViewModel { get; set; }
+    public SessionStatisticsViewModel(IChartService ChartService, SessionStatsMapViewModel sessionStatsViewModel)
     {
+        SessionStatsMapViewModel = sessionStatsViewModel;
         this.chartService = ChartService;
     }
 
@@ -23,6 +25,7 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
     {
         if (PloggingSession == null)
             return;
+        SessionStatsMapViewModel.Initialize(ploggingSession);
         getStatistics();
    }
 
@@ -56,6 +59,7 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
             return $"{placemark.AdminArea}, {placemark.SubLocality}";
         return "N/A";
     }
+
     [ObservableProperty]
     PloggingStatistics ploggingStats;
     [ObservableProperty]

@@ -6,6 +6,7 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
              xmlns:converter="clr-namespace:PloggingApp.Converters"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:views ="clr-namespace:PloggingApp.MVVM.Views"
              x:DataType="viewmodel:SessionStatisticsViewModel"
              Title="PloggingSession"
              >
@@ -17,13 +18,18 @@
     </ContentPage.Resources>
     <VerticalStackLayout>
         <Label Margin="10,0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
-        
         <HorizontalStackLayout Margin="10,0" VerticalOptions="Center">
             <Image Source="map_icon.png"/>
             <Label FontSize="15" FontAttributes="Bold" Text="{Binding Area}" Margin="10,0" VerticalOptions="Center"/>
         </HorizontalStackLayout>
         <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
-        <micro:ChartView Chart="{Binding LitterChart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
+        <!--MapView-->
+        <Border Style="{StaticResource RoundBorder}" Padding="0">
+            <views:SessionStatsMapView BindingContext = "{Binding SessionStatsMapViewModel}" HeightRequest="200"/>
+        </Border>
+        <Border Style="{StaticResource RoundBorder}">
+            <micro:ChartView Chart="{Binding LitterChart}" HeightRequest="150" WidthRequest="400" HorizontalOptions="FillAndExpand"/>
+        </Border>
         <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
             <!--Distance--> 
             <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">

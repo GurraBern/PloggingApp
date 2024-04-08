@@ -93,6 +93,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ScanQRcodePageViewModel>();
         builder.Services.AddTransient<MyProfileViewModel>();
         builder.Services.AddTransient<BadgesViewModel>();
+        builder.Services.AddTransient<SessionStatsMapViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
