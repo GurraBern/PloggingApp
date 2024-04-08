@@ -12,8 +12,8 @@
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
-    <ScrollView HeightRequest="700" VerticalOptions="FillAndExpand" >
-        <VerticalStackLayout  Spacing="10" Padding="20,0">
+    <ScrollView VerticalOptions="FillAndExpand" HeightRequest="700">
+        <VerticalStackLayout  Spacing="10" Padding="20,0" HeightRequest="1000">
             <Label Text="Filter by:" VerticalOptions="Center"/>
             <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                 <HorizontalStackLayout Spacing="5" Margin="0">
