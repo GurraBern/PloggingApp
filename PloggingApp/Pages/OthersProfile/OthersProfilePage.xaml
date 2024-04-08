@@ -7,8 +7,11 @@
 
     <VerticalStackLayout>
         <VerticalStackLayout>
+            
             <Button Text="Go back" Command="{Binding GoBackCommand}"></Button>
+            <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
             <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"></views:OthersSessionsView>
+            
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

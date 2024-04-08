@@ -55,7 +55,6 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Padding" Value="5" />
-
         <Setter Property="Shadow">
             <Setter.Value>
                 <Shadow Brush="Black" Radius="8" Opacity="0.2" Offset="1,1" />

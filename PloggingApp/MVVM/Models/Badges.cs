@@ -1,49 +1,61 @@
 ﻿
-using PloggingApp.Data.Services;
-using RestSharp.Authenticators;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 
 namespace PloggingApp.MVVM.Models;
-public class Badge
+public class Badge : ObservableObject
 {
-    public string Type { get; set; }   /*Distance, TrashInKilos, TimeSpent,  */
-
-    public string Measurement { get; set; }
-    public string Level { get; set; }          /*lvl 0,1,2,3, represents nothing, Bronze, Silver, Gold */
-    public ImageSource Image { get; set; }
-    public DateTime AcquiredDate { get; set; }
-    public double Threshold { get; set; }
-    public double ToNextLevel { get; set; } /* A double dispalying how much left to reach next level */
-
+    public  string Type { get; set; } 
+    public  string Measurement { get; set; }
+    public  Levels Level { get; set; }  
+    public  ImageSource Image { get; set; }
+    public  double ToNextLevel { get; set; } 
     public double progression { get; set; }
-
+    public double percentage { get; set; }
+    public string color { get; set; }
     public void createBadge(double progress, string png, double th1, double th2, double th3)
     {
         if (progress >= th3)
         {
             Image = ImageSource.FromFile(png + "badgegold.png");
-            Level = "Gold";
+            Level = Levels.Gold;
+            percentage = 100; 
+            color = "Gold";
         }
         else if (progress >= th2)
         {
             Image = ImageSource.FromFile(png + "badgesilver.png");
-            Level = "Silver";
+            Level = Levels.Silver;
             ToNextLevel = th3 - progress;
+            percentage = progress / th3;
+            color = "Gold";
         }
         else if (progress >= th1)
         {
             Image = ImageSource.FromFile(png + "badgebronze.png");
-            Level = "Bronze";
+            Level = Levels.Bronze;
             ToNextLevel = th2 - progress;
+            percentage = progress / th2;
+            color = "#566470";
         }
         else
         {
             Image = ImageSource.FromFile(png + "badge.png");
-            Level = "null";
+            Level = Levels.Locked;
             ToNextLevel = th1 - progress;
+            percentage = progress / th1;
+            color = "#CD7F32";
         }
-
-        
     }
+}
+
+public enum Levels
+{
+    Locked,
+    Bronze,
+    Silver,
+    Gold
+
 }
 
 
@@ -52,7 +64,7 @@ public class TrashCollectedBadge : Badge
     public TrashCollectedBadge(PloggingStatistics stats)
     {
         Measurement = "kilogram(s)";
-        Type = "Trash Weight Badge";
+        Type = "Trash Weight";
         progression = stats.TotalWeight;
         createBadge(progression, "weight", 5, 10, 15);
 
@@ -65,7 +77,7 @@ public class TimeSpentBadge : Badge
     public TimeSpentBadge(PloggingStatistics stats)
     {
         Measurement = "hour(s)";
-        Type = "Time Spent Badge";
+        Type = "Time Spent";
         // progression = stats.TotalTime;
         progression = 0;
         createBadge(progression, "timespent", 5, 10, 15);
@@ -80,9 +92,9 @@ public class DistanceBadge : Badge
     public DistanceBadge(PloggingStatistics stats)
     {
         Measurement = "kilometre(s)";
-        Type = "Distance Traveled Badge";
+        Type = "Distance Traveled";
         progression = stats.TotalDistance;
-        createBadge(progression, "distance", 5, 10, 1500000);
+        createBadge(progression, "distance", 5, 10, 15);
 
     }
 
@@ -94,7 +106,7 @@ public class CO2Badge : Badge
     public CO2Badge(PloggingStatistics stats)
     {
         Measurement = "kilograms(s)";
-        Type = "CO2 Saved Badge";
+        Type = "CO2 Saved";
         progression = stats.TotalCO2Saved;
         createBadge(progression, "co2", 5, 10, 15);
 
@@ -109,7 +121,7 @@ public class StreakBadge : Badge
     public StreakBadge(int streak)
     {
         Measurement = "week(s)";
-        Type = "Weekly Streak Badge";
+        Type = "Weekly Streak";
         progression = streak;
         createBadge(progression, "streak", 5, 10, 15);
 

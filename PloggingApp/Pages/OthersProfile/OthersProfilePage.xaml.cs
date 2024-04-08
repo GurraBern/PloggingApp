@@ -16,5 +16,6 @@ public partial class OthersProfilePage : ContentPage
         base.OnAppearing();
 
         await vm.OthersSessionsViewModel.UpdatePage();
+        await vm.BadgesViewModel.Init();
     }
 }

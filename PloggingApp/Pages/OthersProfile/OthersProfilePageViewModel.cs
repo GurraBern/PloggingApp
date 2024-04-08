@@ -10,9 +10,11 @@ namespace PloggingApp.Pages;
 public partial class OthersProfilePageViewModel : BaseViewModel
 {
     public OthersSessionsViewModel OthersSessionsViewModel { get; set; }
+    public BadgesViewModel BadgesViewModel { get; set; }
     public OthersProfilePageViewModel(IPloggingSessionService sessionService, IUserInfoService userService, IStreakService streakService, IPopupService popupService)
     {
         OthersSessionsViewModel = new OthersSessionsViewModel(sessionService, userService, streakService, popupService);
+        BadgesViewModel = new BadgesViewModel(sessionService, userService, streakService, popupService);
 
 
     }
@@ -21,7 +23,5 @@ public partial class OthersProfilePageViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync($"//{nameof(RankingPage)}");
     }
-
-
 
 }

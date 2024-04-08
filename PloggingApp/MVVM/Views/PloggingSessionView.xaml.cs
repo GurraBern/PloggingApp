@@ -15,14 +15,18 @@ public partial class PloggingSessionView : ContentView
 
         if (isOpened)
         {
-            await menuBtn.FadeTo(0.8, 100, Easing.SinIn);
+            menuBtn.RotateTo(180, 200, Easing.Default);
+
+            menuBtn.FadeTo(0.8, 100, Easing.SinIn);
             menuActions.IsVisible = true;
-            await menuActions.FadeTo(1, 100, Easing.SinIn);
+            menuActions.FadeTo(1, 150, Easing.SinIn);
         }
         else
         {
-            await menuBtn.FadeTo(1, 100, Easing.SinIn);
-            await menuActions.FadeTo(0, 100, Easing.SinIn);
+            menuBtn.RotateTo(360, 200, Easing.Default);
+
+            menuBtn.FadeTo(1, 100, Easing.SinIn);
+            menuActions.FadeTo(0, 150, Easing.SinIn);
             menuActions.IsVisible = false;
         }
     }

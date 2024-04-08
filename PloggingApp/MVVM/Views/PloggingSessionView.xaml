@@ -20,14 +20,14 @@
             </VerticalStackLayout>
 
             <ImageButton 
-            x:Name="menuBtn"
-            Clicked="OpenMenuActions"
-            Source="walking_icon.png" 
-            BackgroundColor="{StaticResource Primary}" 
-            CornerRadius="10" 
-            HeightRequest="50" 
-            WidthRequest="50"
-            Margin="0,2,0,5"/>
+                x:Name="menuBtn"
+                Clicked="OpenMenuActions"
+                Source="line_angle_down_icon.png" 
+                BackgroundColor="{StaticResource Primary}" 
+                CornerRadius="25" 
+                HeightRequest="50" 
+                WidthRequest="50"
+                Margin="0,2,0,5"/>
         </VerticalStackLayout>
 
         <Button IsVisible="{Binding IsTracking}"

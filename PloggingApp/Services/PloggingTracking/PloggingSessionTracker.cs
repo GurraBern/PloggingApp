@@ -93,7 +93,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         await _litterbagPlacementService.AddTrashCollectionPoint(litterBagPlacement);
     }
 
-    public async Task EndSession()
+    public async Task EndSession(string imagePath)
     {
         IsTracking = false;
 
@@ -114,7 +114,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                     Litters = CurrentLitter,
                     Weight = CurrentLitter.Sum(x => x.Weight),
                     Distance = CalculateTotalDistance(Route)
-                }
+                },
+                Image = imagePath
             };
 
             await _ploggingSessionService.SavePloggingSession(ploggingSession);
@@ -156,7 +157,9 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             WeakReferenceMessenger.Default.Send(new DeleteGroupMessage(currentUserId));
         }
         var streakUser = await _streakService.GetUserStreak(currentUserId);
-        WeakReferenceMessenger.Default.Send(new UpdateStreakMessage(streakUser.Streak));
+
+        if(streakUser != null)
+            WeakReferenceMessenger.Default.Send(new UpdateStreakMessage(streakUser.Streak));
     }
 
     public void AddLitterItem(LitterType litterType, double amount, Location location)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.BadgesView"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:BadgesViewModel">
+
+    <HorizontalStackLayout Margin="0,0,0,-50">
+        <CollectionView ItemsSource="{Binding Badges}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Badge">
+                        <StackLayout Margin="-25,-10,-30,0">
+                            <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+
+                                <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+                            </Image.GestureRecognizers>
+
+                            </Image>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,8">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowBadgesCommand}"/>
+
+                </Image.GestureRecognizers>
+            </Image>
+        </HorizontalStackLayout>
+</ContentView>

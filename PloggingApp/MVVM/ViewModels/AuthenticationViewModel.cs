@@ -7,7 +7,6 @@ using PloggingApp.Data.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-//TODO: Logout button
 //More information on Firebase package used: https://www.nuget.org/packages/FirebaseAuthentication.net 
 public partial class AuthenticationViewModel : ObservableObject, IAsyncInitialization
 {
