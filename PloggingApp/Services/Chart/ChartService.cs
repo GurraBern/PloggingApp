@@ -36,7 +36,7 @@ public class ChartService : IChartService
             .ToDictionary(d => d.Key, v => v.Sum(g => g.LitterCount));
 
         List<ChartEntry> chartEntries =
-            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = colors[lv.Key] }).ToList();
+            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
         var graph = new DonutChart()
         {
