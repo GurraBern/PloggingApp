@@ -130,6 +130,6 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
             return;
         }
         _sessionService.UserId = userId;
-        await Shell.Current.GoToAsync($"//{nameof(OthersProfilePage)}");
+        await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}");
     }
 }

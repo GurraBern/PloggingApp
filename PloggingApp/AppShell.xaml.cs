@@ -14,6 +14,7 @@ namespace PloggingApp
             Routing.RegisterRoute(nameof(GenerateQRcodePage), typeof(GenerateQRcodePage));
             Routing.RegisterRoute(nameof(SessionStatisticsPage), typeof(SessionStatisticsPage));
             Routing.RegisterRoute(nameof(MyProfilePage), typeof(MyProfilePage));
+            Routing.RegisterRoute(nameof(OthersProfilePage), typeof(OthersProfilePage));
         }
     }
 }
