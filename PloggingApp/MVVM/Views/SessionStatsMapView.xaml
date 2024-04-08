@@ -23,7 +23,6 @@
                     Address="{Binding Address}"
                     Label="{Binding Label}"
                     ImageSource="{Binding ImageSource}"
-                    MarkerClicked="CustomPin_MarkerClicked"
                     Type="Place"/>
             </DataTemplate>
         </maps:Map.ItemTemplate>
