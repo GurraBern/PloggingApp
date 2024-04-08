@@ -58,21 +58,6 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
         badges.Add(new TimeSpentBadge(stats));
         badges.Add(new CO2Badge(stats));
         badges.Add(new StreakBadge(streak));
-        badges.Add(new TrashCollectedBadge(stats));
-        badges.Add(new DistanceBadge(stats));
-        badges.Add(new TimeSpentBadge(stats));
-        badges.Add(new CO2Badge(stats));
-        badges.Add(new StreakBadge(streak));
-        badges.Add(new TrashCollectedBadge(stats));
-        badges.Add(new DistanceBadge(stats));
-        badges.Add(new TimeSpentBadge(stats));
-        badges.Add(new CO2Badge(stats));
-        badges.Add(new StreakBadge(streak));
-        badges.Add(new TrashCollectedBadge(stats));
-        badges.Add(new DistanceBadge(stats));
-        badges.Add(new TimeSpentBadge(stats));
-        badges.Add(new CO2Badge(stats));
-        badges.Add(new StreakBadge(streak));
         Badges.ClearAndAddRange(badges);
         badges.Clear();
     }
