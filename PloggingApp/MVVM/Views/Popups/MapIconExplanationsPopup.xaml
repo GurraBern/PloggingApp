@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="PloggingApp.MVVM.Views.MapIconExplanationsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <Border Style="{StaticResource RoundBorder}" WidthRequest="250">
+        <VerticalStackLayout Spacing="50">
+            <VerticalStackLayout>
+                <Image
+                    HeightRequest="20"
+                    Scale="2"
+                    Source="red_dot.png"
+                    WidthRequest="20"/>
+                <Label FontSize="Caption" Text="Collected"/>
+
+                <Label Text="This icon marks areas where fellow ploggers have already cleaned up litter. After your plogging session, your collected litter will be displayed on the map, inspiring others and creating a collective impact for a cleaner environment!"/>
+            </VerticalStackLayout>
+
+
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <Image
+                        HeightRequest="20"
+                        Source="handshake_color_icon.png"
+                        WidthRequest="20"/>
+                    <Label Text="Pickup"/>
+                </HorizontalStackLayout>
+                <Label Text="This icon marks a litter bag left by another plogger for pickup. By taking it to a recycling location, you're helping keep our environment clean and green! Thank you for your contribution!"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

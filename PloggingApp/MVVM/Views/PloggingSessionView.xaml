@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.MVVM.Views.PloggingSessionView"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             x:DataType="viewmodel:PloggingSessionViewModel"
-             xmlns:converters="clr-namespace:PloggingApp.Converters">
-    
+<ContentView
+    x:Class="PloggingApp.MVVM.Views.PloggingSessionView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:PloggingApp.Converters"
+    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    x:DataType="viewmodel:PloggingSessionViewModel">
+
     <ContentView.Resources>
         <ResourceDictionary>
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -14,31 +15,35 @@
 
     <VerticalStackLayout WidthRequest="150">
         <VerticalStackLayout IsVisible="{Binding IsTracking, Converter={converters:InverseBoolConverter}}">
-            <VerticalStackLayout x:Name="menuActions" Spacing="5" Opacity="0">
-                <Button Text="Start plogging" Command="{Binding StartPloggingSessionCommand}"/>
-                <Button Text="Mark Litter bag" Command="{Binding MarkTrashForCollectionCommand}"/>
+            <VerticalStackLayout
+                x:Name="menuActions"
+                Opacity="0"
+                Spacing="5">
+                <Button Command="{Binding StartPloggingSessionCommand}" Text="Start plogging" />
+                <Button Command="{Binding MarkTrashForCollectionCommand}" Text="Mark Litter bag" />
             </VerticalStackLayout>
 
-            <ImageButton 
+            <ImageButton
                 x:Name="menuBtn"
+                Margin="0,2,0,5"
+                BackgroundColor="{StaticResource Primary}"
                 Clicked="OpenMenuActions"
-                Source="line_angle_down_icon.png" 
-                BackgroundColor="{StaticResource Primary}" 
-                CornerRadius="25" 
-                HeightRequest="50" 
-                WidthRequest="50"
-                Margin="0,2,0,5"/>
+                CornerRadius="25"
+                HeightRequest="50"
+                Source="line_angle_down_icon.png"
+                WidthRequest="50" />
         </VerticalStackLayout>
 
-        <Button IsVisible="{Binding IsTracking}"
-            Text="End Plogging"
-            Margin="0,0,0,5" 
-            FontSize="Medium" 
-            Style="{StaticResource RoundButton}" 
+        <Button
+            Margin="0,0,0,5"
+            BackgroundColor="{StaticResource Red}"
+            Command="{Binding EndPloggingSessionCommand}"
+            FontSize="Medium"
             HeightRequest="50"
-            WidthRequest="220"
-            BackgroundColor="{StaticResource Red}" 
-            Command="{Binding EndPloggingSessionCommand}"/>
+            IsVisible="{Binding IsTracking}"
+            Style="{StaticResource RoundButton}"
+            Text="End Plogging"
+            WidthRequest="220" />
 
     </VerticalStackLayout>
 </ContentView>

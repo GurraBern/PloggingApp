@@ -1,29 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.Pages.DashboardPage"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="viewmodels:DashboardViewModel"
-             Title="Dashboard">
+<ContentPage
+    x:Class="PloggingApp.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    Title="Dashboard"
+    x:DataType="viewmodels:DashboardViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="user.svg" Order="Primary" Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}" Priority="0"/>
+        <ToolbarItem
+            Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}"
+            IconImageSource="user.svg"
+            Order="Primary"
+            Priority="0"/>
     </ContentPage.ToolbarItems>
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
         <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
-        <views:AddLitter BindingContext="{Binding AddLitterViewModel}" HorizontalOptions="End" Margin="5,0"/>
+        <views:AddLitter
+            Margin="5,0"
+            BindingContext="{Binding AddLitterViewModel}"
+            HorizontalOptions="End"/>
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 
-        <views:StreakView HeightRequest="40" VerticalOptions="Start" HorizontalOptions="Start" BindingContext="{Binding StreakViewModel}"/>
+        <views:StreakView
+            BindingContext="{Binding StreakViewModel}"
+            HeightRequest="40"
+            HorizontalOptions="Start"
+            VerticalOptions="End"/>
+
+        <views:MapIconsBar
+            Margin="2"
+            HeightRequest="50"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"/>
+
     </Grid>
 </ContentPage>
