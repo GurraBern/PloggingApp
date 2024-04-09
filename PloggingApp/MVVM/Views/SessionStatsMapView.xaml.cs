@@ -43,17 +43,20 @@ public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessi
 
 	private async Task CenterMap()
 	{
-		Location location;
+		Location center;
+		double radius;
 		if (!ViewModel.TrashPins.Any())
 		{
-			location = await Geolocation.GetLocationAsync();
-
+			center = await Geolocation.GetLocationAsync();
+			radius = 0.5;
 		}
 		else
 		{
-			location = GetCenterLocation(ViewModel.TrashPins.Select(x => new Location(x.Location.Latitude, x.Location.Longitude)));
+			List<Location> locations = ViewModel.TrashPins.Select(x => new Location(x.Location.Latitude, x.Location.Longitude)).ToList();
+			center = GetCenterLocation(locations);
+			radius = GetMinimumRadius(center, locations);
 		}
-		Map.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
+		Map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromKilometers(radius)));
 	}
 
 	private Location GetCenterLocation(IEnumerable<Location> locations)
@@ -61,6 +64,13 @@ public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessi
 		var avLatitude = locations.Average(x => x.Latitude);
 		var avLongitude = locations.Average(x => x.Longitude);
 		return new Location(avLatitude, avLongitude);	
+	}
+
+	private double GetMinimumRadius(Location center, IEnumerable<Location> locations)
+    {
+		var distances = locations.Select(x => Location.CalculateDistance(x.Latitude, x.Longitude, center, DistanceUnits.Kilometers)); ;
+		double maxDistance = locations.Select(x => Location.CalculateDistance(x.Latitude, x.Longitude, center, DistanceUnits.Kilometers)).Max() ;
+		return (maxDistance / 2) + 0.05;
 	}
     private void CustomPin_MarkerClicked(object sender, PinClickedEventArgs e)
     {

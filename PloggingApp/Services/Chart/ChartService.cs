@@ -88,7 +88,7 @@ public class ChartService : IChartService
             distancePerTimePeriod = sessions
                     .GroupBy(s => s.StartDate.Month)
                     .ToDictionary(
-                        group => new DateTime(currentYear, group.Key, 1),
+                        group => new DateTime(year, group.Key, 1),
                         group => group.Sum(s => s.PloggingData.Distance));
             return generateYearLineChart(distancePerTimePeriod, "m", year);
         }
