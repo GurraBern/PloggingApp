@@ -77,6 +77,13 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             TotalDistance = Math.Round(stats.TotalDistance);
             TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
             TotalWeight = Math.Round(stats.TotalWeight);
+            
+            foreach(PloggingSession ps in _allSessions)
+            {
+                ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance);
+                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);
+            }
+
             PloggingSessions.ClearAndAddRange(_allSessions);
             int streak = (await _streakService.GetUserStreak(userId)).Streak;
             StreakString = streak.ToString();

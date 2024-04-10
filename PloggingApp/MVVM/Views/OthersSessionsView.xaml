@@ -28,7 +28,7 @@
             
         <Label Text="Badges" FontSize="Large" Padding="6,0"></Label>
         <views:BadgesView BindingContext="{Binding BadgesViewModel}" Margin="0,-15,0,-25" HorizontalOptions="Start"/>
-            
+
         <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
         <ScrollView Orientation="Vertical">
             <CollectionView ItemsSource="{Binding PloggingSessions}">
