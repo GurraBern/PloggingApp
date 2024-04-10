@@ -74,8 +74,7 @@ public class CanPin : LocationPin
 {
     public CanPin()
     {
-        ImageSource = ImageSource.FromFile("canpin.png");
-
+        ImageSource = ImageSource.FromFile("red_dot.png");
     }
 
 }

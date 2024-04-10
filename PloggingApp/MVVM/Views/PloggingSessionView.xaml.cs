@@ -7,14 +7,18 @@ public partial class PloggingSessionView : ContentView
 	public PloggingSessionView()
 	{
 		InitializeComponent();
-	}
 
-    private async void OpenMenuActions(object sender, EventArgs e)
+        menuActions.IsEnabled = false;
+    }
+
+    private void OpenMenuActions(object sender, EventArgs e)
     {
         isOpened = !isOpened;
 
         if (isOpened)
         {
+            menuActions.IsEnabled = true;
+
             menuBtn.RotateTo(180, 200, Easing.Default);
 
             menuBtn.FadeTo(0.8, 100, Easing.SinIn);
@@ -28,6 +32,7 @@ public partial class PloggingSessionView : ContentView
             menuBtn.FadeTo(1, 100, Easing.SinIn);
             menuActions.FadeTo(0, 150, Easing.SinIn);
             menuActions.IsVisible = false;
+            menuActions.IsEnabled = false;
         }
     }
 }

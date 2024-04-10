@@ -251,6 +251,11 @@
         <Setter Property="CornerRadius" Value="0"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black" Radius="5" Opacity="0.8" Offset="0,1" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

@@ -1,15 +1,13 @@
 using CommunityToolkit.Maui.Views;
-using PloggingApp.MVVM.Views;
 
-namespace PloggingApp.Pages;
+namespace PloggingApp.MVVM.Views;
 
-public partial class DashboardPage : ContentPage
+public partial class InformationExpander : ContentView
 {
-    public DashboardPage(DashboardViewModel vm)
-    {
-        InitializeComponent();
-        BindingContext = vm;
-    }
+	public InformationExpander()
+	{
+		InitializeComponent();
+	}
 
     private void ShowTutorialPopup(object sender, EventArgs e)
     {

@@ -5,7 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:PloggingApp.Pages"
     Shell.FlyoutBehavior="Disabled"
-    Title="PloggingApp">
+    Shell.TabBarBackgroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="White"
+    Shell.TabBarUnselectedColor="{StaticResource PrimaryLight}"
+    Shell.TabBarForegroundColor="{StaticResource White}"
+    Shell.TitleColor="{StaticResource White}"
+    Title="PloggingApp"
+    BackgroundColor="{StaticResource Primary}"
+    Shell.NavBarIsVisible="False">
 
     <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
@@ -17,6 +24,7 @@
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
         <ShellContent Route="PlogTogetherPage" Title="PlogTogether" Icon="plog_together.png" ContentTemplate="{DataTemplate views:PlogTogetherPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
+        <ShellContent Route="Profile" Title="Profile" Icon="user.png" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
     </TabBar>
 
     <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
