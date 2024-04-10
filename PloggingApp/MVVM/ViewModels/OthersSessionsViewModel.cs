@@ -37,7 +37,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private string streakString;
 
     private IEnumerable<PloggingSession> _allSessions = [];
-
+    public BadgesViewModel BadgesViewModel { get; set; }
     private readonly IPloggingSessionService _sessionService;
     private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfo;
@@ -51,6 +51,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _userInfo = UserInfo;
         _streakService = StreakService;
         _popupService = PopupService;
+        BadgesViewModel = new BadgesViewModel(SessionService, UserInfo, StreakService, PopupService);
 
         Initialization = GetSessions(); //TODO Dela upp i två funktioner?
     }
