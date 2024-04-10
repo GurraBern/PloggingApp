@@ -4,10 +4,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
 
-    <zxing:CameraBarcodeReaderView
+    <Grid
+        RowDefinitions="*,Auto">
+
+        <Button Text="Go Back"
+                WidthRequest="200"
+                HeightRequest="70"
+                Grid.Row="1"
+                Clicked="OnNavigateClicked"/>
+
+        <zxing:CameraBarcodeReaderView
         x:Name="barcodeReader"
-        VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand"
-        BarcodesDetected="barcodeReader_BarcodesDetected"/>
+        BarcodesDetected="barcodeReader_BarcodesDetected"
+        Grid.Row="0"/>
+
+    </Grid>
 
 </ContentPage>
