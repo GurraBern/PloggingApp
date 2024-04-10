@@ -36,6 +36,7 @@
                 Grid.Row="2"
                 FontSize="{Binding FontSize, Source={x:Reference Name=Self}}"
                 HorizontalOptions="Center"
+                TextColor="{StaticResource White}"
                 Text="{Binding Text, Source={x:Reference Name=Self}}"
                 VerticalOptions="End"/>
         </Grid>

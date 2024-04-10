@@ -6,7 +6,8 @@
              xmlns:enumsCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
              xmlns:converters="clr-namespace:PloggingApp.Converters"
              x:Class="PloggingApp.MVVM.Views.LeaderboardView"
-             x:DataType="viewmodel:LeaderboardViewModel">
+             x:DataType="viewmodel:LeaderboardViewModel"
+             BackgroundColor="White">
 
     <ContentView.Resources>
         <ResourceDictionary>

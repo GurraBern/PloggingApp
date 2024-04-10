@@ -9,13 +9,6 @@
     Title="Dashboard"
     x:DataType="viewmodels:DashboardViewModel">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}"
-            IconImageSource="user.svg"
-            Order="Primary"
-            Priority="0"/>
-    </ContentPage.ToolbarItems>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,9 +19,9 @@
         <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
         <views:AddLitter
+            HorizontalOptions="End"
             Margin="5,0"
-            BindingContext="{Binding AddLitterViewModel}"
-            HorizontalOptions="End"/>
+            BindingContext="{Binding AddLitterViewModel}"/>
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 
@@ -38,11 +31,13 @@
             HorizontalOptions="Start"
             VerticalOptions="End"/>
 
-        <views:MapIconsBar
-            Margin="2"
-            HeightRequest="50"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"/>
 
+        <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Start" HorizontalOptions="Start" >
+            <ImageButton Clicked="ShowTutorialPopup" Source="question_mark_round_icon.png" WidthRequest="30">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Border>
     </Grid>
 </ContentPage>

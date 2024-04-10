@@ -2,9 +2,9 @@ using CommunityToolkit.Maui.Views;
 
 namespace PloggingApp.MVVM.Views;
 
-public partial class MapIconExplanationsPopup : Popup
+public partial class TutorialPopup : Popup
 {
-	public MapIconExplanationsPopup()
+	public TutorialPopup()
 	{
 		InitializeComponent();
 	}

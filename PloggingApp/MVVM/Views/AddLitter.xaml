@@ -9,10 +9,10 @@
     xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
     x:DataType="viewmodel:AddLitterViewModel">
 
-    <Border HeightRequest="250" Stroke="Transparent">
-        <Grid ColumnSpacing="2" IsVisible="{Binding IsTracking}">
+    <Border HeightRequest="250" Stroke="Transparent" >
+        <Grid IsVisible="{Binding IsTracking}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -22,33 +22,35 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            
             <ImageButton
                 x:Name="expandBtn"
-                Grid.RowSpan="3"
+                Grid.Row="1"
                 Grid.Column="0"
                 Clicked="ShowMoreLitterButtons"
-                Rotation="90"
-                Source="line_angle_down_icon.png">
+                WidthRequest="40"
+                HeightRequest="40"
+                Source="line_angle_left_icon.png">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Black"/>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource OffBlack}"/>
                 </ImageButton.Behaviors>
             </ImageButton>
-
+                          
             <views:LitterTypeButton
                 Grid.Row="0"
                 Grid.Column="1"
-                BackgroundColor="#8865f1"
+                BackgroundColor="#61ba49"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Plastics}"
                 HeightRequest="80"
                 HorizontalOptions="End"
                 ImageSource="candy_icon.png"
-                Text="Plastics (S)"
+                Text="Plastics(S)"
                 WidthRequest="80"/>
             <views:LitterTypeButton
                 Grid.Row="1"
                 Grid.Column="1"
-                BackgroundColor="#a254d5"
+                BackgroundColor="#53a13e"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.SmallMetal}"
                 HeightRequest="80"
@@ -59,7 +61,7 @@
             <views:LitterTypeButton
                 Grid.Row="2"
                 Grid.Column="1"
-                BackgroundColor="#b346b1"
+                BackgroundColor="#468934"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Cigarette}"
                 HeightRequest="80"
@@ -70,18 +72,18 @@
             <views:LitterTypeButton
                 Grid.Row="0"
                 Grid.Column="2"
-                BackgroundColor="#bd3b8a"
+                BackgroundColor="#39722a"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.LargePlastics}"
                 HeightRequest="80"
                 HorizontalOptions="End"
                 ImageSource="pet_bottle_icon.png"
-                Text="Plastics (L)"
+                Text="Plastics(L)"
                 WidthRequest="80"/>
             <views:LitterTypeButton
                 Grid.Row="1"
                 Grid.Column="2"
-                BackgroundColor="#c03460"
+                BackgroundColor="#2d5c20"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Glass}"
                 HeightRequest="80"
@@ -92,7 +94,7 @@
             <views:LitterTypeButton
                 Grid.Row="2"
                 Grid.Column="2"
-                BackgroundColor="#bc3434"
+                BackgroundColor="#214617"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Snus}"
                 HeightRequest="80"

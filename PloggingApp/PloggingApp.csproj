@@ -168,8 +168,8 @@
 	  <Compile Update="MVVM\Views\PloggingSessionView.xaml.cs">
 	    <DependentUpon>PloggingSessionView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\Popups\MapIconExplanationsPopup.xaml.cs">
-	    <DependentUpon>MapIconExplanationsPopup.xaml</DependentUpon>
+	  <Compile Update="MVVM\Views\Popups\TutorialPopup.xaml.cs">
+	    <DependentUpon>TutorialPopup.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
 	    <DependentUpon>DashboardPage.xaml</DependentUpon>
@@ -183,7 +183,10 @@
 	  <MauiXaml Update="MVVM\Views\BadgesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Popups\MapIconExplanationsPopup.xaml">
+	  <MauiXaml Update="MVVM\Views\Components\InformationExpander.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Popups\TutorialPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Components\MapIconsBar.xaml">
