@@ -124,7 +124,6 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         LitterChart.Chart = chartService.generateLitterChart(TimeRes, UserSessions);
         DistanceChart.Chart = chartService.generateDistanceChart(TimeRes, UserSessions, SelectedYear, SelectedMonth);
         PloggingStats = new PloggingStatistics(UserSessions);
-        PloggingStats.changeTimeResolution(TimeRes);
         StatsBoxColor = colorDict[TimeRes];
         IsBusy = false;
     }

@@ -74,10 +74,14 @@
                                 <Label Text= "{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Style="{StaticResource StatsText}"/>
                             </VerticalStackLayout>
                         </Border>
+                        <!--Time Plogged-->
                         <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}">
                             <VerticalStackLayout>
                                 <Label Text="Time plogged" Style="{StaticResource StatsLabelText}"/>
-                                <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} Hours'}" Style="{StaticResource StatsText}"/>
+                                <HorizontalStackLayout HorizontalOptions="Center">  
+                                    <Label Text= "{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}" Style="{StaticResource StatsText}"/>
+                                    <Label Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat='{0}min'}" Style="{StaticResource StatsText}"/>
+                                </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>

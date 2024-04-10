@@ -38,11 +38,11 @@ public class ChartService : IChartService
         List<ChartEntry> chartEntries =
             keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
-        var graph = new DonutChart()
+        var graph = new BarChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.RightOnly,
-            GraphPosition = GraphPosition.AutoFill,
+            //LabelMode = LabelMode.RightOnly,
+            //GraphPosition = GraphPosition.AutoFill,
             Entries = chartEntries,
             LabelTextSize = 20
         };
@@ -69,7 +69,7 @@ public class ChartService : IChartService
     }
     public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month = 1)
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.Sum(s => s.PloggingData.Distance) == 0)
         {
             return generateEmptyLineChart(timeResolution, year, month);
         }
