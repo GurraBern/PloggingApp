@@ -9,6 +9,9 @@
     Title="Dashboard"
     x:DataType="viewmodels:DashboardViewModel">
 
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,13 +28,6 @@
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 
-        <views:StreakView
-            BindingContext="{Binding StreakViewModel}"
-            HeightRequest="40"
-            HorizontalOptions="Start"
-            VerticalOptions="End"/>
-
-
         <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Start" HorizontalOptions="Start" >
             <ImageButton Clicked="ShowTutorialPopup" Source="question_mark_round_icon.png" WidthRequest="30">
                 <ImageButton.Behaviors>
@@ -39,5 +35,12 @@
                 </ImageButton.Behaviors>
             </ImageButton>
         </Border>
+
+        <views:StreakView
+            Margin="5"
+             BindingContext="{Binding StreakViewModel}"
+             HeightRequest="40"
+             HorizontalOptions="End"
+             VerticalOptions="End"/>
     </Grid>
 </ContentPage>

@@ -22,7 +22,6 @@
     <TabBar>
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
-        <ShellContent Route="PlogTogetherPage" Title="PlogTogether" Icon="plog_together.png" ContentTemplate="{DataTemplate views:PlogTogetherPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
         <ShellContent Route="Profile" Title="Profile" Icon="user.png" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
     </TabBar>

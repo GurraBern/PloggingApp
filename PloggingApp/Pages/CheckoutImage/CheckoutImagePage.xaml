@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.Pages.CheckoutImagePage"
-             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
-             x:DataType="viewmodels:CheckoutImageViewModel">
-    <VerticalStackLayout Spacing="5">
-        <Image Source="{Binding ImagePath}"></Image>
-        <Button Command="{Binding UsePhotoCommand}" Style="{StaticResource RoundButton}" WidthRequest="250" HeightRequest="40" Text="Use Photo"></Button>
-        <Button Command="{Binding RetakePhotoCommand}" Style="{StaticResource RoundButton}" BackgroundColor="{StaticResource Red}" WidthRequest="250" HeightRequest="40" Text="Retake Photo"></Button>
+<ContentPage
+    x:Class="PloggingApp.Pages.CheckoutImagePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+    x:DataType="viewmodels:CheckoutImageViewModel">
+    <VerticalStackLayout Padding="25" Spacing="5">
+        <Image Source="{Binding ImagePath}"/>
+
+        <Label Text="Disclaimer: This photo will be proof of your hard work, other people will be able to see it on your profile."/>
+
+        <Button
+            Command="{Binding UsePhotoCommand}"
+            HeightRequest="40"
+            Style="{StaticResource RoundButton}"
+            Text="Use Photo"
+            WidthRequest="250"/>
+        <Button
+            BackgroundColor="{StaticResource Red}"
+            Command="{Binding RetakePhotoCommand}"
+            HeightRequest="40"
+            Style="{StaticResource RoundButton}"
+            Text="Retake Photo"
+            WidthRequest="250"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -17,6 +17,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
     private readonly IStreakService _streakService;
+    private readonly IToastService _toastService;
     private const int DISTANCE_THRESHOLD = 20;
     private Task _updateSession;
     private List<Litter> CurrentLitter { get; set; } = [];
@@ -31,7 +32,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         IAuthenticationService authenticationService,
         IPlogTogetherService plogTogetherService, 
         IUserInfoService userInfoService,
-        IStreakService streakService)
+        IStreakService streakService,
+        IToastService toastService)
     {
         _ploggingSessionService = ploggingSessionService;
         _litterbagPlacementService = litterbagPlacementService;
@@ -39,6 +41,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         _plogTogetherService = plogTogetherService;
         _userInfoService = userInfoService;
         _streakService = streakService;
+        _toastService = toastService;
     }
 
     public void StartSession()
@@ -160,7 +163,10 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         var streakUser = await _streakService.GetUserStreak(currentUserId);
 
         if(streakUser != null)
+        {
             WeakReferenceMessenger.Default.Send(new UpdateStreakMessage(streakUser.Streak));
+            await _toastService.MakeToast("Plogging Session Completed!");
+        }
     }
 
     public void AddLitterItem(LitterType litterType, double amount, Location location)

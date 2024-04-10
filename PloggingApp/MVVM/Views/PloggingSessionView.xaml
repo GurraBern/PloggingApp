@@ -21,6 +21,7 @@
                 Opacity="0"
                 Spacing="5">
                 <Button Command="{Binding StartPloggingSessionCommand}" Text="Start plogging" />
+                <Button Command="{Binding StartPloggTogetherCommand}" Text="Plogg Together"/>
                 <Button Command="{Binding MarkTrashForCollectionCommand}" Text="Mark Litter bag" />
             </VerticalStackLayout>
 
