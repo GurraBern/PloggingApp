@@ -14,6 +14,7 @@
 
     <ContentView.Resources>
         <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
+        <converters:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
 
     <ScrollView>
@@ -80,54 +81,36 @@
             </Border>
 
             <Border>
-                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
+                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="120">
                     <Label Text="History" FontSize="Medium" Margin="10,5" FontAttributes="Bold"/>
-                    <Grid Margin="0,10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="65" />
-                            <ColumnDefinition Width="45" />
-                        </Grid.ColumnDefinitions>
+                    <CollectionView ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="modelsCore:PloggingSession">
+                                <Grid Margin="0,10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65" />
+                                        <ColumnDefinition Width="45" />
+                                    </Grid.ColumnDefinitions>
 
-                        <!-- TODO: Replace walking icon with image from each session -->
-                        <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding RecentWeight0, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                        <Image Grid.Row="0" Grid.Column="1" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-                        <Image Grid.Row="0" Grid.Column="2" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                        <Label Grid.Row="0" Grid.Column="3" Text="{Binding RecentWeight1, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                        <Image Grid.Row="0" Grid.Column="3" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-                        <Image Grid.Row="0" Grid.Column="4" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
-                        <Label Grid.Row="0" Grid.Column="5" Text="{Binding RecentWeight2, StringFormat='{0}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                        <Image Grid.Row="0" Grid.Column="5" Source="canpin.png" WidthRequest="18" HeightRequest="18" VerticalOptions="End"/>
-
-
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="110" />
-                                <ColumnDefinition Width="110" />
-                                <ColumnDefinition Width="110" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding RecentStartDate0, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                            <Label Grid.Column="1" Text="{Binding RecentStartDate1, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                            <Label Grid.Column="2" Text="{Binding RecentStartDate2, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                        </Grid>
-                    </Grid>
-
+                                    <!-- TODO: Replace with Source="{Binding Image}" to get session image -->
+                                    <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
+                                    <Image Grid.Row="0" Grid.Column="1" Source="trashcan.png" WidthRequest="30" HeightRequest="30" VerticalOptions="End"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </Border>
 
 
             <Border>
-                <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="150">
+                <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="120">
                     <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
                     <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
                 </StackLayout>

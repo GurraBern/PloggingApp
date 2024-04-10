@@ -67,22 +67,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
             }
             catch (Exception ex)
             {
-                //Trace.WriteLine($"ERROR: {ex.Message}");
-
-                string errorMessage = ex.Message;
-
-                if (errorMessage.Contains("INVALID_LOGIN_CREDENTIALS"))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Invalid login credentials", "OK");
-                }
-                else if (errorMessage.Contains("INVALID_EMAIL"))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Invalid email.", "OK");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "An error occurred.", "OK");
-                }
+                HandleAuthenticationError(ex);
             }
         }
     }
@@ -112,29 +97,35 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
                 await _authenticationService.LoginUser(RegEmail, RegPassword);
             }
             catch (Exception ex)
-            {
-                //Trace.WriteLine($"ERROR: {ex.Message}");
-
-                string errorMessage = ex.Message;
-
-                if (errorMessage.Contains("INVALID_EMAIL"))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Email invalid.", "OK");
-                }
-                else if (errorMessage.Contains("WEAK_PASSWORD"))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Password must have a minimum length of 6 characters.", "OK");
-                }
-                else if (errorMessage.Contains("EMAIL_EXISTS"))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Email already exists.", "OK");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "An error occurred.", "OK");
-                }
+            { 
+                HandleAuthenticationError(ex);
             }
         }
     }
 
+    private async void HandleAuthenticationError(Exception ex) {
+
+        string errorMessage = ex.Message;
+
+        if (errorMessage.Contains("INVALID_LOGIN_CREDENTIALS"))
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Invalid login credentials", "OK");
+        }
+        else if (errorMessage.Contains("INVALID_EMAIL"))
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Email invalid.", "OK");
+        }
+        else if (errorMessage.Contains("WEAK_PASSWORD"))
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Password must have a minimum length of 6 characters.", "OK");
+        }
+        else if (errorMessage.Contains("EMAIL_EXISTS"))
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Email already exists.", "OK");
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "An error occurred.", "OK");
+        }
+    }
 }
