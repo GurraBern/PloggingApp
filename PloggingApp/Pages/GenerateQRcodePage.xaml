@@ -7,7 +7,8 @@
              x:DataType="viewmodel:GenerateQRcodeViewModel"
              Title="GenerateQRcodePage"
              >
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto"
+          RowSpacing="10">
 
         <zxing:BarcodeGeneratorView
             Format="QrCode"

@@ -5,7 +5,8 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
 
     <Grid
-        RowDefinitions="*,Auto">
+        RowDefinitions="*,Auto"
+        RowSpacing="10">
 
         <Button Text="Go Back"
                 WidthRequest="200"

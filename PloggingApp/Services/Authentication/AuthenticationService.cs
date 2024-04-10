@@ -46,9 +46,8 @@ public class AuthenticationService : IAuthenticationService
         {
             _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
-            // reset streak here for autologin?
-            //var currentUserId = CurrentUser.Uid;
-            //await _streakService.ResetStreak(currentUserId);
+            var currentUserId = CurrentUser.Uid;
+            await _streakService.ResetStreak(currentUserId);
 
             await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
         } else
