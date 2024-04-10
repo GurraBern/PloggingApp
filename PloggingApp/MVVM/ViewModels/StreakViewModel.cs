@@ -43,8 +43,13 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization, IRec
         IsBusy = true;
 
         var user = await _streakService.GetUserStreak(currentUserId);
-        UserStreakCount = user.Streak;
 
+        if (user == null)
+        {
+            return;
+        }
+
+        UserStreakCount = user.Streak;
         IsBusy = false;
     }
 

@@ -27,7 +27,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
     public Task Initialization { get; private set; }
 
-    public ObservableCollection<PlogUser> NewGroup { get; set; } = new ObservableCollection<PlogUser>();
+    public ObservableCollection<PlogUser> Group { get; set; } = new ObservableCollection<PlogUser>();
 
     private bool isTracking = false;
 
@@ -59,7 +59,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         var user = message.AddUser;
-        NewGroup.Add(user);
+        Group.Add(user);
 
         IsBusy = false;
     }
@@ -71,13 +71,12 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         var users = message.PlogUsers;
         foreach (var member in users)
         {
-            NewGroup.Add(member);
+            Group.Add(member);
         }
 
         IsBusy = false;
     }
 
-    // se om något IsTracking = false message skickas, verkar inte som det?
     public void Receive(PloggingSessionMessage message)
     {
         isTracking = message.IsTracking;
@@ -95,7 +94,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
             if (plogGroup.OwnerUserId == currentUserId)
             {
                 await _plogTogetherService.DeleteGroup(currentUserId);
-                NewGroup.Clear();
+                Group.Clear();
             }
             else
             {
@@ -105,7 +104,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
                 });
             }
         }
-        else // OBS det skickas aldrig ett IsTracking = false meddelande efter session atm
+        else
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -121,7 +120,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         var userId = message.Id;
-        NewGroup.Clear();
+        Group.Clear();
 
         IsBusy = false;
     }
@@ -129,42 +128,25 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 	[RelayCommand]
 	public async Task GetGroup()
 	{
-		try
+        IsBusy = true;
+
+        var userId = _authenticationService.CurrentUser.Uid;
+        var plogTogether = await _plogTogetherService.GetPlogTogether(userId);
+
+		if (plogTogether == null) return;
+
+		foreach (var memberId in plogTogether.UserIds)
 		{
-            IsBusy = true;
-
-            var userId = _authenticationService.CurrentUser.Uid;
-            var plogTogether = await _plogTogetherService.GetPlogTogether(userId);
-
-			if (plogTogether == null)
-			{
-				return;
-			}
-
-            List<string> members = plogTogether.UserIds;
-
-			foreach (var member in members)
-			{
-				var user = await _userInfoService.GetUser(member);
-
-                PlogUser plogUser = new()
+			var user = await _userInfoService.GetUser(memberId);
+            if (user != null)
+            {
+                Group.Add(new PlogUser
                 {
-                    DisplayName = user.DisplayName,
-                    UserId = user.UserId
-                };
-
-                NewGroup.Add(plogUser);
-			}
+                    DisplayName = user.DisplayName
+                });
+            }
         }
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex);
-			//await Shell.Current.DisplayAlert("Error!", $"Unable to get group: {ex.Message}", "OK");
-		}
-		finally
-		{
-            IsBusy = false;
-        }
+        IsBusy = false;
 	}
 
     // ska man kunna lämna under active session? bara att kolla isTracking isf
@@ -176,21 +158,21 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         var currentUserId = _authenticationService.CurrentUser.Uid;
         var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
 
-        if (plogGroup != null)
+        if (plogGroup == null) return;
+        
+        if (plogGroup.OwnerUserId != currentUserId)
         {
-            if (plogGroup.OwnerUserId != currentUserId)
-            {
-                await _plogTogetherService.LeaveGroup(currentUserId);
-                NewGroup.Clear();
-            }
-            else
-            {
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Can't leave group: you are the leader!", "OK");
-                });
-            }
+            await _plogTogetherService.LeaveGroup(currentUserId);
+            Group.Clear();
         }
+        else
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Can't leave group: you are the leader!", "OK");
+            });
+        }
+        
 
         IsBusy = false;
     }
