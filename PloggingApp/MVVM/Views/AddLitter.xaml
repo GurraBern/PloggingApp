@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.MVVM.Views.AddLitter"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             xmlns:enumCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
-             x:DataType="viewmodel:AddLitterViewModel">
+<ContentView
+    x:Class="PloggingApp.MVVM.Views.AddLitter"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:enumCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    x:DataType="viewmodel:AddLitterViewModel">
 
-    <Border Stroke="Transparent" HeightRequest="250">
+    <Border HeightRequest="250" Stroke="Transparent" >
         <Grid IsVisible="{Binding IsTracking}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -21,18 +22,86 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ImageButton x:Name="expandBtn" Grid.RowSpan="3" Grid.Column="0" Clicked="ShowMoreLitterButtons" Source="line_angle_down_icon.png" Rotation="90">
+            
+            <ImageButton
+                x:Name="expandBtn"
+                Grid.Row="1"
+                Grid.Column="0"
+                Clicked="ShowMoreLitterButtons"
+                WidthRequest="40"
+                HeightRequest="40"
+                Source="line_angle_left_icon.png">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Black" />
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource OffBlack}"/>
                 </ImageButton.Behaviors>
             </ImageButton>
-
-            <views:LitterTypeButton Grid.Row="0" Grid.Column="1" Text="Plastics (S)" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Plastics}" BackgroundColor="#8865f1" ImageSource="candy_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-            <views:LitterTypeButton Grid.Row="1" Grid.Column="1" Text="Metal" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.SmallMetal}" BackgroundColor="#a254d5" ImageSource="soda_cans_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-            <views:LitterTypeButton Grid.Row="2" Grid.Column="1" Text="Cigarette" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Cigarette}" BackgroundColor="#b346b1" ImageSource="smoking_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-            <views:LitterTypeButton Grid.Row="0" Grid.Column="2" Text="Plastics (L)" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.LargePlastics}" BackgroundColor="#bd3b8a" ImageSource="pet_bottle_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-            <views:LitterTypeButton Grid.Row="1" Grid.Column="2" Text="Glass" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Glass}" BackgroundColor="#c03460" ImageSource="broken_glass_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
-            <views:LitterTypeButton Grid.Row="2" Grid.Column="2" Text="Snus" Command="{Binding AddLitterCommand}" CommandParameter="{x:Static enumCore:LitterType.Snus}" BackgroundColor="#bc3434" ImageSource="snus_icon.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="End"/>
+                          
+            <views:LitterTypeButton
+                Grid.Row="0"
+                Grid.Column="1"
+                BackgroundColor="#61ba49"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.Plastics}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="candy_icon.png"
+                Text="Plastics(S)"
+                WidthRequest="80"/>
+            <views:LitterTypeButton
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="#53a13e"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.SmallMetal}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="soda_cans_icon.png"
+                Text="Metal"
+                WidthRequest="80"/>
+            <views:LitterTypeButton
+                Grid.Row="2"
+                Grid.Column="1"
+                BackgroundColor="#468934"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.Cigarette}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="smoking_icon.png"
+                Text="Cigarette"
+                WidthRequest="80"/>
+            <views:LitterTypeButton
+                Grid.Row="0"
+                Grid.Column="2"
+                BackgroundColor="#39722a"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.LargePlastics}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="pet_bottle_icon.png"
+                Text="Plastics(L)"
+                WidthRequest="80"/>
+            <views:LitterTypeButton
+                Grid.Row="1"
+                Grid.Column="2"
+                BackgroundColor="#2d5c20"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.Glass}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="broken_glass_icon.png"
+                Text="Glass"
+                WidthRequest="80"/>
+            <views:LitterTypeButton
+                Grid.Row="2"
+                Grid.Column="2"
+                BackgroundColor="#214617"
+                Command="{Binding AddLitterCommand}"
+                CommandParameter="{x:Static enumCore:LitterType.Snus}"
+                HeightRequest="80"
+                HorizontalOptions="End"
+                ImageSource="snus_icon.png"
+                Text="Snus"
+                WidthRequest="80"/>
         </Grid>
     </Border>
 </ContentView>

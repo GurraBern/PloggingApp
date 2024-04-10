@@ -21,51 +21,29 @@ public class PlogTogetherRepository : IPlogTogetherRepository
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
         var userOwnsGroup = await _plogTogetherCollection.Find(u => u.OwnerUserId == ownerUserId).FirstOrDefaultAsync();
-        if (userOwnsGroup == null)
-        {
-            var ownerMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(ownerUserId)).FirstOrDefaultAsync();
-            if (ownerMemberInGroup == null)
-            {
-                var userMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
-                if (userMemberInGroup == null)
-                {
-                    List<string> userIds = new()
-                    {
-                         ownerUserId,
-                         userId
-                    };
+        var ownerMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(ownerUserId)).FirstOrDefaultAsync();
+        var userMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
 
-                    var newGroup = new PlogTogether
-                    {
-                        OwnerUserId = ownerUserId,
-                        UserIds = userIds
-                    };
-
-                    await _plogTogetherCollection.InsertOneAsync(newGroup);
-                }
-                else // user exists in another group
-                {
-                    return;
-                }
-            }
-            else // owner exists in another group
-            {
-                return;
-            }
-        }
-        else //owner har redan en grupp
+        if (userOwnsGroup != null)
         {
-            var userMemberInGroup = await _plogTogetherCollection.Find(u => u.UserIds.Contains(userId)).FirstOrDefaultAsync();
             if (userMemberInGroup == null)
             {
                 userOwnsGroup.UserIds.Add(userId);
                 await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == ownerUserId, userOwnsGroup);
             }
-            else // user exists in another group
-            {
-                return;
-            }
+            return;
         }
+
+        if (ownerMemberInGroup != null || userMemberInGroup != null)
+            return;
+
+        var newGroup = new PlogTogether
+        {
+            OwnerUserId = ownerUserId,
+            UserIds = new List<string> { ownerUserId, userId }
+        };
+
+        await _plogTogetherCollection.InsertOneAsync(newGroup);
     }
 
     public async Task DeleteGroup(string ownerUserId)

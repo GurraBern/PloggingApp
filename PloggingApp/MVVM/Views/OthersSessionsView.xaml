@@ -6,11 +6,11 @@
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              x:Class="PloggingApp.MVVM.Views.OthersSessionsView"
+             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              x:DataType="viewmodel:OthersSessionsViewModel">
     
         <StackLayout>
-        <Label Text="{Binding DisplayName}" FontSize="40" Margin="0,0,0,0" HorizontalOptions="Center" />
-
+        <Label Text="{Binding DisplayName}" FontSize="40" HorizontalOptions="Center" />
         <Label Text="Total" FontSize="Large" Padding="6,0" ></Label>
         <Border>
             <Grid ColumnDefinitions="*, *, *, *" RowDefinitions="20,30">
@@ -25,8 +25,9 @@
                 <Label Grid.Row="1" Grid.Column="3" Text="{Binding StreakString, StringFormat='{0} weeks'}" Margin="10,10,0,0" />
             </Grid>
         </Border>
-        <Label Text="Badges" FontSize="Large" Padding="6,0" Margin="0,0,0,50"></Label>
-
+            
+        <Label Text="Badges" FontSize="Large" Padding="6,0"></Label>
+        <views:BadgesView BindingContext="{Binding BadgesViewModel}" Margin="0,-15,0,-25" HorizontalOptions="Start"/>
 
         <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
         <ScrollView Orientation="Vertical">

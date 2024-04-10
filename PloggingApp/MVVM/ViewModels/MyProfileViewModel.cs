@@ -3,12 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Extensions;
 using Plogging.Core.Models;
-using PloggingApp.Pages;
 using System.Collections.ObjectModel;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
-using System.Diagnostics;
+using PloggingApp.Pages;
 
 namespace PloggingApp.MVVM.ViewModels;
 

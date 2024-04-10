@@ -148,7 +148,8 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                     DisplayName = displayName,
                     StartDate = StartTime,
                     EndDate = EndTime,
-                    PloggingData = ploggingData
+                    PloggingData = ploggingData,
+                    Image = imagePath
                 };
 
                 await _ploggingSessionService.SavePloggingSession(ploggingSession);

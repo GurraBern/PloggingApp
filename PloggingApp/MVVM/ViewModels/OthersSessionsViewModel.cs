@@ -37,7 +37,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private string streakString;
 
     private IEnumerable<PloggingSession> _allSessions = [];
-
+    public BadgesViewModel BadgesViewModel { get; set; }
     private readonly IPloggingSessionService _sessionService;
     private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfo;
@@ -51,6 +51,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _userInfo = UserInfo;
         _streakService = StreakService;
         _popupService = PopupService;
+        BadgesViewModel = new BadgesViewModel(SessionService, UserInfo, StreakService, PopupService);
 
         Initialization = GetSessions(); //TODO Dela upp i två funktioner?
     }
@@ -76,6 +77,13 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             TotalDistance = Math.Round(stats.TotalDistance);
             TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
             TotalWeight = Math.Round(stats.TotalWeight);
+            
+            foreach(PloggingSession ps in _allSessions)
+            {
+                ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance);
+                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);
+            }
+
             PloggingSessions.ClearAndAddRange(_allSessions);
             int streak = (await _streakService.GetUserStreak(userId)).Streak;
             StreakString = streak.ToString();

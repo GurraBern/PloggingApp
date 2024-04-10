@@ -8,7 +8,7 @@
              x:Class="PloggingApp.MVVM.Views.PlogTogetherView">
 
     <CollectionView
-        ItemsSource="{Binding NewGroup}">
+        ItemsSource="{Binding Group}">
 
             <CollectionView.ItemTemplate>
 

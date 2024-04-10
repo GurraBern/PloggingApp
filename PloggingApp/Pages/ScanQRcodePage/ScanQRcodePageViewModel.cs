@@ -44,14 +44,12 @@ public partial class ScanQRcodePageViewModel : ObservableObject
 
                 PlogUser plogUser1 = new()
                 {
-                    DisplayName = ownerUserInfo.DisplayName,
-                    UserId = ownerUserInfo.UserId
+                    DisplayName = ownerUserInfo.DisplayName
                 };
 
                 PlogUser plogUser2 = new()
                 {
-                    DisplayName = userInfo.DisplayName,
-                    UserId = userInfo.UserId
+                    DisplayName = userInfo.DisplayName
                 };
 
                 List<PlogUser> plogUsers = new()
@@ -88,13 +86,12 @@ public partial class ScanQRcodePageViewModel : ObservableObject
 
                     PlogUser plogUser = new()
                     {
-                        DisplayName = userInfo.DisplayName,
-                        UserId = userInfo.UserId
+                        DisplayName = userInfo.DisplayName
                     };
 
-                    AddUser = plogUser;
+                    //AddUser = plogUser;
 
-                    WeakReferenceMessenger.Default.Send(new AddUserMessage(AddUser));
+                    WeakReferenceMessenger.Default.Send(new AddUserMessage(plogUser));
 
                     await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
                     MainThread.BeginInvokeOnMainThread(async () =>

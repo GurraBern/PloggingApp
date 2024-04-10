@@ -1,10 +1,7 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Plogging.Core.Models;
 using PloggingApp.Data.Services;
-using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Authentication;
 
@@ -43,8 +40,13 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization, IRec
         IsBusy = true;
 
         var user = await _streakService.GetUserStreak(currentUserId);
-        UserStreakCount = user.Streak;
 
+        if (user == null)
+        {
+            return;
+        }
+
+        UserStreakCount = user.Streak;
         IsBusy = false;
     }
 
