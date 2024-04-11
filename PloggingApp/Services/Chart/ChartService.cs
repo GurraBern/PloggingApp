@@ -28,7 +28,7 @@ public class ChartService : IChartService
 
     public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.All(s => !s.PloggingData.Litters.Any()))
             return generateEmptyLitterChart();
         Dictionary<LitterType, double> keyValuePairs = sessions
             .SelectMany(x => x.PloggingData.Litters)
@@ -39,11 +39,11 @@ public class ChartService : IChartService
             keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), 
                 Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
-        var graph = new BarChart()
+        var graph = new PieChart()
         {
             IsAnimated = true,
-            //LabelMode = LabelMode.RightOnly,
-            //GraphPosition = GraphPosition.AutoFill,
+            LabelMode = LabelMode.RightOnly,
+            GraphPosition = GraphPosition.AutoFill,
 
             Entries = chartEntries,
             LabelTextSize = 25

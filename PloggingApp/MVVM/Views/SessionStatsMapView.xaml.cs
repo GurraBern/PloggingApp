@@ -47,7 +47,6 @@ public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessi
 		double radius;
 		if (!ViewModel.TrashPins.Any())
 		{
-			return;
 			center = await Geolocation.GetLastKnownLocationAsync();
 			radius = 0.5;
 		}
