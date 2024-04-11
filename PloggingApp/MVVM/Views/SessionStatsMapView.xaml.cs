@@ -16,11 +16,11 @@ public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessi
 		WeakReferenceMessenger.Default.Register(this);
 	}
 
-	private void Initialize()
+	private async Task Initialize()
 	{
 		ViewModel = (SessionStatsMapViewModel)BindingContext;
 		DrawRoutePolyLine();
-		CenterMap();
+	    await CenterMap();
 	}
 
 	private void DrawRoutePolyLine()
@@ -47,7 +47,8 @@ public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessi
 		double radius;
 		if (!ViewModel.TrashPins.Any())
 		{
-			center = await Geolocation.GetLocationAsync();
+			return;
+			center = await Geolocation.GetLastKnownLocationAsync();
 			radius = 0.5;
 		}
 		else

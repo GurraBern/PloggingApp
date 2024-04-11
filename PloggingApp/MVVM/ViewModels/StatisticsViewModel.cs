@@ -21,8 +21,8 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     public Task Initialization { get; private set; }
 
     private readonly IPloggingSessionService _ploggingSessionService;
-    private IChartService chartService;
     private readonly IAuthenticationService _authenticationService;
+    private IChartService chartService;
     public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
     private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
     private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>

@@ -31,7 +31,7 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
 
     private async void getStatistics()
     {
-        TimeSpan = $"From {PloggingSession.StartDate.ToString("HH:mm:ss")}" + " to " +
+        TimeSpan = $"{PloggingSession.StartDate.ToString("HH:mm:ss")}" + " to " +
            $"{PloggingSession.EndDate.ToString("HH:mm:ss")}";
 
         Area = await GetArea(PloggingSession.PloggingData.Litters.FirstOrDefault().LitterLocation.Latitude,
