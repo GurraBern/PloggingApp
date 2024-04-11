@@ -12,7 +12,7 @@
     Shell.TitleColor="{StaticResource White}"
     Title="PloggingApp"
     BackgroundColor="{StaticResource Primary}"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="True">
 
     <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />

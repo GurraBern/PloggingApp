@@ -4,6 +4,7 @@ using PloggingApp.Services.Authentication;
 using System.Diagnostics;
 using PloggingApp.Pages;
 using PloggingApp.Data.Services;
+using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -13,6 +14,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     private readonly IAuthenticationService _authenticationService;
     private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfoService;
+    private readonly IToastService _toastService;
 
     [ObservableProperty]
     private bool rememberMeEnabled;
@@ -24,11 +26,12 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
     public Task Initialization { get; }
 
     public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService,
-                                    IUserInfoService userInfoService)
+                                    IUserInfoService userInfoService, IToastService toastService)
     {
         _authenticationService = authenticationService;
         _streakService = streakService;
         _userInfoService = userInfoService;
+        _toastService = toastService;
 
         Initialization = Initialize();
     }
@@ -93,7 +96,7 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
                 await _streakService.CreateUser(userId);
                 await _userInfoService.CreateUser(userId, DisplayName);
 
-                await Application.Current.MainPage.DisplayAlert("Success", "Account created.", "OK");
+                await _toastService.MakeToast("Success. Account created.");
                 await _authenticationService.LoginUser(RegEmail, RegPassword);
             }
             catch (Exception ex)

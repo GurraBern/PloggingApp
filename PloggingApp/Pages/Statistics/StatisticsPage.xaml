@@ -5,7 +5,8 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
              x:DataType="viewmodel:StatisticsPageViewModel"
-             Title="StatisticsPage">
+             Title="StatisticsPage"
+             Shell.NavBarIsVisible="False">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="user.svg" Order="Primary" Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}" Priority="0"/>

@@ -19,7 +19,7 @@
 
     <ScrollView>
         <VerticalStackLayout Margin="5" >
-            <Border>
+            <Border Style="{StaticResource RoundBorder}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="90"/>
@@ -49,7 +49,7 @@
 
             </Border>
 
-            <Border>
+            <Border Style="{StaticResource RoundBorder}">
                 <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
                     <Label Text="This Month" FontSize="Medium" FontAttributes="Bold" Margin="10,5"/>
                     <Grid Margin="10,5">
@@ -80,7 +80,7 @@
                 </StackLayout>
             </Border>
 
-            <Border>
+            <Border Style="{StaticResource RoundBorder}">
                 <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="120">
                     <Label Text="History" FontSize="Medium" Margin="10,5" FontAttributes="Bold"/>
                     <CollectionView ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
@@ -96,7 +96,7 @@
                                         <ColumnDefinition Width="45" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- TODO: Replace with Source="{Binding Image}" to get session image -->
+                                    <!-- TODO: Replace with session image -->
                                     <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
                                     <Image Grid.Row="0" Grid.Column="1" Source="trashcan.png" WidthRequest="30" HeightRequest="30" VerticalOptions="End"/>
@@ -109,7 +109,7 @@
             </Border>
 
 
-            <Border>
+            <Border Style="{StaticResource RoundBorder}">
                 <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="120">
                     <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
                     <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>

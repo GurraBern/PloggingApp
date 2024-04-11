@@ -6,7 +6,8 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:PlogTogetherViewModel"
              xmlns:model="clr-namespace:PloggingApp.MVVM.ViewModels"
-             Title="PlogTogetherPage">
+             Title="PlogTogetherPage"
+             Shell.NavBarIsVisible="False">
 
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="10"
