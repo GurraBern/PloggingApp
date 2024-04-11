@@ -14,9 +14,10 @@
                 <Label Text="Map Icons" FontSize="Medium"></Label>
                 <HorizontalStackLayout>
                     <Image
+                        Margin="0,-10,0,0"
                         HeightRequest="20"
                         Scale="2"
-                        Source="red_dot.png"
+                        Source="pickeduptrash.png"
                         WidthRequest="20"/>
                     <Label FontSize="Small" Text="Collected"/>
                 </HorizontalStackLayout>
