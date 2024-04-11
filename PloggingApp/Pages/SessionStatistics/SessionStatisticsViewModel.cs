@@ -31,11 +31,18 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
 
     private async void getStatistics()
     {
-        TimeSpan = $"From {PloggingSession.StartDate.ToString("HH:mm:ss")}" + " to " +
+        TimeSpan = $"{PloggingSession.StartDate.ToString("HH:mm:ss")}" + " to " +
            $"{PloggingSession.EndDate.ToString("HH:mm:ss")}";
 
-        Area = await GetArea(PloggingSession.PloggingData.Litters.FirstOrDefault().LitterLocation.Latitude,
-            PloggingSession.PloggingData.Litters.FirstOrDefault().LitterLocation.Longitude);
+        if (PloggingSession.PloggingData.Litters.Any())
+        {
+            Area = await GetArea(PloggingSession.PloggingData.Litters.First().LitterLocation);
+        }
+        else
+        {
+
+            Area = "?? :(";
+        }
 
         LitterChart = chartService.generateLitterChart(TimeResolution.Alltime, new List<PloggingSession> { PloggingSession });
         LitterWeight = PloggingSession.PloggingData.Litters.Sum(x => x.Weight);
@@ -51,9 +58,9 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
         Init();
     }
 
-    private async Task<string> GetArea(double latitude, double longitude)
+    private async Task<string> GetArea(MapPoint location)
     {
-        IEnumerable<Placemark> placemarks = await Geocoding.Default.GetPlacemarksAsync(latitude, longitude);
+        IEnumerable<Placemark> placemarks = await Geocoding.Default.GetPlacemarksAsync(location.Latitude, location.Longitude);
         Placemark placemark = placemarks?.FirstOrDefault();
         if (placemark != null)
             return $"{placemark.AdminArea}, {placemark.SubLocality}";
