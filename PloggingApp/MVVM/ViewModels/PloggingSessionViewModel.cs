@@ -8,6 +8,7 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Pages;
 using PloggingApp.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Services.Camera;
@@ -96,10 +97,18 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [RelayCommand]
     private async Task EndPloggingSession()
     {
-        await _popupService.ShowPopupAsync<AcceptPopupViewModel>();
+        var imagePath = await _cameraService.TakePhoto();
+        await Shell.Current.GoToAsync($"{nameof(CheckoutImagePage)}?ImagePath={imagePath}");
 
         IsTracking = false;
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
+    }
+
+
+    [RelayCommand]
+    private async Task StartPloggTogether()
+    {
+        await Shell.Current.GoToAsync($"{nameof(PlogTogetherPage)}");
     }
 
     [RelayCommand]

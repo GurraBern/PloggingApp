@@ -6,7 +6,9 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:PlogTogetherViewModel"
              xmlns:model="clr-namespace:PloggingApp.MVVM.ViewModels"
-             Title="PlogTogetherPage">
+             Title="PlogTogetherPage"
+             Shell.TabBarIsVisible="False">
+             Shell.NavBarIsVisible="False">
 
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="10"
@@ -36,15 +38,15 @@
 
         <Button Text="Delete Group"
                 Command="{Binding DeleteGroupCommand}"
-                WidthRequest="200"
-                HeightRequest="70"
+                WidthRequest="170"
+                HeightRequest="60"
                 Grid.Column="1"
                 Grid.Row="4"/>
 
         <Button Text="Leave Group"
                 Command="{Binding LeaveGroupCommand}"
-                WidthRequest="200"
-                HeightRequest="70"
+                WidthRequest="170"
+                HeightRequest="60"
                 Grid.Column="0"
                 Grid.Row="4"
                 />

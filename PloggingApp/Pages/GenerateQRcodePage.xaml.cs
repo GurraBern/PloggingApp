@@ -9,4 +9,9 @@ public partial class GenerateQRcodePage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    private async void OnNavigateClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+    }
 }

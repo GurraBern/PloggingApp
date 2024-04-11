@@ -14,11 +14,13 @@ public class AuthenticationService : IAuthenticationService
     
     private readonly FirebaseAuthClient _firebaseAuthClient;
     private readonly IStreakService _streakService;
+    private readonly IToastService _toastService;
 
-    public AuthenticationService(FirebaseAuthClient firebaseAuthClient, IStreakService streakService)
+    public AuthenticationService(FirebaseAuthClient firebaseAuthClient, IStreakService streakService, IToastService toastService)
     {
         _firebaseAuthClient = firebaseAuthClient;
         _streakService = streakService;
+        _toastService = toastService;
     }
 
     public async Task LoginUser(string email, string password)
@@ -28,7 +30,7 @@ public class AuthenticationService : IAuthenticationService
         var currentUserId = CurrentUser.Uid;
         await _streakService.ResetStreak(currentUserId);
 
-        await Application.Current.MainPage.DisplayAlert("Success", "You are being logged in.", "OK");
+        await _toastService.MakeToast("You are being logged in.");
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
 
@@ -46,9 +48,8 @@ public class AuthenticationService : IAuthenticationService
         {
             _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
-            // reset streak here for autologin?
-            //var currentUserId = CurrentUser.Uid;
-            //await _streakService.ResetStreak(currentUserId);
+            var currentUserId = CurrentUser.Uid;
+            await _streakService.ResetStreak(currentUserId);
 
             await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
         } else

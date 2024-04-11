@@ -16,7 +16,7 @@ public partial class AcceptPopupViewModel : ObservableObject
         _popupService = popupService;
         _cameraService = cameraService;
     }
-
+    
     [RelayCommand]
     private async Task ShowCameraView()
     {

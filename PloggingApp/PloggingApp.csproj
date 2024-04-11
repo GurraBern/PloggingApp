@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>PloggingApp</ApplicationTitle>
+		<ApplicationTitle>PlogPal</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.ploggingapp</ApplicationId>
@@ -43,7 +43,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<!-- <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" /> -->
+		<MauiIcon Include="Resources\AppIcon\newappicon.jpg" />
+		
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -153,6 +155,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="MVVM\Views\Components\MapIconsBar.xaml.cs">
+	    <DependentUpon>MapIconsBar.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="MVVM\Views\DashboardView.xaml.cs">
 	    <DependentUpon>DashboardView.xaml</DependentUpon>
 	  </Compile>
@@ -165,6 +170,9 @@
 	  <Compile Update="MVVM\Views\PloggingSessionView.xaml.cs">
 	    <DependentUpon>PloggingSessionView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="MVVM\Views\Popups\TutorialPopup.xaml.cs">
+	    <DependentUpon>TutorialPopup.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
 	    <DependentUpon>DashboardPage.xaml</DependentUpon>
 	  </Compile>
@@ -175,6 +183,15 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="MVVM\Views\BadgesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Components\InformationExpander.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Popups\TutorialPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Components\MapIconsBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\AcceptPopup.xaml">

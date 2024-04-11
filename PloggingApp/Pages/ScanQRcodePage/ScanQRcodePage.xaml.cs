@@ -43,4 +43,9 @@ public partial class ScanQRcodePage : ContentPage
 
         isScanning = true;
     }
+
+    private async void OnNavigateClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+    }
 }

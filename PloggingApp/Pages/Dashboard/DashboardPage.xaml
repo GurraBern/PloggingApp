@@ -1,29 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.Pages.DashboardPage"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:DataType="viewmodels:DashboardViewModel"
-             Title="Dashboard">
+<ContentPage
+    x:Class="PloggingApp.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    Title="Dashboard"
+    x:DataType="viewmodels:DashboardViewModel"
+    Shell.NavBarIsVisible="False">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="user.svg" Order="Primary" Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}" Priority="0"/>
-    </ContentPage.ToolbarItems>
-    
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
         <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
-        <views:AddLitter BindingContext="{Binding AddLitterViewModel}" HorizontalOptions="End" Margin="5,0"/>
+        <views:AddLitter
+            HorizontalOptions="End"
+            Margin="5,0"
+            BindingContext="{Binding AddLitterViewModel}"/>
 
         <views:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 
-        <views:StreakView HeightRequest="40" VerticalOptions="Start" HorizontalOptions="Start" BindingContext="{Binding StreakViewModel}"/>
+        <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Start" HorizontalOptions="Start" >
+            <ImageButton Clicked="ShowTutorialPopup" Source="question_mark_round_icon.png" WidthRequest="30">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Border>
+
+        <views:StreakView
+            Margin="5"
+             BindingContext="{Binding StreakViewModel}"
+             HeightRequest="40"
+             HorizontalOptions="End"
+             VerticalOptions="End"/>
     </Grid>
 </ContentPage>

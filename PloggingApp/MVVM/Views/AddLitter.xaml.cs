@@ -16,12 +16,12 @@ public partial class AddLitter : ContentView
         if(!isExpanded)
         {
             this.TranslateTo(0, 0, 300, Easing.CubicOut);
-            expandBtn.RotateTo(-90, 150);
+            expandBtn.RotateTo(-180, 150);
         }
         else
         {
             this.TranslateTo(85, 0, 300, Easing.CubicOut);
-            expandBtn.RotateTo(90);
+            expandBtn.RotateTo(0, 150);
         }
 
         isExpanded = !isExpanded;
