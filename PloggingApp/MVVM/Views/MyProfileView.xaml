@@ -19,7 +19,8 @@
 
     <ScrollView>
         <VerticalStackLayout Margin="5" >
-            <Border Style="{StaticResource RoundBorder}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 90, 90, 0, 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="90"/>
@@ -36,11 +37,11 @@
                     <Label Grid.Row="0" Grid.Column="0" 
                        Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" 
                        TextColor="Black" 
-                       FontSize="Large"
+                       Style="{StaticResource SubHeadline}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"/>
 
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" FontSize="Medium" BackgroundColor="White" VerticalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" Style="{StaticResource SubHeadline}"  BackgroundColor="White" VerticalOptions="Center"/>
                     <views:StreakView Grid.Row="0" Grid.Column="2" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" BackgroundColor="White" HorizontalOptions="Center"/>
@@ -51,7 +52,7 @@
 
             <Border Style="{StaticResource RoundBorder}">
                 <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
-                    <Label Text="This Month" FontSize="Medium" FontAttributes="Bold" Margin="10,5"/>
+                    <Label Text="This Month" FontSize="Medium" HorizontalOptions="Start" Margin="10,5"/>
                     <Grid Margin="10,5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -81,8 +82,9 @@
             </Border>
 
             <Border Style="{StaticResource RoundBorder}">
-                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="120">
-                    <Label Text="History" FontSize="Medium" Margin="10,5" FontAttributes="Bold"/>
+                <StackLayout Margin="0,10" Orientation="Vertical">
+                    <Label Text="History" Margin="10,5" FontSize="Medium" HorizontalOptions="Start"/>
+
                     <CollectionView ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="modelsCore:PloggingSession">
@@ -96,11 +98,15 @@
                                         <ColumnDefinition Width="45" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- TODO: Replace with session image -->
-                                    <Image Grid.Row="0" Grid.Column="0" Source="walking_icon.svg" WidthRequest="40" HeightRequest="40"/>
+                                    <Image Source="{Binding Image}" >
+                                        <Image.Clip>
+                                            <EllipseGeometry RadiusX="28" RadiusY="28" Center="32,40"/>
+                                        </Image.Clip>
+                                    </Image>
+
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                                    <Image Grid.Row="0" Grid.Column="1" Source="trashcan.png" WidthRequest="30" HeightRequest="30" VerticalOptions="End"/>
-                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                                    <Image Grid.Row="0" Grid.Column="1" Source="trashbag.png" WidthRequest="20" HeightRequest="20" VerticalOptions="End"/>
+                                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -109,12 +115,33 @@
             </Border>
 
 
-            <Border Style="{StaticResource RoundBorder}">
-                <StackLayout Margin="10, 10" Orientation="Vertical" HeightRequest="120">
-                    <Label Text="Badge Collection"  FontSize="Medium" Margin="10, 5"  FontAttributes="Bold"/>
-                    <views:BadgesView BindingContext="{Binding BadgesViewModel}"></views:BadgesView>
+
+            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 0, 0, 50, 50" >
+                <StackLayout Margin="10">
+                    <Label Text="Badge Collection" FontSize="Medium" Margin="10, 5" HorizontalOptions="Start"/>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16*"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Grid.Column="0" BackgroundColor="White"/>
+
+                        <views:BadgesView BindingContext="{Binding BadgesViewModel}" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="StartAndExpand" 
+                            Scale="1.4"
+                            Grid.Column="1">
+                        </views:BadgesView>
+                    </Grid>
                 </StackLayout>
             </Border>
+
+
+
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>
+
+
