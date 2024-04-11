@@ -158,7 +158,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 await _ploggingSessionService.SavePloggingSession(ploggingSession);
             }
             await _plogTogetherService.DeleteGroup(currentUserId);
-            WeakReferenceMessenger.Default.Send(new DeleteGroupMessage(currentUserId));
         }
         var streakUser = await _streakService.GetUserStreak(currentUserId);
 

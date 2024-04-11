@@ -15,15 +15,17 @@ using PloggingApp.Services.Authentication;
 using System.Diagnostics;
 using PloggingApp.Services.PloggingTracking;
 using Firebase.Auth;
+using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization, IRecipient<AddUserMessage>, IRecipient<DeleteGroupMessage>,
-                                             IRecipient<PloggingSessionMessage>, IRecipient<AddFirstUserMessage>
+public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization,
+                                             IRecipient<PloggingSessionMessage>
 {
 	private readonly IPlogTogetherService _plogTogetherService;
 	private readonly IAuthenticationService _authenticationService;
 	private readonly IUserInfoService _userInfoService;
+    private readonly IToastService _toastService;
 
     public Task Initialization { get; private set; }
 
@@ -31,50 +33,28 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
     private bool isTracking = false;
 
+    [ObservableProperty]
+    private bool inGroup = false;
+
     public ICommand RemoveUserCommand { get; private set; }
 
     public PlogTogetherViewModel(IPlogTogetherService plogTogetherService, IAuthenticationService authenticationService,
-								IUserInfoService userInfoService)
+								IUserInfoService userInfoService, IToastService toastService)
 	{
 		_plogTogetherService = plogTogetherService;
 		_authenticationService = authenticationService;
 		_userInfoService = userInfoService;
+        _toastService = toastService;
 
         Initialization = InitializeAsync();
         //RemoveUserCommand = new Command<string>(async (userId) => await RemoveUser(userId));
 
-        WeakReferenceMessenger.Default.Register<AddUserMessage>(this);
-        WeakReferenceMessenger.Default.Register<AddFirstUserMessage>(this);
-        WeakReferenceMessenger.Default.Register<DeleteGroupMessage>(this);
         WeakReferenceMessenger.Default.Register<PloggingSessionMessage>(this);
     }
 
     private async Task InitializeAsync()
     {
         await GetGroup();
-    }
-
-    public void Receive(AddUserMessage message)
-    {
-        IsBusy = true;
-
-        var user = message.AddUser;
-        Group.Add(user);
-
-        IsBusy = false;
-    }
-
-    public void Receive(AddFirstUserMessage message)
-    {
-        IsBusy = true;
-
-        var users = message.PlogUsers;
-        foreach (var member in users)
-        {
-            Group.Add(member);
-        }
-
-        IsBusy = false;
     }
 
     public void Receive(PloggingSessionMessage message)
@@ -91,16 +71,20 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         {
             var currentUserId = _authenticationService.CurrentUser.Uid;
             var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+
+            if (plogGroup == null) return;
+
             if (plogGroup.OwnerUserId == currentUserId)
             {
                 await _plogTogetherService.DeleteGroup(currentUserId);
                 Group.Clear();
+                InGroup = false;
             }
             else
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Can't delete group: only the owner can delete the group!", "OK");
+                    await _toastService.MakeToast("Can't delete group: only the owner can delete the group!");
                 });
             }
         }
@@ -108,21 +92,11 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Can't delete group: active plogging session!", "OK");
+                await _toastService.MakeToast("Can't delete group: active plogging session!");
             });
         }
 		
 		IsBusy = false;
-    }
-
-    public void Receive(DeleteGroupMessage message)
-    {
-        IsBusy = true;
-
-        var userId = message.Id;
-        Group.Clear();
-
-        IsBusy = false;
     }
 
 	[RelayCommand]
@@ -133,7 +107,13 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         var userId = _authenticationService.CurrentUser.Uid;
         var plogTogether = await _plogTogetherService.GetPlogTogether(userId);
 
-		if (plogTogether == null) return;
+		if (plogTogether == null)
+        {
+            InGroup = false;
+            return;
+        }
+
+        InGroup = true;
 
 		foreach (var memberId in plogTogether.UserIds)
 		{
@@ -164,16 +144,16 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         {
             await _plogTogetherService.LeaveGroup(currentUserId);
             Group.Clear();
+            InGroup = false;
         }
         else
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Can't leave group: you are the leader!", "OK");
+                await _toastService.MakeToast("Can't leave group: you are the leader!");
             });
         }
         
-
         IsBusy = false;
     }
 
