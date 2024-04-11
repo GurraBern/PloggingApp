@@ -21,7 +21,6 @@ public class StreakRepository : IStreakRepository
 	// called when user ends plogging session
 	public async Task UpdateStreak(string userId)
 	{
-		//add null ref excep
         var user = await _ploggingStreakCollection.Find(user => user.UserId == userId).FirstOrDefaultAsync();
 
 		DateTime currentDate = DateTime.UtcNow;

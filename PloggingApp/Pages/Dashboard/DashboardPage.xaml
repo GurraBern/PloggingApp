@@ -7,7 +7,8 @@
     xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
     xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
     Title="Dashboard"
-    x:DataType="viewmodels:DashboardViewModel">
+    x:DataType="viewmodels:DashboardViewModel"
+    Shell.NavBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent" />
