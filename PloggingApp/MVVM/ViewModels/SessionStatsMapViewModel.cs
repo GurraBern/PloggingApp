@@ -1,5 +1,4 @@
-﻿using Android.Net.Wifi.Aware;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;

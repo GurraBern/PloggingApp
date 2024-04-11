@@ -127,6 +127,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
         var user = await _userInfo.GetUser(userId);
         if (user == null)
         {
+            await Application.Current.MainPage.DisplayAlert("ERROR", "Can not show profile, user does not exist.", "OK");
             return;
         }
         _sessionService.UserId = userId;

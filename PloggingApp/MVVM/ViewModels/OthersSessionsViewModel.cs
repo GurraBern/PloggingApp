@@ -34,7 +34,12 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private string displayName;
 
     [ObservableProperty]
+    private string imageURI;
+
+    [ObservableProperty]
     private string streakString;
+
+
 
     private IEnumerable<PloggingSession> _allSessions = [];
     public BadgesViewModel BadgesViewModel { get; set; }
@@ -42,6 +47,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private readonly IStreakService _streakService;
     private readonly IUserInfoService _userInfo;
     private readonly IPopupService _popupService;
+
     private IRelayCommand? RecentSessionCommand { get; set; }
     public Task Initialization { get; private set; }
 
@@ -53,7 +59,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _popupService = PopupService;
         BadgesViewModel = new BadgesViewModel(SessionService, UserInfo, StreakService, PopupService);
 
-        Initialization = GetSessions(); //TODO Dela upp i två funktioner?
+        Initialization = GetSessions();
     }
 
     [RelayCommand]
@@ -81,12 +87,16 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             foreach(PloggingSession ps in _allSessions)
             {
                 ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance);
-                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);
+                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);     
             }
 
             PloggingSessions.ClearAndAddRange(_allSessions);
             int streak = (await _streakService.GetUserStreak(userId)).Streak;
             StreakString = streak.ToString();
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("ERROR","Cant Show Profile", "OK");
         }
 
         IsBusy = false;

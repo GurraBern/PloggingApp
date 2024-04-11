@@ -86,6 +86,9 @@
                     <DataTemplate x:DataType="modelsCore:UserRanking">
                         <Border Style="{StaticResource RoundBorder}">
                             <Grid Padding="10">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" CommandParameter="{Binding Id}"/>
+                                </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -126,6 +129,7 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
+                                
                             </Grid>
                         </Border>
                     </DataTemplate>
