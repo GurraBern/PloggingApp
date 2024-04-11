@@ -12,7 +12,7 @@
 
     <maps:Map ItemsSource="{Binding PlacedPins}" IsShowingUser="true" x:Name="PloggingMap" MapType="Street">
         <maps:Map.MapElements>
-            <maps:Polyline x:Name="polyLine" StrokeColor="Blue" StrokeWidth="15">
+            <maps:Polyline x:Name="polyLine" StrokeColor="#00964f" StrokeWidth="15">
                 <maps:Polyline.Geopath/>
             </maps:Polyline>
         </maps:Map.MapElements>

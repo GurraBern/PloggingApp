@@ -26,8 +26,9 @@
                 Margin="0,30"
                 Aspect="AspectFit"
                 HeightRequest="100"
-                Source="dotnet_bot.svg"
+                Source="appicon.png"
                 WidthRequest="80" />
+
         </StackLayout>
 
         <BoxView Color="White" Grid.Row="1" />

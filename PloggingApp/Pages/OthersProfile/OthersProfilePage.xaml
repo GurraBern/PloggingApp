@@ -10,11 +10,6 @@
     </ContentPage.ToolbarItems>
 
     <Grid>
-        <Image Source="leftarrow.png" HeightRequest="40" WidthRequest="40" Margin="5" VerticalOptions="Start" HorizontalOptions="Start" >
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-            </Image.GestureRecognizers>
-        </Image>
         <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}" />
     </Grid>
 

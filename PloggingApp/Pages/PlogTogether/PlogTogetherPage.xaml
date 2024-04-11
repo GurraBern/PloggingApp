@@ -7,7 +7,7 @@
              x:DataType="viewmodel:PlogTogetherViewModel"
              xmlns:model="clr-namespace:PloggingApp.MVVM.ViewModels"
              Title="PlogTogetherPage"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False">
 
     <Grid ColumnDefinitions="*,*"

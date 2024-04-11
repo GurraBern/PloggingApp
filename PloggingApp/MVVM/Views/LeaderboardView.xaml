@@ -127,7 +127,7 @@
                         <Border Style="{StaticResource RoundBorder}">
                             <Grid Padding="10">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" CommandParameter="{Binding Id}"/>
+                                    <TapGestureRecognizer Tapped="GridTap" Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" CommandParameter="{Binding Id}"/>
                                 </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -141,9 +141,6 @@
                                         FontSize="Small"
                                         Text="{Binding DisplayName}"
                                         VerticalOptions="Center">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" CommandParameter="{Binding Id}"/>
-                                        </Label.GestureRecognizers>
                                     </Label>
                                 </HorizontalStackLayout>
 

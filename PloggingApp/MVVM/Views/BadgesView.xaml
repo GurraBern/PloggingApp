@@ -16,9 +16,10 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Badge">
                         <StackLayout Margin="-25,-10,-30,0">
-                        <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+                        <Image x:Name="Badge" Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
                             <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}"
+                                                      CommandParameter="{Binding .}" Tapped="BadgeTap"/>
                             </Image.GestureRecognizers>
                         </Image>
                         </StackLayout>
@@ -27,7 +28,7 @@
             </CollectionView>
             <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,10" >
                 <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ShowBadgesCommand}"/>
+                <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
             </Image.GestureRecognizers>
             </Image>
         </HorizontalStackLayout>
