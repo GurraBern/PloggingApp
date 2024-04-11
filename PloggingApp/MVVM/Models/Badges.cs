@@ -78,7 +78,7 @@ public class TimeSpentBadge : Badge
     {
         Measurement = "hour(s)";
         Type = "Time Spent";
-        // progression = stats.TotalTime;
+        progression = stats.TotalTime.TotalHours;
         progression = 0;
         createBadge(progression, "timespent", 5, 10, 15);
 
@@ -124,8 +124,6 @@ public class StreakBadge : Badge
         Type = "Weekly Streak";
         progression = streak;
         createBadge(progression, "streak", 5, 10, 15);
-
-
     }
 
 

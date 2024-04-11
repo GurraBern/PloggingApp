@@ -14,7 +14,7 @@
     <VerticalStackLayout>
         <Image Source="closepopup.png" HeightRequest="10" WidthRequest="10" Aspect="AspectFill" Margin="380,0,0,0">
             <Image.GestureRecognizers>
-                <TapGestureRecognizer  Command="{Binding CloseCommand}"  CommandParameter="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type toolkit:Popup}}}"/>
+                <TapGestureRecognizer Tapped="BadgeTap" Command="{Binding CloseCommand}"  CommandParameter="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type toolkit:Popup}}}"/>
             </Image.GestureRecognizers>
         </Image>
         <CollectionView ItemsSource="{Binding Badges}" ItemsLayout="VerticalGrid, 5">
@@ -30,7 +30,7 @@
                         <VerticalStackLayout>
                             <Image Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesPopUpViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
+                                    <TapGestureRecognizer Tapped="BadgeTap" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesPopUpViewModel}}, Path=TapBadgeCommand}" CommandParameter="{Binding .}"/>
                                 </Image.GestureRecognizers>
                             </Image>
                             <HorizontalStackLayout>
