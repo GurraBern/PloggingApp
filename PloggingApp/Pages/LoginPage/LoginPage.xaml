@@ -7,38 +7,39 @@
              x:DataType="viewmodel:AuthenticationViewModel"
              BackgroundColor="{DynamicResource SecondaryColor}"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="LightContent" />
     </ContentPage.Behaviors>
 
     <Grid
-        BackgroundColor="White"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="2.5*" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0" HorizontalOptions="Center">
-            <Image
-                Margin="0,30"
+
+        <Grid Grid.Row="0" Background="{StaticResource Primary}">
+            <StackLayout HorizontalOptions="Center" Margin="0,30,0,0">
+                <Label Style="{StaticResource Headline}" Text="PlogPal" TextColor="Black" FontSize="40"/>
+                <Image
+                Margin="0,-35"
                 Aspect="AspectFit"
-                HeightRequest="100"
-                Source="appicon.png"
-                WidthRequest="80" />
-
+                HeightRequest="300"
+                Source="raccoon.svg"/>
         </StackLayout>
+        </Grid>
 
-        <BoxView Color="White" Grid.Row="1" />
-
-        <VerticalStackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0">
-            <Label FontAttributes="Bold" FontSize="24" HorizontalOptions="CenterAndExpand" Text="Welcome Back!" TextColor="#1C375C" />
-            <Label Margin="0,15,0,0" HorizontalOptions="CenterAndExpand" Text="Login in to account" TextColor="#1C375C" />
+        <Grid Grid.Row="1" BackgroundColor="{StaticResource Primary}">
+            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 90, 90, 0, 0" StrokeThickness="0" Background="{StaticResource White}">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0">
+            <Label Margin="0, 10" Style="{StaticResource SubHeadline}"  FontSize="24" HorizontalOptions="CenterAndExpand" Text="Welcome Back!" TextColor="Black"/>
             <Entry Margin="0,25,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" TextColor="Black" Text="{Binding LoginEmail}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
             <Entry Margin="0,15,0,0" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" TextColor="Black" Text="{Binding LoginPassword}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
-            <Button Margin="0,15,0,0" BackgroundColor="#1C375C" Command="{Binding LoginCommand}" TextColor="White" CornerRadius="20" Text="Login"  WidthRequest="300" />
+            <Button Margin="0,15,0,0" WidthRequest="260" HeightRequest="40" Text="Login" Style="{StaticResource RoundButton}" Command="{Binding LoginCommand}"/>
 
             <StackLayout Orientation="Horizontal" Margin="95,10,20,0">
                 <Switch IsToggled="{Binding RememberMeEnabled}" OnColor="LightGray"/>
@@ -47,7 +48,9 @@
 
             <Label Margin="0,55,0,0" TextColor="Black" HorizontalOptions="Center" Text="Don't have an account? Sign up here" />
 
-            <Button Margin="0,15,0,0" BackgroundColor="#1C375C" Command="{Binding GoToRegisterPageCommand}" TextColor="White" CornerRadius="20" Text="Register using Email" WidthRequest="300" />
+            <Button Margin="0,15,0,0" WidthRequest="260" HeightRequest="40" Text="Register using Email" Style="{StaticResource RoundButton}" Command="{Binding GoToRegisterPageCommand}"/>
         </VerticalStackLayout>
+        </Border>
+    </Grid>
     </Grid>
 </ContentPage>
