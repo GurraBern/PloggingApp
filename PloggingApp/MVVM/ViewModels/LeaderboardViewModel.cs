@@ -124,13 +124,16 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GoToProfilePage(string userId)
     {
+        IsBusy = true;
         var user = await _userInfo.GetUser(userId);
         if (user == null)
         {
+            IsBusy = false;
             await Application.Current.MainPage.DisplayAlert("ERROR", "Can not show profile, user does not exist.", "OK");
             return;
         }
         _sessionService.UserId = userId;
         await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}");
+        IsBusy = false;
     }
 }

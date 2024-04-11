@@ -5,9 +5,6 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              Title="Others Profile">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="user.svg" Order="Primary" Command="{Binding MyProfileViewModel.GoToMyProfilePageCommand}" Priority="0"/>
-    </ContentPage.ToolbarItems>
 
     <Grid>
         <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}" />
