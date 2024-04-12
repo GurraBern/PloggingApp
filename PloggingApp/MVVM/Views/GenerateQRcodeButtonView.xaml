@@ -7,8 +7,8 @@
         <Button Text="Generate QR code"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                WidthRequest="200"
-                HeightRequest="70"
+                WidthRequest="170"
+                HeightRequest="60"
                 Clicked="OnNavigateClicked"/>
 
     </Grid>

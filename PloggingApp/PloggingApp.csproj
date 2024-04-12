@@ -117,6 +117,7 @@
 	  <None Remove="Resources\Images\pet_bottle_icon.svg" />
 	  <None Remove="Resources\Images\pickeduptrash.png" />
 	  <None Remove="Resources\Images\profilepicture.png" />
+	  <None Remove="Resources\Images\raccoon.svg" />
 	  <None Remove="Resources\Images\smoking_icon.svg" />
 	  <None Remove="Resources\Images\soda_cans_icon.svg" />
 	  <None Remove="Resources\Images\startpin.png" />

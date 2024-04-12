@@ -28,7 +28,7 @@ public class ChartService : IChartService
 
     public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.All(s => !s.PloggingData.Litters.Any()))
             return generateEmptyLitterChart();
         Dictionary<LitterType, double> keyValuePairs = sessions
             .SelectMany(x => x.PloggingData.Litters)
@@ -36,15 +36,17 @@ public class ChartService : IChartService
             .ToDictionary(d => d.Key, v => v.Sum(g => g.LitterCount));
 
         List<ChartEntry> chartEntries =
-            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
+            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), 
+                Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
-        var graph = new DonutChart()
+        var graph = new PieChart()
         {
             IsAnimated = true,
             LabelMode = LabelMode.RightOnly,
             GraphPosition = GraphPosition.AutoFill,
+
             Entries = chartEntries,
-            LabelTextSize = 20
+            LabelTextSize = 25
         };
         return graph;
     }
@@ -69,7 +71,7 @@ public class ChartService : IChartService
     }
     public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month = 1)
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.Sum(s => s.PloggingData.Distance) == 0)
         {
             return generateEmptyLineChart(timeResolution, year, month);
         }
@@ -103,7 +105,7 @@ public class ChartService : IChartService
             double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
             valuePerDay.Add(currentDate.ToString("d "), acc);
         }
-        return generateLineChart(valuePerDay, yAxisLabel, SKColor.Parse("#9558a8"));
+        return generateLineChart(valuePerDay, yAxisLabel);
     }
 
     private Chart generateYearLineChart(Dictionary<DateTime, double> dict, string yAxisLabel, int year)
@@ -115,11 +117,11 @@ public class ChartService : IChartService
             double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
             valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
         }
-        return generateLineChart(valuePerMonth, yAxisLabel, SKColor.Parse("#6100b0"));
+        return generateLineChart(valuePerMonth, yAxisLabel);
     }
 
     // General function
-    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel, SKColor color)
+    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel)
     {
         //For some reason, if every value in the graph == 0. Skiasharp throws an exception, 
         // claiming that "shaderA is null". This is an ugly workaround for this.
@@ -127,7 +129,7 @@ public class ChartService : IChartService
         var lineChart = new LineChart
         {
             Entries = dict.Select(kv => new ChartEntry((float?)kv.Value + offset)
-            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : "", Color = color }).ToList(),
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : "", Color = SKColor.Parse("#3bac7c") }).ToList(),
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,

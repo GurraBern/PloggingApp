@@ -8,7 +8,6 @@
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:views ="clr-namespace:PloggingApp.MVVM.Views"
              x:DataType="viewmodel:SessionStatisticsViewModel"
-             Title="PloggingSession"
              >
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
@@ -18,15 +17,17 @@
     </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="20,0">
-            <Label Margin="10,0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
-            <HorizontalStackLayout Margin="10,0" VerticalOptions="Center">
+            <Label Margin="0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
+            <HorizontalStackLayout Margin="0" VerticalOptions="Center">
                 <Image Source="map_icon.png"/>
                 <Label FontSize="15" FontAttributes="Bold" Text="{Binding Area}" Margin="10,0" VerticalOptions="Center"/>
             </HorizontalStackLayout>
-            <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
+            <HorizontalStackLayout>
+                <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
+            </HorizontalStackLayout>
             <!--MapView-->
             <Border Style="{StaticResource RoundBorder}" Padding="0">
-                <views:SessionStatsMapView BindingContext = "{Binding SessionStatsMapViewModel}" HeightRequest="175"/>
+                <views:SessionStatsMapView BindingContext = "{Binding SessionStatsMapViewModel}"/>
             </Border>
             <!--Chart-->
             <Border Style="{StaticResource RoundBorder}">
@@ -56,8 +57,10 @@
                                 <Image Source="clock.svg"/>
                             </Border>
                             <Label Style="{StaticResource StatsLabelText}" Text="Time plogged" Grid.Row="0" Grid.Column="1"/>
-                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0} hrs'}"
-               Grid.Row="1" Grid.Column="1"/>
+                            <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                                <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
+                                <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat='{0}min '}"/>
+                            </HorizontalStackLayout>
                         </Grid>
                     </Border>
                     <!--Litter pieces-->
@@ -79,8 +82,7 @@
                                 <Image Source="scale.svg"/>
                             </Border>
                             <Label Style="{StaticResource StatsLabelText}" Text="Litter weight" Grid.Row="0" Grid.Column="1"/>
-                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight,
-                        StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
+                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Border>
                 </Grid>

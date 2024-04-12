@@ -6,6 +6,7 @@ using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Data.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.MVVM.Models;
+using PloggingApp.Services;
 
 namespace PloggingApp.Pages;
 
@@ -18,12 +19,15 @@ public partial class ScanQRcodePageViewModel : ObservableObject
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
     private readonly IAuthenticationService _authenticationService;
+    private readonly IToastService _toastService;
 
-    public ScanQRcodePageViewModel(IPlogTogetherService plogTogetherService, IUserInfoService userInfoService, IAuthenticationService authenticationService)
+    public ScanQRcodePageViewModel(IPlogTogetherService plogTogetherService, IUserInfoService userInfoService,
+                                    IAuthenticationService authenticationService, IToastService toastService)
 	{
         _plogTogetherService = plogTogetherService;
         _userInfoService = userInfoService;
         _authenticationService = authenticationService;
+        _toastService = toastService;
 	}
 
     public async Task AddUserToGroup(string userId)
@@ -58,24 +62,25 @@ public partial class ScanQRcodePageViewModel : ObservableObject
                     plogUser2
                 };
 
-                WeakReferenceMessenger.Default.Send(new AddFirstUserMessage(plogUsers));
+                //WeakReferenceMessenger.Default.Send(new AddFirstUserMessage(plogUsers));
 
-                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
+
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await Application.Current.MainPage.DisplayAlert("Success", $"{userInfo.DisplayName} added to group!", "OK");
+                    await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                    await _toastService.MakeToast("User added to group!");
                 });
             }
-            else // user already in a group
+            else
             {
-                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: user is already in a group", "OK");
+                    await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                    await _toastService.MakeToast("Error, user is already in a group!");
                 });
             }
         }
-        else // currentUser already in a group, check if current user is owner, then check if user trying to add is in group already
+        else
         {
             if (plogTogetherGroup.OwnerUserId == currentUserId)
             {
@@ -89,31 +94,29 @@ public partial class ScanQRcodePageViewModel : ObservableObject
                         DisplayName = userInfo.DisplayName
                     };
 
-                    //AddUser = plogUser;
+                    //WeakReferenceMessenger.Default.Send(new AddUserMessage(plogUser));
 
-                    WeakReferenceMessenger.Default.Send(new AddUserMessage(plogUser));
-
-                    await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await Application.Current.MainPage.DisplayAlert("Success", $"{userInfo.DisplayName} added to group!", "OK");
+                        await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                        await _toastService.MakeToast("User added to group!");
                     });
                 }
-                else // user already in a group
+                else
                 {
-                    await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: user is already in a group", "OK");
+                        await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                        await _toastService.MakeToast("Error, user is already in a group!");
                     });
                 }
             }
-            else //current user is not owner!!! 
+            else
             {
-                await Shell.Current.GoToAsync($"//{nameof(PlogTogetherPage)}");
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "Can't add user: you are not the owner of the group", "OK");
+                    await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                    await _toastService.MakeToast("Error, can't add user: you are not the owner of the group!");
                 });
             }
         }
