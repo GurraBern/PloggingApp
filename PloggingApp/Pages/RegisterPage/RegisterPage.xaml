@@ -37,11 +37,6 @@
                     <Entry Margin="0,15,0,0" HorizontalOptions="FillAndExpand" Placeholder="Username" TextColor="Black" Text="{Binding DisplayName}" VerticalOptions="FillAndExpand" WidthRequest="300"/>
                     <Button Margin="0,15,0,0" WidthRequest="260" HeightRequest="40" Text="Register" Style="{StaticResource RoundButton}" Command="{Binding RegisterCommand}"/>
 
-                    <StackLayout Orientation="Horizontal" Margin="95,10,20,0">
-                        <Switch IsToggled="{Binding RememberMeEnabled}" OnColor="LightGray"/>
-                        <Label Text="Remember Me" TextColor="Black" VerticalOptions="Center" Margin="5,0,0,0"/>
-                    </StackLayout>
-
                     <Button BackgroundColor="White" Command="{Binding GoToLoginPageCommand}" >
                         <Button.ImageSource>
                             <FontImageSource Glyph="&#x2190;" Size="40" Color="Black"/>
