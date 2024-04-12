@@ -8,7 +8,6 @@
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:views ="clr-namespace:PloggingApp.MVVM.Views"
              x:DataType="viewmodel:SessionStatisticsViewModel"
-             Title="PloggingSession"
              >
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsVisible="False" IsEnabled="False" />
