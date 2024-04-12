@@ -8,6 +8,7 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
+using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -17,6 +18,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     private readonly IRankingService _rankingService;
     private readonly IStreakService _streakService;
+    private readonly IToastService _toastService;
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
@@ -40,8 +42,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public double totalTime;
     [ObservableProperty]
     public int userRankInt;
-    [ObservableProperty]
-    private bool isRefreshing;
+    //[ObservableProperty]
+    //private bool isRefreshing;
     [ObservableProperty]
     public IEnumerable<PloggingSession> latestSessions;
 
@@ -52,7 +54,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IPloggingSessionService ploggingSessionService, 
         PloggingSessionViewModel ploggingSessionViewModel, 
         LeaderboardViewModel leaderboardViewModel,
-        BadgesViewModel badgesViewModel)
+        BadgesViewModel badgesViewModel,
+        IToastService toastService)
     {
         _authenticationService = authenticationService;
         _rankingService = rankingService;
@@ -62,6 +65,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         LeaderboardViewModel = leaderboardViewModel;
         BadgesViewModel = badgesViewModel;
         _streakService = StreakService;
+        _toastService = toastService;
 
         Initialization = InitializeAsync();
     }
@@ -76,6 +80,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        //if (!_allUserSessions.Any())
+            //await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
         PloggingSessions.ClearAndAddRange(_allUserSessions);
@@ -109,18 +115,11 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [RelayCommand]
-    public async Task GoToMyProfilePage()
-    {
-        await Shell.Current.GoToAsync("MyProfilePage");
-    }
-
-    [RelayCommand]
     private async Task RefreshMyProfile()
     {
-        IsRefreshing = true;
+        IsBusy = true;
         await GetSessions();
-        IsRefreshing = false;
+        IsBusy = false;
     }
-
 }
 

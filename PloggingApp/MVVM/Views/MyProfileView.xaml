@@ -10,28 +10,28 @@
              xmlns:converters="clr-namespace:PloggingApp.Converters"
              x:DataType="viewmodel:MyProfileViewModel">
 
-    <!-- TODO: Add navigation to stats/history page? -->
-
     <ContentView.Resources>
         <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
         <converters:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Margin="5" >
+        <VerticalStackLayout  Spacing="10" Padding="20,0" >
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
-            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 90, 90, 0, 0">
-                <Grid>
+            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 80, 80, 0, 0">
+                <Grid HeightRequest="120">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="90"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
+                    <Button Grid.Row="0" Grid.Column="2" ImageSource="logout.svg" Command="{Binding LogoutCommand}" Scale="0.13" Background="White"/>
 
                     <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
                     <Label Grid.Row="0" Grid.Column="0" 
@@ -42,9 +42,9 @@
                        VerticalOptions="Center"/>
 
                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" Style="{StaticResource SubHeadline}"  BackgroundColor="White" VerticalOptions="Center"/>
-                    <views:StreakView Grid.Row="0" Grid.Column="2" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <views:StreakView Grid.Row="1" Grid.Column="0" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" BackgroundColor="White" HorizontalOptions="Center"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" FontSize="Medium" BackgroundColor="White" HorizontalOptions="Center"/>
                 </Grid>
 
 
@@ -76,6 +76,7 @@
                                 <Label Text="Saved CO2" VerticalOptions="Center"/>
                                 <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
                             </StackLayout>
+                            
                         </Grid>
                     </Grid>
                 </StackLayout>
@@ -85,32 +86,42 @@
                 <StackLayout Margin="0,10" Orientation="Vertical">
                     <Label Text="History" Margin="10,5" FontSize="Medium" HorizontalOptions="Start"/>
 
-                    <CollectionView ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="modelsCore:PloggingSession">
-                                <Grid Margin="0,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="65" />
-                                        <ColumnDefinition Width="45" />
-                                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                                    <Image Source="{Binding Image}" >
-                                        <Image.Clip>
-                                            <EllipseGeometry RadiusX="28" RadiusY="28" Center="32,40"/>
-                                        </Image.Clip>
-                                    </Image>
 
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start"/>
-                                    <Image Grid.Row="0" Grid.Column="1" Source="trashbag.png" WidthRequest="20" HeightRequest="20" VerticalOptions="End"/>
-                                    <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        <CollectionView Grid.Column="1" x:Name="collectionView" ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="modelsCore:PloggingSession">
+                                    <Grid Margin="0,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="45" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Source="{Binding Image}" >
+                                            <Image.Clip>
+                                                <EllipseGeometry RadiusX="25" RadiusY="25" Center="30,38"/>
+                                            </Image.Clip>
+                                        </Image>
+
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start" />
+                                        <Image Grid.Row="0" Grid.Column="1" Source="trashbag.png" WidthRequest="20" HeightRequest="20" VerticalOptions="End"/>
+                                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Image Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40" HorizontalOptions="End"/>
+                    </Grid>
                 </StackLayout>
             </Border>
 

@@ -6,20 +6,12 @@
              x:Class="PloggingApp.Pages.MyProfilePage"
              Title="My Profile">
 
-    <!-- TODO: Fix mysterious title indentation? -->
-
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="logout.svg" Command="{Binding LogoutCommand}"  Order="Primary" Priority="0"/>
-    </ContentPage.ToolbarItems>
-
-
     <StackLayout>
 
-        <RefreshView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RefreshColor="Red" 
-            IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshMyProfileCommand}">
+        <RefreshView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+            IsRefreshing="{Binding IsBusy}" Command="{Binding RefreshMyProfileCommand}">
 
-         <views:MyProfileView></views:MyProfileView>
+            <views:MyProfileView></views:MyProfileView>
 
 
         </RefreshView>
@@ -27,5 +19,6 @@
     </StackLayout>
 
 </ContentPage>
+
 
 
