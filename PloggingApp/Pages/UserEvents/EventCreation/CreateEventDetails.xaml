@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.Pages.CreateEventDetails"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+             Title="CreateEventDetails"
+             x:DataType="viewmodels:CreateEventDetailsViewModel">
+    <VerticalStackLayout>
+
+        <Entry Placeholder="Event title">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior MinimumLength="1"/>
+            </Entry.Behaviors>
+            
+        </Entry>
+        <Entry Placeholder="Event description"/>
+
+        <HorizontalStackLayout>
+            <Label Text="Event start"/>
+            <DatePicker/>
+
+            <Label Text="Event end"/>
+            <DatePicker/>
+        </HorizontalStackLayout>
+        
+        <Label 
+            Text="{Binding Location.Latitude}"
+            TextColor="Black"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Label Text="{Binding LocationName}"/>
+
+        <Button Text="Create Event" Command="{Binding CreateEventCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

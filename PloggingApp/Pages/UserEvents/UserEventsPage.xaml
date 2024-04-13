@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             x:Class="PloggingApp.Pages.UserEventsPage"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             x:DataType="viewmodels:UserEventsViewModel">
+    
+    <VerticalStackLayout Padding="10,0">
+        <Label Text="Events" FontSize="Large" HorizontalOptions="Center"/>
+
+        <Button Text="Create Event" Command="{Binding CreateEventCommand}"/>
+
+        <CollectionView ItemsSource="{Binding UserEvents}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="modelsCore:UserEvent">
+                    <Border Style="{StaticResource RoundBorder}" Padding="20">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Title}" FontSize="Medium"/>
+
+                            <HorizontalStackLayout Spacing="20">
+                                <Label Text="{Binding NumberOfParticipants, StringFormat='Number of participants {0}'}" FontSize="Caption"/>
+                                <Label Text="Distance 1236m" FontSize="Caption"/>
+                            </HorizontalStackLayout>
+
+                            <Label Text="{Binding Description}" Margin="10, 0, 0, 0"/>
+                            <Button Text="Interested"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
+             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             x:Class="PloggingApp.Pages.CreateEventPage"
+             Title="CreateEventPage">
+
+    <Grid Padding="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="Choose a location for your event" FontSize="Large" HorizontalOptions="Center"/>
+
+        <Border Grid.Row="1" Style="{StaticResource RoundBorder}" Padding="25">
+            <maps:Map IsShowingUser="False" MapType="Street" MapClicked="MapPlaceEvent">
+                <maps:Map.ItemTemplate>
+                    <DataTemplate x:DataType="models:LocationPin">
+                        <components:CustomPin
+                            Location="{Binding Location}"
+                            Address="{Binding Address}"
+                            Label="{Binding Label}"
+                            ImageSource="{Binding ImageSource}"
+                            Type="Place"/>
+                    </DataTemplate>
+                </maps:Map.ItemTemplate>
+            </maps:Map>
+        </Border>
+    </Grid>
+</ContentPage>

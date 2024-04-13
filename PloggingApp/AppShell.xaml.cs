@@ -16,6 +16,8 @@ namespace PloggingApp
             Routing.RegisterRoute(nameof(MyProfilePage), typeof(MyProfilePage));
             Routing.RegisterRoute(nameof(OthersProfilePage), typeof(OthersProfilePage));
             Routing.RegisterRoute(nameof(DashboardPage) + "/" + nameof(PlogTogetherPage), typeof(PlogTogetherPage));
+            Routing.RegisterRoute(nameof(UserEventsPage) + "/" + nameof(CreateEventPage), typeof(CreateEventPage));
+            Routing.RegisterRoute(nameof(UserEventsPage) + "/" + nameof(CreateEventPage) + "/" + nameof(CreateEventDetails), typeof(CreateEventDetails));
         }
     }
 }

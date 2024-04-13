@@ -39,18 +39,15 @@ builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>()
 builder.Services.AddSingleton<ILitterbagPlacementService, LitterbagPlacementService>();
 builder.Services.AddSingleton<IStreakService, StreakService>();
 builder.Services.AddTransient<GoogleDriveService>();
+builder.Services.AddTransient<IUserEventService, UserEventService>();
 
 //Register Repositories
 builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionRepository>();
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
 builder.Services.AddSingleton<ILitterbagRepository, LitterbagRepository>();
 builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
-
-
-
-
+builder.Services.AddSingleton<IUserEventRepository, UserEventRepository>();
 builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>();
-
 builder.Services.AddSingleton<IUserInfoRepository, UserInfoRepository>();
 
 builder.Services.AddControllers();

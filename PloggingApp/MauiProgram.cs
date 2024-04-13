@@ -22,7 +22,6 @@ using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
-using Syncfusion.Maui.Core.Hosting;
 
 namespace PloggingApp;
 
@@ -94,6 +93,8 @@ public static class MauiProgram
         builder.Services.AddTransient<MyProfileViewModel>();
         builder.Services.AddTransient<BadgesViewModel>();
         builder.Services.AddTransient<SessionStatsMapViewModel>();
+        builder.Services.AddTransient<CreateEventDetailsViewModel>();
+        builder.Services.AddTransient<CreateEventViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -127,6 +128,9 @@ public static class MauiProgram
         builder.Services.AddTransient<PlogTogetherPage>();
 
         builder.Services.AddSingleton<MyProfilePage>();
+        builder.Services.AddTransient<UserEventsPage>();
+        builder.Services.AddTransient<CreateEventPage>();
+        builder.Services.AddTransient<CreateEventDetails>();
     }
 
     private static void AddServices(MauiAppBuilder builder)
@@ -142,6 +146,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ILitterbagPlacementService, LitterbagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddTransient<IUserEventService, UserEventService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
@@ -167,6 +172,7 @@ public static class MauiProgram
             builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);
             builder.RegisterPloggingApiClient<PloggingImage>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<UserEvent>(ploggingApiClient);
         }
     }
 

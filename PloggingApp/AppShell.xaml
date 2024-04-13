@@ -22,6 +22,7 @@
     <TabBar>
         <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
         <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
+        <ShellContent Route="UserEvents" Title="User Events" Icon="event_calendar_icon.png" ContentTemplate="{DataTemplate views:UserEventsPage}"></ShellContent>
         <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
         <ShellContent Route="Profile" Title="Profile" Icon="user.png" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
     </TabBar>

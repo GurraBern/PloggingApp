@@ -8,7 +8,6 @@
              xmlns:model="clr-namespace:PloggingApp.MVVM.ViewModels"
              Title="PlogTogetherPage"
              Shell.TabBarIsVisible="False">
-             Shell.NavBarIsVisible="False">
 
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="10"
