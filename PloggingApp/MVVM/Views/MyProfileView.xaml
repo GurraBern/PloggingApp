@@ -15,151 +15,155 @@
         <converters:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
 
-    <ScrollView>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
 
-        <VerticalStackLayout Spacing="10" Padding="20,20">
-                
-                
-            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 80, 80, 0, 0">
-                <Grid HeightRequest="120">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2.2*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+        <ScrollView>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <VerticalStackLayout Spacing="10" Padding="20,20">
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
 
-                    <Button Grid.Row="0" Grid.Column="2" ImageSource="logout.svg" Command="{Binding LogoutCommand}" Scale="0.13" Background="White"/>
 
-                    <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
-                    <Label Grid.Row="0" Grid.Column="0" 
+
+                <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 80, 80, 0, 0">
+                    <Grid HeightRequest="120">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2.2*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Row="0" Grid.Column="2" ImageSource="logout.svg" Command="{Binding LogoutCommand}" Scale="0.13" Background="White"/>
+
+                        <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
+                        <Label Grid.Row="0" Grid.Column="0" 
                        Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" 
                        TextColor="Black" 
                        Style="{StaticResource SubHeadline}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"/>
 
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" Style="{StaticResource SubHeadline}"  BackgroundColor="White" VerticalOptions="Center"/>
-                    <views:StreakView Grid.Row="1" Grid.Column="0" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" Style="{StaticResource SubHeadline}"  BackgroundColor="White" VerticalOptions="Center"/>
+                        <views:StreakView Grid.Row="1" Grid.Column="0" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" FontSize="Medium" BackgroundColor="White" HorizontalOptions="Center"/>
-                </Grid>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" FontSize="Medium" BackgroundColor="White" HorizontalOptions="Center"/>
+                    </Grid>
 
 
-            </Border>
+                </Border>
 
-            <Border Style="{StaticResource RoundBorder}">
-                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="100">
-                    <Label Text="This Month" FontSize="Medium" HorizontalOptions="Start" Margin="10,5"/>
-                    <Grid Margin="10,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="120" />
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Grid.Column="0" Orientation="Vertical">
-                                <Label Text="Litter collected" VerticalOptions="Center"/>
-                                <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" />
-                            </StackLayout>
-                            <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
-                                <Label Text="Distance" VerticalOptions="Center"/>
-                                <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" />
-                            </StackLayout>
-                            <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
-                                <Label Text="Saved CO2" VerticalOptions="Center"/>
-                                <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
-                            </StackLayout>
-                            
+                <Border Style="{StaticResource RoundBorder}">
+                    <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="90">
+                        <Label Text="This Month" FontSize="Medium" HorizontalOptions="Start" Margin="10,5"/>
+                        <Grid Margin="10,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="2*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="120" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0" Orientation="Vertical">
+                                    <Label Text="Litter collected" VerticalOptions="Center"/>
+                                    <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" />
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
+                                    <Label Text="Distance" VerticalOptions="Center"/>
+                                    <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" />
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
+                                    <Label Text="Saved CO2" VerticalOptions="Center"/>
+                                    <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
+                                </StackLayout>
+
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </StackLayout>
-            </Border>
+                    </StackLayout>
+                </Border>
 
-            <Border Style="{StaticResource RoundBorder}">
-                <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="130">
-                    <Label Text="History" Margin="10,5" FontSize="Medium" HorizontalOptions="Start"/>
+                <Border Style="{StaticResource RoundBorder}">
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="140">
+                        <Label Text="History" Margin="10,5" FontSize="Medium" HorizontalOptions="Start"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
 
-                        <CollectionView Grid.Column="0" x:Name="collectionView" ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="modelsCore:PloggingSession">
-                                    <Grid Margin="0,10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="45" />
-                                        </Grid.ColumnDefinitions>
+                            <CollectionView Grid.Column="0" x:Name="collectionView" ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="modelsCore:PloggingSession">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="60" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Image Source="{Binding Image}" >
-                                            <Image.Clip>
-                                                <EllipseGeometry RadiusX="25" RadiusY="25" Center="25,33"/>
-                                            </Image.Clip>
-                                        </Image>
+                                            <Image Source="{Binding Image}" HorizontalOptions="Center" />
 
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}kg'}" HorizontalOptions="Center" VerticalOptions="Start" />
-                                        <Image Grid.Row="0" Grid.Column="1" Source="trashbag.png" WidthRequest="20" HeightRequest="20" VerticalOptions="End"/>
-                                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
 
-                        <Image Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToHistoryPageCommand}"/>
-                            </Image.GestureRecognizers>
-                        </Image>
-                    </Grid>
+                                            <Label Grid.Row="1" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
 
-                </StackLayout>
-            </Border>
+                                            <Label Grid.Row="2" Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}" Margin="20, 0"/>
+                                            <Image Grid.Row="2" Source="trashbag.png" WidthRequest="15" HeightRequest="15" HorizontalOptions="End" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                            <Image Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToHistoryPageCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+
+                    </StackLayout>
+                </Border>
 
 
 
-            <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 0, 0, 50, 50" >
-                <StackLayout Margin="10" HeightRequest="120">
-                    <Label Text="Badge Collection" FontSize="Medium" Margin="10, 5" HorizontalOptions="Start"/>
+                <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 0, 0, 50, 50" >
+                    <StackLayout Margin="10" HeightRequest="120">
+                        <Label Text="Badge Collection" FontSize="Medium" Margin="10, 5" HorizontalOptions="Start"/>
 
-                    <Grid Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="16*"/>
-                        </Grid.ColumnDefinitions>
-                        <BoxView Grid.Column="0" BackgroundColor="White"/>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="16*"/>
+                            </Grid.ColumnDefinitions>
+                            <BoxView Grid.Column="0" BackgroundColor="White"/>
 
-                        <views:BadgesView BindingContext="{Binding BadgesViewModel}" 
+                            <views:BadgesView BindingContext="{Binding BadgesViewModel}" 
                             HorizontalOptions="Start" 
                             VerticalOptions="StartAndExpand" 
                             Scale="1.3"
                             Grid.Column="1">
-                        </views:BadgesView>
-                    </Grid>
-                </StackLayout>
-            </Border>
+                            </views:BadgesView>
+                        </Grid>
+                    </StackLayout>
+                </Border>
 
 
 
 
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
 </ContentView>
 
 

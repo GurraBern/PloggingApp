@@ -131,7 +131,7 @@ public static class MauiProgram
         builder.Services.AddTransient<OthersProfilePage>();
         builder.Services.AddTransient<PlogTogetherPage>();
 
-        builder.Services.AddSingleton<MyProfilePage>();
+        builder.Services.AddTransient<MyProfilePage>();
 
         builder.Services.AddTransient<HistoryPage>();
     }

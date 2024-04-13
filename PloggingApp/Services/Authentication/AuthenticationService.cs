@@ -56,6 +56,7 @@ public class AuthenticationService : IAuthenticationService
         {
             Trace.WriteLine("Autologin failed.");
         }
+
     }
 
     public async Task SaveCredentials(bool rememberMe, string email, string password)

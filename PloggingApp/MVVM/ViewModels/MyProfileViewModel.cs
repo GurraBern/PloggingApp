@@ -42,8 +42,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public double totalTime;
     [ObservableProperty]
     public int userRankInt;
-    //[ObservableProperty]
-    //private bool isRefreshing;
+    [ObservableProperty]
+    private bool isRefreshing;
     [ObservableProperty]
     public IEnumerable<PloggingSession> latestSessions;
 
@@ -94,7 +94,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         else {
         PloggingSessions.ClearAndAddRange(_allUserSessions);
 
-        LatestSessions = PloggingSessions.Take(3);
+        LatestSessions = PloggingSessions.Take(4);
 
         var stats = new PloggingStatistics(_allUserSessions);
         TotalDistance = Math.Round(stats.TotalDistance);
@@ -125,17 +125,18 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [RelayCommand]
-    private async Task RefreshMyProfile()
+    private async Task Refresh()
     {
         IsBusy = true;
         await GetSessions();
+        IsRefreshing = false;
         IsBusy = false;
     }
 
     [RelayCommand]
     private async Task GoToHistoryPage()
     {
-        await Shell.Current.GoToAsync($"///{nameof(HistoryPage)}");
+        await Shell.Current.GoToAsync($"{nameof(HistoryPage)}");
     }
 
 }

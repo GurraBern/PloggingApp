@@ -9,11 +9,13 @@ using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
 using PloggingApp.Services;
+using System.Windows.Input;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
 {
+    public Task Initialization { get; set; }
 
     private readonly IToastService _toastService;
     private readonly IPloggingSessionService _ploggingSessionService;
@@ -21,24 +23,27 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
 
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
+    public StatisticsViewModel StatisticsViewModel { get; }
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
 
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
 
-
+    [ObservableProperty]
+    bool isRefreshing;
     public HistoryViewModel(IPloggingSessionService ploggingSessionService,
-        PloggingSessionViewModel ploggingSessionViewModel, IToastService toastService, IAuthenticationService authenticationService)
+        PloggingSessionViewModel ploggingSessionViewModel, IToastService toastService, 
+        IAuthenticationService authenticationService, StatisticsViewModel statisticsViewModel)
 	{
         _ploggingSessionService = ploggingSessionService;
         PloggingSessionViewModel = ploggingSessionViewModel;
         _toastService = toastService;
         _authenticationService = authenticationService;
+        StatisticsViewModel = statisticsViewModel;
 
 
         Initialization = InitializeAsync();
     }
-    public Task Initialization { get; private set; }
 
     private async Task InitializeAsync()
     {
@@ -56,6 +61,16 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
         }
         PloggingSessions.ClearAndAddRange(_allUserSessions);
 
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task Refresh()
+    {
+        // IsRefreshing = true
+        IsBusy = true;
+        GetSessions();
+        IsRefreshing = false;
         IsBusy = false;
     }
 }
