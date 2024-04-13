@@ -12,6 +12,7 @@
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
         <Grid RowDefinitions="*">
             <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
                 <VerticalStackLayout  Spacing="10" Padding="20,0" HeightRequest="1300">
@@ -107,4 +108,5 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
+    </RefreshView>
 </ContentView>
