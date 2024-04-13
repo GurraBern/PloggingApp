@@ -47,6 +47,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public IEnumerable<PloggingSession> latestSessions;
 
+
     public MyProfileViewModel(IAuthenticationService authenticationService, 
         IRankingService rankingService,
         IStreakService StreakService,
@@ -79,16 +80,21 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public async Task GetSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-        //if (!_allUserSessions.Any())
-            //await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
+
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+
+        if (!_allUserSessions.Any())
+        {
+            await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
+            IsBusy = false;
+            return;
+        }
+        else {
         PloggingSessions.ClearAndAddRange(_allUserSessions);
 
         LatestSessions = PloggingSessions.Take(3);
-
-        UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
         var stats = new PloggingStatistics(_allUserSessions);
         TotalDistance = Math.Round(stats.TotalDistance);
@@ -99,7 +105,11 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
         await BadgesViewModel.GetBadges(stats, streak);
 
+        UserRankInt = LeaderboardViewModel.UserRank.Rank;
+
         IsBusy = false;
+
+        }
     }
 
     [RelayCommand]
@@ -121,5 +131,12 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         await GetSessions();
         IsBusy = false;
     }
+
+    [RelayCommand]
+    private async Task GoToHistoryPage()
+    {
+        await Shell.Current.GoToAsync($"///{nameof(HistoryPage)}");
+    }
+
 }
 
