@@ -8,7 +8,7 @@
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:BadgesPopUpViewModel"
-             CanBeDismissedByTappingOutsideOfPopup="False"
+             CanBeDismissedByTappingOutsideOfPopup="True"
              Color="white"
              Size="450,500">
     <VerticalStackLayout>
