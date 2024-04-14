@@ -7,8 +7,14 @@
              x:DataType="viewmodel:GenerateQRcodeViewModel"
              Title="GenerateQRcodePage"
              >
-    <Grid RowDefinitions="*,Auto"
-          RowSpacing="10">
+    <Grid RowDefinitions="Auto,*"
+          RowSpacing="10"
+          Padding="20">
+
+        <Button Text="Go Back"
+                Grid.Row="0"
+                HorizontalOptions="Start"
+                Clicked="OnNavigateClicked"/>
 
         <zxing:BarcodeGeneratorView
             Format="QrCode"
@@ -17,13 +23,7 @@
             VerticalOptions="Center"
             WidthRequest="400"
             HeightRequest="400"
-            Grid.Row="0"/>
-
-        <Button Text="Go Back"
-                WidthRequest="200"
-                HeightRequest="70"
-                Grid.Row="1"
-                Clicked="OnNavigateClicked"/>
+            Grid.Row="1"/>
 
     </Grid>
 </ContentPage>
