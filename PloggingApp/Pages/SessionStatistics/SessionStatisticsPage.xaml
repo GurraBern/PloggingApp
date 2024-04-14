@@ -17,13 +17,18 @@
     </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="20,0">
-            <Label Margin="0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
-            <HorizontalStackLayout Margin="0" VerticalOptions="Center">
-                <Image Source="map_icon.png"/>
-                <Label FontSize="15" FontAttributes="Bold" Text="{Binding Area}" Margin="10,0" VerticalOptions="Center"/>
-            </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <Label Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
+                <Grid RowDefinitions="*,*,*" ColumnDefinitions="0.8*, 80" ColumnSpacing="0">
+                    <Label Grid.Row="0" Grid.Column="0" Margin="0" Padding="0" FontSize="30" FontAttributes="Bold" Text="{Binding PloggingSession.StartDate, Converter={StaticResource TitleCaseConverter}}"/>
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Margin="0" VerticalOptions="Center">
+                        <Image Source="map_icon.png"/>
+                        <Label FontSize="15" FontAttributes="Bold" Text="{Binding Area}" Margin="10,0" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="10,0" FontSize="13" Text="{Binding TimeSpan}"/>
+                </Grid>
+                <Border Style="{StaticResource RoundBorder}">
+                    <Image Source="{Binding PloggingSession.Image}" HeightRequest="80" WidthRequest="80"/>
+                </Border>
             </HorizontalStackLayout>
             <!--MapView-->
             <Border Style="{StaticResource RoundBorder}" Padding="0">
@@ -59,7 +64,7 @@
                             <Label Style="{StaticResource StatsLabelText}" Text="Time plogged" Grid.Row="0" Grid.Column="1"/>
                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
                                 <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
-                                <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat='{0}min '}"/>
+                                <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat=' {0}min '}"/>
                             </HorizontalStackLayout>
                         </Grid>
                     </Border>
