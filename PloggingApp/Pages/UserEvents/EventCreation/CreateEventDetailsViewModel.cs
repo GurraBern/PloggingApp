@@ -46,7 +46,7 @@ public partial class CreateEventDetailsViewModel : BaseViewModel, IQueryAttribut
         {
             Title = EventTitle,
             Description = EventDescription,
-            StarDate = EventDate,
+            StartDate = EventDate,
             Location = Location
         };
 

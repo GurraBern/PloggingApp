@@ -5,4 +5,5 @@ namespace PloggingApp.Data.Services.Interfaces;
 public interface IUserEventService
 {
     Task CreateEvent(UserEvent userEvent);
+    Task<IEnumerable<UserEvent>> GetEvents();
 }

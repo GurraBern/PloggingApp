@@ -16,12 +16,19 @@ public class UserEventService : IUserEventService
 
     public async Task CreateEvent(UserEvent userEvent)
     {
-        var request = new RestRequest();
+        var request = new RestRequest("api/UserEvents");
         request.AddBody(userEvent);
 
         await _ploggingApiClient.PostAsync(request);
 
     }
 
-    //public Task ApplyToEvent() { }
+    public async Task<IEnumerable<UserEvent>> GetEvents()
+    {
+        var request = new RestRequest("api/UserEvents");
+
+        var events = await _ploggingApiClient.GetAllAsync(request);
+
+        return events;
+    }
 }

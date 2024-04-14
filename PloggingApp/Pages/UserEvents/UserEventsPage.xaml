@@ -26,10 +26,11 @@
                         <VerticalStackLayout>
                             <Label Text="{Binding Title}" FontSize="Medium"/>
 
-                            <HorizontalStackLayout Spacing="20">
+                            <Label Text="{Binding StartDate}" FontSize="Medium"/>
+                            <!--<HorizontalStackLayout Spacing="20">
                                 <Label Text="{Binding NumberOfParticipants, StringFormat='Number of participants {0}'}" FontSize="Caption"/>
                                 <Label Text="Distance 1236m" FontSize="Caption"/>
-                            </HorizontalStackLayout>
+                            </HorizontalStackLayout>-->
 
                             <Label Text="{Binding Description}" Margin="10, 0, 0, 0"/>
                             <Button Text="Interested"/>

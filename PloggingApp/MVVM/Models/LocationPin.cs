@@ -44,6 +44,17 @@ public class LitterbagPlacementPin: LocationPin
     }
 }
 
+public class UserEventPin : LocationPin
+{
+    public UserEvent UserEvent { get; set; }
+    public UserEventPin(ICommand command, UserEvent userEvent)
+    {
+        ImageSource = ImageSource.FromFile("event_calendar_icon.png");
+        Command = command;
+        UserEvent = userEvent;
+    }
+}
+
 public class FinishPin : LocationPin
 {
     public FinishPin()

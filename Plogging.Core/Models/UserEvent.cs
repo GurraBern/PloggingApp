@@ -12,7 +12,7 @@ public class UserEvent
     public string? Id { get; set; }
 
     [FutureDate]
-    public DateTime StarDate { get; set; }
+    public DateTime StartDate { get; set; }
 
     [Required]
     [MaxLength(100)]

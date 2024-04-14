@@ -14,6 +14,7 @@ namespace PloggingApp.MVVM.ViewModels;
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
+    private readonly IUserEventService _userEventService;
     private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
@@ -21,9 +22,10 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     public Task Initialization { get; private set; }
 
-    public MapViewModel(ILitterLocationService litterLocationService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
+    public MapViewModel(ILitterLocationService litterLocationService, IUserEventService userEventService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
     {
         _litterLocationService = litterLocationService;
+        _userEventService = userEventService;
         _litterbagPlacementService = litterbagPlacementService;
         _popupService = popupService;
         _toastService = toastService;
@@ -37,6 +39,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     {
         await AddTrashPinsToMap();
         await AddLitterBagPlacementsToMap();
+        await AddEventsToMap();
     }
 
     private async Task AddTrashPinsToMap()
@@ -46,6 +49,25 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         foreach (var litterLocation in litterLocations)
         {
             PlaceTrashPin(litterLocation.Location);
+        }
+    }
+
+    private async Task AddLitterBagPlacementsToMap()
+    {
+        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+        foreach (var litterbagPlacement in litterbagPlacements)
+        {
+            PlaceLitterbagPin(litterbagPlacement);
+        }
+    }
+
+    private async Task AddEventsToMap()
+    {
+        var userEvents = await _userEventService.GetEvents();
+        
+        foreach (var userEvent in userEvents)
+        {
+            PlaceEventPin(userEvent);
         }
     }
 
@@ -63,16 +85,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         });
     }
 
-    private async Task AddLitterBagPlacementsToMap()
-    {
-        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
-        foreach (var litterbagPlacement in litterbagPlacements)
-        {
-            PlaceLitterbag(litterbagPlacement);
-        }
-    }
-
-    private void PlaceLitterbag(LitterbagPlacement litterbagPlacement)
+    private void PlaceLitterbagPin(LitterbagPlacement litterbagPlacement)
     {
         var location = litterbagPlacement.Location;
 
@@ -89,6 +102,21 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         PlacedPins.Add(litterbagPlacementPin);
     }
 
+    private void PlaceEventPin(UserEvent userEvent)
+    {
+        var userEventPin = new UserEventPin(OpenUserEventCommand, userEvent)
+        {
+            Label = "Plogging Event",
+            Location = new Location()
+            {
+                Latitude = userEvent.Location.Latitude,
+                Longitude = userEvent.Location.Longitude
+            }
+        };
+
+        PlacedPins.Add(userEventPin);
+    }
+
     [RelayCommand]
     private async Task PressedLitterbagPlacement(LitterbagPlacement litterbagPlacement)
     {
@@ -100,6 +128,14 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
             viewModel.LitterbagPlacement = litterbagPlacement;
             viewModel.CalculateDistance(currentLocation);
         });
+    }
+
+    [RelayCommand]
+    private async Task OpenUserEvent(UserEvent userEvent)
+    {
+        var test = userEvent;
+
+        //TODO Open popup for event 
     }
 
     [RelayCommand]
@@ -140,6 +176,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
 	public void Receive(LitterBagPlacedMessage message)
 	{
-        PlaceLitterbag(message.LitterbagPlacement);
+        PlaceLitterbagPin(message.LitterbagPlacement);
 	}
 }

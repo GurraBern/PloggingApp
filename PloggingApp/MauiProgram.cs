@@ -78,7 +78,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
         builder.Services.AddTransient<SessionStatisticsViewModel>();
-
+        builder.Services.AddTransient<CreateEventDetailsViewModel>();
+        builder.Services.AddTransient<CreateEventViewModel>();
+        builder.Services.AddTransient<UserEventsViewModel>();
+        
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
         builder.Services.AddTransient<StatisticsViewModel>();
@@ -93,8 +96,6 @@ public static class MauiProgram
         builder.Services.AddTransient<MyProfileViewModel>();
         builder.Services.AddTransient<BadgesViewModel>();
         builder.Services.AddTransient<SessionStatsMapViewModel>();
-        builder.Services.AddTransient<CreateEventDetailsViewModel>();
-        builder.Services.AddTransient<CreateEventViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)

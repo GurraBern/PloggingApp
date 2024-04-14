@@ -4,10 +4,10 @@ namespace PloggingApp.Pages;
 
 public partial class UserEventsPage : ContentPage
 {
-	public UserEventsPage()
+	public UserEventsPage(UserEventsViewModel vm)
 	{
 		InitializeComponent();
 
-		BindingContext = new UserEventsViewModel();
+		BindingContext = vm;
 	}
 }
