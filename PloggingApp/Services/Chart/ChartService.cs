@@ -66,7 +66,7 @@ public class ChartService : IChartService
                 new ChartEntry(1f)
                 {
                     Label = "N/A",
-                    Color = SKColor.Parse("#999999")
+                    Color = SKColor.Parse("#dedede")
                 }
             },
             LabelTextSize = 20
@@ -75,7 +75,7 @@ public class ChartService : IChartService
     }
     public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> func, SKColor color, int year, int month = 1 )
     {
-        if (!sessions.Any() || sessions.Sum(s => s.PloggingData.Distance) == 0)
+        if (!sessions.Any() || sessions.Sum(func) == 0)
         {
             return generateEmptyLineChart(timeResolution, year, month);
         }
@@ -99,32 +99,6 @@ public class ChartService : IChartService
             return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
     }
-    //private Chart generateMonthLineChart(Dictionary<DateTime, double> dict, int year, int month = 1)
-    //{
-
-    //    Dictionary<string, double> valuePerDay = new Dictionary<string, double>();
-    //    for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
-    //    {
-    //        DateTime currentDate = new DateTime(year, month, day);
-    //        double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
-    //        valuePerDay.Add(currentDate.ToString("d "), acc);
-    //    }
-    //    return generateLineChart(valuePerDay);
-    //}
-
-    //private Chart generateYearLineChart(Dictionary<DateTime, double> dict, int year)
-    //{
-    //    Dictionary<string, double> valuePerMonth = new Dictionary<string, double>();
-    //    for (int m = 1; m <= 12; m++)
-    //    {
-    //        DateTime thisMonth = new DateTime(year, m, 1);
-    //        double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
-    //        valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
-    //    }
-    //    return generateLineChart(valuePerMonth);
-    //}
-
-    // General function
     private Chart makeLineChart(Dictionary<DateTime, double> dict, TimeResolution timeRes, SKColor color, int year, int month = 1)
     {
         Dictionary<string, double> valuePerTimePeriod = new Dictionary<string, double>();
@@ -190,7 +164,7 @@ public class ChartService : IChartService
                 {
                     Label = new DateTime(year, month, day).ToString("d "),
                     ValueLabel = "",
-                    Color = SKColor.Parse("#999999")
+                    Color = SKColor.Parse("#dedede")
                 };
                 entries.Add(newEntry);
             }
@@ -200,7 +174,7 @@ public class ChartService : IChartService
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
-            ValueLabelOrientation = Orientation.Vertical,
+            ValueLabelOrientation = Orientation.Horizontal,
             EnableYFadeOutGradient = true,
             IsAnimated = false,
             LabelTextSize = 20f,

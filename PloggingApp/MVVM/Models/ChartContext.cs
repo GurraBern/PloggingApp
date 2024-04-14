@@ -15,5 +15,6 @@ public class ChartContext : ObservableObject
     public string Name { get; set; }
     public string Unit { get; set; }
     public SKColor Color { get; set; }
+    public string ImageURI {  get; set; }
     
 }

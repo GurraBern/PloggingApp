@@ -90,31 +90,35 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         {
             Name = "Distance",
             Unit = "m",
-            Color = SKColor.Parse("#3bac7c")
+            Color = SKColor.Parse("#3bac7c"),
+            ImageURI = "distance.svg"
         };
         WeightChart = new ChartContext
         {
             Name = "Litter weight",
             Unit = "g",
-            Color = SKColor.Parse("#3b84ac")
+            Color = SKColor.Parse("#3b84ac"),
+            ImageURI = "scale.svg" 
         };
         LitterChart = new ChartContext
         {
             Name = "Litter",
             Unit = "pcs",
+            ImageURI = "trashcan.svg"
         };
         TimeChart = new ChartContext
         {
             Name = "Time Spent",
             Unit = "minutes",
-            Color = SKColor.Parse("#ac833b")
+            Color = SKColor.Parse("#ac833b"),
+            ImageURI = "clock.svg"
         };
         Co2savedChart = new ChartContext
         {
             Name = "CO2 Saved",
             Unit = "g CO2e",
-            Color = SKColor.Parse("#ac3b7f")
-
+            Color = SKColor.Parse("#ac3b7f"),
+            ImageURI = "leaf.svg" 
         };
         
         GetCharts();
