@@ -19,6 +19,10 @@ public class CO2SavedCalculator
         {LitterType.Glass, 0.314 } // Mixed glass
     };
 
+    public static double CalculateCO2Saved(Litter litter)
+    {
+        return (CO2PerKgPairs[litter.LitterType]*(litter.Weight)) / 1000;
+    }
     public static double CalculateCO2Saved(IEnumerable<PloggingSession> sessions)
     {
         return Calculate(sessions.SelectMany(s => s.PloggingData.Litters).ToList());
@@ -29,7 +33,7 @@ public class CO2SavedCalculator
     }
     private static double Calculate(List<Litter> litters)
     {
-        return litters.Sum(l => CO2PerKgPairs[l.LitterType]) / 1000 ;
+        return litters.Sum(l => (CO2PerKgPairs[l.LitterType]) * l.Weight) / 1000 ;
     }
     
 
