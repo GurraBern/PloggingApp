@@ -31,6 +31,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
 
     [ObservableProperty]
+    PloggingStatistics ploggingStatistics;
+    [ObservableProperty]
     public string displayName;
     [ObservableProperty]
     public double totalDistance;
@@ -38,8 +40,6 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public double totalCO2Saved;
     [ObservableProperty]
     public double totalWeight;
-    [ObservableProperty]
-    public double totalTime;
     [ObservableProperty]
     public int userRankInt;
     [ObservableProperty]
@@ -97,7 +97,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         }
         else {
         PloggingSessions.ClearAndAddRange(_allUserSessions);
-
+        PloggingStatistics = new PloggingStatistics(_allUserSessions);
         LatestSessions = PloggingSessions.Take(4);
 
 

@@ -19,16 +19,18 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private readonly List<Badge> badges = [];
 
     [ObservableProperty]
-    private double totalSteps;
+    PloggingStatistics ploggingStatistics;
+    //[ObservableProperty]
+    //private double totalSteps;
 
-    [ObservableProperty]
-    private double totalDistance;
+    //[ObservableProperty]
+    //private double totalDistance;
 
-    [ObservableProperty]
-    private double totalCO2Saved;
+    //[ObservableProperty]
+    //private double totalCO2Saved;
 
-    [ObservableProperty]
-    private double totalWeight;
+    //[ObservableProperty]
+    //private double totalWeight;
 
     [ObservableProperty]
     private string displayName;
@@ -79,11 +81,11 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             var user = await _userInfo.GetUser(userId);
             DisplayName = user.DisplayName;
             _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
-            var stats = new PloggingStatistics(_allSessions);
-            TotalSteps = Math.Round(stats.TotalSteps);
-            TotalDistance = Math.Round(stats.TotalDistance);
-            TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-            TotalWeight = Math.Round(stats.TotalWeight);
+            PloggingStatistics = new PloggingStatistics(_allSessions);
+            //TotalSteps = Math.Round(stats.TotalSteps);
+            //TotalDistance = Math.Round(stats.TotalDistance);
+            //TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
+            //TotalWeight = Math.Round(stats.TotalWeight);
             
             foreach(PloggingSession ps in _allSessions)
             {

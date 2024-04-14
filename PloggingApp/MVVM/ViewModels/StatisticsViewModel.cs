@@ -124,7 +124,8 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         }
         else
         {
-            UserSessions.ClearAndAddRange(_allUserSessions.Where(s => s.StartDate.Year == SelectedYear && s.StartDate.Month == SelectedMonth));
+            UserSessions.ClearAndAddRange(_allUserSessions.Where(s => s.StartDate.Year == SelectedYear &&
+            s.StartDate.Month == SelectedMonth));
         }
         if (!UserSessions.Any())
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);

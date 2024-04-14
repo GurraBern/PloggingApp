@@ -72,15 +72,15 @@
                                 </Grid.ColumnDefinitions>
                                 <StackLayout Grid.Column="0" Orientation="Vertical">
                                     <Label Text="Litter collected" VerticalOptions="Center"/>
-                                    <Label Text="{Binding TotalWeight, StringFormat='{0}kg'}" />
+                                    <Label Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0}kg'}" />
                                 </StackLayout>
                                 <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
                                     <Label Text="Distance" VerticalOptions="Center"/>
-                                    <Label Text="{Binding TotalDistance, StringFormat='{0}m'}" />
+                                    <Label Text="{Binding PloggingStatistics.TotalDistance, StringFormat='{0}m'}" />
                                 </StackLayout>
                                 <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
                                     <Label Text="Saved CO2" VerticalOptions="Center"/>
-                                    <Label Text="{Binding TotalCO2Saved, StringFormat='{0}CO2'}"/>
+                                    <Label Text="{Binding PloggingStatistics.TotalCO2Saved, StringFormat='{0} kg CO2e'}"/>
                                 </StackLayout>
 
                             </Grid>
