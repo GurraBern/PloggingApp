@@ -20,7 +20,7 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="modelsCore:PloggingSession">
 
-                                <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 50, 50, 50, 50" HeightRequest="90" >
+                                <Border Style="{StaticResource StatsBorder}" BackgroundColor="White" HeightRequest="80" Margin="0,0,0,10" StrokeThickness="1">
 
 
                                     <Grid>
@@ -29,9 +29,9 @@
                                             <ColumnDefinition Width="2*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Source="{Binding Image}" Grid.Column="0"  Aspect="Center">
+                                        <Image Source="{Binding Image}" Grid.Column="0" Aspect="AspectFill" VerticalOptions="Center" >
                                             <Image.Clip>
-                                                <EllipseGeometry RadiusX="40" RadiusY="40" Center="50,40"/>
+                                                <EllipseGeometry RadiusX="35" RadiusY="35" Center="50,40"/>
                                             </Image.Clip>
                                         </Image>
 
@@ -46,22 +46,27 @@
                                             </Grid.ColumnDefinitions>
 
 
-                                            <Label Text="{Binding StartDate, StringFormat='{0:dd MMMM yyyy HH:mm}'}" FontSize="Medium"/>
+                                            <Label Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:mm}'}" FontSize="Medium"/>
 
-                                            <HorizontalStackLayout Grid.Row="1">
-                                                <Grid>
+                                            <HorizontalStackLayout Grid.Row="1" >
+                                                <Grid ColumnSpacing="20">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="4*" />
+                                                        <ColumnDefinition Width="4*" />
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Label x:Name="Weight" Grid.Column="0" Text="{Binding PloggingData.Weight, StringFormat='{0:F0}kg'}" FontSize="Medium" />
+                                                    <Label x:Name="Weight" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F0}kg'}" FontSize="Medium" />
 
-                                                    <Image Grid.Column="1" Source="trashbag.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="End"/>
+                                                    <Image Grid.Column="0" Source="trashbag.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="End" />
+
+                                                    <Label x:Name="Count" Grid.Column="0" Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}" FontSize="Medium" Margin="0,0,20,0"/>
 
 
-                                                    <Label x:Name="Distance" Grid.Column="2" Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" FontSize="Medium" />
+                                                    <Label x:Name="Distance" Grid.Column="2" Text="{Binding PloggingData.Distance, StringFormat='{0}m'}" FontSize="Medium" />
+                                                    
+                                                    
                                                 </Grid>
                                             </HorizontalStackLayout>
                                         </Grid>
