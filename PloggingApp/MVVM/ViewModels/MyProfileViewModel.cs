@@ -33,13 +33,15 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public string displayName;
     [ObservableProperty]
-    public double totalDistance;
-    [ObservableProperty]
-    public double totalCO2Saved;
-    [ObservableProperty]
-    public double totalWeight;
-    [ObservableProperty]
-    public double totalTime;
+    PloggingStatistics ploggingStatistics;
+    //[ObservableProperty]
+    //public double totalDistance;
+    //[ObservableProperty]
+    //public double totalCO2Saved;
+    //[ObservableProperty]
+    //public double totalWeight;
+    //[ObservableProperty]
+    //public double totalTime;
     [ObservableProperty]
     public int userRankInt;
     //[ObservableProperty]
@@ -96,14 +98,14 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
         LatestSessions = PloggingSessions.Take(3);
 
-        var stats = new PloggingStatistics(_allUserSessions);
-        TotalDistance = Math.Round(stats.TotalDistance);
-        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-        TotalWeight = Math.Round(stats.TotalWeight);
+        PloggingStatistics = new PloggingStatistics(_allUserSessions);
+        //TotalDistance = stats.TotalDistance;
+        //TotalCO2Saved = stats.TotalCO2Saved;
+        //TotalWeight = stats.TotalWeight;
 
         int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
 
-        await BadgesViewModel.GetBadges(stats, streak);
+        await BadgesViewModel.GetBadges(PloggingStatistics, streak);
 
         UserRankInt = LeaderboardViewModel.UserRank.Rank;
 

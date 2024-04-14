@@ -5,9 +5,6 @@ using Plogging.Core.Models;
 namespace PloggingApp.MVVM.Models;
 public partial class PloggingStatistics : ObservableObject
 {
-    private bool isSingleSession { get; set; } = true;
-    private TimeResolution currentTR {get; set;}
-
     [ObservableProperty]
     public double totalSteps;
     [ObservableProperty]
@@ -21,10 +18,9 @@ public partial class PloggingStatistics : ObservableObject
 
     public PloggingStatistics(IEnumerable<PloggingSession> sessions)
     {
-        isSingleSession = false;
         TotalSteps = sessions.Sum(s => s.PloggingData.Steps);
         TotalDistance = Math.Round(sessions.Sum(s => s.PloggingData.Distance), 1);
-        TotalCO2Saved = 0;
+        TotalCO2Saved = Math.Round(CO2SavedCalculator.CalculateCO2Saved(sessions) / 1000, 2);
         TotalWeight = Math.Round(sessions.Sum(s => s.PloggingData.Litters.Sum(l => l.Weight)), 1);
         TotalTime = calculateTime(sessions);
     }
@@ -32,6 +28,7 @@ public partial class PloggingStatistics : ObservableObject
     {
         TotalSteps = session.PloggingData.Steps;
         TotalDistance = Math.Round(session.PloggingData.Distance, 2);
+        TotalCO2Saved = Math.Round(CO2SavedCalculator.CalculateCO2Saved(session) / 1000, 2);
         TotalWeight = Math.Round(session.PloggingData.Litters.Sum(s => s.Weight), 2);
         TotalTime = session.EndDate - session.StartDate;
     }
