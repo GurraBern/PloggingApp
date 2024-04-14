@@ -12,10 +12,14 @@ public class ChartService : IChartService
     private Dictionary<LitterType, SKColor> colors = new Dictionary<LitterType, SKColor>
     {
         {LitterType.Plastics, SKColor.Parse("#2bb5ff")},
-        {LitterType.Cigarette, SKColor.Parse("#ffb53c")},
+        {LitterType.LargePlastics, SKColor.Parse("#144e6e")},
+        {LitterType.Cigarette, SKColor.Parse("#383838")},
         {LitterType.Can, SKColor.Parse("#26ffb0")},
         {LitterType.SmallMetal, SKColor.Parse("#be26ff")},
         {LitterType.Cardboard, SKColor.Parse("#874b01")},
+        {LitterType.Snus, SKColor.Parse("#b5994a")},
+        {LitterType.Glass, SKColor.Parse("#ffb53c") },
+        {LitterType.Fabric, SKColor.Parse("#fa66f5") }
     };
     public ChartService()
     {

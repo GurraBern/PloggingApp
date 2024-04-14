@@ -9,7 +9,7 @@
              x:Class="PloggingApp.MVVM.Views.SessionStatsMapView"
              x:DataType="viewmodel:SessionStatsMapViewModel">
     
-    <maps:Map ItemsSource="{Binding TrashPins}" IsShowingUser="True" x:Name="Map" MapType="Street" HeightRequest="175">
+    <maps:Map ItemsSource="{Binding TrashPins}" IsShowingUser="True" x:Name="Map" MapType="Street" HeightRequest="180">
         <maps:Map.MapElements>
             <maps:Polyline x:Name="polyLine" StrokeColor="Blue" StrokeWidth="15">
                 <maps:Polyline.Geopath/>
