@@ -29,7 +29,7 @@ public class CO2SavedCalculator
     }
     private static double Calculate(List<Litter> litters)
     {
-        return litters.Sum(l => CO2PerKgPairs[l.LitterType]);
+        return litters.Sum(l => CO2PerKgPairs[l.LitterType]) / 1000 ;
     }
     
 

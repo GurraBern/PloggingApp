@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microcharts;
+using SkiaSharp;
 
 namespace PloggingApp.MVVM.Models;
 public class ChartContext : ObservableObject
@@ -13,5 +14,6 @@ public class ChartContext : ObservableObject
     }
     public string Name { get; set; }
     public string Unit { get; set; }
+    public SKColor Color { get; set; }
     
 }
