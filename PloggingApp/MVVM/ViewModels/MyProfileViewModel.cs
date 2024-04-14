@@ -82,6 +82,10 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
+        _ploggingSessionService.MyUserId = _authenticationService.CurrentUser.Uid;
+        _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
+
+        await BadgesViewModel.Init();
 
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
@@ -96,14 +100,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
         LatestSessions = PloggingSessions.Take(4);
 
-        var stats = new PloggingStatistics(_allUserSessions);
-        TotalDistance = Math.Round(stats.TotalDistance);
-        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-        TotalWeight = Math.Round(stats.TotalWeight);
 
-        int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
-
-        await BadgesViewModel.GetBadges(stats, streak);
 
         UserRankInt = LeaderboardViewModel.UserRank.Rank;
 

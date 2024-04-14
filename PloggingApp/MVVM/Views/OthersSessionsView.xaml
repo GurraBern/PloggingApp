@@ -39,14 +39,14 @@
                     <DataTemplate x:DataType="modelsCore:PloggingSession">
                         <Border Margin="2,3" Padding="0">
                             <HorizontalStackLayout >
-                                <Image Source="{Binding Image}"  HeightRequest="80" WidthRequest="80"></Image>
+                                <Image Source="{Binding Image}"  HeightRequest="80" WidthRequest="80" Margin="-10,0,0,0"></Image>
                                 <VerticalStackLayout Margin="40,0,0,0">
                                     <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" Margin="30,10,0,0" />
                                     <HorizontalStackLayout Margin="0,0,0,10">
                                         <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  FontSize="Large"/>
                                         <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" FontSize="Large" />
                                         <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}'}" FontSize="Large"/>
-                                        <Image x:Name="SessionImage" Source="trashbag.png" HeightRequest="20" WidthRequest="20"/>
+                                        <Image x:Name="SessionImage" Source="pickeduptrash.png" HeightRequest="50" WidthRequest="50" Margin="-5,-18,0,0"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
