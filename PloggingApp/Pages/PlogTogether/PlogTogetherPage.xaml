@@ -92,7 +92,7 @@
             WidthRequest="170"
             HeightRequest="60"
             Grid.Column="1"
-            Grid.Row="1"/>
+            Grid.Row="0"/>
 
         <Button Text="Delete Group"
             Command="{Binding DeleteGroupCommand}"
@@ -100,7 +100,7 @@
             WidthRequest="170"
             HeightRequest="60"
             Grid.Column="1"
-            Grid.Row="1"/>
+            Grid.Row="0"/>
 
 
 
