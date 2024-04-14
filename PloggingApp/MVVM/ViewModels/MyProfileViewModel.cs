@@ -33,19 +33,15 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public string displayName;
     [ObservableProperty]
-    PloggingStatistics ploggingStatistics;
-    //[ObservableProperty]
-    //public double totalDistance;
-    //[ObservableProperty]
-    //public double totalCO2Saved;
-    //[ObservableProperty]
-    //public double totalWeight;
-    //[ObservableProperty]
-    //public double totalTime;
+    public double totalDistance;
+    [ObservableProperty]
+    public double totalCO2Saved;
+    [ObservableProperty]
+    public double totalWeight;
     [ObservableProperty]
     public int userRankInt;
-    //[ObservableProperty]
-    //private bool isRefreshing;
+    [ObservableProperty]
+    private bool isRefreshing;
     [ObservableProperty]
     public IEnumerable<PloggingSession> latestSessions;
 
@@ -84,6 +80,10 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
+        _ploggingSessionService.MyUserId = _authenticationService.CurrentUser.Uid;
+        _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
+
+        await BadgesViewModel.Init();
 
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
@@ -96,16 +96,9 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         else {
         PloggingSessions.ClearAndAddRange(_allUserSessions);
 
-        LatestSessions = PloggingSessions.Take(3);
+        LatestSessions = PloggingSessions.Take(4);
 
-        PloggingStatistics = new PloggingStatistics(_allUserSessions);
-        //TotalDistance = stats.TotalDistance;
-        //TotalCO2Saved = stats.TotalCO2Saved;
-        //TotalWeight = stats.TotalWeight;
 
-        int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
-
-        await BadgesViewModel.GetBadges(PloggingStatistics, streak);
 
         UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
@@ -127,17 +120,18 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [RelayCommand]
-    private async Task RefreshMyProfile()
+    private async Task Refresh()
     {
         IsBusy = true;
         await GetSessions();
+        IsRefreshing = false;
         IsBusy = false;
     }
 
     [RelayCommand]
     private async Task GoToHistoryPage()
     {
-        await Shell.Current.GoToAsync($"///{nameof(HistoryPage)}");
+        await Shell.Current.GoToAsync($"{nameof(HistoryPage)}");
     }
 
 }

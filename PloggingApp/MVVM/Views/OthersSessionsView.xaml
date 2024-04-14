@@ -9,7 +9,7 @@
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              x:DataType="viewmodel:OthersSessionsViewModel">
     
-        <StackLayout>
+    <StackLayout>
         <Label Text="{Binding DisplayName}" FontSize="40" HorizontalOptions="Center" />
         <Label Text="Total" FontSize="Large" Padding="6,0" ></Label>
         <Border HeightRequest="70">
@@ -32,31 +32,28 @@
         <views:BadgesView BindingContext="{Binding BadgesViewModel}" Margin="0,-15,0,-25" HorizontalOptions="Start" MinimumHeightRequest="80"/>
 
         <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
-        <ScrollView Orientation="Vertical">
-            <VerticalStackLayout>
-
-                <CollectionView ItemsSource="{Binding PloggingSessions}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="modelsCore:PloggingSession">
-                            <Frame Margin="2,3" Padding="0">
-                                <HorizontalStackLayout >
-                                    <Image Source="{Binding Image}"  HeightRequest="80" WidthRequest="80"></Image>
-                                    <VerticalStackLayout Margin="40,0,0,0">
-                                        <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" Margin="30,10,0,0" />
-                                        <HorizontalStackLayout Margin="0,0,0,10">
-                                            <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  FontSize="Large"/>
-                                            <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" FontSize="Large" />
-                                            <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}'}" FontSize="Large"/>
-                                            <Image x:Name="SessionImage" Source="trashbag.png" HeightRequest="20" WidthRequest="20"/>
-                                        </HorizontalStackLayout>
-                                    </VerticalStackLayout>
-                                </HorizontalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+        
+        <ScrollView HeightRequest="370">
+            <CollectionView ItemsSource="{Binding PloggingSessions}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelsCore:PloggingSession">
+                        <Border Margin="2,3" Padding="0">
+                            <HorizontalStackLayout >
+                                <Image Source="{Binding Image}"  HeightRequest="80" WidthRequest="80" Margin="-10,0,0,0"></Image>
+                                <VerticalStackLayout Margin="40,0,0,0">
+                                    <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" Margin="30,10,0,0" />
+                                    <HorizontalStackLayout Margin="0,0,0,10">
+                                        <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  FontSize="Large"/>
+                                        <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" FontSize="Large" />
+                                        <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}'}" FontSize="Large"/>
+                                        <Image x:Name="SessionImage" Source="pickeduptrash.png" HeightRequest="50" WidthRequest="50" Margin="-5,-18,0,0"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </ScrollView>
     </StackLayout>
-    
 </ContentView>

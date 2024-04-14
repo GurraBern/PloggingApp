@@ -73,7 +73,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     public async Task GetSessions()
     {
         IsBusy = true;
-        string userId = _sessionService.UserId;
+        string userId = _sessionService.OtherUserId;
+        _sessionService.UserId = userId;
 
         if(userId != null)
         {

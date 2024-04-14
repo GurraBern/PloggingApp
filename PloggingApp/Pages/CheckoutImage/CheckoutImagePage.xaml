@@ -5,23 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
     x:DataType="viewmodels:CheckoutImageViewModel">
-    <VerticalStackLayout Padding="25" Spacing="5">
-        <Image Source="{Binding ImagePath}"/>
 
-        <Label Text="Disclaimer: This photo will be proof of your hard work, other people will be able to see it on your profile."/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="{Binding ImagePath}"/>
 
-        <Button
-            Command="{Binding UsePhotoCommand}"
-            HeightRequest="40"
-            Style="{StaticResource RoundButton}"
-            Text="Use Photo"
-            WidthRequest="250"/>
-        <Button
-            BackgroundColor="{StaticResource Red}"
-            Command="{Binding RetakePhotoCommand}"
-            HeightRequest="40"
-            Style="{StaticResource RoundButton}"
-            Text="Retake Photo"
-            WidthRequest="250"/>
-    </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Spacing="5">
+            <Label Text="Disclaimer: This photo will be proof of your hard work, other people will be able to see it on your profile."/>
+
+            <Button
+                Command="{Binding UsePhotoCommand}"
+                HeightRequest="40"
+                Style="{StaticResource RoundButton}"
+                Text="Use Photo"
+                WidthRequest="250"/>
+            <Button
+                BackgroundColor="{StaticResource Red}"
+                Command="{Binding RetakePhotoCommand}"
+                HeightRequest="40"
+                Style="{StaticResource RoundButton}"
+                Text="Retake Photo"
+                WidthRequest="250"/>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

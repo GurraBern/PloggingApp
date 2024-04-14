@@ -43,7 +43,21 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
         {
             var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
-            int streak = (await _streakService.GetUserStreak(userId)).BiggestStreak;
+            int streak;
+            if (_allSessions.Count() == 0)
+            {
+                stats.totalSteps = 0;
+                stats.totalDistance = 0;
+                stats.totalCO2Saved = 0;
+                stats.totalWeight = 0;
+                stats.totalTime = TimeSpan.Zero;
+                streak = 0;
+            }
+            else
+            {
+                streak = (await _streakService.GetUserStreak(userId)).BiggestStreak;
+            }
+
             await GetBadges(stats, streak);
         }
 

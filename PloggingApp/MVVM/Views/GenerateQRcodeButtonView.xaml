@@ -4,7 +4,7 @@
              x:Class="PloggingApp.MVVM.Views.GenerateQRcodeButtonView">
     <Grid>
 
-        <Button Text="Generate QR code"
+        <Button Text="Your ID"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 WidthRequest="170"

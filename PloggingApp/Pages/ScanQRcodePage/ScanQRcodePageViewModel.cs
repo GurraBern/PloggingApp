@@ -42,6 +42,15 @@ public partial class ScanQRcodePageViewModel : ObservableObject
             var userAlreadyInGroup = await _plogTogetherService.GetPlogTogether(userId);
             if (userAlreadyInGroup == null)
             {
+                if (currentUserId == userId)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+                        await _toastService.MakeToast("Can't add yourself!");
+                    });
+                    return;
+                }
                 await _plogTogetherService.AddUserToGroup(currentUserId, userId);
 
                 var ownerUserInfo = await _userInfoService.GetUser(currentUserId);
@@ -61,9 +70,6 @@ public partial class ScanQRcodePageViewModel : ObservableObject
                     plogUser1,
                     plogUser2
                 };
-
-                //WeakReferenceMessenger.Default.Send(new AddFirstUserMessage(plogUsers));
-
 
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {

@@ -65,7 +65,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task AddLitterBagPlacementsToMap()
     {
-        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+        var litterbagPlacements = await Task.Run(_litterbagPlacementService.GetLitterbagPlacements);
+
         foreach (var litterbagPlacement in litterbagPlacements)
         {
             PlaceLitterbag(litterbagPlacement);
