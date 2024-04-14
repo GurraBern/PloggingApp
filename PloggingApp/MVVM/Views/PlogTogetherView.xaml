@@ -27,7 +27,7 @@
                             WidthRequest="70"
                             HorizontalOptions="End"
                             Grid.Column="1"
-                            IsVisible="{Binding IsLeader, Converter={StaticResource InverseBooleanConverter}}"
+                            IsVisible="{Binding ShowButtons, Converter={StaticResource InverseBooleanConverter}}"
                             />
                 </Grid>
             </Border>
