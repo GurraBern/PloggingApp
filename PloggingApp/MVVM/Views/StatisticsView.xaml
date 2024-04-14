@@ -15,12 +15,10 @@
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
         <Grid RowDefinitions="*">
             <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
-                <VerticalStackLayout  Spacing="10" Padding="20,0" HeightRequest="1300">
+                <VerticalStackLayout  Spacing="15" Padding="20,0" HeightRequest="1300">
                     <Label Text="Filter by:" VerticalOptions="Center"/>
                     <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                         <HorizontalStackLayout Spacing="15" Margin="0">
-                            <!--<Button Style="{StaticResource CapsuleButton}" Command="{Binding ShowYearCommand}"  Text="Year"></Button>
-                            <Button Style="{StaticResource CapsuleButton}" Command="{Binding ShowMonthCommand}"  Text="Month "></Button>-->
                             <StackLayout Orientation="Horizontal">
                                 <RadioButton GroupName="timefilter" Content="Year" IsChecked="True" CheckedChanged="RadioButton_CheckedChanged"/>
                                 <RadioButton GroupName="timefilter" Content="Month" IsChecked="False" CheckedChanged="RadioButton_CheckedChanged"/>
@@ -40,7 +38,7 @@
                         </HorizontalStackLayout>
                     </Border>
                     <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
-                    <Border Style="{StaticResource RoundBorder}">
+                    <!--<Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
                             <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
                             <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
@@ -50,6 +48,28 @@
                         <VerticalStackLayout>
                             <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
                             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                        </VerticalStackLayout>
+                    </Border>-->
+                    <CarouselView ItemsSource="{Binding Charts}" IndicatorView="indicatorCharts">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ChartContext">
+                                <Border Style="{StaticResource RoundBorder}">
+                                    <VerticalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                                            <Label Text="{Binding Unit, StringFormat='({0})'}" Style="{StaticResource StatsText}" TextColor="Black" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                        <micro:ChartView Chart="{Binding Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="indicatorCharts" Margin="5" HorizontalOptions="Center"/>
+                    <Border Style="{StaticResource RoundBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="160" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
                         </VerticalStackLayout>
                     </Border>
                     <Border Style="{StaticResource RoundBorder}">

@@ -88,15 +88,39 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         PloggingStats = new PloggingStatistics(UserSessions);
         DistanceChart = new ChartContext
         {
-            Chart = _chartService.generateDistanceChart(TimeRes,UserSessions, SelectedYear, SelectedMonth),
             Name = "Distance",
-            Unit = "m"
+            Unit = "m",
+            Color = SKColor.Parse("#3bac7c")
+        };
+        WeightChart = new ChartContext
+        {
+            Name = "Litter weight",
+            Unit = "g",
+            Color = SKColor.Parse("#3b84ac")
         };
         LitterChart = new ChartContext
         {
-            Chart = _chartService.generateLitterChart(TimeRes, UserSessions),
             Name = "Litter",
-            Unit = "pcs"
+            Unit = "pcs",
+        };
+        TimeChart = new ChartContext
+        {
+            Name = "Time Spent",
+            Unit = "minutes",
+            Color = SKColor.Parse("#ac833b")
+        };
+        Co2savedChart = new ChartContext
+        {
+            Name = "CO2 Saved",
+            Unit = "g CO2e",
+            Color = SKColor.Parse("#ac3b7f")
+
+        };
+        
+        GetCharts();
+        Charts = new ObservableCollection<ChartContext>()
+        {
+            DistanceChart, TimeChart, WeightChart, Co2savedChart
         };
         _isInitialized = true;
         IsBusy = false;
@@ -129,11 +153,19 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         }
         if (!UserSessions.Any())
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
-        LitterChart.Chart = _chartService.generateLitterChart(TimeRes, UserSessions);
-        DistanceChart.Chart = _chartService.generateDistanceChart(TimeRes, UserSessions, SelectedYear, SelectedMonth);
+        GetCharts(); 
         PloggingStats = new PloggingStatistics(UserSessions);
         StatsBoxColor = colorDict[TimeRes];
         IsBusy = false;
+    }
+    
+    private void GetCharts()
+    {
+        LitterChart.Chart = _chartService.generateLitterChart(TimeRes, UserSessions);
+        DistanceChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth);
+        WeightChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth);
+        TimeChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth);
+        Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s) * 1000, Co2savedChart.Color, SelectedYear, SelectedMonth);
     }
     [RelayCommand]
     private async Task GoToSessionStats(PloggingSession session)
@@ -150,7 +182,6 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task Refresh()
     {
-        // IsRefreshing = true
         IsBusy = true;
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         Update();
@@ -177,7 +208,19 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     ChartContext distanceChart;
 
     [ObservableProperty]
+    ChartContext weightChart;
+
+    [ObservableProperty]
     ChartContext litterChart;
+
+    [ObservableProperty]
+    ChartContext timeChart;
+
+    [ObservableProperty]
+    ChartContext co2savedChart;
+
+    [ObservableProperty]
+    ObservableCollection<ChartContext> charts;
 
     [ObservableProperty]
     TimeResolution timeRes;

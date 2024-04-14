@@ -43,14 +43,14 @@ public class ChartService : IChartService
             keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), 
                 Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
-        var graph = new PieChart()
+        var graph = new BarChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.RightOnly,
-            GraphPosition = GraphPosition.AutoFill,
+            //LabelMode = LabelMode.RightOnly,
+            //GraphPosition = GraphPosition.AutoFill,
 
             Entries = chartEntries,
-            LabelTextSize = 25
+            LabelTextSize = 25f
         };
         return graph;
     }
@@ -73,7 +73,7 @@ public class ChartService : IChartService
         };
         return graph;
     }
-    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month = 1)
+    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> func, SKColor color, int year, int month = 1 )
     {
         if (!sessions.Any() || sessions.Sum(s => s.PloggingData.Distance) == 0)
         {
@@ -86,8 +86,8 @@ public class ChartService : IChartService
                     .GroupBy(s => s.StartDate.Date)
                     .ToDictionary(
                         group => group.Key,
-                        group => group.Sum(s => s.PloggingData.Distance));
-            return generateMonthLineChart(distancePerTimePeriod, "m", year, month);
+                        group => group.Sum(func));
+            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
         else
         {
@@ -95,45 +95,64 @@ public class ChartService : IChartService
                     .GroupBy(s => s.StartDate.Month)
                     .ToDictionary(
                         group => new DateTime(year, group.Key, 1),
-                        group => group.Sum(s => s.PloggingData.Distance));
-            return generateYearLineChart(distancePerTimePeriod, "m", year);
+                        group => group.Sum(func));
+            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
     }
-    private Chart generateMonthLineChart(Dictionary<DateTime, double> dict, string yAxisLabel, int year, int month = 1)
-    {
+    //private Chart generateMonthLineChart(Dictionary<DateTime, double> dict, int year, int month = 1)
+    //{
 
-        Dictionary<string, double> valuePerDay = new Dictionary<string, double>();
-        for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
-        {
-            DateTime currentDate = new DateTime(year, month, day);
-            double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
-            valuePerDay.Add(currentDate.ToString("d "), acc);
-        }
-        return generateLineChart(valuePerDay, yAxisLabel);
-    }
+    //    Dictionary<string, double> valuePerDay = new Dictionary<string, double>();
+    //    for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+    //    {
+    //        DateTime currentDate = new DateTime(year, month, day);
+    //        double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
+    //        valuePerDay.Add(currentDate.ToString("d "), acc);
+    //    }
+    //    return generateLineChart(valuePerDay);
+    //}
 
-    private Chart generateYearLineChart(Dictionary<DateTime, double> dict, string yAxisLabel, int year)
-    {
-        Dictionary<string, double> valuePerMonth = new Dictionary<string, double>();
-        for (int m = 1; m <= 12; m++)
-        {
-            DateTime thisMonth = new DateTime(year, m, 1);
-            double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
-            valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
-        }
-        return generateLineChart(valuePerMonth, yAxisLabel);
-    }
+    //private Chart generateYearLineChart(Dictionary<DateTime, double> dict, int year)
+    //{
+    //    Dictionary<string, double> valuePerMonth = new Dictionary<string, double>();
+    //    for (int m = 1; m <= 12; m++)
+    //    {
+    //        DateTime thisMonth = new DateTime(year, m, 1);
+    //        double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
+    //        valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
+    //    }
+    //    return generateLineChart(valuePerMonth);
+    //}
 
     // General function
-    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel)
+    private Chart makeLineChart(Dictionary<DateTime, double> dict, TimeResolution timeRes, SKColor color, int year, int month = 1)
     {
+        Dictionary<string, double> valuePerTimePeriod = new Dictionary<string, double>();
+        if(timeRes is TimeResolution.ThisMonth)
+        {
+            for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+            {
+                DateTime currentDate = new DateTime(year, month, day);
+                double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
+                valuePerTimePeriod.Add(currentDate.ToString("d "), acc);
+            }
+        }
+        else
+        {
+            for (int m = 1; m <= 12; m++)
+            {
+                DateTime thisMonth = new DateTime(year, m, 1);
+                double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
+                valuePerTimePeriod.Add(thisMonth.ToString("MMM"), acc);
+            }
+        }
         //For some reason, if every value in the graph == 0. Skiasharp throws an exception, 
         // claiming that "shaderA is null". This is an ugly workaround for this.
-        float offset = (dict.Values.All(v => v == 0)) ? 0.005f : 0f;
+        float offset = (valuePerTimePeriod.Values.All(v => v == 0)) ? 0.005f : 0f;
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value + offset)
-            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : "", Color = SKColor.Parse("#3bac7c") }).ToList(),
+            Entries = valuePerTimePeriod.Select(kv => new ChartEntry((float?)Math.Round(kv.Value) + offset)
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? Math.Round(kv.Value).ToString() : "", Color = color }).ToList(),
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
