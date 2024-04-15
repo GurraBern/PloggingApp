@@ -37,7 +37,7 @@
             <!--Chart-->
             <Border Style="{StaticResource RoundBorder}">
                 <VerticalStackLayout>
-                    <Label Style="{StaticResource SubHeadline}" Text="Litter types" HorizontalOptions="Start"/>
+                    <Label Style="{StaticResource SubHeadline}" Text="{Binding PloggingSession.PloggingData.Litters.Count, StringFormat='Litter Types, {0} pieces'}" HorizontalOptions="Start"/>
                     <micro:ChartView Chart="{Binding LitterChart}" HeightRequest="120" WidthRequest="250" HorizontalOptions="FillAndExpand"/>
                 </VerticalStackLayout>
             </Border>
@@ -61,7 +61,7 @@
                             <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                 <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>
                             </Border>
-                            <Label Style="{StaticResource StatsLabelText}" Text="Time plogged" Grid.Row="0" Grid.Column="1"/>
+                            <Label Style="{StaticResource StatsLabelText}" Text="Time Plogged" Grid.Row="0" Grid.Column="1"/>
                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
                                 <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
                                 <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat=' {0}min '}"/>
@@ -72,11 +72,11 @@
                     <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
                         <Grid Style="{StaticResource StatsGrid}">
                             <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                <Image Source="trashcan.svg" HeightRequest="50" WidthRequest="50"/>
+                                <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
                             </Border>
-                            <Label Style="{StaticResource StatsLabelText}" Text="Litter pieces" Grid.Row="0" Grid.Column="1"/>
-                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingSession.PloggingData.Litters.Count,
-                        StringFormat='{0} pcs'}"
+                            <Label Style="{StaticResource StatsLabelText}" Text="CO2e Saved" Grid.Row="0" Grid.Column="1"/>
+                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalCO2Saved,
+                        StringFormat='{0} kg CO2e'}"
                Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Border>
@@ -86,7 +86,7 @@
                             <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                 <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
                             </Border>
-                            <Label Style="{StaticResource StatsLabelText}" Text="Litter weight" Grid.Row="0" Grid.Column="1"/>
+                            <Label Style="{StaticResource StatsLabelText}" Text="Litter Weight" Grid.Row="0" Grid.Column="1"/>
                             <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Border>

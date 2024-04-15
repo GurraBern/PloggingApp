@@ -97,8 +97,8 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         };
         WeightChart = new ChartContext
         {
-            Name = "Litter weight",
-            Unit = "g",
+            Name = "Litter Weight",
+            Unit = "kg",
             Color = SKColor.Parse("#3b84ac"),
             ImageURI = "scale.svg" 
         };
@@ -110,15 +110,15 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         };
         TimeChart = new ChartContext
         {
-            Name = "Time Spent",
+            Name = "Time Plogged",
             Unit = "minutes",
             Color = SKColor.Parse("#ac833b"),
             ImageURI = "clock.svg"
         };
         Co2savedChart = new ChartContext
         {
-            Name = "CO2 Saved",
-            Unit = "g CO2e",
+            Name = "CO2e Saved",
+            Unit = "kg CO2e",
             Color = SKColor.Parse("#ac3b7f"),
             ImageURI = "leaf.svg" 
         };
@@ -171,7 +171,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         DistanceChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth + 1);
         WeightChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth + 1);
         TimeChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth + 1);
-        Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s) * 1000, Co2savedChart.Color, SelectedYear, SelectedMonth + 1);
+        Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s), Co2savedChart.Color, SelectedYear, SelectedMonth + 1);
     }
     [RelayCommand]
     private async Task GoToSessionStats(PloggingSession session)
