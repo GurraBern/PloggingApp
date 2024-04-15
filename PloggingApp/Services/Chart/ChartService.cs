@@ -56,11 +56,9 @@ public class ChartService : IChartService
     }
     private Chart generateEmptyLitterChart()
     {
-        var graph = new DonutChart()
+        var graph = new BarChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.RightOnly,
-            GraphPosition = GraphPosition.AutoFill,
             Entries = new List<ChartEntry>()
             {
                 new ChartEntry(1f)
@@ -125,8 +123,8 @@ public class ChartService : IChartService
         float offset = (valuePerTimePeriod.Values.All(v => v == 0)) ? 0.005f : 0f;
         var lineChart = new LineChart
         {
-            Entries = valuePerTimePeriod.Select(kv => new ChartEntry((float?)Math.Round(kv.Value) + offset)
-            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? Math.Round(kv.Value).ToString() : "", Color = color }).ToList(),
+            Entries = valuePerTimePeriod.Select(kv => new ChartEntry((float?)Math.Round((kv.Value), 2) + offset)
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? Math.Round((kv.Value), 2).ToString() : "", Color = color }).ToList(),
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
