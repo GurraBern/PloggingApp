@@ -11,12 +11,13 @@
              >
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
+        <converter:TimeResolutionToBoolConverter x:Key="TimeResolutionToBoolConverter"/>
+        <converter:IntToMonthConverter x:Key="IntToMonthConverter"/>
     </ContentView.Resources>
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
         <Grid RowDefinitions="*">
             <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
                 <VerticalStackLayout  Spacing="15" Padding="20,0" HeightRequest="1300">
-                    <Label Text="Filter by:" VerticalOptions="Center"/>
                     <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                         <HorizontalStackLayout Spacing="15" Margin="0">
                             <StackLayout Orientation="Horizontal">
@@ -82,7 +83,11 @@
                     </Border>
                     <Border Style="{StaticResource RoundBorder}">
                         <Grid RowDefinitions="30,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
-                            <Label Text="{Binding TimeRes}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2"/>
+                            <Grid Grid.Row="0" Grid.ColumnSpan="2" RowDefinitions="*" ColumnDefinitions="Auto,60" ColumnSpacing="0">
+                                <Label Text="Your activity in " Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"/>
+                                <Label Text="{Binding SelectedMonth, StringFormat='Your activity in {0},' , Converter={StaticResource IntToMonthConverter}}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'} "/>
+                                <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
+                            </Grid>
                             <!--Weight-->
                             <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
                                 <Grid Style="{StaticResource StatsGrid}">

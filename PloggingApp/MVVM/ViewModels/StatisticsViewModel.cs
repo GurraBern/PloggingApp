@@ -45,6 +45,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
             if (!_isInitialized)
                 return;
             Update();
+            OnPropertyChanged(nameof(SelectedYear));
         }
     }
     public int SelectedMonth
@@ -52,10 +53,11 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         get => _selectedMonth;
         set
         {
-            _selectedMonth = value + 1;
+           _selectedMonth = value;
            if (!_isInitialized)
                 return;
-            Update();
+           OnPropertyChanged(nameof(SelectedMonth));
+           Update();
         }
     }
 
@@ -71,7 +73,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         TimeRes = TimeResolution.ThisYear;
         StatsBoxColor = colorDict[TimeRes];
         SelectedYear = DateTime.UtcNow.Year;
-        SelectedMonth = DateTime.UtcNow.Month - 2;
+        SelectedMonth = DateTime.UtcNow.Month - 1;
         Initialization = InitializeAsync();
     }
     private async Task InitializeAsync()
@@ -81,7 +83,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
         if (!_allUserSessions.Any())
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
         UserSessions.ClearAndAddRange(_allUserSessions);
@@ -153,7 +155,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         else
         {
             UserSessions.ClearAndAddRange(_allUserSessions.Where(s => s.StartDate.Year == SelectedYear &&
-            s.StartDate.Month == SelectedMonth));
+            s.StartDate.Month == SelectedMonth + 1));
         }
         if (!UserSessions.Any())
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
@@ -187,7 +189,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task Refresh()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
         Update();
         IsRefreshing = false;
         IsBusy = false;
