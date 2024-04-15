@@ -72,7 +72,7 @@
                                 </Grid.ColumnDefinitions>
                                 <StackLayout Grid.Column="0" Orientation="Vertical">
                                     <Label Text="Litter collected" VerticalOptions="Center"/>
-                                    <Label Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0}kg'}" />
+                                    <Label Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0}g'}" />
                                 </StackLayout>
                                 <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
                                     <Label Text="Distance" VerticalOptions="Center"/>
