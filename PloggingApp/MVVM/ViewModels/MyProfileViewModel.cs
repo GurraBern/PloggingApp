@@ -29,7 +29,6 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
 
-
     [ObservableProperty]
     PloggingStatistics ploggingStatistics;
     [ObservableProperty]
@@ -91,21 +90,17 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
         if (!_allUserSessions.Any())
         {
-            await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
             IsBusy = false;
             return;
         }
-        else {
-        PloggingSessions.ClearAndAddRange(_allUserSessions);
-        PloggingStatistics = new PloggingStatistics(_allUserSessions);
-        LatestSessions = PloggingSessions.Take(4);
+        else
+        {
+            PloggingSessions.ClearAndAddRange(_allUserSessions);
+            PloggingStatistics = new PloggingStatistics(_allUserSessions);
+            LatestSessions = PloggingSessions.Take(4);
+            UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
-
-
-        UserRankInt = LeaderboardViewModel.UserRank.Rank;
-
-        IsBusy = false;
-
+            IsBusy = false;
         }
     }
 
@@ -135,6 +130,5 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     {
         await Shell.Current.GoToAsync($"{nameof(HistoryPage)}");
     }
-
 }
 
