@@ -62,6 +62,16 @@
                 <Label Text="You've just completed a Plogging Session!"/>
 
                 <!--  Plogg Together  -->
+                <Label
+                    Margin="0,20,0,0"
+                    FontSize="Medium"
+                    Text="Plogg Together"/>
+                <Label Text="Plogg Together lets you team up with friends for a plogging session. One person tracks the litter collected while the other helps pick it up. Both get credit for the cleanup effort."/>
+
+                <Label Margin="0,10,0,0" Text="To start plogging together tap Plogg Together on the map menu buttons."/>
+                <Image Source="tutorial_ploggtogether_mainview"/>
+
+                <Label Text="The group leader shares their QR code for others to join by pressing Your ID. Non-leader members join by pressing Add User and scanning the leader's QR code."/>
 
                 <!--  Pickup Request Tutorial  -->
                 <Label
