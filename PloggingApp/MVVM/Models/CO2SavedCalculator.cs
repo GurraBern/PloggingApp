@@ -21,7 +21,7 @@ public class CO2SavedCalculator
 
     public static double CalculateCO2Saved(Litter litter)
     {
-        return (CO2PerKgPairs[litter.LitterType]*(litter.Weight)) / 1000;
+        return (CO2PerKgPairs[litter.LitterType]*(litter.Weight));
     }
     public static double CalculateCO2Saved(IEnumerable<PloggingSession> sessions)
     {
@@ -33,7 +33,7 @@ public class CO2SavedCalculator
     }
     private static double Calculate(List<Litter> litters)
     {
-        return litters.Sum(l => (CO2PerKgPairs[l.LitterType]) * l.Weight) / 1000 ;
+        return litters.Sum(l => (CO2PerKgPairs[l.LitterType]) * l.Weight);
     }
     
 

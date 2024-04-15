@@ -10,6 +10,7 @@ using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
 using PloggingApp.Services;
 using System.Windows.Input;
+using PloggingApp.Services.SessionStatistics;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -20,6 +21,7 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
     private readonly IToastService _toastService;
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
+    private readonly ISessionStatisticsService _sessionStatisticsService;
 
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
@@ -33,13 +35,15 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
     bool isRefreshing;
     public HistoryViewModel(IPloggingSessionService ploggingSessionService,
         PloggingSessionViewModel ploggingSessionViewModel, IToastService toastService, 
-        IAuthenticationService authenticationService, StatisticsViewModel statisticsViewModel)
+        IAuthenticationService authenticationService, StatisticsViewModel statisticsViewModel,
+        ISessionStatisticsService sessionStatisticsService)
 	{
         _ploggingSessionService = ploggingSessionService;
         PloggingSessionViewModel = ploggingSessionViewModel;
         _toastService = toastService;
         _authenticationService = authenticationService;
         StatisticsViewModel = statisticsViewModel;
+        _sessionStatisticsService = sessionStatisticsService;
 
 
         Initialization = InitializeAsync();
@@ -62,6 +66,12 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
         PloggingSessions.ClearAndAddRange(_allUserSessions);
 
         IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task GoToSessionStats(PloggingSession session)
+    {
+        await _sessionStatisticsService.GoToSessionStats(session);
     }
 
     [RelayCommand]

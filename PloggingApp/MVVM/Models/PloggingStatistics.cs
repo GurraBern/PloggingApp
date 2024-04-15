@@ -20,7 +20,7 @@ public partial class PloggingStatistics : ObservableObject
     {
         TotalSteps = sessions.Sum(s => s.PloggingData.Steps);
         TotalDistance = Math.Round(sessions.Sum(s => s.PloggingData.Distance), 1);
-        TotalCO2Saved = Math.Round(CO2SavedCalculator.CalculateCO2Saved(sessions), 2);
+        TotalCO2Saved = Math.Round(CO2SavedCalculator.CalculateCO2Saved(sessions), 4);
         TotalWeight = Math.Round(sessions.Sum(s => s.PloggingData.Litters.Sum(l => l.Weight)), 1);
         TotalTime = calculateTime(sessions);
     }

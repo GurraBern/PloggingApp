@@ -371,3 +371,4 @@ obj/
 .vscode/launch.json
 PloggingApp/.DS_Store
 .DS_Store
+/PloggingAPI/Properties
