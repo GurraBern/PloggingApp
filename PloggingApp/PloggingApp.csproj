@@ -52,7 +52,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\**\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -105,12 +104,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\Components\MapIconsBar.xaml.cs">
-	    <DependentUpon>MapIconsBar.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="MVVM\Views\DashboardView.xaml.cs">
-	    <DependentUpon>DashboardView.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
@@ -142,9 +135,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\TutorialPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Components\MapIconsBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\AcceptPopup.xaml">
@@ -220,5 +210,9 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\ScanQRcodePage\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiImage Include="Resources\AppIcon\appicon.jpg" />
+	  <MauiImage Include="Resources\AppIcon\raccoon.svg" />
 	</ItemGroup>
 </Project>
