@@ -6,11 +6,12 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Color="Transparent">
 
-    <Border Style="{StaticResource RoundBorder}" WidthRequest="300" HeightRequest="500" Padding="5">
+    <Border Style="{StaticResource RoundBorder}" WidthRequest="300" HeightRequest="500" Padding="20">
         <ScrollView>
             <VerticalStackLayout>
                 <Label Text="Tutorial" FontSize="Large" HorizontalOptions="Center"></Label>
-                
+
+                <!--MapIcons Explanations-->
                 <Label Text="Map Icons" FontSize="Medium"></Label>
                 <HorizontalStackLayout>
                     <Image
@@ -32,12 +33,31 @@
                 </HorizontalStackLayout>
                 <Label Text="This icon signals a plogger's leftover litter bag for you to pick up and recycle."/>
 
+                <!--Plogging Session Tutorial - Start Plogging-->
+                <Label Text="Plogging Session" FontSize="Medium" Margin="0, 20, 0, 0"/>
+                <Label Text="To start a plogging session press the button at the bottom of the Map, then press Start plogging."/>
+                <Image Source="tutorial_menu_actions.png" Margin="0, 0, 0, 20"/>
 
-                <Label Text="Plogging Session" FontSize="Medium"></Label>
-               
-                <!--TODO insert images and explanations on how to perform different actions and features-->
+                <!--Plogging Session Tutorial - Add Litter-->
+                <Label Text="During the plogging session whenver you pick up litter press the buttons to the right which best describes the litter."/>
+                <Image Source="tutorial_plogging_session.png" Margin="0, 0, 0, 20"/>
+
+                <!--Plogging Sesssion Weight Conversions-->
+                <!--TODO add-->
+
+                <!--Plogging Session Tutorial - Finish Plogging Session-->
+                <Label Text="When you are finished with your plogging session press End Plogging, this will bring up the camera where you are suppose to take a photo of the entire bag of litter which you picked up."/>
+                <Image Source="tutorial_checkout_image.png"/>
+                <Label Text="You've just completed a Plogging Session!"/>
+
+                <!--Plogg Together-->
+                <!--TODO add-->
+
+                <!--Pickup Request Tutorial-->
+                <Label Text="Pickup Request" FontSize="Medium" Margin="0, 20, 0, 0"/>
+                <Label Text="If you are not able to bring the collected litter to a recycling location you can create a pickup request by pressing Mark Litterbag. Take a photo that easily allows other ploggers to see where the bag is located, the location along with the photo will be available on the map."/>
+                <Image Source="tutorial_menu_actions"/>
             </VerticalStackLayout>
-
         </ScrollView>
     </Border>
 </toolkit:Popup>
