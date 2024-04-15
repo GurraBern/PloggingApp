@@ -18,6 +18,7 @@
         <Grid RowDefinitions="*">
             <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
                 <VerticalStackLayout  Spacing="15" Padding="20,0" HeightRequest="1300">
+
                     <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
                         <HorizontalStackLayout Spacing="15" Margin="0">
                             <StackLayout Orientation="Horizontal">
@@ -51,6 +52,12 @@
                             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
                         </VerticalStackLayout>
                     </Border>-->
+                    <Grid RowDefinitions="*" ColumnDefinitions="Auto,60" ColumnSpacing="0">
+                        <Label Text="Your activity in " Style="{StaticResource SubHeadline}"  HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"/>
+                        <Label Text="{Binding SelectedMonth, StringFormat='Your activity in {0},' , Converter={StaticResource IntToMonthConverter}}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'} "/>
+                        <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
+                    </Grid>
+
                     <CarouselView ItemsSource="{Binding Charts}" IndicatorView="indicatorCharts">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="models:ChartContext">
@@ -82,14 +89,9 @@
                         </VerticalStackLayout>
                     </Border>
                     <Border Style="{StaticResource RoundBorder}">
-                        <Grid RowDefinitions="30,*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
-                            <Grid Grid.Row="0" Grid.ColumnSpan="2" RowDefinitions="*" ColumnDefinitions="Auto,60" ColumnSpacing="0">
-                                <Label Text="Your activity in " Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"/>
-                                <Label Text="{Binding SelectedMonth, StringFormat='Your activity in {0},' , Converter={StaticResource IntToMonthConverter}}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'} "/>
-                                <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
-                            </Grid>
+                        <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                             <!--Weight-->
-                            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
                                 <Grid Style="{StaticResource StatsGrid}">
                                     <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                         <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
@@ -99,7 +101,7 @@
                                 </Grid>
                             </Border>
                             <!--CO2Saved-->
-                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
                                 <Grid Style="{StaticResource StatsGrid}">
                                     <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                         <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
@@ -109,7 +111,7 @@
                                 </Grid>
                             </Border>
                             <!--Distance-->
-                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
                                 <Grid Style="{StaticResource StatsGrid}">
                                     <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                         <Image Source="distance.svg" HeightRequest="24" WidthRequest="24"/>
@@ -119,7 +121,7 @@
                                 </Grid>
                             </Border>
                             <!--Time Plogged-->
-                            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
                                 <Grid Style="{StaticResource StatsGrid}">
                                     <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
                                         <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>

@@ -168,10 +168,10 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private void GetCharts()
     {
         LitterChart.Chart = _chartService.generateLitterChart(TimeRes, UserSessions);
-        DistanceChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth);
-        WeightChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth);
-        TimeChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth);
-        Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s) * 1000, Co2savedChart.Color, SelectedYear, SelectedMonth);
+        DistanceChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth + 1);
+        WeightChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth + 1);
+        TimeChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth + 1);
+        Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s) * 1000, Co2savedChart.Color, SelectedYear, SelectedMonth + 1);
     }
     [RelayCommand]
     private async Task GoToSessionStats(PloggingSession session)
