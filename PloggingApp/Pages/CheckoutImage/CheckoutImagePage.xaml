@@ -6,7 +6,7 @@
     xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
     x:DataType="viewmodels:CheckoutImageViewModel">
 
-    <Grid>
+    <Grid Padding="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -14,7 +14,7 @@
         <Image Grid.Row="0" Source="{Binding ImagePath}"/>
 
         <VerticalStackLayout Grid.Row="1" Spacing="5">
-            <Label Text="Disclaimer: This photo will be proof of your hard work, other people will be able to see it on your profile."/>
+            <Label Text="Disclaimer: This photo will be proof of your hard work, other people will be able to see it on your profile." Margin="0, 0, 0, 20"/>
 
             <Button
                 Command="{Binding UsePhotoCommand}"

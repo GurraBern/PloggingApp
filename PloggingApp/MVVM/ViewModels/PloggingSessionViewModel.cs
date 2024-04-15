@@ -135,19 +135,6 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     }
 
     [RelayCommand]
-    public void AddNeedHelpToCollectPin()
-    {
-        var pin = new NeedHelpToCollectPin()
-        {
-            Label = "HELP",
-            Location = CurrentLocation,
-            Address = "!!"
-        };
-
-        PlacedPins.Add(pin);
-    }
-
-    [RelayCommand]
     public void FinishSession()
     {
         TrackingPositions.Clear();

@@ -23,6 +23,7 @@ using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
 using Syncfusion.Maui.Core.Hosting;
+using PloggingApp.Services.SessionStatistics;
 
 namespace PloggingApp;
 
@@ -149,6 +150,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ILitterbagPlacementService, LitterbagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddTransient<ISessionStatisticsService, SessionStatisticsService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
