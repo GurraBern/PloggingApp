@@ -96,8 +96,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         else
         {
             PloggingSessions.ClearAndAddRange(_allUserSessions);
-            PloggingStatistics = new PloggingStatistics(_allUserSessions);
-            LatestSessions = PloggingSessions.Take(4);
+            PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
+            LatestSessions = PloggingSessions.Take(3);
             UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
             IsBusy = false;

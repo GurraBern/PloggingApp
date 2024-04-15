@@ -7,7 +7,7 @@
              x:DataType="viewmodel:HistoryPageViewModel"
              Title="HistoryPage">
 
-    <VerticalStackLayout>
-        <views:HistoryView BindingContext="{Binding HistoryViewModel}"></views:HistoryView>
-    </VerticalStackLayout>
+        <VerticalStackLayout>
+            <views:HistoryView BindingContext="{Binding HistoryViewModel}"></views:HistoryView>
+        </VerticalStackLayout>
 </ContentPage>

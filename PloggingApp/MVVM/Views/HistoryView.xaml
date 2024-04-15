@@ -9,8 +9,8 @@
 
 
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
-        <Grid>
-            <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
+        <Grid RowDefinitions="*">
+            <ScrollView Grid.Row="0"  VerticalOptions="FillAndExpand">
 
                 <VerticalStackLayout Spacing="10" Padding="20,0">
                     <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
@@ -21,6 +21,9 @@
                             <DataTemplate x:DataType="modelsCore:PloggingSession">
 
                                 <Border Style="{StaticResource StatsBorder}" BackgroundColor="White" HeightRequest="80" Margin="0,0,0,10" StrokeThickness="1">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Radius="8" Opacity="0.2" Offset="2,2" />
+                                    </Border.Shadow>
 
 
                                     <Grid>
