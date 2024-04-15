@@ -57,7 +57,7 @@
                                                         <ColumnDefinition Width="4*" />
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Label x:Name="Weight" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F0}kg'}" FontSize="Medium" />
+                                                    <Label x:Name="Weight" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}g'}" FontSize="Medium" />
 
                                                     <Image Grid.Column="0" Source="trashbag.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="End" />
 
@@ -73,7 +73,7 @@
                                     </Grid>
 
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:HistoryViewModel}}}" CommandParameter="{Binding .}"/>
                                     </Border.GestureRecognizers>
 
                                 </Border>

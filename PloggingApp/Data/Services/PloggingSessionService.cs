@@ -42,9 +42,9 @@ public class PloggingSessionService : IPloggingSessionService
         try
         {
             var request = new RestRequest("api/PloggingSession/UserSessions");
-            request.AddParameter("userId", UserId);
-            request.AddParameter("startDate", startDate);
-            request.AddParameter("endDate", endDate);
+            request.AddParameter("userId", UserId.ToString());
+            request.AddParameter("startDate", startDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            request.AddParameter("endDate", endDate.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
             return ploggingSessions;
