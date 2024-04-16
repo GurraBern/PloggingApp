@@ -4,9 +4,14 @@
              x:Class="PloggingApp.Pages.OthersProfilePage"
              xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
              Title="Others Profile">
-
+    
 
     <Grid>
+        <Image Source="leftarrow.png" Margin="0,-665,350,0" HeightRequest="15">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command ="{Binding goBackCommand}" Tapped ="BackTap"/>
+            </Image.GestureRecognizers>
+        </Image>
         <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}" />
     </Grid>
 
