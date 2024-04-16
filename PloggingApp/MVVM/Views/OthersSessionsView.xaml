@@ -32,7 +32,7 @@
 
         <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
         
-        <ScrollView HeightRequest="370">
+        <ScrollView HeightRequest="450">
             <CollectionView ItemsSource="{Binding PloggingSessions}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="modelsCore:PloggingSession">
