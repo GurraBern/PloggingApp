@@ -80,18 +80,19 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         var currentUserId = _authenticationService.CurrentUser.Uid;
         var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
 
-        if (plogGroup == null) return;
+        if (plogGroup == null)
+        {
+            ClearGroup();
+            IsBusy = false;
+            return;
+        }
 
         if (IsTracking == false)
         {
             if (plogGroup.OwnerUserId == currentUserId)
             {
                 await _plogTogetherService.DeleteGroup(currentUserId);
-                Group.Clear();
-                InGroup = false;
-                UserCanAdd = true;
-                UserCanLeave = false;
-                UserCanDelete = false;
+                ClearGroup();
             }
             else
             {
@@ -123,11 +124,8 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
        
         if (plogTogether == null)
         {
+            ClearGroup();
             IsBusy = false;
-            InGroup = false;
-            UserCanAdd = true;
-            UserCanLeave = false;
-            UserCanDelete = false;
             return;
         }
 
@@ -209,6 +207,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
         if (plogGroup == null)
         {
+            ClearGroup();
             IsBusy = false;
             return;
         }
@@ -216,11 +215,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
         if (plogGroup.OwnerUserId != currentUserId)
         {
             await _plogTogetherService.LeaveGroup(currentUserId);
-            Group.Clear();
-            InGroup = false;
-            UserCanAdd = true;
-            UserCanLeave = false;
-            UserCanDelete = false;
+            ClearGroup();
         }
         else
         {
@@ -249,15 +244,28 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
             var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
             if (plogGroup == null)
             {
-                InGroup = false;
-                UserCanAdd = true;
-                UserCanLeave = false;
-                UserCanDelete = false;
-                Group.Clear();
+                ClearGroup();
             }
         }
 
         IsBusy = false;
+    }
+
+    [RelayCommand]
+    public async Task goBack()
+    {
+        IsBusy = true;
+        await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
+        IsBusy = false;
+    }
+
+    private void ClearGroup()
+    {
+        InGroup = false;
+        UserCanAdd = true;
+        UserCanLeave = false;
+        UserCanDelete = false;
+        Group.Clear();
     }
 }
 
