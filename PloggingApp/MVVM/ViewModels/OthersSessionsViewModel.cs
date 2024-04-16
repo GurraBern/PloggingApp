@@ -82,15 +82,20 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             DisplayName = user.DisplayName;
             _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             PloggingStatistics = new PloggingStatistics(_allSessions);
-            //TotalSteps = Math.Round(stats.TotalSteps);
-            //TotalDistance = Math.Round(stats.TotalDistance);
-            //TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-            //TotalWeight = Math.Round(stats.TotalWeight);
-            
-            foreach(PloggingSession ps in _allSessions)
+
+            ploggingStatistics.TotalSteps = Math.Round(ploggingStatistics.TotalSteps,1);
+
+            ploggingStatistics.TotalDistance = Math.Round(ploggingStatistics.TotalDistance,1);
+
+            ploggingStatistics.TotalWeight = Math.Round(ploggingStatistics.TotalWeight,1);
+
+            ploggingStatistics.TotalCO2Saved = Math.Round(ploggingStatistics.TotalCO2Saved,1);
+
+            foreach (PloggingSession ps in _allSessions)
             {
-                ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance);
-                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);     
+                ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance,1);
+                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1); 
+                
             }
 
             PloggingSessions.ClearAndAddRange(_allSessions);
