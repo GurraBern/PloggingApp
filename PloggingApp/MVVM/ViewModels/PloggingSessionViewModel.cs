@@ -167,6 +167,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
             {
                 await _toastService.MakeToast("Could not place litterbag request");
             }
+
+            await _toastService.MakeToast("Placed pickup request successfully!");
         }
     }
 

@@ -3,13 +3,15 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
 public partial class LitterbagPlacementViewModel : ObservableObject
 {
     private readonly ILitterbagPlacementService _litterbagPlacementService;
-    private const int LITTERBAG_DISTANCE_THRESHOLD = 40;
+    private readonly IToastService _toastService;
+    private const int LITTERBAG_DISTANCE_THRESHOLD = 20;
 
     [ObservableProperty]
     private LitterbagPlacement litterbagPlacement = new();
@@ -20,15 +22,19 @@ public partial class LitterbagPlacementViewModel : ObservableObject
     [ObservableProperty]
     private bool canPickup = false;
 
-    public LitterbagPlacementViewModel(ILitterbagPlacementService litterbagPlacementService)
+    public LitterbagPlacementViewModel(ILitterbagPlacementService litterbagPlacementService, IToastService toastService)
     {
         _litterbagPlacementService = litterbagPlacementService;
+        _toastService = toastService;
     }
 
     [RelayCommand]
     private async Task CollectLitterbag()
     {
+        //TODO add error handling
         await _litterbagPlacementService.CollectLitterbagPlacement(litterbagPlacement.Id, DistanceToLitterBag);
+
+        await _toastService.MakeToast("Pickup request collected successfully!");
     }
 
     public void CalculateDistance(Location userLocation)
