@@ -112,6 +112,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
                 StartDate = StartTime,
                 EndDate = DateTime.UtcNow,
+                PloggingRoute = ConvertRoute(Route),
                 PloggingData = new PloggingData()
                 {
                     Litters = CurrentLitter,
@@ -151,6 +152,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                     DisplayName = displayName,
                     StartDate = StartTime,
                     EndDate = EndTime,
+                    PloggingRoute = ConvertRoute(Route),
                     PloggingData = ploggingData,
                     Image = imagePath
                 };
@@ -166,6 +168,18 @@ public class PloggingSessionTracker : IPloggingSessionTracker
             WeakReferenceMessenger.Default.Send(new UpdateStreakMessage(streakUser.Streak));
             await _toastService.MakeToast("Plogging Session Completed!");
         }
+    }
+
+    private List<MapPoint> ConvertRoute(List<Location> route)
+    {
+        var mapPoints = new List<MapPoint>();
+        foreach (var location in route)
+        {
+            var point = new MapPoint(location.Latitude, location.Longitude);
+            mapPoints.Add(point);
+        }
+
+        return mapPoints;
     }
 
     public void AddLitterItem(LitterType litterType, double amount, Location location)
