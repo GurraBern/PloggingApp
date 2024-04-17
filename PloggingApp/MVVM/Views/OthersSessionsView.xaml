@@ -10,7 +10,7 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
     
     <StackLayout>
-        <Grid RowDefinitions="*" ColumnDefinitions="100,200,50,10">
+        <Grid RowDefinitions="*" ColumnDefinitions="60,250,50,10">
          <Label Text="{Binding DisplayName}" FontSize="30" HorizontalOptions="Center"  MaximumWidthRequest="250"
                 Grid.Row="0" Grid.Column="1"/>
         <Label Text="{Binding StreakString}" FontSize="30" HorizontalOptions="Center"  MaximumWidthRequest="250"
