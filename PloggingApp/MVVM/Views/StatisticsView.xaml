@@ -40,54 +40,11 @@
                         </HorizontalStackLayout>
                     </Border>
                     <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
-                    <!--<Border Style="{StaticResource RoundBorder}">
-                        <VerticalStackLayout>
-                            <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
-                            <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Style="{StaticResource RoundBorder}">
-                        <VerticalStackLayout>
-                            <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
-                    </Border>-->
                     <Grid RowDefinitions="*" ColumnDefinitions="Auto,60" ColumnSpacing="0">
                         <Label Text="Your activity in " Style="{StaticResource SubHeadline}"  HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"/>
                         <Label Text="{Binding SelectedMonth, StringFormat='Your activity in {0},' , Converter={StaticResource IntToMonthConverter}}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'} "/>
                         <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
                     </Grid>
-
-                    <CarouselView ItemsSource="{Binding Charts}" IndicatorView="indicatorCharts">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="models:ChartContext">
-                                <Border Style="{StaticResource RoundBorder}">
-                                    <VerticalStackLayout>
-                                        <HorizontalStackLayout HorizontalOptions="StartAndExpand">
-                                            <Border Style="{StaticResource RoundBorder}" HeightRequest="30" WidthRequest="30">
-                                                <Image Source="{Binding ImageURI}" HeightRequest="24" WidthRequest="24"/>
-                                            </Border>
-                                            <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                                            <Label Text="{Binding Unit, StringFormat='({0})'}" Style="{StaticResource StatsText}" TextColor="Black" VerticalOptions="Center"/>
-                                           </HorizontalStackLayout>
-                                        <micro:ChartView Chart="{Binding Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
-                                    </VerticalStackLayout>
-                                </Border>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                    <IndicatorView x:Name="indicatorCharts"  HorizontalOptions="Center"/>
-                    <Border Style="{StaticResource RoundBorder}">
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout>
-                                <Border Style="{StaticResource RoundBorder}" HeightRequest="30" WidthRequest="30">
-                                    <Image Source="trashcan.svg" HeightRequest="50" WidthRequest="50"/>
-                                </Border>
-                                <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                            </HorizontalStackLayout>
-                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="160" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
-                    </Border>
                     <Border Style="{StaticResource RoundBorder}">
                         <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
                             <!--Weight-->
@@ -135,7 +92,51 @@
                             </Border>
                         </Grid>
                     </Border>
-                    <Label Style="{StaticResource SubHeadline}" Text="Sessions" Margin="10,0" HorizontalOptions="Start"/>
+                    <!--<Border Style="{StaticResource RoundBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
+                            <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource RoundBorder}">
+                        <VerticalStackLayout>
+                            <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                        </VerticalStackLayout>
+                    </Border>-->
+                 
+
+                    <CarouselView ItemsSource="{Binding Charts}" IndicatorView="indicatorCharts">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ChartContext">
+                                <Border Style="{StaticResource RoundBorder}">
+                                    <VerticalStackLayout>
+                                        <HorizontalStackLayout HorizontalOptions="StartAndExpand">
+                                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30">
+                                                <Image Source="{Binding ImageURI}" HeightRequest="24" WidthRequest="24"/>
+                                            </Border>
+                                            <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                                            <Label Text="{Binding Unit, StringFormat='({0})'}" Style="{StaticResource StatsText}" TextColor="Black" VerticalOptions="Center"/>
+                                           </HorizontalStackLayout>
+                                        <micro:ChartView Chart="{Binding Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="indicatorCharts"  HorizontalOptions="Center"/>
+                    <Border Style="{StaticResource RoundBorder}">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#e6e6e6" HeightRequest="30" WidthRequest="30">
+                                    <Image Source="trashcan.svg" HeightRequest="50" WidthRequest="50"/>
+                                </Border>
+                                <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                            </HorizontalStackLayout>
+                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="160" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                        </VerticalStackLayout>
+                    </Border>
+                                     <Label Style="{StaticResource SubHeadline}" Text="Sessions" Margin="10,0" HorizontalOptions="Start"/>
                     <CollectionView ItemsSource="{Binding UserSessions}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="modelscore:PloggingSession">
