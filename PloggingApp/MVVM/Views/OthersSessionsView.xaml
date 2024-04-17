@@ -10,41 +10,89 @@
              x:DataType="viewmodel:OthersSessionsViewModel">
     
     <StackLayout>
-        <Label Text="{Binding DisplayName}" FontSize="40" HorizontalOptions="Center" />
-        <Label Text="Total" FontSize="Large" Padding="6,0" ></Label>
-        <Border HeightRequest="50">
-            <Grid ColumnDefinitions="100,100,100,100" RowDefinitions="20,60"   >
-                <Label Grid.Row="0" Grid.Column="0" Text="Trash Weight" Margin="0,0,10,0"  HorizontalTextAlignment="Center" MaximumWidthRequest="100"/>
-                <Label Grid.Row="0" Grid.Column="1" Text="Distance" Margin="10,0,10,0" HorizontalTextAlignment="Center" MaximumWidthRequest="150"/>
-                <Label Grid.Row="0" Grid.Column="2" Text="CO2" Margin="10,0,10,0" HorizontalTextAlignment="Center" MaximumWidthRequest="100"/>
-                <Label Grid.Row="0" Grid.Column="3" Text="Biggest Streak" Margin="0,0,0,0" HorizontalTextAlignment="Start" />
-
-                <Label Grid.Row="1" Grid.Column="0" Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0}kg'}" Margin="0" HorizontalTextAlignment="Center" FontSize="Medium"/>
-                <Label Grid.Row="1" Grid.Column="1" Text="{Binding PloggingStatistics.TotalDistance, StringFormat='{0}km'}" Margin="0" HorizontalTextAlignment="Center" FontSize="Medium"/>
-                <Label Grid.Row="1" Grid.Column="2" Text="{Binding PloggingStatistics.TotalCO2Saved, StringFormat='{0}kg'}" Margin="0" HorizontalTextAlignment="Center" FontSize="Medium"/>
-                <Label Grid.Row="1" Grid.Column="3" Text="{Binding StreakString, StringFormat='{0}'}" Margin="0"  MaximumWidthRequest="300" HorizontalTextAlignment="Center" FontSize="Medium"/>
+        <Grid RowDefinitions="*" ColumnDefinitions="100,200,50,10">
+         <Label Text="{Binding DisplayName}" FontSize="30" HorizontalOptions="Center"  MaximumWidthRequest="250"
+                Grid.Row="0" Grid.Column="1"/>
+        <Label Text="{Binding StreakString}" FontSize="30" HorizontalOptions="Center"  MaximumWidthRequest="250"
+               Grid.Row="0" Grid.Column="2"/>
+            <Image WidthRequest="20" Source="streak_icon.svg" Grid.Row="0" Grid.Column="3"></Image>
+            
+        </Grid>
+        <Border Style="{StaticResource RoundBorder}"  HeightRequest="80" WidthRequest="350" Padding="5,5,0,0">
+            <Grid RowDefinitions="*" ColumnDefinitions="*">
+                <views:BadgesView BindingContext="{Binding BadgesViewModel}" Grid.Row="0" Grid.Column ="0" Margin="0,-20,0,0"/>
             </Grid>
         </Border>
+        <VerticalStackLayout>
+            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
+                <!--Weight-->
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                    <Grid Style="{StaticResource StatsGrid}">
+                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                            <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
+                        </Border>
+                        <Label Style="{StaticResource StatsLabelText}" Text="Litter Weight" Grid.Row="0" Grid.Column="1"/>
+                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0}kg'}" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+                <!--CO2Saved-->
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                    <Grid Style="{StaticResource StatsGrid}">
+                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                            <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
+                        </Border>
+                        <Label Style="{StaticResource StatsLabelText}" Text="CO2e Saved" Grid.Row="0" Grid.Column="1"/>
+                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStatistics.TotalCO2Saved, StringFormat='{0} kg CO2e'}" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+                <!--Distance-->
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                    <Grid Style="{StaticResource StatsGrid}">
+                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                            <Image Source="distance.svg" HeightRequest="24" WidthRequest="24"/>
+                        </Border>
+                        <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
+                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStatistics.TotalDistance, StringFormat='{0}m'}" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+                <!--Time Plogged-->
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                    <Grid Style="{StaticResource StatsGrid}">
+                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                            <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>
+                        </Border>
+                        <Label Style="{StaticResource StatsLabelText}" Text="Time Plogged" Grid.Row="0" Grid.Column="1"/>
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStatistics.TotalTime.Hours, StringFormat='{0}h : '}"/>
+                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStatistics.TotalTime.Minutes, StringFormat=' {0}min '}"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            
+        </VerticalStackLayout>
 
-        <Label Text="Badges" FontSize="Large" Padding="6,0"></Label>
-
-        <views:BadgesView BindingContext="{Binding BadgesViewModel}" Margin="0,-15,0,-25" HorizontalOptions="Start" MinimumHeightRequest="80"/>
-
-        <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
+        <VerticalStackLayout>
+            
+            <Label Text="Recent Sessions" FontSize="Large" Padding="6,0"></Label>
+        </VerticalStackLayout>
+        
         
         <ScrollView HeightRequest="450">
             <CollectionView ItemsSource="{Binding PloggingSessions}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="modelsCore:PloggingSession">
-                        <Border Margin="2,3" Padding="0">
+                        <Border Margin="2,3" Padding="0" StrokeShape="RoundRectangle 0" BackgroundColor="white" HeightRequest="80">
                             <HorizontalStackLayout >
-                                <Image Source="{Binding Image}"  HeightRequest="80" WidthRequest="80" Margin="-10,0,0,0"></Image>
+                                <Border WidthRequest="60">
+                                    <Image Source="{Binding Image}"    HeightRequest="85" WidthRequest="85" Margin="0,0,0,0"></Image>
+                                </Border>
                                 <VerticalStackLayout Margin="40,0,0,0">
-                                    <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:MM}'}" Margin="30,10,0,0" />
+                                    <Label x:Name ="StartDate" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:mm}'}" Margin="30,10,0,0" />
                                     <HorizontalStackLayout Margin="0,0,0,10">
-                                        <Label x:Name="Duration"  Text="{Binding EndDate, StringFormat='{0:HH:MM }'}"  FontSize="Large"/>
-                                        <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}km'}" FontSize="Large" />
-                                        <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}'}" FontSize="Large"/>
+                                        <Label x:Name="Duration"  Text="{Binding StartDate, StringFormat='{0:HH:mm }'}"  FontSize="Large"/>
+                                        <Label x:Name="Distance"  Text="{Binding PloggingData.Distance, StringFormat='{0}m'}" FontSize="Large" />
+                                        <Label x:Name="Weight"  Text="{Binding PloggingData.Weight, StringFormat=' {0}kg'}" FontSize="Large"/>
                                         <Image x:Name="SessionImage" Source="pickeduptrash.png" HeightRequest="50" WidthRequest="50" Margin="-5,-18,0,0"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>

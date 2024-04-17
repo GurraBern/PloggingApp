@@ -26,7 +26,7 @@ public class Badge : ObservableObject
         {
             Image = ImageSource.FromFile(png + "badgesilver.png");
             Level = Levels.Silver;
-            ToNextLevel = th3 - progress;
+            ToNextLevel = Math.Round(th3 - progress,1);
             percentage = progress / th3;
             color = "Gold";
         }
@@ -34,7 +34,7 @@ public class Badge : ObservableObject
         {
             Image = ImageSource.FromFile(png + "badgebronze.png");
             Level = Levels.Bronze;
-            ToNextLevel = th2 - progress;
+            ToNextLevel = Math.Round(th2 - progress,1);
             percentage = progress / th2;
             color = "#566470";
         }
@@ -42,7 +42,7 @@ public class Badge : ObservableObject
         {
             Image = ImageSource.FromFile(png + "badge.png");
             Level = Levels.Locked;
-            ToNextLevel = th1 - progress;
+            ToNextLevel = Math.Round(th1 - progress,1);
             percentage = progress / th1;
             color = "#CD7F32";
         }

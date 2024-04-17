@@ -7,7 +7,7 @@
     
 
     <Grid>
-        <Image Source="leftarrow.png" Margin="0,-665,350,0" HeightRequest="15">
+        <Image Source="leftarrow.png" Margin="0,-675,320,0" HeightRequest="25">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Command ="{Binding goBackCommand}" Tapped ="BackTap"/>
             </Image.GestureRecognizers>

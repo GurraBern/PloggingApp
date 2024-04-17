@@ -94,7 +94,8 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
             foreach (PloggingSession ps in _allSessions)
             {
                 ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance,1);
-                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1); 
+                ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);
+                ps.StartDate = ps.StartDate.AddHours(2);
                 
             }
 

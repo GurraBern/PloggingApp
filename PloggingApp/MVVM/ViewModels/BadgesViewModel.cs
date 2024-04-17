@@ -73,10 +73,7 @@ public partial class BadgesViewModel: BaseViewModel
         badges.Add(new StreakBadge(streak));
         foreach (Badge b in badges)
         {
-            if (b.Level != Levels.Locked)
-            {
                 Badges.Add(b);
-            }
 
             if (Badges.Count == 5)
             {
