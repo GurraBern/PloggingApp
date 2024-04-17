@@ -31,7 +31,7 @@
                                     <Image Source="arrowdown.svg"/>
                                 </HorizontalStackLayout>
                             </Border>
-                            <Border BackgroundColor ="{StaticResource Primary}" StrokeShape="RoundRectangle 10">
+                            <Border BackgroundColor ="{StaticResource Primary}" StrokeShape="RoundRectangle 10"  IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'}">
                                 <HorizontalStackLayout>
                                     <Picker BackgroundColor ="Transparent" TextColor="White" ItemsSource="{Binding Months}" Title="Month" SelectedIndex="{Binding SelectedMonth}"/>
                                     <Image Source="arrowdown.svg"/>
