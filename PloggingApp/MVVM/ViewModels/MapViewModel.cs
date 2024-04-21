@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 
-public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>
+public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>, IRecipient<LitterbagPickedUpMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
     private readonly ILitterbagPlacementService _litterbagPlacementService;
@@ -29,6 +29,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         _toastService = toastService;
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<LitterBagPlacedMessage>(this);
+        WeakReferenceMessenger.Default.Register<LitterbagPickedUpMessage>(this);
 
         Initialization = Initialize();
     }
@@ -79,6 +80,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
         var litterbagPlacementPin = new LitterbagPlacementPin(PressedLitterbagPlacementCommand, litterbagPlacement)
         {
+            MarkerId = litterbagPlacement.Id,
             Label = "Pickup Trashbag",
             Location = new Location()
             {
@@ -143,4 +145,23 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 	{
         PlaceLitterbag(message.LitterbagPlacement);
 	}
+
+    public void Receive(LitterbagPickedUpMessage message)
+    {
+        RemoveLitterbag(message.LitterbagPlacement.Id);
+    }
+
+    //TODO better performance?
+    private void RemoveLitterbag(string id)
+    {
+        try
+        {
+            var litterbagPin = PlacedPins.First(x => x.MarkerId != null && x.MarkerId.Equals(id));
+            PlacedPins.Remove(litterbagPin);
+        }
+        catch (Exception)
+        {
+            _toastService.MakeToast("Could not find marker");
+        }
+    }
 }

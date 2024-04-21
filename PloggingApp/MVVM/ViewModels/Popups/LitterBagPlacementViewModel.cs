@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
@@ -31,10 +33,20 @@ public partial class LitterbagPlacementViewModel : ObservableObject
     [RelayCommand]
     private async Task CollectLitterbag()
     {
-        //TODO add error handling
-        await _litterbagPlacementService.CollectLitterbagPlacement(litterbagPlacement.Id, DistanceToLitterBag);
+        if(LitterbagPlacement != null && LitterbagPlacement.Id != null)
+        {
+            //TODO add error handling
+            await _litterbagPlacementService.CollectLitterbagPlacement(LitterbagPlacement.Id, DistanceToLitterBag);
 
-        await _toastService.MakeToast("Pickup request collected successfully!");
+            //If successful
+            WeakReferenceMessenger.Default.Send(new LitterbagPickedUpMessage(LitterbagPlacement));
+
+            await _toastService.MakeToast("Pickup request collected successfully!");
+        }
+        else
+        {
+            await _toastService.MakeToast("No pickup request select");
+        }
     }
 
     public void CalculateDistance(Location userLocation)

@@ -51,7 +51,6 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
-
     }
 
     private void OnLocationUpdated(object? sender, Location location)
