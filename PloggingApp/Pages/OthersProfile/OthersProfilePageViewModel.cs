@@ -19,5 +19,13 @@ public partial class OthersProfilePageViewModel : BaseViewModel
 
     }
 
+    [RelayCommand]
+    public async Task goBack()
+    {
+        IsBusy = true;
+        await Shell.Current.GoToAsync($"..");
+        IsBusy = false;
+    }
+
 
 }

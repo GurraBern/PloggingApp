@@ -9,10 +9,11 @@
         RowSpacing="10"
         Padding="10">
 
-        <Button Text="Go Back"
-                Grid.Row="0"
-                HorizontalOptions="Start"
-                Clicked="OnNavigateClicked"/>
+        <Image Source="leftarrow.png" HeightRequest="25" Grid.Row="0" HorizontalOptions="Start">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnNavigateClicked"/>
+            </Image.GestureRecognizers>
+        </Image>
 
         <zxing:CameraBarcodeReaderView
         x:Name="barcodeReader"

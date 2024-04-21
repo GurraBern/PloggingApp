@@ -7,29 +7,33 @@
              xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:BadgesViewModel">
+    <Grid RowDefinitions="100" ColumnDefinitions="80,*">
+        <Border Style="{StaticResource RoundedBorders}" WidthRequest="90" HeightRequest="150" Margin="-10,0,0,0">
+            <Image Source="badgesindicator.png" HeightRequest="100" WidthRequest ="100" Grid.Row="0" Grid.Column="0">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
+            </Image.GestureRecognizers>
+        </Image>
+        </Border>
 
-    <HorizontalStackLayout>
-        <CollectionView ItemsSource="{Binding Badges}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Badge">
-                        <StackLayout Margin="-25,-10,-30,0">
-                        <Image x:Name="Badge" Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill">
+        <CollectionView ItemsSource="{Binding Badges}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Margin="-5">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Badge">
+                    <HorizontalStackLayout>
+                        <Image x:Name="Badge" Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill" HorizontalOptions="Start"
+                              Margin="-20,0,-30,0" >
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}"
                                                       CommandParameter="{Binding .}" Tapped="BadgeTap"/>
                             </Image.GestureRecognizers>
                         </Image>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Image Source="morebadges.png" WidthRequest="30" HeightRequest="30" Margin="10,0,0,10" >
-                <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
-            </Image.GestureRecognizers>
-            </Image>
-        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentView>

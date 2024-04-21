@@ -120,7 +120,7 @@ public class ChartService : IChartService
         }
         //For some reason, if every value in the graph == 0. Skiasharp throws an exception, 
         // claiming that "shaderA is null". This is an ugly workaround for this.
-        float offset = (valuePerTimePeriod.Values.All(v => v == 0)) ? 0.005f : 0f;
+        float offset = (valuePerTimePeriod.Values.All(v => Math.Round(v, 2) == 0)) ? 0.005f : 0f;
         var lineChart = new LineChart
         {
             Entries = valuePerTimePeriod.Select(kv => new ChartEntry((float?)Math.Round((kv.Value), 2) + offset)

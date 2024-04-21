@@ -18,4 +18,19 @@ public partial class OthersProfilePage : ContentPage
         await vm.OthersSessionsViewModel.UpdatePage();
         await vm.BadgesViewModel.Init();
     }
+
+    private void BackTap(object sender, EventArgs e)
+    {
+        if (sender is Image tappedImage)
+        {
+            tappedImage.Opacity = 0.5;
+
+            Device.StartTimer(TimeSpan.FromMilliseconds(500), () =>
+            {
+                tappedImage.Opacity = 1;
+                return false;
+            });
+        }
+    }
+
 }

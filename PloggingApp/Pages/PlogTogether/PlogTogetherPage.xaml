@@ -24,12 +24,11 @@
           RowDefinitions="Auto,Auto,*,Auto"
           RowSpacing="20">
 
-        <Button Text="Go Back"
-                Grid.Row="0"
-                Grid.Column="0"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                Clicked="OnNavigateClicked"/>
+        <Image Source="leftarrow.png" HeightRequest="25" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding goBackCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
 
         <Label Text="Plog Group:"
                Grid.Row="1"
