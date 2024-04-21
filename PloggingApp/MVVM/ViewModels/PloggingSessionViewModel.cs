@@ -51,7 +51,6 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
-
     }
 
     private void OnLocationUpdated(object? sender, Location location)
@@ -167,6 +166,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
             {
                 await _toastService.MakeToast("Could not place litterbag request");
             }
+
+            await _toastService.MakeToast("Placed pickup request successfully!");
         }
     }
 

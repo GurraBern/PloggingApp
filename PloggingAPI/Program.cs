@@ -20,7 +20,6 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
-
 var serviceAccountPath = Environment.GetEnvironmentVariable("SERVICEACCOUNT_GOOGLEDRIVE", EnvironmentVariableTarget.Process);
 if(serviceAccountPath == null)
 {
@@ -45,9 +44,6 @@ builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionReposit
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
 builder.Services.AddSingleton<ILitterbagRepository, LitterbagRepository>();
 builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
-
-
-
 
 builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>();
 
