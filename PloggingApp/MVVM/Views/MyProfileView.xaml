@@ -34,7 +34,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="2" ImageSource="logout.svg" Command="{Binding LogoutCommand}" Scale="0.15" Background="White" HeightRequest="350" WidthRequest="350"/>
+                        <ImageButton Grid.Row="0" Grid.Column="2" Source="logout.svg" Command="{Binding LogoutCommand}" Scale="0.12" Background="White" HeightRequest="350" WidthRequest="350"/>
 
                         <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
                         <Label Grid.Row="0" Grid.Column="0" 
@@ -134,11 +134,8 @@
                             </CollectionView>
 
 
-                            <Image Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoToHistoryPageCommand}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
+                            <ImageButton Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40" Command="{Binding GoToHistoryPageCommand}"/>
+
                         </Grid>
 
                     </StackLayout>
