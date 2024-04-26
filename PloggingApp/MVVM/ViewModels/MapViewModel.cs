@@ -6,6 +6,7 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.MVVM.ViewModels.Popups;
 using PloggingApp.Services;
 using System.Collections.ObjectModel;
 
@@ -35,11 +36,12 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
         Initialization = Initialize();
     }
-
+    
+    //TODO Reactive extensions to concurrently load these
     private async Task Initialize()
     {
-        await AddTrashPinsToMap();
-        await AddLitterBagPlacementsToMap();
+        //await AddTrashPinsToMap();
+        //await AddLitterBagPlacementsToMap();
         await AddEventsToMap();
     }
 
@@ -55,7 +57,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task AddLitterBagPlacementsToMap()
     {
-        var litterbagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+        var litterbagPlacements = await Task.Run(_litterbagPlacementService.GetLitterbagPlacements);
+
         foreach (var litterbagPlacement in litterbagPlacements)
         {
             PlaceLitterbagPin(litterbagPlacement);
@@ -84,16 +87,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
                 Longitude = location.Longitude 
             }
         });
-    }
-
-    private async Task AddLitterBagPlacementsToMap()
-    {
-        var litterbagPlacements = await Task.Run(_litterbagPlacementService.GetLitterbagPlacements);
-
-        foreach (var litterbagPlacement in litterbagPlacements)
-        {
-            PlaceLitterbag(litterbagPlacement);
-        }
     }
 
     private void PlaceLitterbagPin(LitterbagPlacement litterbagPlacement)
@@ -145,9 +138,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     [RelayCommand]
     private async Task OpenUserEvent(UserEvent userEvent)
     {
-        var test = userEvent;
-
         //TODO Open popup for event 
+        await _popupService.ShowPopupAsync<EventPopupViewModel>();
     }
 
     [RelayCommand]

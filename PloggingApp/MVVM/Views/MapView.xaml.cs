@@ -104,6 +104,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         }
     }
 
+    //TODO Is it possible to remove this and use generic type
     private void CustomPin_MarkerClicked(object sender, PinClickedEventArgs e)
     {
         var pin = sender as CustomPin;
@@ -115,6 +116,9 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
                 break;
             case CanPin canPin:
                 canPin.Command.Execute("");
+                break;
+            case UserEventPin userEventPin:
+                userEventPin.Command.Execute(userEventPin.UserEvent);
                 break;
             default:
                 break;

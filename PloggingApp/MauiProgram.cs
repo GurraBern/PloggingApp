@@ -24,6 +24,7 @@ using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
 using Syncfusion.Maui.Core.Hosting;
 using PloggingApp.Services.SessionStatistics;
+using PloggingApp.MVVM.ViewModels.Popups;
 
 namespace PloggingApp;
 
@@ -108,7 +109,7 @@ public static class MauiProgram
     {
         builder.Services.AddTransientPopup<AcceptPopup, AcceptPopupViewModel>();
         builder.Services.AddTransientPopup<BadgesPopUpView,BadgesPopUpViewModel>();
-
+        builder.Services.AddTransientPopup<EventPopup, EventPopupViewModel>();
         builder.Services.AddTransientPopup<LitterbagPlacementPopup, LitterbagPlacementViewModel>();
     }
 

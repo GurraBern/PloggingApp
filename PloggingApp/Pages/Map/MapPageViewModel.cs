@@ -9,8 +9,8 @@ public class MapPageViewModel
 {
     public MapViewModel MapViewModel { get; set; }
 
-    public MapPageViewModel(ILitterLocationService litterLocationService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
+    public MapPageViewModel(ILitterLocationService litterLocationService, IUserEventService userEventService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
     {
-        MapViewModel = new MapViewModel(litterLocationService, litterbagPlacementService, popupService, toastService);
+        MapViewModel = new MapViewModel(litterLocationService, userEventService, litterbagPlacementService, popupService, toastService);
     }
 }
