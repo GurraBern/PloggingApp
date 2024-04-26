@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls.Maps;
-using Plogging.Core.Models;
+﻿using Plogging.Core.Models;
 using PloggingApp.MVVM.Views.Components;
 using System.Windows.Input;
 
@@ -13,24 +11,6 @@ public class LocationPin : CustomPin
     public Location? Location { get; set; }
     public ImageSource? ImageSource { get; set; }
     public ICommand Command { get; set; }
-}
-
-public class NeedHelpToCollectPin : LocationPin
-{
-    public NeedHelpToCollectPin()
-    {
-        ImageSource = ImageSource.FromFile("needhelptrashpin.png");
-    }
-
-}
-
-public class TrashCollectedPin : LocationPin
-{
-    public TrashCollectedPin()
-    {
-
-    }
-
 }
 
 public class LitterbagPlacementPin: LocationPin
@@ -61,7 +41,6 @@ public class FinishPin : LocationPin
     {
         ImageSource = ImageSource.FromFile("finishpin.png");
     }
-
 }
 
 public class StartPin : LocationPin
@@ -70,39 +49,12 @@ public class StartPin : LocationPin
     {
         ImageSource = ImageSource.FromFile("startpin.png");
     }
-
-}
-
-public class PlasticPin : LocationPin
-{
-    public PlasticPin()
-    {
-    }
-
 }
 
 public class CanPin : LocationPin
 {
     public CanPin()
     {
-        ImageSource = ImageSource.FromFile("red_dot.png");
+        ImageSource = ImageSource.FromFile("pickeduptrash.png");
     }
-
-}
-public class CigarettePin : LocationPin
-{
-    public CigarettePin()
-    {
-
-    }
-
-}
-
-public class SnusPin : LocationPin
-{
-    public SnusPin()
-    {
-
-    }
-
 }

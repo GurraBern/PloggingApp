@@ -66,7 +66,15 @@ public class PlogTogetherRepository : IPlogTogetherRepository
         if (groupOwnerId != userId)
         {
             plogGroup.UserIds.Remove(userId);
-            await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == groupOwnerId, plogGroup);
+
+            if (plogGroup.UserIds.Count == 1)
+            {
+                await DeleteGroup(groupOwnerId);
+            }
+            else
+            {
+                await _plogTogetherCollection.ReplaceOneAsync(u => u.OwnerUserId == groupOwnerId, plogGroup);
+            }
         }
     }
 

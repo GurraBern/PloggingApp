@@ -5,19 +5,20 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
 
     <Grid
-        RowDefinitions="*,Auto"
-        RowSpacing="10">
+        RowDefinitions="Auto,*"
+        RowSpacing="10"
+        Padding="10">
 
-        <Button Text="Go Back"
-                WidthRequest="200"
-                HeightRequest="70"
-                Grid.Row="1"
-                Clicked="OnNavigateClicked"/>
+        <Image Source="leftarrow.png" HeightRequest="25" Grid.Row="0" HorizontalOptions="Start">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnNavigateClicked"/>
+            </Image.GestureRecognizers>
+        </Image>
 
         <zxing:CameraBarcodeReaderView
         x:Name="barcodeReader"
         BarcodesDetected="barcodeReader_BarcodesDetected"
-        Grid.Row="0"/>
+        Grid.Row="1"/>
 
     </Grid>
 

@@ -57,5 +57,8 @@ public class PloggingSessionService : IPloggingSessionService
         }
     }
     public string UserId { get; set; }
+    public string MyUserId { get; set; }
+
+    public string OtherUserId { get; set; }
     public string SessionId { get; set; }
 }

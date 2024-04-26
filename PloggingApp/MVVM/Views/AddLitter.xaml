@@ -22,7 +22,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            
             <ImageButton
                 x:Name="expandBtn"
                 Grid.Row="1"
@@ -39,7 +38,7 @@
             <views:LitterTypeButton
                 Grid.Row="0"
                 Grid.Column="1"
-                BackgroundColor="#61ba49"
+                BackgroundColor="#8865f1"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Plastics}"
                 HeightRequest="80"
@@ -50,7 +49,7 @@
             <views:LitterTypeButton
                 Grid.Row="1"
                 Grid.Column="1"
-                BackgroundColor="#53a13e"
+                BackgroundColor="#a254d5"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.SmallMetal}"
                 HeightRequest="80"
@@ -61,7 +60,7 @@
             <views:LitterTypeButton
                 Grid.Row="2"
                 Grid.Column="1"
-                BackgroundColor="#468934"
+                BackgroundColor="#b346b1"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Cigarette}"
                 HeightRequest="80"
@@ -72,7 +71,7 @@
             <views:LitterTypeButton
                 Grid.Row="0"
                 Grid.Column="2"
-                BackgroundColor="#39722a"
+                BackgroundColor="#bd3b8a"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.LargePlastics}"
                 HeightRequest="80"
@@ -83,7 +82,7 @@
             <views:LitterTypeButton
                 Grid.Row="1"
                 Grid.Column="2"
-                BackgroundColor="#2d5c20"
+                BackgroundColor="#c03460"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Glass}"
                 HeightRequest="80"
@@ -94,7 +93,7 @@
             <views:LitterTypeButton
                 Grid.Row="2"
                 Grid.Column="2"
-                BackgroundColor="#214617"
+                BackgroundColor="#bc3434"
                 Command="{Binding AddLitterCommand}"
                 CommandParameter="{x:Static enumCore:LitterType.Snus}"
                 HeightRequest="80"

@@ -12,7 +12,7 @@
     Shell.TitleColor="{StaticResource White}"
     Title="PloggingApp"
     BackgroundColor="{StaticResource Primary}"
-    Shell.NavBarIsVisible="True">
+    Shell.NavBarIsVisible="False">
 
     <ShellItem>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
@@ -30,4 +30,6 @@
     <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
     <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
     <ShellContent Route="OthersProfilePage" Title="OTHER PROFILE"  ContentTemplate="{DataTemplate views:OthersProfilePage}"></ShellContent>
+    <ShellContent Route="HistoryPage" Title="HistoryPage" ContentTemplate="{DataTemplate views:HistoryPage}"></ShellContent>
+
 </Shell> 

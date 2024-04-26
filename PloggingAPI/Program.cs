@@ -20,7 +20,6 @@ else
     builder.Services.Configure<PloggingDatabaseSettings>(builder.Configuration.GetSection("PloggingDatabaseSettings"));
 }
 
-
 var serviceAccountPath = Environment.GetEnvironmentVariable("SERVICEACCOUNT_GOOGLEDRIVE", EnvironmentVariableTarget.Process);
 if(serviceAccountPath == null)
 {

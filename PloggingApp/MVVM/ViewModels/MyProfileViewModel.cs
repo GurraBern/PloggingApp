@@ -8,6 +8,7 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
+using PloggingApp.Services;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -17,6 +18,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     private readonly IRankingService _rankingService;
     private readonly IStreakService _streakService;
+    private readonly IToastService _toastService;
 
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
@@ -27,7 +29,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 
     public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
 
-
+    [ObservableProperty]
+    PloggingStatistics ploggingStatistics;
     [ObservableProperty]
     public string displayName;
     [ObservableProperty]
@@ -37,13 +40,12 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     public double totalWeight;
     [ObservableProperty]
-    public double totalTime;
-    [ObservableProperty]
     public int userRankInt;
     [ObservableProperty]
     private bool isRefreshing;
     [ObservableProperty]
     public IEnumerable<PloggingSession> latestSessions;
+
 
     public MyProfileViewModel(IAuthenticationService authenticationService, 
         IRankingService rankingService,
@@ -52,7 +54,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IPloggingSessionService ploggingSessionService, 
         PloggingSessionViewModel ploggingSessionViewModel, 
         LeaderboardViewModel leaderboardViewModel,
-        BadgesViewModel badgesViewModel)
+        BadgesViewModel badgesViewModel,
+        IToastService toastService)
     {
         _authenticationService = authenticationService;
         _rankingService = rankingService;
@@ -62,6 +65,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         LeaderboardViewModel = leaderboardViewModel;
         BadgesViewModel = badgesViewModel;
         _streakService = StreakService;
+        _toastService = toastService;
 
         Initialization = InitializeAsync();
     }
@@ -75,25 +79,29 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public async Task GetSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
-        PloggingSessions.ClearAndAddRange(_allUserSessions);
+        _ploggingSessionService.MyUserId = _authenticationService.CurrentUser.Uid;
+        _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
 
-        LatestSessions = PloggingSessions.Take(3);
+        await BadgesViewModel.Init();
 
-        UserRankInt = LeaderboardViewModel.UserRank.Rank;
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
-        var stats = new PloggingStatistics(_allUserSessions);
-        TotalDistance = Math.Round(stats.TotalDistance);
-        TotalCO2Saved = Math.Round(stats.TotalCO2Saved);
-        TotalWeight = Math.Round(stats.TotalWeight);
+        if (!_allUserSessions.Any())
+        {
+            IsBusy = false;
+            return;
+        }
+        else
+        {
+            PloggingSessions.ClearAndAddRange(_allUserSessions);
+            PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
+            LatestSessions = PloggingSessions.Take(3);
+            UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
-        int streak = (await _streakService.GetUserStreak(_authenticationService.CurrentUser.Uid)).Streak;
-
-        await BadgesViewModel.GetBadges(stats, streak);
-
-        IsBusy = false;
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
@@ -109,18 +117,18 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     }
 
     [RelayCommand]
-    public async Task GoToMyProfilePage()
+    private async Task Refresh()
     {
-        await Shell.Current.GoToAsync("MyProfilePage");
+        IsBusy = true;
+        await GetSessions();
+        IsRefreshing = false;
+        IsBusy = false;
     }
 
     [RelayCommand]
-    private async Task RefreshMyProfile()
+    private async Task GoToHistoryPage()
     {
-        IsRefreshing = true;
-        await GetSessions();
-        IsRefreshing = false;
+        await Shell.Current.GoToAsync($"{nameof(HistoryPage)}");
     }
-
 }
 

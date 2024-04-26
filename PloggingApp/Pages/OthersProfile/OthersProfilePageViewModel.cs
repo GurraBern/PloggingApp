@@ -18,10 +18,14 @@ public partial class OthersProfilePageViewModel : BaseViewModel
 
 
     }
+
     [RelayCommand]
-    public async Task GoBack()
+    public async Task goBack()
     {
-        await Shell.Current.GoToAsync($"//{nameof(RankingPage)}");
+        IsBusy = true;
+        await Shell.Current.GoToAsync($"..");
+        IsBusy = false;
     }
+
 
 }

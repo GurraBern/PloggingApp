@@ -22,6 +22,8 @@ using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
+using Syncfusion.Maui.Core.Hosting;
+using PloggingApp.Services.SessionStatistics;
 
 namespace PloggingApp;
 
@@ -78,6 +80,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<AuthenticationViewModel>();
 
         builder.Services.AddTransient<SessionStatisticsViewModel>();
+
+        builder.Services.AddTransient<HistoryPageViewModel>();
+        builder.Services.AddTransient<MyProfilePageViewModel>();
         builder.Services.AddTransient<CreateEventDetailsViewModel>();
         builder.Services.AddTransient<CreateEventViewModel>();
         builder.Services.AddTransient<UserEventsViewModel>();
@@ -96,6 +101,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MyProfileViewModel>();
         builder.Services.AddTransient<BadgesViewModel>();
         builder.Services.AddTransient<SessionStatsMapViewModel>();
+        builder.Services.AddTransient<HistoryViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -128,7 +134,9 @@ public static class MauiProgram
         builder.Services.AddTransient<OthersProfilePage>();
         builder.Services.AddTransient<PlogTogetherPage>();
 
-        builder.Services.AddSingleton<MyProfilePage>();
+        builder.Services.AddTransient<MyProfilePage>();
+
+        builder.Services.AddTransient<HistoryPage>();
         builder.Services.AddTransient<UserEventsPage>();
         builder.Services.AddTransient<CreateEventPage>();
         builder.Services.AddTransient<CreateEventDetails>();
@@ -147,6 +155,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ILitterbagPlacementService, LitterbagPlacementService>();
         builder.Services.AddTransient<IChartService, ChartService>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddTransient<ISessionStatisticsService, SessionStatisticsService>();
         builder.Services.AddTransient<IUserEventService, UserEventService>();
 
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()

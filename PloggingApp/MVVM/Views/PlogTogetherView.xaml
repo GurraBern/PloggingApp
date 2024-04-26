@@ -7,24 +7,32 @@
              x:DataType="viewmodel:PlogTogetherViewModel"
              x:Class="PloggingApp.MVVM.Views.PlogTogetherView">
 
-    <CollectionView
-        ItemsSource="{Binding Group}">
+        <CollectionView ItemsSource="{Binding Group}">
+    <CollectionView.ItemsLayout>
+        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+    </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
+    <CollectionView.ItemTemplate>
 
-                <DataTemplate
-
-                x:DataType="model:PlogUser">
+        <DataTemplate x:DataType="model:PlogUser">
+            <Border Style="{StaticResource RoundBorder}" Padding="10">
+                <Grid ColumnDefinitions="*,*">
 
                     <Label Text="{Binding DisplayName}"
-                           FontSize="Large"/>
+                           FontSize="Medium"
+                           Grid.Column="0"/>
 
+                    <Button Text="Remove"
+                            FontSize="Micro"
+                            WidthRequest="70"
+                            HorizontalOptions="End"
+                            Grid.Column="1"
+                            IsVisible="{Binding ShowButtons, Converter={StaticResource InverseBooleanConverter}}"
+                            />
+                </Grid>
+            </Border>
+        </DataTemplate>
 
-                </DataTemplate>
-
-        </CollectionView.ItemTemplate>
-
-    </CollectionView>
-
+    </CollectionView.ItemTemplate>
+</CollectionView>
 </ContentView>
-

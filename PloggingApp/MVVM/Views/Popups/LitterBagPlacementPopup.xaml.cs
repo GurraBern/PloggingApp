@@ -10,4 +10,9 @@ public partial class LitterbagPlacementPopup : Popup
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    private void ClosePopup(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

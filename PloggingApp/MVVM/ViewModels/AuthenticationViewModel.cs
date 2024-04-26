@@ -9,7 +9,7 @@ using PloggingApp.Services;
 namespace PloggingApp.MVVM.ViewModels;
 
 //More information on Firebase package used: https://www.nuget.org/packages/FirebaseAuthentication.net 
-public partial class AuthenticationViewModel : ObservableObject, IAsyncInitialization
+public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IStreakService _streakService;
@@ -39,7 +39,9 @@ public partial class AuthenticationViewModel : ObservableObject, IAsyncInitializ
 
     private async Task Initialize()
     {
+        IsBusy = true;
         await _authenticationService.AutoLogin();
+        IsBusy = false;
     }
 
 

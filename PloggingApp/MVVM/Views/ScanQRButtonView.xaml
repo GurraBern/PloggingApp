@@ -4,13 +4,8 @@
              x:Class="PloggingApp.MVVM.Views.ScanQRButtonView">
     <Grid>
 
-        <Button Text="Scan QR code"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                WidthRequest="200"
-                HeightRequest="70"
+        <Button Text="Add User"
                 Clicked="OnNavigateClicked"/>
-
     </Grid>
 </ContentView>
 

@@ -12,10 +12,14 @@ public class ChartService : IChartService
     private Dictionary<LitterType, SKColor> colors = new Dictionary<LitterType, SKColor>
     {
         {LitterType.Plastics, SKColor.Parse("#2bb5ff")},
-        {LitterType.Cigarette, SKColor.Parse("#ffb53c")},
+        {LitterType.LargePlastics, SKColor.Parse("#144e6e")},
+        {LitterType.Cigarette, SKColor.Parse("#383838")},
         {LitterType.Can, SKColor.Parse("#26ffb0")},
         {LitterType.SmallMetal, SKColor.Parse("#be26ff")},
         {LitterType.Cardboard, SKColor.Parse("#874b01")},
+        {LitterType.Snus, SKColor.Parse("#b5994a")},
+        {LitterType.Glass, SKColor.Parse("#ffb53c") },
+        {LitterType.Fabric, SKColor.Parse("#fa66f5") }
     };
     public ChartService()
     {
@@ -28,7 +32,7 @@ public class ChartService : IChartService
 
     public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.All(s => !s.PloggingData.Litters.Any()))
             return generateEmptyLitterChart();
         Dictionary<LitterType, double> keyValuePairs = sessions
             .SelectMany(x => x.PloggingData.Litters)
@@ -36,40 +40,40 @@ public class ChartService : IChartService
             .ToDictionary(d => d.Key, v => v.Sum(g => g.LitterCount));
 
         List<ChartEntry> chartEntries =
-            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
+            keyValuePairs.Select(lv => new ChartEntry((float?)lv.Value) { Label = lv.Key.ToString(), ValueLabel = lv.Value.ToString(), 
+                Color = (colors.ContainsKey(lv.Key)) ? colors[lv.Key] : SKColor.Parse("#000000")}).ToList();
 
-        var graph = new DonutChart()
+        var graph = new BarChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.RightOnly,
-            GraphPosition = GraphPosition.AutoFill,
+            //LabelMode = LabelMode.RightOnly,
+            //GraphPosition = GraphPosition.AutoFill,
+
             Entries = chartEntries,
-            LabelTextSize = 20
+            LabelTextSize = 25f
         };
         return graph;
     }
     private Chart generateEmptyLitterChart()
     {
-        var graph = new DonutChart()
+        var graph = new BarChart()
         {
             IsAnimated = true,
-            LabelMode = LabelMode.RightOnly,
-            GraphPosition = GraphPosition.AutoFill,
             Entries = new List<ChartEntry>()
             {
                 new ChartEntry(1f)
                 {
                     Label = "N/A",
-                    Color = SKColor.Parse("#999999")
+                    Color = SKColor.Parse("#dedede")
                 }
             },
             LabelTextSize = 20
         };
         return graph;
     }
-    public Chart generateDistanceChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, int year, int month = 1)
+    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> func, SKColor color, int year, int month = 1 )
     {
-        if (!sessions.Any())
+        if (!sessions.Any() || sessions.Sum(func) == 0)
         {
             return generateEmptyLineChart(timeResolution, year, month);
         }
@@ -80,8 +84,8 @@ public class ChartService : IChartService
                     .GroupBy(s => s.StartDate.Date)
                     .ToDictionary(
                         group => group.Key,
-                        group => group.Sum(s => s.PloggingData.Distance));
-            return generateMonthLineChart(distancePerTimePeriod, "m", year, month);
+                        group => group.Sum(func));
+            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
         else
         {
@@ -89,45 +93,38 @@ public class ChartService : IChartService
                     .GroupBy(s => s.StartDate.Month)
                     .ToDictionary(
                         group => new DateTime(year, group.Key, 1),
-                        group => group.Sum(s => s.PloggingData.Distance));
-            return generateYearLineChart(distancePerTimePeriod, "m", year);
+                        group => group.Sum(func));
+            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
     }
-    private Chart generateMonthLineChart(Dictionary<DateTime, double> dict, string yAxisLabel, int year, int month = 1)
+    private Chart makeLineChart(Dictionary<DateTime, double> dict, TimeResolution timeRes, SKColor color, int year, int month = 1)
     {
-
-        Dictionary<string, double> valuePerDay = new Dictionary<string, double>();
-        for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+        Dictionary<string, double> valuePerTimePeriod = new Dictionary<string, double>();
+        if(timeRes is TimeResolution.ThisMonth)
         {
-            DateTime currentDate = new DateTime(year, month, day);
-            double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
-            valuePerDay.Add(currentDate.ToString("d "), acc);
+            for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+            {
+                DateTime currentDate = new DateTime(year, month, day);
+                double acc = dict.ContainsKey(currentDate) ? dict[currentDate] : (double)0;
+                valuePerTimePeriod.Add(currentDate.ToString("d "), acc);
+            }
         }
-        return generateLineChart(valuePerDay, yAxisLabel, SKColor.Parse("#9558a8"));
-    }
-
-    private Chart generateYearLineChart(Dictionary<DateTime, double> dict, string yAxisLabel, int year)
-    {
-        Dictionary<string, double> valuePerMonth = new Dictionary<string, double>();
-        for (int m = 1; m <= 12; m++)
+        else
         {
-            DateTime thisMonth = new DateTime(year, m, 1);
-            double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
-            valuePerMonth.Add(thisMonth.ToString("MMM"), acc);
+            for (int m = 1; m <= 12; m++)
+            {
+                DateTime thisMonth = new DateTime(year, m, 1);
+                double acc = dict.ContainsKey(thisMonth) ? dict[thisMonth] : 0;
+                valuePerTimePeriod.Add(thisMonth.ToString("MMM"), acc);
+            }
         }
-        return generateLineChart(valuePerMonth, yAxisLabel, SKColor.Parse("#6100b0"));
-    }
-
-    // General function
-    private Chart generateLineChart(Dictionary<string, double> dict, string yAxisLabel, SKColor color)
-    {
         //For some reason, if every value in the graph == 0. Skiasharp throws an exception, 
         // claiming that "shaderA is null". This is an ugly workaround for this.
-        float offset = (dict.Values.All(v => v == 0)) ? 0.005f : 0f;
+        float offset = (valuePerTimePeriod.Values.All(v => Math.Round(v, 2) == 0)) ? 0.005f : 0f;
         var lineChart = new LineChart
         {
-            Entries = dict.Select(kv => new ChartEntry((float?)kv.Value + offset)
-            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? kv.Value.ToString() : "", Color = color }).ToList(),
+            Entries = valuePerTimePeriod.Select(kv => new ChartEntry((float?)Math.Round((kv.Value), 2) + offset)
+            { Label = kv.Key.ToString(), ValueLabel = (kv.Value != 0) ? Math.Round((kv.Value), 2).ToString() : "", Color = color }).ToList(),
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
@@ -165,7 +162,7 @@ public class ChartService : IChartService
                 {
                     Label = new DateTime(year, month, day).ToString("d "),
                     ValueLabel = "",
-                    Color = SKColor.Parse("#999999")
+                    Color = SKColor.Parse("#dedede")
                 };
                 entries.Add(newEntry);
             }
@@ -175,7 +172,7 @@ public class ChartService : IChartService
             LineMode = LineMode.Straight,
             PointMode = PointMode.None,
             LabelOrientation = Orientation.Vertical,
-            ValueLabelOrientation = Orientation.Vertical,
+            ValueLabelOrientation = Orientation.Horizontal,
             EnableYFadeOutGradient = true,
             IsAnimated = false,
             LabelTextSize = 20f,

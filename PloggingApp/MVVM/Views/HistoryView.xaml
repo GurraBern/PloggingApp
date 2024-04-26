@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PloggingApp.MVVM.Views.HistoryView"
+             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+             x:DataType="viewmodel:HistoryViewModel">
+
+
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
+        <Grid RowDefinitions="*">
+            <ScrollView Grid.Row="0"  VerticalOptions="FillAndExpand">
+
+                <VerticalStackLayout Spacing="10" Padding="20,0">
+                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+
+                    <Label Text="Recent Sessions" Style="{StaticResource SubHeadline}" HorizontalOptions="Start"></Label>
+                    <CollectionView ItemsSource="{Binding PloggingSessions}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="modelsCore:PloggingSession">
+
+                                <Border Style="{StaticResource StatsBorder}" BackgroundColor="White" HeightRequest="80" Margin="0,0,0,10" StrokeThickness="1">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Radius="8" Opacity="0.2" Offset="2,2" />
+                                    </Border.Shadow>
+
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Source="{Binding Image}" Grid.Column="0" Aspect="AspectFill" VerticalOptions="Center" >
+                                            <Image.Clip>
+                                                <EllipseGeometry RadiusX="35" RadiusY="35" Center="50,40"/>
+                                            </Image.Clip>
+                                        </Image>
+
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <Label Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:mm}'}" FontSize="Medium"/>
+
+                                            <HorizontalStackLayout Grid.Row="1" >
+                                                <Grid ColumnSpacing="20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="4*" />
+                                                        <ColumnDefinition Width="4*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label x:Name="Weight" Grid.Column="1" Text="{Binding PloggingData.Weight, StringFormat='{0:F1}g'}" FontSize="Medium" />
+
+                                                    <Image Grid.Column="0" Source="trashbag.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="End" />
+
+                                                    <Label x:Name="Count" Grid.Column="0" Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}" FontSize="Medium" Margin="0,0,20,0"/>
+
+
+                                                    <Label x:Name="Distance" Grid.Column="2" Text="{Binding PloggingData.Distance, StringFormat='{0}m'}" FontSize="Medium" />
+                                                    
+                                                    
+                                                </Grid>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:HistoryViewModel}}}" CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </RefreshView>
+</ContentView>
