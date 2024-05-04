@@ -1,7 +1,6 @@
-using Microcharts;
 using PloggingApp.MVVM.ViewModels;
-using SkiaSharp;
-
+using CommunityToolkit.Maui.Views;
+using PloggingApp.MVVM.Views;
 namespace PloggingApp.MVVM.Views;
 
 public partial class StatisticsView : ContentView
@@ -30,5 +29,11 @@ public partial class StatisticsView : ContentView
 		{
 			viewModel.ShowMonthCommand.Execute(null);
 		}
+	}
+
+	private void ShowInformationPopup(object sender, EventArgs e)
+	{
+		var informationPopup = new StatisticsInformationPopup();
+		Application.Current?.MainPage?.ShowPopup(informationPopup);
 	}
 } 

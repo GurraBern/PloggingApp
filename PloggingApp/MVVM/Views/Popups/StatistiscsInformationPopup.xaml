@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="PloggingApp.MVVM.Views.StatisticsInformationPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border
+        Padding="20"
+        HeightRequest="500"
+        Style="{StaticResource RoundBorder}"
+        WidthRequest="300">
+        <ScrollView>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="10">
+                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30">
+                        <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
+                    </Border>
+                    <Label Text="Weight" Style="{StaticResource SubHeadline}" HorizontalOptions="Start"/>
+                </HorizontalStackLayout>
+                <Label Text="The weight of the picked up litter is an estimate based on a survey conducted in the Gothenburg area."/>
+                <Label Text="The survey examined what the average weight for the most common type of litters was, and resulted in the litter options that are available during the plogging sessions."/>
+
+                <HorizontalStackLayout Margin="10">
+                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30">
+                        <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
+                    </Border>
+                    <Label Text="CO2e Saved " Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Margin="10,0"/>
+                </HorizontalStackLayout>
+                <Label Text="CO2e Saved, or the CO2 offset, is an estimated value of the carbon emissions that the user saves by using PlogPal. "/>
+                <Label Text="The estimates are based on emission factors from peer reviewed sources and the estimated weight of the user's picked up litter."/>
+                <Label FontAttributes="Bold" Text="Note that these estimates assume that the user recycles the litter properly, since the estimates are based on emission factors expressed in CO2e per weight unit of material reprocessed."/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</toolkit:Popup>
