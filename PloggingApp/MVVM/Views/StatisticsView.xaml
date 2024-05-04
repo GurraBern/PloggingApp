@@ -4,6 +4,7 @@
              x:Class="PloggingApp.MVVM.Views.StatisticsView"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
              xmlns:modelscore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:converter="clr-namespace:PloggingApp.Converters"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels" 
@@ -19,7 +20,7 @@
             <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
                 <VerticalStackLayout  Spacing="15" Padding="20,0" HeightRequest="1300">
 
-                    <Border Style="{StaticResource RoundBorder}" Padding="10, 10">
+                    <Border Style="{StaticResource RoundBorder}" Padding="0, 10">
                         <HorizontalStackLayout Spacing="15" Margin="0">
                             <StackLayout Orientation="Horizontal">
                                 <RadioButton GroupName="timefilter" Content="Year" IsChecked="True" CheckedChanged="RadioButton_CheckedChanged"/>
@@ -46,51 +47,63 @@
                         <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
                     </Grid>
                     <Border Style="{StaticResource RoundBorder}">
-                        <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
-                            <!--Weight-->
-                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
-                                <Grid Style="{StaticResource StatsGrid}">
-                                    <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                        <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
-                                    </Border>
-                                    <Label Style="{StaticResource StatsLabelText}" Text="Litter Weight" Grid.Row="0" Grid.Column="1"/>
-                                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
-                                </Grid>
-                            </Border>
-                            <!--CO2Saved-->
-                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
-                                <Grid Style="{StaticResource StatsGrid}">
-                                    <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                        <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
-                                    </Border>
-                                    <Label Style="{StaticResource StatsLabelText}" Text="CO2e Saved" Grid.Row="0" Grid.Column="1"/>
-                                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalCO2Saved, StringFormat='{0} kg CO2e'}" Grid.Row="1" Grid.Column="1"/>
-                                </Grid>
-                            </Border>
-                            <!--Distance-->
-                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
-                                <Grid Style="{StaticResource StatsGrid}">
-                                    <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                        <Image Source="distance.svg" HeightRequest="24" WidthRequest="24"/>
-                                    </Border>
-                                    <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
-                                    <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Grid.Row="1" Grid.Column="1"/>
-                                </Grid>
-                            </Border>
-                            <!--Time Plogged-->
-                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
-                                <Grid Style="{StaticResource StatsGrid}">
-                                    <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                        <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>
-                                    </Border>
-                                    <Label Style="{StaticResource StatsLabelText}" Text="Time Plogged" Grid.Row="0" Grid.Column="1"/>
-                                    <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
-                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
-                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat=' {0}min '}"/>
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </Border>
-                        </Grid>
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,45">
+                                <Label Style="{StaticResource SubHeadline}" HorizontalOptions="Start" TextColor="Black" Text="General" VerticalOptions="Center" Grid.Column="0"/>
+                                <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" >
+                                    <ImageButton Clicked="ShowInformationPopup" Source="question_mark_round_icon.png" WidthRequest="30">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
+                                </Border>
+                            </Grid>
+                            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
+                                <!--Weight-->
+                                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                                    <Grid Style="{StaticResource StatsGrid}">
+                                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                                            <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
+                                        </Border>
+                                        <Label Style="{StaticResource StatsLabelText}" Text="Litter Weight" Grid.Row="0" Grid.Column="1"/>
+                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
+                                    </Grid>
+                                </Border>
+                                <!--CO2Saved-->
+                                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                                    <Grid Style="{StaticResource StatsGrid}">
+                                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                                            <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
+                                        </Border>
+                                        <Label Style="{StaticResource StatsLabelText}" Text="CO2e Saved" Grid.Row="0" Grid.Column="1"/>
+                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalCO2Saved, StringFormat='{0} kg CO2e'}" Grid.Row="1" Grid.Column="1"/>
+                                    </Grid>
+                                </Border>
+                                <!--Distance-->
+                                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                                    <Grid Style="{StaticResource StatsGrid}">
+                                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                                            <Image Source="distance.svg" HeightRequest="24" WidthRequest="24"/>
+                                        </Border>
+                                        <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
+                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Grid.Row="1" Grid.Column="1"/>
+                                    </Grid>
+                                </Border>
+                                <!--Time Plogged-->
+                                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                                    <Grid Style="{StaticResource StatsGrid}">
+                                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
+                                            <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>
+                                        </Border>
+                                        <Label Style="{StaticResource StatsLabelText}" Text="Time Plogged" Grid.Row="0" Grid.Column="1"/>
+                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
+                                            <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat=' {0}min '}"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
                     </Border>
                     <!--<Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>

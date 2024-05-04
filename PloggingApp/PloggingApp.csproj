@@ -135,6 +135,9 @@
 	  <MauiXaml Update="MVVM\Views\HistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\Popups\StatistiscsInformationPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\TutorialPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="PloggingApp.MVVM.Views.StatisticsInformationPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border
+        Padding="20"
+        HeightRequest="500"
+        Style="{StaticResource RoundBorder}"
+        WidthRequest="300">
+        <ScrollView>
+            <VerticalStackLayout>
+                <Label
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="Tutorial"/>
+
+                <!--  MapIcons Explanations  -->
+                <Label FontSize="Medium" Text="Map Icons"/>
+                <HorizontalStackLayout>
+                    <Image
+                        Margin="0,-10,0,0"
+                        HeightRequest="20"
+                        Scale="2"
+                        Source="pickeduptrash.png"
+                        WidthRequest="20"/>
+                    <Label FontSize="Small" Text="Collected"/>
+                </HorizontalStackLayout>
+                <Label Text="This icon marks areas where fellow ploggers have already cleaned up litter."/>
+
+                <HorizontalStackLayout Margin="0,20,0,0">
+                    <Image
+                        HeightRequest="20"
+                        Source="handshake_color_icon.png"
+                        WidthRequest="20"/>
+                    <Label FontSize="Small" Text="Pickup Request"/>
+                </HorizontalStackLayout>
+                <Label Text="This icon signals a plogger's leftover litter bag for you to pick up and recycle."/>
+
+                <!--  Plogging Session Tutorial - Start Plogging  -->
+                <Label
+                    Margin="0,20,0,0"
+                    FontSize="Medium"
+                    Text="Plogging Session"/>
+                <Label Text="To start a plogging session press the button at the bottom of the Map, then press Start plogging."/>
+                <Image Margin="0,0,0,20" Source="tutorial_menu_actions"/>
+
+                <!--  Plogging Session Tutorial - Add Litter  -->
+                <Label Text="During the plogging session whenever you pick up litter press the buttons to the right which best describes the litter."/>
+                <Image Margin="0,0,0,20" Source="tutorial_plogging_session"/>
+
+                <!--  Plogging Sesssion Weight Conversions  -->
+                <!--  TODO add  -->
+
+
+                <!--  Plogging Session Tutorial - Finish Plogging Session  -->
+                <Label Text="When you are finished with your plogging session press End Plogging, this will bring up the camera where you are suppose to take a photo of the entire bag of litter which you picked up."/>
+                <Image Source="tutorial_checkout_image.png"/>
+                <Label Text="You've just completed a Plogging Session!"/>
+
+                <!--  Plogg Together  -->
+                <Label
+                    Margin="0,20,0,0"
+                    FontSize="Medium"
+                    Text="Plogg Together"/>
+                <Label Text="Plogg Together lets you team up with friends for a plogging session. One person tracks the litter collected while the other helps pick it up. Both get credit for the cleanup effort."/>
+
+                <Label Margin="0,10,0,0" Text="To start plogging together tap Plogg Together on the map menu buttons."/>
+                <Image Source="tutorial_ploggtogether_mainview"/>
+
+                <Label Text="The group leader shares their QR code for others to join by pressing Your ID. Non-leader members join by pressing Add User and scanning the leader's QR code."/>
+
+                <!--  Pickup Request Tutorial  -->
+                <Label
+                    Margin="0,20,0,0"
+                    FontSize="Medium"
+                    Text="Pickup Request"/>
+                <Label Text="If you are not able to bring the collected litter to a recycling location you can create a pickup request by pressing Mark Litterbag."/>
+                <Label Text="Take a photo that easily allows other ploggers to see where the bag is located, the location along with the photo will be available on the map."/>
+                <Image Margin="0,0,0,20" Source="tutorial_menu_actions"/>
+
+                <Label Text="To collect a Pickup Request simply tap on a marker displayed on the map then press Collect Trash then bring it to a recycling location, provided you're within a 40-meter radius."/>
+                <Image Margin="0,0,0,20" Source="tutorial_litterpickup_request"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</toolkit:Popup>
