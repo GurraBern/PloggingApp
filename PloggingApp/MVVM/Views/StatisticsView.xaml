@@ -48,9 +48,12 @@
                     </Grid>
                     <Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
-                            <Grid ColumnDefinitions="*,45">
-                                <Label Style="{StaticResource SubHeadline}" HorizontalOptions="Start" TextColor="Black" Text="General" VerticalOptions="Center" Grid.Column="0"/>
-                                <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" >
+                            <Grid ColumnDefinitions="30,*,45">
+                                <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30" Grid.Column="0">
+                                    <Image Source="stats.svg" HeightRequest="24" WidthRequest="24"/>
+                                </Border>
+                                <Label Style="{StaticResource SubHeadline}" HorizontalOptions="Start" TextColor="Black" Margin="10" Text="General" VerticalOptions="Center" Grid.Column="1"/>
+                                <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" >
                                     <ImageButton Clicked="ShowInformationPopup" Source="question_mark_round_icon.png" WidthRequest="30">
                                         <ImageButton.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
