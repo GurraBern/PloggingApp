@@ -6,12 +6,12 @@ internal class LitterCalculator
 {
     public static double CalculateWeight(LitterType litterType) => litterType switch
     {
-        LitterType.Plastics => WeightConversion(4.52),
-        LitterType.LargePlastics => WeightConversion(23.8),
-        LitterType.Cigarette => WeightConversion(0.52),
-        LitterType.SmallMetal => WeightConversion(3.82),
-        LitterType.Cardboard => WeightConversion(10),
-        LitterType.Fabric => WeightConversion(26),
+        LitterType.Plastics => WeightConversion(3.5),
+        LitterType.LargePlastics => WeightConversion(22.18),
+        LitterType.Cigarette => WeightConversion(0.42),
+        LitterType.SmallMetal => WeightConversion(7.22),
+        LitterType.Cardboard => WeightConversion(9.94),
+        LitterType.Fabric => WeightConversion(51.5),
         LitterType.Can => WeightConversion(14),
         _ => WeightConversion(0) 
     };
