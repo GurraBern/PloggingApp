@@ -8,12 +8,12 @@
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              x:DataType="viewmodel:BadgesViewModel">
     <Grid RowDefinitions="100" ColumnDefinitions="80,*">
-        <Border Style="{StaticResource RoundedBorders}" WidthRequest="90" HeightRequest="150" Margin="-10,0,0,0">
-            <Image Source="badgesindicator.png" HeightRequest="100" WidthRequest ="100" Grid.Row="0" Grid.Column="0">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
-            </Image.GestureRecognizers>
-        </Image>
+        <Border Style="{StaticResource RoundBorder}" Margin="-10,0,0,0" Grid.Row="0" Grid.Column="0">
+            <Image Source="badgesindicator.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
+                </Image.GestureRecognizers>
+            </Image>
         </Border>
 
         <CollectionView ItemsSource="{Binding Badges}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Margin="-5">
