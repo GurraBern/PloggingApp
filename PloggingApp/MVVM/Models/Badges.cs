@@ -93,7 +93,7 @@ public class DistanceBadge : Badge
     {
         Measurement = "kilometre(s)";
         Type = "Distance Traveled";
-        progression = stats.TotalDistance;
+        progression = stats.TotalDistance/1000;
         createBadge(progression, "distance", 5, 10, 15);
 
     }
