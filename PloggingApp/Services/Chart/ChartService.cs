@@ -11,14 +11,14 @@ public class ChartService : IChartService
     private DateTime currentDate;
     private Dictionary<LitterType, SKColor> colors = new Dictionary<LitterType, SKColor>
     {
-        {LitterType.Plastics, SKColor.Parse("#2bb5ff")},
-        {LitterType.LargePlastics, SKColor.Parse("#144e6e")},
-        {LitterType.Cigarette, SKColor.Parse("#383838")},
-        {LitterType.Can, SKColor.Parse("#26ffb0")},
-        {LitterType.SmallMetal, SKColor.Parse("#be26ff")},
+        {LitterType.Plastics, SKColor.Parse("#8564f1")},
+        {LitterType.LargePlastics, SKColor.Parse("#bf3a8b")},
+        {LitterType.Cigarette, SKColor.Parse("#b346b1")},
+        {LitterType.Can, SKColor.Parse("#a453d4")},
+        {LitterType.SmallMetal, SKColor.Parse("#a453d4")},
         {LitterType.Cardboard, SKColor.Parse("#874b01")},
-        {LitterType.Snus, SKColor.Parse("#b5994a")},
-        {LitterType.Glass, SKColor.Parse("#ffb53c") },
+        {LitterType.Snus, SKColor.Parse("#bb3333")},
+        {LitterType.Glass, SKColor.Parse("#c1345f") },
         {LitterType.Fabric, SKColor.Parse("#fa66f5") }
     };
     public ChartService()
