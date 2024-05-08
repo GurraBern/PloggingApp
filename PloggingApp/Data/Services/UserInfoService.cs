@@ -1,5 +1,6 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.Services.Authentication;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
@@ -7,10 +8,12 @@ namespace PloggingApp.Data.Services;
 public class UserInfoService : IUserInfoService
 {
     private readonly IPloggingApiClient<UserInfo> _ploggingApiClient;
+    private readonly IAuthenticationService _authenticationService;
 
-    public UserInfoService(IPloggingApiClient<UserInfo> ploggingApiClient)
+    public UserInfoService(IPloggingApiClient<UserInfo> ploggingApiClient, IAuthenticationService authenticationService)
 	{
         _ploggingApiClient = ploggingApiClient;
+        _authenticationService = authenticationService;
     }
 
     public async Task<UserInfo> GetUser(string userId)
@@ -19,7 +22,8 @@ public class UserInfoService : IUserInfoService
         {
             var request = new RestRequest($"api/UserInfo/GetUserInfo/{userId}");
 
-            var user = await _ploggingApiClient.GetAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            var user = await _ploggingApiClient.GetAsync(request, bearerToken);
             return user;
         }
         catch (Exception ex)
@@ -43,7 +47,8 @@ public class UserInfoService : IUserInfoService
             var request = new RestRequest("api/UserInfo/CreateUser");
             request.AddBody(user);
 
-            await _ploggingApiClient.PostAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PostAsync(request, bearerToken);
         }
         catch (Exception ex)
         {

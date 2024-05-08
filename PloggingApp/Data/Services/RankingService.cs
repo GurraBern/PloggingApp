@@ -3,6 +3,7 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Factories;
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Services;
+using PloggingApp.Services.Authentication;
 
 namespace PloggingApp.Data.Services;
 
@@ -10,11 +11,13 @@ public class RankingService : IRankingService
 {
     private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
     private readonly IToastService _toastService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService)
+    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService, IAuthenticationService authenticationService)
     {
         _ploggingApiClient = ploggingApiClient;
         _toastService = toastService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
@@ -23,7 +26,8 @@ public class RankingService : IRankingService
         {
             var sessionsRequest = SessionRequestFactory.CreateRequest(startDate, endDate, SortDirection.Descending, sortProperty);
 
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest, bearerToken);
 
             var rankings = new List<UserRanking>();
             var rank = 1;

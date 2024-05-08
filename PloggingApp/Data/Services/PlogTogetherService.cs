@@ -1,5 +1,6 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.Services.Authentication;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
@@ -7,11 +8,13 @@ namespace PloggingApp.Data.Services;
 public class PlogTogetherService : IPlogTogetherService
 {
     private readonly IPloggingApiClient<PlogTogether> _ploggingApiClient;
+    private readonly IAuthenticationService _authenticationService;
 
-    public PlogTogetherService(IPloggingApiClient<PlogTogether> ploggingApiClient)
+    public PlogTogetherService(IPloggingApiClient<PlogTogether> ploggingApiClient, IAuthenticationService authenticationService)
 	{
         _ploggingApiClient = ploggingApiClient;
-	}
+        _authenticationService = authenticationService;
+    }
 
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
@@ -19,7 +22,8 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/AddUserToGroup/{ownerUserId}/{userId}");
 
-            await _ploggingApiClient.PostAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PostAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -35,7 +39,8 @@ public class PlogTogetherService : IPlogTogetherService
             var request = new RestRequest("api/PlogTogether/DeleteGroup");
             request.AddParameter("ownerUserId", ownerUserId);
 
-            await _ploggingApiClient.DeleteAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.DeleteAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -49,7 +54,8 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/GetPlogTogether/{ownerUserId}");
 
-            var plogTogether = await _ploggingApiClient.GetAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            var plogTogether = await _ploggingApiClient.GetAsync(request, bearerToken);
             return plogTogether;
         }
         catch (Exception ex)
@@ -65,7 +71,8 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/LeaveGroup/{userId}");
 
-            await _ploggingApiClient.PutAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PutAsync(request, bearerToken);
         }
         catch (Exception ex)
         {

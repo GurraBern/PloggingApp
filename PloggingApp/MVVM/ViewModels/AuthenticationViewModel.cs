@@ -41,6 +41,7 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
     {
         IsBusy = true;
         await _authenticationService.AutoLogin();
+        await _streakService.ResetStreak(_authenticationService.CurrentUser.Uid);
         IsBusy = false;
     }
 
@@ -69,6 +70,7 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
             {
                 await _authenticationService.LoginUser(LoginEmail, LoginPassword);
                 await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
+                await _streakService.ResetStreak(_authenticationService.CurrentUser.Uid);
             }
             catch (Exception ex)
             {

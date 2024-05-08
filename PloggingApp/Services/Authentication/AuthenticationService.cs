@@ -1,9 +1,6 @@
 ﻿using Firebase.Auth;
 using System.Diagnostics;
 using PloggingApp.Pages;
-using Microsoft.Maui.ApplicationModel.Communication;
-using CommunityToolkit.Mvvm.ComponentModel;
-using PloggingApp.Data.Services;
 
 namespace PloggingApp.Services.Authentication;
 
@@ -13,13 +10,11 @@ public class AuthenticationService : IAuthenticationService
     public User CurrentUser =>_userCredential?.User;
     
     private readonly FirebaseAuthClient _firebaseAuthClient;
-    private readonly IStreakService _streakService;
     private readonly IToastService _toastService;
 
-    public AuthenticationService(FirebaseAuthClient firebaseAuthClient, IStreakService streakService, IToastService toastService)
+    public AuthenticationService(FirebaseAuthClient firebaseAuthClient, IToastService toastService)
     {
         _firebaseAuthClient = firebaseAuthClient;
-        _streakService = streakService;
         _toastService = toastService;
     }
 
@@ -28,7 +23,6 @@ public class AuthenticationService : IAuthenticationService
         _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
         var currentUserId = CurrentUser.Uid;
-        await _streakService.ResetStreak(currentUserId);
 
         await _toastService.MakeToast("You are being logged in.");
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
@@ -49,7 +43,6 @@ public class AuthenticationService : IAuthenticationService
             _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
             var currentUserId = CurrentUser.Uid;
-            await _streakService.ResetStreak(currentUserId);
 
             await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
         } else
