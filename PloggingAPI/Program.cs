@@ -1,3 +1,6 @@
+using FirebaseAdmin;
+using FirebaseAdminAuthentication.DependencyInjection.Extensions;
+using Google.Apis.Auth.OAuth2;
 using PloggingAPI.Models;
 using PloggingAPI.Repository;
 using PloggingAPI.Repository.Interfaces;
@@ -33,6 +36,11 @@ builder.Services.Configure<GoogleDriveSettings>(options =>
     options.DirectoryId = "1Vc_R08GhzScbik-Y7RO0tj6id-ENMwSF";
 });
 
+builder.Services.AddSingleton(FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.GetApplicationDefault(),
+}));
+
 //Register Services
 builder.Services.AddSingleton<IPloggingSessionService, PloggingSessionService>();
 builder.Services.AddSingleton<ILitterbagPlacementService, LitterbagPlacementService>();
@@ -49,6 +57,9 @@ builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>()
 
 builder.Services.AddSingleton<IUserInfoRepository, UserInfoRepository>();
 
+builder.Services.AddFirebaseAuthentication();
+builder.Services.AddAuthorization();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -63,7 +74,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

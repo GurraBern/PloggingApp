@@ -1,62 +1,63 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Plogging.Core.Models;
 using PloggingAPI.Services.Interfaces;
 
-namespace PloggingAPI.Controllers
+namespace PloggingAPI.Controllers;
+
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class LitterBagPlacementController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LitterBagPlacementController : ControllerBase
+    private readonly ILitterbagPlacementService _litterbagPlacementService;
+
+    public LitterBagPlacementController(ILitterbagPlacementService litterbagPlacementService)
     {
-        private readonly ILitterbagPlacementService _litterbagPlacementService;
+        _litterbagPlacementService = litterbagPlacementService;
+    }
 
-        public LitterBagPlacementController(ILitterbagPlacementService litterbagPlacementService)
+    [HttpPost]
+    public async Task<IActionResult> CreateLitterbagPlacement([FromBody] LitterbagPlacement litterbagPlacement)
+    {
+        try
         {
-            _litterbagPlacementService = litterbagPlacementService;
+            await _litterbagPlacementService.CreateLitterbagPlacement(litterbagPlacement);
+            return Ok();
+                       }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
         }
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateLitterbagPlacement([FromBody] LitterbagPlacement litterbagPlacement)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<LitterbagPlacement>>> GetLitterbagPlacements()
+    {
+        try
         {
-            try
-            {
-                await _litterbagPlacementService.CreateLitterbagPlacement(litterbagPlacement);
-                return Ok();
-                           }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while processing your request.");
-            }
+            var litterBagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
+
+            return Ok(litterBagPlacements);
         }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<LitterbagPlacement>>> GetLitterbagPlacements()
+        catch (Exception ex)
         {
-            try
-            {
-                var litterBagPlacements = await _litterbagPlacementService.GetLitterbagPlacements();
-
-                return Ok(litterBagPlacements);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while processing your request.");
-            }
+            return StatusCode(500, "An error occurred while processing your request.");
         }
+    }
 
-        [HttpDelete]
-        public async Task<IActionResult> CollectLitterbagPlacement(string litterbagPlacementId, int distanceToLitterbag)
+    [HttpDelete]
+    public async Task<IActionResult> CollectLitterbagPlacement(string litterbagPlacementId, int distanceToLitterbag)
+    {
+        try
         {
-            try
-            {
-                await _litterbagPlacementService.CollectLitterbagPlacement(litterbagPlacementId, distanceToLitterbag);
+            await _litterbagPlacementService.CollectLitterbagPlacement(litterbagPlacementId, distanceToLitterbag);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "An error occurred while processing your request.");
-            }
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "An error occurred while processing your request.");
         }
     }
 }

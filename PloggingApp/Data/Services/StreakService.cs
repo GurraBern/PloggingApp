@@ -1,5 +1,6 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.ApiClients;
+using PloggingApp.Services.Authentication;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
@@ -7,11 +8,13 @@ namespace PloggingApp.Data.Services;
 public class StreakService : IStreakService
 {
     private readonly IPloggingApiClient<UserStreak> _ploggingApiClient;
+    private readonly IAuthenticationService _authenticationService;
 
-    public StreakService(IPloggingApiClient<UserStreak> ploggingApiClient)
+    public StreakService(IPloggingApiClient<UserStreak> ploggingApiClient, IAuthenticationService authenticationService)
 	{
         _ploggingApiClient = ploggingApiClient;
-	}
+        _authenticationService = authenticationService;
+    }
 
     public async Task<UserStreak> GetUserStreak(string id)
     {
@@ -20,7 +23,8 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/GetUserStreak");
             request.AddParameter("userId", id);
 
-            var user = await _ploggingApiClient.GetAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            var user = await _ploggingApiClient.GetAsync(request, bearerToken);
             return user;
         }
         catch (Exception ex)
@@ -37,7 +41,8 @@ public class StreakService : IStreakService
         {
             var request = new RestRequest($"api/Streak/ResetStreak/{userId}");
 
-            await _ploggingApiClient.PatchAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PatchAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -52,7 +57,8 @@ public class StreakService : IStreakService
         {
             var request = new RestRequest($"api/Streak/UpdateStreak/{userId}");
 
-            await _ploggingApiClient.PatchAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PatchAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -73,7 +79,8 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/CreateUser");
             request.AddBody(user);
 
-            await _ploggingApiClient.PostAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PostAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -82,5 +89,4 @@ public class StreakService : IStreakService
         }
     }
 }
-
 

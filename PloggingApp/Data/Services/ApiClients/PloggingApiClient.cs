@@ -93,15 +93,15 @@ public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T
 
 public interface IPloggingApiClient<T>
 {
-    Task<T> GetAsync(RestRequest request, string bearerToken = "");
+    Task<T> GetAsync(RestRequest request, string bearerToken);
 
-    Task<IEnumerable<T>> GetAllAsync(RestRequest request, string bearerToken = "");
+    Task<IEnumerable<T>> GetAllAsync(RestRequest request, string bearerToken);
 
-    Task<T> PostAsync(RestRequest request, string bearerToken = "");
+    Task<T> PostAsync(RestRequest request, string bearerToken);
 
-    Task<T> DeleteAsync(RestRequest request, string bearerToken = "");
+    Task<T> DeleteAsync(RestRequest request, string bearerToken);
 
-    Task<T> PatchAsync(RestRequest request, string bearerToken = "");
+    Task<T> PatchAsync(RestRequest request, string bearerToken);
 
-    Task<T> PutAsync(RestRequest request, string bearerToken = "");
+    Task<T> PutAsync(RestRequest request, string bearerToken);
 }

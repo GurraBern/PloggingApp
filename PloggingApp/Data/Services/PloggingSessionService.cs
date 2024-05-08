@@ -2,6 +2,7 @@
 using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Services;
+using PloggingApp.Services.Authentication;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
@@ -11,12 +12,14 @@ public class PloggingSessionService : IPloggingSessionService
     private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
     private readonly IPloggingImageService _ploggingImageService;
     private readonly IToastService _toastService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService)
+    public PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService, IAuthenticationService authenticationService)
     {
         _ploggingApiClient = ploggingApiClient;
         _ploggingImageService = ploggingImageService;
         _toastService = toastService;
+        _authenticationService = authenticationService;
     }
 
     public async Task SavePloggingSession(PloggingSession ploggingSession)
@@ -29,7 +32,8 @@ public class PloggingSessionService : IPloggingSessionService
             var request = new RestRequest("api/PloggingSession/UserSessions");
             request.AddBody(ploggingSession);
 
-            await _ploggingApiClient.PostAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            await _ploggingApiClient.PostAsync(request, bearerToken);
         }
         catch (Exception ex)
         {
@@ -46,7 +50,8 @@ public class PloggingSessionService : IPloggingSessionService
             request.AddParameter("startDate", startDate);
             request.AddParameter("endDate", endDate);
 
-            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
+            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
+            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request, bearerToken);
             return ploggingSessions;
         }
         catch (Exception)
