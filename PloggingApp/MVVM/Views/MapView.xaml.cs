@@ -44,37 +44,15 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         PloggingMap.MapElements.Add(polyLine);
     }
 
-    private async Task<Location> MoveMapToCurrentLocationAsync()
+    private async Task MoveMapToCurrentLocationAsync()
     {
-        try
+        var request = new GeolocationRequest(GeolocationAccuracy.Best);
+        var location = await Geolocation.GetLocationAsync(request);
+
+        if (location != null)
         {
-            var request = new GeolocationRequest(GeolocationAccuracy.Best);
-            var location = await Geolocation.GetLocationAsync(request);
-
-            if (location != null)
-            {
-                PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
-                return location;
-            }
-            else
-            {
-                return null;
-            }
+            PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
         }
-        catch (Exception ex)
-        {
-            return null;
-        }
-    }
-
-    private async Task MapFollowFunction()
-    {
-        await MoveMapToCurrentLocationAsync();
-
-        //Location ZoomLoc = ((MapViewModel)BindingContext).CalculateZoomOut();
-        //var (Longitude, Latitude) = ((MapViewModel)BindingContext).ZoomRegion();
-        //MapSpan MapSpan = new MapSpan(ZoomLoc, Longitude * 1.8, Latitude * 1.4);
-        //PloggingMap.MoveToRegion(MapSpan);
     }
 
     private async Task GetLastKnownLocation()
@@ -86,22 +64,56 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         }
     }
 
-
-
     //Bad solution should use data binding if possible
-    public void Receive(PloggingSessionMessage message)
+    public async void Receive(PloggingSessionMessage message)
     {
         if(MapViewModel == null)
             Initialize();
 
         if (message.IsTracking)
         {
-            MapFollowFunction();
+            await MoveMapToCurrentLocationAsync();
         }
         else
         {
             DrawPolyLine(message.Locations);
+            MoveToRouteRegion(message.Locations);
         }
+    }
+
+    private void MoveToRouteRegion(ICollection<Location> locations)
+    {
+        var routeCenter = CalculateRouteCenter(locations);
+        var (LatitudeRegion, LongitudeRegion) = CalculateZoomRegion(locations);
+        var routeRegion = new MapSpan(routeCenter, LatitudeRegion * 1.8, LongitudeRegion * 1.4);
+        PloggingMap.MoveToRegion(routeRegion);
+    }
+
+    private static Location CalculateRouteCenter(ICollection<Location> locations)
+    {
+        double longitude = 0;
+        double latitude = 0;
+        foreach (Location loc in locations)
+        {
+            longitude += loc.Longitude;
+            latitude += loc.Latitude;
+        }
+
+        var locationCount = locations.Count;
+        var zoomLocation = new Location(latitude/locationCount, longitude/locationCount);
+
+        return zoomLocation;
+    }
+
+    private (double LatitudeRegion, double LongitudeRegion) CalculateZoomRegion(ICollection<Location> locations)
+    {
+        double LatitudeMin = locations.Min(loc => loc.Latitude);
+        double LatitudeMax = locations.Max(loc => loc.Latitude);
+
+        double LongitudeMin = locations.Min(loc => loc.Longitude);
+        double LongitudeMax = locations.Max(loc => loc.Longitude);
+
+        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin);
     }
 
     private void CustomPin_MarkerClicked(object sender, PinClickedEventArgs e)

@@ -100,9 +100,8 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
         await Shell.Current.GoToAsync($"{nameof(CheckoutImagePage)}?ImagePath={imagePath}");
 
         IsTracking = false;
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, []));
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
     }
-
 
     [RelayCommand]
     private async Task StartPloggTogether()
@@ -193,42 +192,6 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
         return Steps;
     }
 
-    [RelayCommand]
-    public void StopTracking()
-    {
-        IsTracking = false;
-    }
-
-    public Location CalculateZoomOut()
-    {
-        double longitude = 0;
-        double latitude = 0;
-        foreach (Location loc in TrackingPositions)
-        {
-            longitude += loc.Longitude;
-            latitude += loc.Latitude;
-        }
-        longitude = longitude / TrackingPositions.Count;
-        latitude = latitude / TrackingPositions.Count;
-        Location ZoomLoc = new Location(latitude, longitude);
-        return ZoomLoc;
-    }
-
-    public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
-    {
-        double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
-        double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
-        double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
-        double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
-
-        return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin);
-    }
-
-    private double DistanceCalc(Location loc1, Location loc2)
-    {
-        double distance = Distance.BetweenPositions(loc1, loc2).Meters;
-        return distance;
-    }
 
     public void Receive(LitterPlacedMessage message)
     {
@@ -247,8 +210,5 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
         };
 
         PlacedPins.Add(FinishPin);
-        TrackingPositions.Add(CurrentLocation);
-
-        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
     }
 }
