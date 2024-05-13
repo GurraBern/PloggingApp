@@ -5,7 +5,7 @@ using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Services;
 using PloggingApp.Services.Authentication;
 
-namespace PloggingApp.Data.Services;
+namespace PloggingApp.Features.Leaderboard;
 
 public class RankingService : IRankingService
 {
@@ -50,8 +50,8 @@ public class RankingService : IRankingService
         }
         catch (Exception)
         {
-            await _toastService.MakeToast("Could not fetch user rankings"); 
-            return Enumerable.Empty<UserRanking>();
+            await _toastService.MakeToast("Could not fetch user rankings");
+            return [];
         }
     }
 }

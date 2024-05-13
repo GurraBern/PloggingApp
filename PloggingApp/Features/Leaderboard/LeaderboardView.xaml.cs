@@ -1,10 +1,6 @@
+namespace PloggingApp.Features.Leaderboard;
 
-using Microsoft.Maui.Platform;
-using PloggingApp.MVVM.ViewModels;
-
-namespace PloggingApp.MVVM.Views;
-
-public partial class LeaderboardView : Microsoft.Maui.Controls.ContentView
+public partial class LeaderboardView : ContentView
 {
     public LeaderboardView()
     {

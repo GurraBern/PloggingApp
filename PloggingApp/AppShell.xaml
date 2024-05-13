@@ -3,32 +3,62 @@
     x:Class="PloggingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:leaderboard="clr-namespace:PloggingApp.Features.Leaderboard"
     xmlns:views="clr-namespace:PloggingApp.Pages"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="{StaticResource Primary}"
-    Shell.TabBarTitleColor="White"
-    Shell.TabBarUnselectedColor="{StaticResource PrimaryLight}"
-    Shell.TabBarForegroundColor="{StaticResource White}"
-    Shell.TitleColor="{StaticResource White}"
     Title="PloggingApp"
     BackgroundColor="{StaticResource Primary}"
-    Shell.NavBarIsVisible="False">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="{StaticResource Primary}"
+    Shell.TabBarForegroundColor="{StaticResource White}"
+    Shell.TabBarTitleColor="White"
+    Shell.TabBarUnselectedColor="{StaticResource PrimaryLight}"
+    Shell.TitleColor="{StaticResource White}">
 
     <ShellItem>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
-        <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate views:RegisterPage}" />
+        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="LoginPage"/>
+        <ShellContent ContentTemplate="{DataTemplate views:RegisterPage}" Route="RegisterPage"/>
     </ShellItem>
 
     <TabBar>
-        <ShellContent Route="DashboardPage" Title="Dashboard" Icon="map_icon.png" ContentTemplate="{DataTemplate views:DashboardPage}"></ShellContent>
-        <ShellContent Route="RankingPage" Title="Rankings" Icon="leaderboard.png" ContentTemplate="{DataTemplate views:RankingPage}"></ShellContent>
-        <ShellContent Route="StatisticsPage" Title="Statistics" Icon="stats.png" ContentTemplate="{DataTemplate views:StatisticsPage}"></ShellContent>
-        <ShellContent Route="Profile" Title="Profile" Icon="user.png" ContentTemplate="{DataTemplate views:MyProfilePage}"></ShellContent>
+        <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}"
+            Icon="map_icon.png"
+            Route="DashboardPage"/>
+        <ShellContent
+            Title="Rankings"
+            ContentTemplate="{DataTemplate leaderboard:LeaderboardPage}"
+            Icon="leaderboard.png"
+            Route="RankingPage"/>
+
+        <ShellContent
+            Title="Statistics"
+            ContentTemplate="{DataTemplate views:StatisticsPage}"
+            Icon="stats.png"
+            Route="StatisticsPage"/>
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate views:MyProfilePage}"
+            Icon="user.png"
+            Route="Profile"/>
     </TabBar>
 
-    <ShellContent Route="ScanQRcodePage" Title="Scan QR code" ContentTemplate="{DataTemplate views:ScanQRcodePage}"></ShellContent>
-    <ShellContent Route="GenerateQRcodePage" Title="QR code" ContentTemplate="{DataTemplate views:GenerateQRcodePage}"></ShellContent>
-    <ShellContent Route="OthersProfilePage" Title="OTHER PROFILE"  ContentTemplate="{DataTemplate views:OthersProfilePage}"></ShellContent>
-    <ShellContent Route="HistoryPage" Title="HistoryPage" ContentTemplate="{DataTemplate views:HistoryPage}"></ShellContent>
+    <ShellContent
+        Title="Scan QR code"
+        ContentTemplate="{DataTemplate views:ScanQRcodePage}"
+        Route="ScanQRcodePage"/>
+    <ShellContent
+        Title="QR code"
+        ContentTemplate="{DataTemplate views:GenerateQRcodePage}"
+        Route="GenerateQRcodePage"/>
+    <ShellContent
+        Title="OTHER PROFILE"
+        ContentTemplate="{DataTemplate views:OthersProfilePage}"
+        Route="OthersProfilePage"/>
+    <ShellContent
+        Title="HistoryPage"
+        ContentTemplate="{DataTemplate views:HistoryPage}"
+        Route="HistoryPage"/>
 
 </Shell> 

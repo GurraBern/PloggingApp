@@ -114,7 +114,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="MVVM\Views\LeaderboardView.xaml.cs">
+	  <Compile Update="Features\Leaderboard\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="MVVM\Views\BadgesView.xaml.cs">
@@ -129,8 +129,8 @@
 	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
 	    <DependentUpon>DashboardPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\Leaderboard\RankingPage.xaml.cs">
-	    <DependentUpon>RankingPage.xaml</DependentUpon>
+	  <Compile Update="Features\Leaderboard\LeaderboardPage.xaml.cs">
+	    <DependentUpon>LeaderboardPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -168,7 +168,7 @@
 	  <MauiXaml Update="MVVM\Views\OthersSessionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\LeaderboardView.xaml">
+	  <MauiXaml Update="Features\Leaderboard\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\Popups\LitterBagPlacementPopup.xaml">
@@ -195,7 +195,7 @@
 	  <MauiXaml Update="Pages\HistoryPage\HistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Leaderboard\RankingPage.xaml">
+	  <MauiXaml Update="Features\Leaderboard\LeaderboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage\LoginPage.xaml">
@@ -222,6 +222,7 @@
 	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="Commands\" />
 	  <Folder Include="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 	<ItemGroup>

@@ -9,6 +9,7 @@ using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
 using PloggingApp.Services;
+using PloggingApp.Features.Leaderboard;
 
 namespace PloggingApp.MVVM.ViewModels;
 
@@ -98,7 +99,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
             PloggingSessions.ClearAndAddRange(_allUserSessions);
             PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
             LatestSessions = PloggingSessions.Take(3);
-            UserRankInt = LeaderboardViewModel.UserRank.Rank;
+            //UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
             IsBusy = false;
         }

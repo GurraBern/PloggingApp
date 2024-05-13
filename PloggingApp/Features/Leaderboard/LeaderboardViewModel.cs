@@ -8,8 +8,10 @@ using System.Collections.ObjectModel;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Pages;
+using PloggingApp.MVVM.ViewModels;
+using PloggingApp.MVVM;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.Leaderboard;
 
 public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
@@ -18,7 +20,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     private readonly IPloggingSessionService _sessionService;
     private readonly IUserInfoService _userInfo;
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
-    private IEnumerable<UserRanking> _allRankings = new ObservableCollection<UserRanking>();
+    private IEnumerable<UserRanking> _allRankings = [];
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
     public SortProperty SelectedSortProperty
     {
@@ -51,6 +53,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService = authenticationService;
         _sessionService = sessionService;
         _userInfo = userInfo;
+
         Initialization = InitializeAsync();
     }
 

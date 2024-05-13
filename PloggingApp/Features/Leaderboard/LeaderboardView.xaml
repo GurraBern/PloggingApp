@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.MVVM.Views.LeaderboardView"
+    x:Class="PloggingApp.Features.Leaderboard.LeaderboardView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:PloggingApp.Converters"
     xmlns:enumsCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
     xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    xmlns:viewmodel="clr-namespace:PloggingApp.Features.Leaderboard"
     x:DataType="viewmodel:LeaderboardViewModel"
     BackgroundColor="White">
 
@@ -34,12 +34,12 @@
                 <Label
                     Grid.Column="1"
                     HorizontalOptions="End"
-                    IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}"
+                    IsVisible="{Binding SelectedSortProperty, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Weight}}"
                     VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span FontSize="Small" Text="{Binding UserRank.PloggingData.Weight}"/>
-                            <Span FontSize="Caption" Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"/>
+                            <Span FontSize="Caption" Text="{Binding SortUnit}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -47,12 +47,12 @@
                 <Label
                     Grid.Column="1"
                     HorizontalOptions="End"
-                    IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Distance}}"
+                    IsVisible="{Binding SelectedSortProperty, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Distance}}"
                     VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span FontSize="Small" Text="{Binding UserRank.PloggingData.Distance}"/>
-                            <Span FontSize="Caption" Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"/>
+                            <Span FontSize="Caption" Text="{Binding SortUnit}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -60,12 +60,12 @@
                 <Label
                     Grid.Column="1"
                     HorizontalOptions="End"
-                    IsVisible="{Binding SelectedSortProperty, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Steps}}"
+                    IsVisible="{Binding SelectedSortProperty, Converter={StaticResource SortPropertyToBoolConverter}, ConverterParameter={x:Static enumsCore:SortProperty.Steps}}"
                     VerticalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span FontSize="Small" Text="{Binding UserRank.PloggingData.Steps}"/>
-                            <Span FontSize="Caption" Text="{Binding SortUnit, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"/>
+                            <Span FontSize="Caption" Text="{Binding SortUnit}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -127,7 +127,10 @@
                         <Border Style="{StaticResource RoundBorder}">
                             <Grid Padding="10">
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="GridTap" Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}" CommandParameter="{Binding Id}"/>
+                                    <TapGestureRecognizer
+                                        Command="{Binding GoToProfilePageCommand, Source={RelativeSource AncestorType={x:Type viewmodel:LeaderboardViewModel}}}"
+                                        CommandParameter="{Binding Id}"
+                                        Tapped="GridTap"/>
                                 </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -140,9 +143,10 @@
                                         x:Name="NameOfOtherUser"
                                         FontSize="Small"
                                         Text="{Binding DisplayName}"
-                                        VerticalOptions="Center">
-                                    </Label>
+                                        VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
+
+
 
                                 <Label
                                     Grid.Column="1"
@@ -182,7 +186,6 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                
                             </Grid>
                         </Border>
                     </DataTemplate>

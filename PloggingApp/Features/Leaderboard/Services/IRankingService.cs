@@ -1,7 +1,7 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
 
-namespace PloggingApp.Data.Services;
+namespace PloggingApp.Features.Leaderboard;
 
 public interface IRankingService
 {

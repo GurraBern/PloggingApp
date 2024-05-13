@@ -22,8 +22,8 @@ using System.Reflection;
 using PloggingApp.Services.Statistics;
 using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
-using Syncfusion.Maui.Core.Hosting;
 using PloggingApp.Services.SessionStatistics;
+using PloggingApp.Features.Leaderboard;
 
 namespace PloggingApp;
 
@@ -70,7 +70,6 @@ public static class MauiProgram
     private static void AddViewModels(MauiAppBuilder builder)
     {
         //Pages ViewModels
-        builder.Services.AddTransient<RankingViewmodel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<MapPageViewModel>();
         builder.Services.AddTransient<StatisticsPageViewModel>();
@@ -111,12 +110,11 @@ public static class MauiProgram
 
     private static void AddPages(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<RankingPage>();
+        builder.Services.AddView<LeaderboardPage, LeaderboardViewModel>();
+            
         builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<MapPage>();
-
-        builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<StatisticsPage>();
         builder.Services.AddTransient<SessionStatisticsPage>();
@@ -183,6 +181,15 @@ public static class MauiProgram
         builder.Services.AddTransient<IPloggingApiClient<T>>(serviceProvider =>
         {
             return new PloggingApiClient<T>(restClient);
+        });
+    }
+
+    private static void AddView<TView, TViewModel>(this IServiceCollection services)
+    where TView : ContentPage, new()
+    {
+        services.AddSingleton(serviceProvider => new TView()
+        {
+            BindingContext = serviceProvider.GetRequiredService<TViewModel>()
         });
     }
 
