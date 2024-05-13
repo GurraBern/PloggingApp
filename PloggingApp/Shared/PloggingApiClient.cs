@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace PloggingApp.Data.Services.ApiClients;
+namespace PloggingApp.Shared;
 
 public class PloggingApiClient<T>(IRestClient restClient) : IPloggingApiClient<T>
 {

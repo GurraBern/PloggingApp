@@ -11,6 +11,7 @@ using PloggingApp.Pages;
 using PloggingApp.Services;
 using System.Windows.Input;
 using PloggingApp.Services.SessionStatistics;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

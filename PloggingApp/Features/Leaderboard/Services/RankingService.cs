@@ -1,9 +1,9 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Factories;
-using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Services;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Leaderboard;
 

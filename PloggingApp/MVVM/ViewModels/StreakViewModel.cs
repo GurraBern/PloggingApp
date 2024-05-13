@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using PloggingApp.Data.Services;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Authentication;
-
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

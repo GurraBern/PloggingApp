@@ -2,17 +2,13 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using PloggingApp.MVVM.Models;
+using PloggingApp.Features.Map.Components;
 using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.MVVM.ViewModels;
-using PloggingApp.MVVM.Views.Components;
 
-namespace PloggingApp.MVVM.Views;
+namespace PloggingApp.Features.Map;
 
 public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 {
-    public MapViewModel? MapViewModel { get; set; }
-
     public MapView()
     {
         InitializeComponent();
@@ -20,11 +16,6 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         GetLastKnownLocation().SafeFireAndForget();
 
         WeakReferenceMessenger.Default.Register(this);
-    }
-
-    private void Initialize()   
-    {
-        MapViewModel = (MapViewModel)BindingContext;
     }
 
     public void DrawPolyLine(IEnumerable<Location> locations)
@@ -67,9 +58,6 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     //Bad solution should use data binding if possible
     public async void Receive(PloggingSessionMessage message)
     {
-        if(MapViewModel == null)
-            Initialize();
-
         if (message.IsTracking)
         {
             await MoveMapToCurrentLocationAsync();
@@ -125,8 +113,8 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
             case LitterbagPlacementPin litterbagPlacementPin:
                 litterbagPlacementPin.Command.Execute(litterbagPlacementPin.LitterBagPlacement);
                 break;
-            case CanPin canPin:
-                canPin.Command.Execute("");
+            case CollectedLitterPin collectedLitterPin:
+                collectedLitterPin.Command.Execute("");
                 break;
             default:
                 break;

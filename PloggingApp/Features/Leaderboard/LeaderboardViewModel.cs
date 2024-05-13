@@ -9,7 +9,7 @@ using PloggingApp.Services.Authentication;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Pages;
 using PloggingApp.MVVM.ViewModels;
-using PloggingApp.MVVM;
+using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Leaderboard;
 

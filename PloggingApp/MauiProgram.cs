@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
-using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.MVVM.Views;
@@ -24,6 +23,8 @@ using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Features.Leaderboard;
+using PloggingApp.Shared;
+using PloggingApp.Features.Map;
 
 namespace PloggingApp;
 
@@ -71,7 +72,6 @@ public static class MauiProgram
     {
         //Pages ViewModels
         builder.Services.AddTransient<DashboardViewModel>();
-        builder.Services.AddTransient<MapPageViewModel>();
         builder.Services.AddTransient<StatisticsPageViewModel>();
 
         builder.Services.AddScoped<CheckoutImageViewModel>();
@@ -110,11 +110,9 @@ public static class MauiProgram
 
     private static void AddPages(MauiAppBuilder builder)
     {
-        builder.Services.AddView<LeaderboardPage, LeaderboardViewModel>();
-            
-        builder.Services.AddTransient<DashboardPage>();
+        builder.Services.AddTransientView<LeaderboardPage, LeaderboardViewModel>();
 
-        builder.Services.AddTransient<MapPage>();
+        builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<StatisticsPage>();
         builder.Services.AddTransient<SessionStatisticsPage>();
@@ -184,7 +182,16 @@ public static class MauiProgram
         });
     }
 
-    private static void AddView<TView, TViewModel>(this IServiceCollection services)
+    private static void AddTransientView<TView, TViewModel>(this IServiceCollection services)
+    where TView : ContentPage, new()
+    {
+        services.AddTransient(serviceProvider => new TView()
+        {
+            BindingContext = serviceProvider.GetRequiredService<TViewModel>()
+        });
+    }
+
+    private static void AddSingletonView<TView, TViewModel>(this IServiceCollection services)
     where TView : ContentPage, new()
     {
         services.AddSingleton(serviceProvider => new TView()

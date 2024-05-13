@@ -5,6 +5,7 @@ using System.Diagnostics;
 using PloggingApp.Pages;
 using PloggingApp.Data.Services;
 using PloggingApp.Services;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

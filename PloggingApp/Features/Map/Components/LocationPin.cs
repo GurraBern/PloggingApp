@@ -1,8 +1,7 @@
 ﻿using Plogging.Core.Models;
-using PloggingApp.MVVM.Views.Components;
 using System.Windows.Input;
 
-namespace PloggingApp.MVVM.Models;
+namespace PloggingApp.Features.Map.Components;
 
 public class LocationPin : CustomPin
 {
@@ -40,9 +39,9 @@ public class StartPin : LocationPin
     }
 }
 
-public class CanPin : LocationPin
+public class CollectedLitterPin : LocationPin
 {
-    public CanPin()
+    public CollectedLitterPin()
     {
         ImageSource = ImageSource.FromFile("pickeduptrash.png");
     }

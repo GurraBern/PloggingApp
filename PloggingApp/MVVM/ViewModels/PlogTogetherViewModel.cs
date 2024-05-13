@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-
-
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
@@ -16,6 +14,7 @@ using System.Diagnostics;
 using PloggingApp.Services.PloggingTracking;
 using Firebase.Auth;
 using PloggingApp.Services;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

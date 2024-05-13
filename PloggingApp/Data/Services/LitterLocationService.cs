@@ -1,6 +1,6 @@
 ﻿using Plogging.Core.Models;
-using PloggingApp.Data.Services.ApiClients;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services.Interfaces;

@@ -4,12 +4,14 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.MVVM.Models;
+using PloggingApp.Features.Map.Components;
 using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Services;
+using PloggingApp.Shared;
 using System.Collections.ObjectModel;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.Map;
 
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>, IRecipient<LitterbagPickedUpMessage>
 {
@@ -52,7 +54,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private void PlaceTrashPin(MapPoint location)
     {
-        PlacedPins.Add(new CanPin()
+        PlacedPins.Add(new CollectedLitterPin()
         {
             Label = "Litter",
             Command = PressedLitterCommand,

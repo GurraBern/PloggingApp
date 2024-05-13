@@ -13,6 +13,7 @@ using PloggingApp.Services.Authentication;
 using PloggingApp.Pages;
 using System;
 using PloggingApp.Services;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

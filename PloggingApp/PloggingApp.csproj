@@ -174,7 +174,7 @@
 	  <MauiXaml Update="MVVM\Views\Popups\LitterBagPlacementPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\MapView.xaml">
+	  <MauiXaml Update="Features\Map\MapView.xaml">
     <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\SessionStatsMapView.xaml">
@@ -199,9 +199,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage\LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Map\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MyProfilePage\MyProfilePage.xaml">

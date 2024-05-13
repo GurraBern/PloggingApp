@@ -5,7 +5,7 @@
              xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
              xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
              xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
-             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
+             xmlns:components="clr-namespace:PloggingApp.Features.Map.Components"
              x:Class="PloggingApp.MVVM.Views.SessionStatsMapView"
              x:DataType="viewmodel:SessionStatsMapViewModel">
     
@@ -17,7 +17,7 @@
         </maps:Map.MapElements>
 
         <maps:Map.ItemTemplate>
-            <DataTemplate x:DataType="models:LocationPin">
+            <DataTemplate x:DataType="components:LocationPin">
                 <components:CustomPin
                     Location="{Binding Location}"
                     Address="{Binding Address}"

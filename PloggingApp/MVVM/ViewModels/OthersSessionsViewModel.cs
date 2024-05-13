@@ -7,6 +7,7 @@ using PloggingApp.MVVM.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
 using CommunityToolkit.Maui.Core;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

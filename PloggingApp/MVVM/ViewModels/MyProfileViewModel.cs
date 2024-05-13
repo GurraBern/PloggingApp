@@ -10,6 +10,7 @@ using PloggingApp.MVVM.Models;
 using PloggingApp.Pages;
 using PloggingApp.Services;
 using PloggingApp.Features.Leaderboard;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

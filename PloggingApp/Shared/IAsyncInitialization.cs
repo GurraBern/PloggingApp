@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.MVVM;
+﻿namespace PloggingApp.Shared;
 
 public interface IAsyncInitialization
 {

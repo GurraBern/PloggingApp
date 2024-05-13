@@ -6,6 +6,7 @@ using Firebase.Auth;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
+using PloggingApp.Features.Map.Components;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Pages;
@@ -122,7 +123,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [RelayCommand]
     public void AddCanCollectedPin()
     {
-        var pin = new CanPin()
+        var pin = new CollectedLitterPin()
         {
             Label = "COLLECTED",
             Location = CurrentLocation,

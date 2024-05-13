@@ -6,6 +6,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:PloggingApp.Pages"
     xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    xmlns:map="clr-namespace:PloggingApp.Features.Map"
     Title="Dashboard"
     x:DataType="viewmodels:DashboardViewModel">
 
@@ -19,7 +20,7 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
-        <views:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
+        <map:MapView BindingContext="{Binding MapViewModel}" Grid.Row="0"/>
 
         <views:AddLitter
             HorizontalOptions="End"

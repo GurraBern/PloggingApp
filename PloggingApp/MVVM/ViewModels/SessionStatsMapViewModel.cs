@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Models;
-using PloggingApp.MVVM.Models;
+using PloggingApp.Features.Map.Components;
 using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
 
@@ -33,7 +33,7 @@ public partial class SessionStatsMapViewModel : ObservableObject
     {
         foreach(var location in PloggingSession.PloggingData.Litters) 
         {
-            TrashPins.Add(new CanPin()
+            TrashPins.Add(new CollectedLitterPin()
             {
                 Label = "Litter",
                 Location = new Location()
