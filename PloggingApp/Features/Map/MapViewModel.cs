@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Models;
+using PloggingApp.Commands;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Services;
 using PloggingApp.Shared;
 using System.Collections.ObjectModel;
@@ -57,7 +56,6 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         PlacedPins.Add(new CollectedLitterPin()
         {
             Label = "Litter",
-            Command = PressedLitterCommand,
             Location = new Location()
             {
                 Latitude = location.Latitude,
@@ -79,8 +77,9 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     private void PlaceLitterbag(LitterbagPlacement litterbagPlacement)
     {
         var location = litterbagPlacement.Location;
+        var openLitterbagPlacementCommand = new OpenLitterbagPlacementCommand(_popupService, litterbagPlacement);
 
-        var litterbagPlacementPin = new LitterbagPlacementPin(PressedLitterbagPlacementCommand, litterbagPlacement)
+        var litterbagPlacementPin = new LitterbagPlacementPin(openLitterbagPlacementCommand, litterbagPlacement)
         {
             MarkerId = litterbagPlacement.Id,
             Label = "Pickup Trashbag",
@@ -94,56 +93,12 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         PlacedPins.Add(litterbagPlacementPin);
     }
 
-    [RelayCommand]
-    private async Task PressedLitterbagPlacement(LitterbagPlacement litterbagPlacement)
-    {
-        var request = new GeolocationRequest(GeolocationAccuracy.Best);
-        var currentLocation = await Geolocation.GetLocationAsync(request);
-
-        await _popupService.ShowPopupAsync<LitterbagPlacementViewModel>(onPresenting: viewModel =>
-        {
-            viewModel.LitterbagPlacement = litterbagPlacement;
-            viewModel.CalculateDistance(currentLocation);
-        });
-    }
-
-    [RelayCommand]
-    private async Task PressedLitter()
-    {
-        await _toastService.MakeToast("Litter");
-    }
-
-    //public Location CalculateZoomOut()
-    //{
-    //    double Longitude = 0;
-    //    double Latitude = 0;
-    //    foreach(Location loc in TrackingPositions)
-    //    {
-    //        Longitude += loc.Longitude;
-    //        Latitude += loc.Latitude;
-    //    }
-    //    Longitude = Longitude / TrackingPositions.Count;
-    //    Latitude = Latitude / TrackingPositions.Count;
-    //    Location ZoomLoc = new Location(Latitude, Longitude);
-    //    return ZoomLoc;
-    //}
-
-    //public (double LatitudeRegion, double LongitudeRegion) ZoomRegion()
-    //{
-
-    //    double LatitudeMin = TrackingPositions.Min(loc => loc.Latitude);
-    //    double LatitudeMax = TrackingPositions.Max(loc => loc.Latitude);
-    //    double LongitudeMin = TrackingPositions.Min(loc => loc.Longitude);
-    //    double LongitudeMax = TrackingPositions.Max(loc => loc.Longitude);
-    //   return (LatitudeMax - LatitudeMin, LongitudeMax - LongitudeMin); 
-    //}
-
     public void Receive(LitterPlacedMessage message)
     {
         PlaceTrashPin(message.LitterLocation);
     }
 
-	public void Receive(LitterBagPlacedMessage message)
+    public void Receive(LitterBagPlacedMessage message)
 	{
         PlaceLitterbag(message.LitterbagPlacement);
 	}

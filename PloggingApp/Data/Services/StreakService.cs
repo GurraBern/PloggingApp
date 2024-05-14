@@ -23,8 +23,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/GetUserStreak");
             request.AddParameter("userId", id);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            var user = await _ploggingApiClient.GetAsync(request, bearerToken);
+            var user = await _ploggingApiClient.GetAsync(request, _authenticationService.BearerToken);
             return user;
         }
         catch (Exception ex)
@@ -41,8 +40,7 @@ public class StreakService : IStreakService
         {
             var request = new RestRequest($"api/Streak/ResetStreak/{userId}");
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PatchAsync(request, bearerToken);
+            await _ploggingApiClient.PatchAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {
@@ -57,8 +55,7 @@ public class StreakService : IStreakService
         {
             var request = new RestRequest($"api/Streak/UpdateStreak/{userId}");
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PatchAsync(request, bearerToken);
+            await _ploggingApiClient.PatchAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {
@@ -79,8 +76,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/CreateUser");
             request.AddBody(user);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PostAsync(request, bearerToken);
+            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {

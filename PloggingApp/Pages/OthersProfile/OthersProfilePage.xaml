@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.Pages.OthersProfilePage"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             Title="Others Profile">
-    
+<ContentPage
+    x:Class="PloggingApp.Pages.OthersProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    Title="Others Profile"
+    x:DataType="viewmodel:OthersProfilePageViewModel">
 
     <Grid>
-        <Image Source="leftarrow.png" Margin="0,-675,320,0" HeightRequest="25">
+        <Image
+            Margin="0,-675,320,0"
+            HeightRequest="25"
+            Source="leftarrow.png">
             <Image.GestureRecognizers>
-                <TapGestureRecognizer Command ="{Binding goBackCommand}" Tapped ="BackTap"/>
+                <TapGestureRecognizer Command="{Binding GoBackCommand}" Tapped="BackTap"/>
             </Image.GestureRecognizers>
         </Image>
-        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}" />
+        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"/>
     </Grid>
-
 
 </ContentPage>

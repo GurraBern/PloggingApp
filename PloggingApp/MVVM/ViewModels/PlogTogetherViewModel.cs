@@ -45,6 +45,8 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private bool userCanDelete = false;
 
+    private string UserId => _authenticationService.UserId;
+
     public ICommand RemoveUserCommand { get; private set; }
 
     public PlogTogetherViewModel(IPlogTogetherService plogTogetherService, IAuthenticationService authenticationService,
@@ -76,8 +78,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 	{
         IsBusy = true;
 
-        var currentUserId = _authenticationService.CurrentUser.Uid;
-        var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+        var plogGroup = await _plogTogetherService.GetPlogTogether(UserId);
 
         if (plogGroup == null)
         {
@@ -88,9 +89,9 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
         if (IsTracking == false)
         {
-            if (plogGroup.OwnerUserId == currentUserId)
+            if (plogGroup.OwnerUserId == UserId)
             {
-                await _plogTogetherService.DeleteGroup(currentUserId);
+                await _plogTogetherService.DeleteGroup(UserId);
                 ClearGroup();
             }
             else
@@ -117,8 +118,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 	{
         IsBusy = true;
 
-        var userId = _authenticationService.CurrentUser.Uid;
-        var plogTogether = await _plogTogetherService.GetPlogTogether(userId);
+        var plogTogether = await _plogTogetherService.GetPlogTogether(UserId);
 
        
         if (plogTogether == null)
@@ -130,7 +130,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
         InGroup = true;
 
-        if (userId == plogTogether.OwnerUserId)
+        if (UserId == plogTogether.OwnerUserId)
         {
             foreach (var memberId in plogTogether.UserIds)
             {
@@ -201,8 +201,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
 
-        var currentUserId = _authenticationService.CurrentUser.Uid;
-        var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+        var plogGroup = await _plogTogetherService.GetPlogTogether(UserId);
 
         if (plogGroup == null)
         {
@@ -211,9 +210,9 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
             return;
         }
         
-        if (plogGroup.OwnerUserId != currentUserId)
+        if (plogGroup.OwnerUserId != UserId)
         {
-            await _plogTogetherService.LeaveGroup(currentUserId);
+            await _plogTogetherService.LeaveGroup(UserId);
             ClearGroup();
         }
         else
@@ -231,8 +230,6 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
 
-        var currentUserId = _authenticationService.CurrentUser.Uid;
-
         var plogUser = Group.FirstOrDefault(u => u.UserId == userId);
 
         if (plogUser != null)
@@ -240,7 +237,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
             await _plogTogetherService.LeaveGroup(userId);
             Group.Remove(plogUser);
 
-            var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
+            var plogGroup = await _plogTogetherService.GetPlogTogether(UserId);
             if (plogGroup == null)
             {
                 ClearGroup();

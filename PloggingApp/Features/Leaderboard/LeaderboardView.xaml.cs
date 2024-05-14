@@ -7,7 +7,7 @@ public partial class LeaderboardView : ContentView
         InitializeComponent();
     }
 
-    private void searchBar_TextChanged(object sender, TextChangedEventArgs e)
+    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
         var vm = (LeaderboardViewModel) BindingContext;
 

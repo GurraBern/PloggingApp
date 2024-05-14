@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
-using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.ViewModels;
@@ -15,17 +14,13 @@ public partial class OthersProfilePageViewModel : BaseViewModel
     {
         OthersSessionsViewModel = new OthersSessionsViewModel(sessionService, userService, streakService, popupService);
         BadgesViewModel = new BadgesViewModel(sessionService, userService, streakService, popupService);
-
-
     }
 
     [RelayCommand]
-    public async Task goBack()
+    public async Task GoBack()
     {
         IsBusy = true;
         await Shell.Current.GoToAsync($"..");
         IsBusy = false;
     }
-
-
 }

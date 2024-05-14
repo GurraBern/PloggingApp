@@ -7,8 +7,10 @@ namespace PloggingApp.Services.Authentication;
 public class AuthenticationService : IAuthenticationService
 {
     private UserCredential _userCredential;
-    public User CurrentUser =>_userCredential?.User;
-    
+    public User CurrentUser => _userCredential?.User;
+    public string UserId => CurrentUser.Uid;
+    public string BearerToken => CurrentUser.Credential.IdToken;
+
     private readonly FirebaseAuthClient _firebaseAuthClient;
     private readonly IToastService _toastService;
 

@@ -17,6 +17,7 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization, IRec
 
     [ObservableProperty]
     private int userStreakCount;
+    private string UserId => _authenticationService.UserId;
 
     public StreakViewModel(IStreakService streakService, IAuthenticationService authenticationService)
 	{
@@ -35,11 +36,9 @@ public partial class StreakViewModel : BaseViewModel, IAsyncInitialization, IRec
     [RelayCommand]
     private async Task GetUserStreak()
     {
-        var currentUserId = _authenticationService.CurrentUser.Uid; 
-
         IsBusy = true;
 
-        var user = await _streakService.GetUserStreak(currentUserId);
+        var user = await _streakService.GetUserStreak(UserId);
 
         if (user == null)
         {

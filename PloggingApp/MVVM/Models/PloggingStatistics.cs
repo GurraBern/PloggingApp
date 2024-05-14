@@ -1,20 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Plogging.Core.Enums;
 using Plogging.Core.Models;
 
 namespace PloggingApp.MVVM.Models;
 public partial class PloggingStatistics : ObservableObject
 {
     [ObservableProperty]
-    public double totalSteps;
+    private double totalSteps;
     [ObservableProperty]
-    public double totalDistance;
+    private double totalDistance;
     [ObservableProperty]
-    public double totalCO2Saved;
+    private double totalCO2Saved;
     [ObservableProperty]
-    public double totalWeight;
+    private double totalWeight;
     [ObservableProperty]
-    public TimeSpan totalTime;
+    private TimeSpan totalTime;
 
     public PloggingStatistics(IEnumerable<PloggingSession> sessions)
     {

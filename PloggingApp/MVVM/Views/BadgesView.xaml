@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.MVVM.Views.BadgesView"
-             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
-             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             x:DataType="viewmodel:BadgesViewModel">
-    <Grid RowDefinitions="100" ColumnDefinitions="80,*">
-        <Border Style="{StaticResource RoundBorder}" Margin="-10,0,0,0" Grid.Row="0" Grid.Column="0">
+<ContentView
+    x:Class="PloggingApp.MVVM.Views.BadgesView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
+    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    x:DataType="viewmodel:BadgesViewModel">
+    <Grid ColumnDefinitions="80,*" RowDefinitions="100">
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="-10,0,0,0"
+            Style="{StaticResource RoundBorder}">
             <Image Source="badgesindicator.png">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
@@ -16,24 +20,36 @@
             </Image>
         </Border>
 
-        <CollectionView ItemsSource="{Binding Badges}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Margin="-5">
+        <CollectionView
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="-5"
+            HorizontalOptions="Start"
+            ItemsSource="{Binding Badges}">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal" />
+                <LinearItemsLayout Orientation="Horizontal"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Badge">
                     <HorizontalStackLayout>
-                        <Image x:Name="Badge" Source="{Binding Image}" HeightRequest="100" WidthRequest="100" Aspect="AspectFill" HorizontalOptions="Start"
-                              Margin="-20,0,-30,0" >
+                        <Image
+                            x:Name="Badge"
+                            Margin="-20,0,-30,0"
+                            Aspect="AspectFill"
+                            HeightRequest="100"
+                            HorizontalOptions="Start"
+                            Source="{Binding Image}"
+                            WidthRequest="100">
                             <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}"
-                                                      CommandParameter="{Binding .}" Tapped="BadgeTap"/>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BadgesViewModel}}, Path=TapBadgeCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Tapped="BadgeTap"/>
                             </Image.GestureRecognizers>
                         </Image>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentView>

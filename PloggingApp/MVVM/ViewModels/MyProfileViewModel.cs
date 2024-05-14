@@ -26,28 +26,25 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     public StreakViewModel StreakViewModel { get; set; }
     public LeaderboardViewModel LeaderboardViewModel { get; }
     public BadgesViewModel BadgesViewModel { get; }
-
-    public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
-
-    public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+    private ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
+    private IEnumerable<PloggingSession> _allUserSessions = [];
 
     [ObservableProperty]
-    PloggingStatistics ploggingStatistics;
+    private PloggingStatistics ploggingStatistics;
     [ObservableProperty]
-    public string displayName;
+    private string displayName;
     [ObservableProperty]
-    public double totalDistance;
+    private double totalDistance;
     [ObservableProperty]
-    public double totalCO2Saved;
+    private double totalCO2Saved;
     [ObservableProperty]
-    public double totalWeight;
+    private double totalWeight;
     [ObservableProperty]
-    public int userRankInt;
+    private int userRankInt;
     [ObservableProperty]
     private bool isRefreshing;
     [ObservableProperty]
-    public IEnumerable<PloggingSession> latestSessions;
-
+    private IEnumerable<PloggingSession> latestSessions;
 
     public MyProfileViewModel(IAuthenticationService authenticationService, 
         IRankingService rankingService,
@@ -83,12 +80,12 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
-        _ploggingSessionService.MyUserId = _authenticationService.CurrentUser.Uid;
+        _ploggingSessionService.MyUserId = _authenticationService.UserId;
         _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
 
         await BadgesViewModel.Init();
 
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
         if (!_allUserSessions.Any())
         {
@@ -100,6 +97,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
             PloggingSessions.ClearAndAddRange(_allUserSessions);
             PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
             LatestSessions = PloggingSessions.Take(3);
+
+            //TODO get from RankingService instead
             //UserRankInt = LeaderboardViewModel.UserRank.Rank;
 
             IsBusy = false;

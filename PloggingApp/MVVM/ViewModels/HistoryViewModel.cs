@@ -57,7 +57,7 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
     public async Task GetSessions() {
 
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
         if (!_allUserSessions.Any())
         {
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);

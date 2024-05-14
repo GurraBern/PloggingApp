@@ -29,7 +29,7 @@ public partial class GenerateQRcodeViewModel : BaseViewModel
     {
         IsBusy = true;
 
-        CurrentUserId = _authenticationService.CurrentUser.Uid;
+        CurrentUserId = _authenticationService.UserId;
 
 		IsBusy = false;
         return Task.CompletedTask;

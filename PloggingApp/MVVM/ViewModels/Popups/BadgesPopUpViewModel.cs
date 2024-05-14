@@ -1,18 +1,11 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using PloggingApp.MVVM.Models;
-using PloggingApp.MVVM.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PloggingApp.MVVM.ViewModels;
 public partial class BadgesPopUpViewModel : BaseViewModel {
@@ -33,7 +26,6 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
         Initialization = Init();
     }
 
-
     public async Task Init()
     {
         IsBusy = true;
@@ -44,13 +36,13 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
             var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
             int streak;
-            if (_allSessions.Count() == 0)
+            if (_allSessions.Any())
             {
-                stats.totalSteps = 0;
-                stats.totalDistance = 0;
-                stats.totalCO2Saved = 0;
-                stats.totalWeight = 0;
-                stats.totalTime = TimeSpan.Zero;
+                stats.TotalSteps = 0;
+                stats.TotalDistance = 0;
+                stats.TotalCO2Saved = 0;
+                stats.TotalWeight = 0;
+                stats.TotalTime = TimeSpan.Zero;
                 streak = 0;
             }
             else

@@ -5,22 +5,22 @@ using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Pages;
 using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Shared;
+using PloggingApp.Services;
 
 namespace PloggingApp.Features.Leaderboard;
 
 public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IRankingService _rankingService;
-    private readonly IAuthenticationService _authenticationService;
     private readonly IPloggingSessionService _sessionService;
     private readonly IUserInfoService _userInfo;
+    private readonly IToastService _toastService;
+
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
-    private IEnumerable<UserRanking> _allRankings = [];
     public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
     public SortProperty SelectedSortProperty
     {
@@ -47,12 +47,12 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IAuthenticationService authenticationService, IPloggingSessionService sessionService, IUserInfoService userInfo)
+    public LeaderboardViewModel(IRankingService rankingService, IPloggingSessionService sessionService, IUserInfoService userInfo, IToastService toastService)
     {
         _rankingService = rankingService;
-        _authenticationService = authenticationService;
         _sessionService = sessionService;
         _userInfo = userInfo;
+        _toastService = toastService;
 
         Initialization = InitializeAsync();
     }
@@ -65,12 +65,9 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GetMonthlyRankings()
     {
-        RecentRankingCommand = GetMonthlyRankingsCommand;
         IsBusy = true;
 
-        _allRankings = await _rankingService.GetUserRankings(DateTime.UtcNow.FirstDateInMonth(), DateTime.UtcNow.LastDateInMonth(), SelectedSortProperty);
-        Rankings.ClearAndAddRange(_allRankings);
-        UserRank = GetUserRank();
+        await GetRankings(DateTime.UtcNow.FirstDateInMonth(), DateTime.UtcNow.LastDateInMonth(), SelectedSortProperty, GetMonthlyRankingsCommand);
 
         IsBusy = false;
     }
@@ -78,12 +75,9 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GetYearlyRankings()
     {
-        RecentRankingCommand = GetYearlyRankingsCommand;
         IsBusy = true;
 
-        _allRankings = await _rankingService.GetUserRankings(DateTime.UtcNow.FirstDateInYear(), DateTime.UtcNow.LastDateInYear(), SelectedSortProperty);
-        Rankings.ClearAndAddRange(_allRankings);
-        UserRank = GetUserRank();
+        await GetRankings(DateTime.UtcNow.FirstDateInYear(), DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetYearlyRankingsCommand);
 
         IsBusy = false;
     }
@@ -91,23 +85,25 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GetAllTimeRankings()
     {
-        RecentRankingCommand = GetAllTimeRankingsCommand;
         IsBusy = true;
 
-        _allRankings = await _rankingService.GetUserRankings(DateTime.MinValue, DateTime.UtcNow.LastDateInYear(), SelectedSortProperty);
-        Rankings.ClearAndAddRange(_allRankings);
-        UserRank = GetUserRank();
+        await GetRankings(DateTime.MinValue, DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetAllTimeRankingsCommand);
 
         IsBusy = false;
     }
 
-    private UserRanking GetUserRank()
+    private async Task GetRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty, IAsyncRelayCommand command)
     {
-        var currentUserId = _authenticationService.CurrentUser.Uid;
+        RecentRankingCommand = command;
 
-        var userRank = _allRankings.FirstOrDefault(user => user.Id.Equals(currentUserId, StringComparison.InvariantCultureIgnoreCase));
+        var userRankings = await _rankingService.GetUserRankings(startDate, endDate, sortProperty);
+        if (!userRankings.Any())
+        {
+            await _toastService.MakeToast("Could not fetch user rankings");
+        }
 
-        return userRank;
+        Rankings.ClearAndAddRange(userRankings);
+        UserRank = _rankingService.UserRank;
     }
 
     [RelayCommand]
@@ -115,12 +111,12 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     {
         if (!userName.Equals(""))
         {
-            var searchResults = _allRankings.Where(x => x.DisplayName != null && x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
+            var searchResults = _rankingService.UserRankings.Where(x => x.DisplayName != null && x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
             Rankings.ClearAndAddRange(searchResults);
         }
         else
         {
-            Rankings.ClearAndAddRange(_allRankings);
+            Rankings.ClearAndAddRange(_rankingService.UserRankings);
         }
     }
 
@@ -135,6 +131,7 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
             await Application.Current.MainPage.DisplayAlert("ERROR", "Can not show profile, user does not exist.", "OK");
             return;
         }
+
         _sessionService.OtherUserId = userId;
         _sessionService.UserId = userId;
         await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}");

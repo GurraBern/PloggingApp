@@ -62,7 +62,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [RelayCommand]
     private async Task StartPloggingSession()
     {
-        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var currentUserId = _authenticationService.UserId;
         var plogGroup = await _plogTogetherService.GetPlogTogether(currentUserId);
 
         if (plogGroup == null)

@@ -108,17 +108,9 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     {
         var pin = sender as CustomPin;
 
-        switch (pin?.BindingContext)
-        {
-            case LitterbagPlacementPin litterbagPlacementPin:
-                litterbagPlacementPin.Command.Execute(litterbagPlacementPin.LitterBagPlacement);
-                break;
-            case CollectedLitterPin collectedLitterPin:
-                collectedLitterPin.Command.Execute("");
-                break;
-            default:
-                break;
-        }
+        var locationPin = pin?.BindingContext as LocationPin;
+
+        locationPin?.Command?.ExecuteAsync("");
     }
 }
 

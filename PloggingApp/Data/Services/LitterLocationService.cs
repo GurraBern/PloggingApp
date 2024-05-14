@@ -20,8 +20,7 @@ public class LitterLocationService : ILitterLocationService
     {
         var request = new RestRequest("api/PloggingSession/LitterLocations");
 
-        var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-        var litterLocations = await _ploggingApiClient.GetAllAsync(request, bearerToken);
+        var litterLocations = await _ploggingApiClient.GetAllAsync(request, _authenticationService.BearerToken);
 
         return litterLocations;
     }

@@ -1,24 +1,18 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Factories;
-using PloggingApp.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Leaderboard;
 
-public class RankingService : IRankingService
+public class RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IAuthenticationService authenticationService) : IRankingService
 {
-    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
-    private readonly IToastService _toastService;
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient = ploggingApiClient;
+    private readonly IAuthenticationService _authenticationService = authenticationService;
 
-    public RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IToastService toastService, IAuthenticationService authenticationService)
-    {
-        _ploggingApiClient = ploggingApiClient;
-        _toastService = toastService;
-        _authenticationService = authenticationService;
-    }
+    public UserRanking UserRank { get; set; } = UserRanking.CreateDefault();
+    public IEnumerable<UserRanking> UserRankings { get; private set; } = [];
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
     {
@@ -26,8 +20,7 @@ public class RankingService : IRankingService
         {
             var sessionsRequest = SessionRequestFactory.CreateRequest(startDate, endDate, SortDirection.Descending, sortProperty);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest, bearerToken);
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest, _authenticationService.BearerToken);
 
             var rankings = new List<UserRanking>();
             var rank = 1;
@@ -46,11 +39,14 @@ public class RankingService : IRankingService
                 rankings.Add(userRank);
             }
 
+            UserRank = rankings.FirstOrDefault(user => user.Id.Equals(_authenticationService.UserId, StringComparison.InvariantCultureIgnoreCase));
+
+            UserRankings = rankings;
+
             return rankings;
         }
         catch (Exception)
         {
-            await _toastService.MakeToast("Could not fetch user rankings");
             return [];
         }
     }

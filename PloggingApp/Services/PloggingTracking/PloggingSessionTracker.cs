@@ -100,7 +100,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
     {
         IsTracking = false;
 
-        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var currentUserId = _authenticationService.UserId;
 
         var userIsPloggingTogether = await _plogTogetherService.GetPlogTogether(currentUserId);
 

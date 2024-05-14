@@ -26,8 +26,7 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         var placementRequest = new RestRequest("api/LitterbagPlacement");
         placementRequest.AddBody(litterbagPlacement);
 
-        var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-        await _ploggingApiClient.PostAsync(placementRequest, bearerToken);
+        await _ploggingApiClient.PostAsync(placementRequest, _authenticationService.BearerToken);
     }
 
     private async Task<LitterbagPlacement> SaveLitterbagImage(LitterbagPlacement litterbagPlacement)
@@ -45,16 +44,14 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         request.AddParameter("litterbagPlacementId", id);
         request.AddParameter("distanceToLitterbag", distance);
 
-        var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-        await _ploggingApiClient.DeleteAsync(request, bearerToken);
+        await _ploggingApiClient.DeleteAsync(request, _authenticationService.BearerToken);
     }
 
     public async Task<IEnumerable<LitterbagPlacement>> GetLitterbagPlacements()
     {
         var request = new RestRequest("api/LitterbagPlacement");
 
-        var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-        var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request, bearerToken);
+        var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request, _authenticationService.BearerToken);
 
         return litterbagPlacements;
     }

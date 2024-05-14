@@ -1,5 +1,5 @@
-﻿using Plogging.Core.Models;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using Plogging.Core.Models;
 
 namespace PloggingApp.Features.Map.Components;
 
@@ -9,13 +9,14 @@ public class LocationPin : CustomPin
     public string? Address { get; set; }
     public Location? Location { get; set; }
     public ImageSource? ImageSource { get; set; }
-    public ICommand Command { get; set; }
+    public IAsyncRelayCommand Command { get; set; }
+
 }
 
 public class LitterbagPlacementPin: LocationPin
 {
     public LitterbagPlacement LitterBagPlacement { get; set; }
-    public LitterbagPlacementPin(ICommand command, LitterbagPlacement litterbagPlacement)
+    public LitterbagPlacementPin(IAsyncRelayCommand command, LitterbagPlacement litterbagPlacement)
     {
         ImageSource = ImageSource.FromFile("handshake_color_icon.png");
         Command = command;

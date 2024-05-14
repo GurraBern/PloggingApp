@@ -32,8 +32,7 @@ public class PloggingSessionService : IPloggingSessionService
             var request = new RestRequest("api/PloggingSession/UserSessions");
             request.AddBody(ploggingSession);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PostAsync(request, bearerToken);
+            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {
@@ -41,29 +40,28 @@ public class PloggingSessionService : IPloggingSessionService
         }
     }
 
-    public async Task<IEnumerable<PloggingSession>> GetUserSessions(string UserId, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<PloggingSession>> GetUserSessions(string userId, DateTime startDate, DateTime endDate)
     {
         try
         {
             var request = new RestRequest("api/PloggingSession/UserSessions");
-            request.AddParameter("userId", UserId);
+            request.AddParameter("userId", userId);
             request.AddParameter("startDate", startDate);
             request.AddParameter("endDate", endDate);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request, bearerToken);
+            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request, _authenticationService.BearerToken);
             return ploggingSessions;
         }
         catch (Exception)
         {
             await _toastService.MakeToast("Could not fetch user sessions");
 
-            return Enumerable.Empty<PloggingSession>();
+            return [];
         }
     }
     public string UserId { get; set; }
     public string MyUserId { get; set; }
 
     public string OtherUserId { get; set; }
-    public string SessionId { get; set; }
+    //public string SessionId { get; set; }
 }

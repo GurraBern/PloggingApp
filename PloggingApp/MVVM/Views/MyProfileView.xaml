@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.MVVM.Views.MyProfileView"
-             xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
-             xmlns:components="clr-namespace:PloggingApp.MVVM.Views.Components"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             xmlns:converters="clr-namespace:PloggingApp.Converters"
-             x:DataType="viewmodel:MyProfileViewModel">
+<ContentView
+    x:Class="PloggingApp.MVVM.Views.MyProfileView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:PloggingApp.Converters"
+    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    x:DataType="viewmodel:MyProfileViewModel">
 
     <ContentView.Resources>
-        <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter" />
+        <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter"/>
         <converters:TitleCaseConverter x:Key="TitleCaseConverter"/>
     </ContentView.Resources>
 
-    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        HeightRequest="800"
+        IsRefreshing="{Binding IsRefreshing}">
 
         <ScrollView>
-            <VerticalStackLayout Spacing="10" Padding="20,20">
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
-                <Border Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 80, 80, 0, 0">
+            <VerticalStackLayout Padding="20,20" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+                <Border StrokeShape="RoundRectangle 80, 80, 0, 0" Style="{StaticResource RoundBorder}">
 
                     <Grid HeightRequest="120">
                         <Grid.RowDefinitions>
@@ -34,55 +36,114 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Row="0" Grid.Column="2" ImageSource="logout.svg" Command="{Binding LogoutCommand}" Scale="0.15" Background="White" HeightRequest="350" WidthRequest="350"/>
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Background="White"
+                            Command="{Binding LogoutCommand}"
+                            HeightRequest="350"
+                            ImageSource="logout.svg"
+                            Scale="0.15"
+                            WidthRequest="350"/>
 
-                        <Ellipse Grid.Row="0" Grid.Column="0" Stroke="Black" StrokeThickness="2" WidthRequest="70" HeightRequest="70"></Ellipse>
-                        <Label Grid.Row="0" Grid.Column="0" 
-                       Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}" 
-                       TextColor="Black" 
-                       Style="{StaticResource SubHeadline}"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
+                        <Ellipse
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="70"
+                            Stroke="Black"
+                            StrokeThickness="2"
+                            WidthRequest="70"/>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource SubHeadline}"
+                            Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
 
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding DisplayName}" Style="{StaticResource SubHeadline}"  BackgroundColor="White" VerticalOptions="Center" />
-                        <views:StreakView Grid.Row="1" Grid.Column="0" BindingContext="{Binding StreakViewModel}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            Style="{StaticResource SubHeadline}"
+                            Text="{Binding DisplayName}"
+                            VerticalOptions="Center"/>
+                        <views:StreakView
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            BindingContext="{Binding StreakViewModel}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
 
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding UserRankInt, StringFormat='Rank: {0}'}" FontSize="Medium" BackgroundColor="White" HorizontalOptions="Center"/>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            FontSize="Medium"
+                            HorizontalOptions="Center"
+                            Text="{Binding UserRankInt, StringFormat='Rank: {0}'}"/>
                     </Grid>
 
 
                 </Border>
 
-                <Border Style="{StaticResource RoundBorder}"  HeightRequest="80">
-                    <Grid RowDefinitions="*" ColumnDefinitions="*">
-                        <views:BadgesView BindingContext="{Binding BadgesViewModel}" Grid.Row="0" Grid.Column ="0" Margin="0,-20,0,0"/>
+                <Border HeightRequest="80" Style="{StaticResource RoundBorder}">
+                    <Grid ColumnDefinitions="*" RowDefinitions="*">
+                        <views:BadgesView
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,-20,0,0"
+                            BindingContext="{Binding BadgesViewModel}"/>
                     </Grid>
                 </Border>
 
                 <Border Style="{StaticResource RoundBorder}">
-                    <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="90">
-                        <Label Text="This Month" FontSize="Medium" HorizontalOptions="Start" Margin="10,5"/>
+                    <StackLayout
+                        Margin="0,10"
+                        HeightRequest="90"
+                        Orientation="Vertical">
+                        <Label
+                            Margin="10,5"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="This Month"/>
                         <Grid Margin="10,0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="2*" />
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="120"/>
                                 </Grid.ColumnDefinitions>
                                 <StackLayout Grid.Column="0" Orientation="Vertical">
-                                    <Label Text="Litter collected" VerticalOptions="Center" FontAttributes="Bold"/>
-                                    <Label Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0:F1} kg'}" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Text="Litter collected"
+                                        VerticalOptions="Center"/>
+                                    <Label Text="{Binding PloggingStatistics.TotalWeight, StringFormat='{0:F1} kg'}"/>
                                 </StackLayout>
-                                <StackLayout Grid.Column="1" Orientation="Vertical" Margin="20,0">
-                                    <Label Text="Distance" VerticalOptions="Center" FontAttributes="Bold"/>
-                                    <Label Text="{Binding PloggingStatistics.TotalDistance, StringFormat='{0} m'}" />
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="20,0"
+                                    Orientation="Vertical">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Text="Distance"
+                                        VerticalOptions="Center"/>
+                                    <Label Text="{Binding PloggingStatistics.TotalDistance, StringFormat='{0} m'}"/>
                                 </StackLayout>
-                                <StackLayout Grid.Column="2" Orientation="Vertical" Margin="20,0">
-                                    <Label Text="Saved CO2" VerticalOptions="Center" FontAttributes="Bold"/>
+                                <StackLayout
+                                    Grid.Column="2"
+                                    Margin="20,0"
+                                    Orientation="Vertical">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Text="Saved CO2"
+                                        VerticalOptions="Center"/>
                                     <Label Text="{Binding PloggingStatistics.TotalCO2Saved, StringFormat='{0} kg CO2e'}"/>
                                 </StackLayout>
 
@@ -93,40 +154,69 @@
 
                 <Border Style="{StaticResource RoundBorder}">
 
-                    <StackLayout Margin="0,10" Orientation="Vertical" HeightRequest="150">
-                        <Label Text="History" Margin="10,0" FontSize="Medium" HorizontalOptions="Start"/>
+                    <StackLayout
+                        Margin="0,10"
+                        HeightRequest="150"
+                        Orientation="Vertical">
+                        <Label
+                            Margin="10,0"
+                            FontSize="Medium"
+                            HorizontalOptions="Start"
+                            Text="History"/>
 
-                        <Grid  Margin="10,5">
+                        <Grid Margin="10,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
 
-                            <CollectionView Grid.Column="0" x:Name="collectionView" ItemsSource="{Binding LatestSessions}" ItemsLayout="HorizontalList">
+                            <CollectionView
+                                x:Name="collectionView"
+                                Grid.Column="0"
+                                ItemsLayout="HorizontalList"
+                                ItemsSource="{Binding LatestSessions}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="modelsCore:PloggingSession">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="80" />
-                                                <RowDefinition Height="20" />
-                                                <RowDefinition Height="20" />
+                                                <RowDefinition Height="80"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
                                             </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions >
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="5" />
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"/>
+                                                <ColumnDefinition Width="5"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Image Source="{Binding Image}" Grid.Row="0" Aspect="AspectFit">
+                                            <Image
+                                                Grid.Row="0"
+                                                Aspect="AspectFit"
+                                                Source="{Binding Image}">
                                                 <Image.Clip>
-                                                    <EllipseGeometry RadiusX="31" RadiusY="31" Center="37,40"/>
+                                                    <EllipseGeometry
+                                                        Center="37,40"
+                                                        RadiusX="31"
+                                                        RadiusY="31"/>
                                                 </Image.Clip>
                                             </Image>
 
-                                            <Label Grid.Row="1" Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}" HorizontalOptions="Center"/>
+                                            <Label
+                                                Grid.Row="1"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding StartDate, StringFormat='{0:dd MMMM}'}"/>
 
-                                            <Label Grid.Row="2" Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}" HorizontalOptions="Center"/>
-                                            <Image Grid.Row="2" Source="trashbag.png" WidthRequest="15" HeightRequest="15" HorizontalOptions="Start" Margin="15,0"/>
+                                            <Label
+                                                Grid.Row="2"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}"/>
+                                            <Image
+                                                Grid.Row="2"
+                                                Margin="15,0"
+                                                HeightRequest="15"
+                                                HorizontalOptions="Start"
+                                                Source="trashbag.png"
+                                                WidthRequest="15"/>
 
                                         </Grid>
                                     </DataTemplate>
@@ -134,7 +224,12 @@
                             </CollectionView>
 
 
-                            <ImageButton Grid.Column="1" Source="morebadges.png" WidthRequest="40" HeightRequest="40" Command="{Binding GoToHistoryPageCommand}"/>
+                            <ImageButton
+                                Grid.Column="1"
+                                Command="{Binding GoToHistoryPageCommand}"
+                                HeightRequest="40"
+                                Source="morebadges.png"
+                                WidthRequest="40"/>
 
                         </Grid>
 

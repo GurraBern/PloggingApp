@@ -2,11 +2,6 @@
 
 public class CameraService : ICameraService
 {
-    public CameraService()
-    {
-
-    }
-
     public async Task<string> TakePhoto()
     {
         if (MediaPicker.Default.IsCaptureSupported)

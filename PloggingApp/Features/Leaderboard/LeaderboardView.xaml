@@ -111,7 +111,7 @@
                 Placeholder="search for user..."
                 SearchCommand="{Binding SearchUsersCommand}"
                 SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                TextChanged="searchBar_TextChanged"/>
+                TextChanged="SearchBar_TextChanged"/>
         </Border>
 
         <VerticalStackLayout>
@@ -145,8 +145,6 @@
                                         Text="{Binding DisplayName}"
                                         VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
-
-
 
                                 <Label
                                     Grid.Column="1"

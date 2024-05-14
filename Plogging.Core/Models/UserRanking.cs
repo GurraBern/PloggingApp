@@ -11,4 +11,15 @@ public class UserRanking
     public required string DisplayName { get; set; }
     public int Rank { get; set; }
     public PloggingData PloggingData { get; set; } = new();
+
+    public static UserRanking CreateDefault()
+    {
+        return new UserRanking()
+        {
+            Id = "",
+            DisplayName = "",
+            Rank = 0,
+            PloggingData = new PloggingData()
+        };
+    }
 }

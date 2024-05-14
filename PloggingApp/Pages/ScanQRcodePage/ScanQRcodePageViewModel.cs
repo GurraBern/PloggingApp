@@ -1,8 +1,4 @@
-﻿    using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using Firebase.Auth;
-using PloggingApp.MVVM.Models.Messages;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.MVVM.Models;
@@ -15,6 +11,7 @@ public partial class ScanQRcodePageViewModel : ObservableObject
 {
     [ObservableProperty]
     private PlogUser addUser;
+    private string UserId => _authenticationService.UserId;
 
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
@@ -32,7 +29,7 @@ public partial class ScanQRcodePageViewModel : ObservableObject
 
     public async Task AddUserToGroup(string userId)
     {
-        var currentUserId = _authenticationService.CurrentUser.Uid;
+        var currentUserId = _authenticationService.UserId;
         var userInfo = await _userInfoService.GetUser(userId);
 
         var plogTogetherGroup = await _plogTogetherService.GetPlogTogether(currentUserId);

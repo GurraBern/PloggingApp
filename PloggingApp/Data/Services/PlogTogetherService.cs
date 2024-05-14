@@ -22,8 +22,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/AddUserToGroup/{ownerUserId}/{userId}");
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PostAsync(request, bearerToken);
+            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {
@@ -39,8 +38,7 @@ public class PlogTogetherService : IPlogTogetherService
             var request = new RestRequest("api/PlogTogether/DeleteGroup");
             request.AddParameter("ownerUserId", ownerUserId);
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.DeleteAsync(request, bearerToken);
+            await _ploggingApiClient.DeleteAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {
@@ -54,8 +52,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/GetPlogTogether/{ownerUserId}");
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            var plogTogether = await _ploggingApiClient.GetAsync(request, bearerToken);
+            var plogTogether = await _ploggingApiClient.GetAsync(request, _authenticationService.BearerToken);
             return plogTogether;
         }
         catch (Exception ex)
@@ -71,8 +68,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/LeaveGroup/{userId}");
 
-            var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-            await _ploggingApiClient.PutAsync(request, bearerToken);
+            await _ploggingApiClient.PutAsync(request, _authenticationService.BearerToken);
         }
         catch (Exception ex)
         {

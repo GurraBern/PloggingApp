@@ -84,7 +84,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task GetUserSessions()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
         if (!_allUserSessions.Any())
             await _toastService.MakeToast("No sessions found :(", CommunityToolkit.Maui.Core.ToastDuration.Short);
         UserSessions.ClearAndAddRange(_allUserSessions);
@@ -190,7 +190,7 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private async Task Refresh()
     {
         IsBusy = true;
-        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.CurrentUser.Uid, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
+        _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-3), DateTime.UtcNow);
         Update();
         IsRefreshing = false;
         IsBusy = false;

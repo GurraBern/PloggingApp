@@ -219,7 +219,6 @@
 	  <ProjectReference Include="..\Plogging.Core\Plogging.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Commands\" />
 	  <Folder Include="Pages\ScanQRcodePage\" />
 	</ItemGroup>
 	<ItemGroup>

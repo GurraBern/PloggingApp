@@ -22,8 +22,7 @@ public class PloggingImageService : IPloggingImageService
         var imageRequest = new RestRequest("api/Image");
         imageRequest.AddFile("image", imagePath);
 
-        var bearerToken = _authenticationService.CurrentUser.Credential.IdToken;
-        var ploggingImage = await _imageApiClient.PostAsync(imageRequest, bearerToken);
+        var ploggingImage = await _imageApiClient.PostAsync(imageRequest, _authenticationService.BearerToken);
 
         return ploggingImage;
     }
