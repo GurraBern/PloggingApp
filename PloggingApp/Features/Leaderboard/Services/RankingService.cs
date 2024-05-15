@@ -20,7 +20,7 @@ public class RankingService(IPloggingApiClient<PloggingSession> ploggingApiClien
         {
             var sessionsRequest = SessionRequestFactory.CreateRequest(startDate, endDate, SortDirection.Descending, sortProperty);
 
-            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest, _authenticationService.BearerToken);
+            var ploggingSummaries = await _ploggingApiClient.GetAllAsync(sessionsRequest);
 
             var rankings = new List<UserRanking>();
             var rank = 1;

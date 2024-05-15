@@ -1,18 +1,13 @@
-﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Pages;
 using PloggingApp.Services.Authentication;
-using System.Diagnostics;
-using PloggingApp.Services.PloggingTracking;
-using Firebase.Auth;
 using PloggingApp.Services;
 using PloggingApp.Shared;
 
@@ -28,7 +23,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
 
     public Task Initialization { get; private set; }
 
-    public ObservableCollection<PlogUser> Group { get; set; } = new ObservableCollection<PlogUser>();
+    public ObservableCollection<PlogUser> Group { get; set; } = [];
 
     [ObservableProperty]
     private bool isTracking = false;
@@ -157,6 +152,7 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
                     }
                 }
             }
+
             UserCanAdd = true;
             UserCanDelete = true;
         }

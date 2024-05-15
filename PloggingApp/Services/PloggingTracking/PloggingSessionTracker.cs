@@ -127,7 +127,6 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         }
         else
         {
-
             List<string> usersInGroup = userIsPloggingTogether.UserIds;
 
             DateTime EndTime = DateTime.UtcNow;

@@ -1,5 +1,4 @@
-﻿using System;
-using Plogging.Core.Models;
+﻿using Plogging.Core.Models;
 
 namespace PloggingApp.Data.Services;
 
@@ -9,9 +8,8 @@ public interface IStreakService
 
     Task UpdateStreak(string userId);
 
-    Task ResetStreak(string userId);
+    Task ResetStreak();
 
     Task CreateUser(string userId);
 }
-
 

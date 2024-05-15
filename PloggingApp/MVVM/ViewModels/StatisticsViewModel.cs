@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microcharts;
 using SkiaSharp;
 using Plogging.Core.Models;
 using Plogging.Core.Enums;
@@ -11,7 +10,6 @@ using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Pages;
-using System;
 using PloggingApp.Services;
 using PloggingApp.Shared;
 
@@ -19,9 +17,6 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 {
-
-    public Task Initialization { get; private set; }
-
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IChartService _chartService;
@@ -61,6 +56,9 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
            Update();
         }
     }
+
+    public Task Initialization { get; private set; }
+
 
     public StatisticsViewModel(IPloggingSessionService ploggingSessionService, IAuthenticationService authenticationService, IChartService chartService, IToastService toastService)
     {

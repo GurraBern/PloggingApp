@@ -22,7 +22,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/AddUserToGroup/{ownerUserId}/{userId}");
 
-            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PostAsync(request);
         }
         catch (Exception ex)
         {
@@ -38,7 +38,7 @@ public class PlogTogetherService : IPlogTogetherService
             var request = new RestRequest("api/PlogTogether/DeleteGroup");
             request.AddParameter("ownerUserId", ownerUserId);
 
-            await _ploggingApiClient.DeleteAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.DeleteAsync(request);
         }
         catch (Exception ex)
         {
@@ -52,7 +52,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/GetPlogTogether/{ownerUserId}");
 
-            var plogTogether = await _ploggingApiClient.GetAsync(request, _authenticationService.BearerToken);
+            var plogTogether = await _ploggingApiClient.GetAsync(request);
             return plogTogether;
         }
         catch (Exception ex)
@@ -68,7 +68,7 @@ public class PlogTogetherService : IPlogTogetherService
         {
             var request = new RestRequest($"api/PlogTogether/LeaveGroup/{userId}");
 
-            await _ploggingApiClient.PutAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PutAsync(request);
         }
         catch (Exception ex)
         {

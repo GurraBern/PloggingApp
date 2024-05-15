@@ -22,7 +22,7 @@ public class PloggingImageService : IPloggingImageService
         var imageRequest = new RestRequest("api/Image");
         imageRequest.AddFile("image", imagePath);
 
-        var ploggingImage = await _imageApiClient.PostAsync(imageRequest, _authenticationService.BearerToken);
+        var ploggingImage = await _imageApiClient.PostAsync(imageRequest);
 
         return ploggingImage;
     }

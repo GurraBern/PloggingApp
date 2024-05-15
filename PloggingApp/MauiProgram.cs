@@ -176,9 +176,10 @@ public static class MauiProgram
 
     private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)
     {
-        builder.Services.AddTransient<IPloggingApiClient<T>>(serviceProvider =>
+        builder.Services.AddScoped<IPloggingApiClient<T>>(serviceProvider =>
         {
-            return new PloggingApiClient<T>(restClient);
+            var authService = serviceProvider.GetService<IAuthenticationService>();
+            return new PloggingApiClient<T>(restClient, authService);
         });
     }
 

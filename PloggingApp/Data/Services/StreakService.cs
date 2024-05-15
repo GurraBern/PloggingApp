@@ -23,7 +23,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/GetUserStreak");
             request.AddParameter("userId", id);
 
-            var user = await _ploggingApiClient.GetAsync(request, _authenticationService.BearerToken);
+            var user = await _ploggingApiClient.GetAsync(request);
             return user;
         }
         catch (Exception ex)
@@ -34,13 +34,13 @@ public class StreakService : IStreakService
         }
     }
 
-    public async Task ResetStreak(string userId)
+    public async Task ResetStreak()
     {
         try
         {
-            var request = new RestRequest($"api/Streak/ResetStreak/{userId}");
+            var request = new RestRequest($"api/Streak/ResetStreak/{_authenticationService.UserId}");
 
-            await _ploggingApiClient.PatchAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PatchAsync(request);
         }
         catch (Exception ex)
         {
@@ -55,7 +55,7 @@ public class StreakService : IStreakService
         {
             var request = new RestRequest($"api/Streak/UpdateStreak/{userId}");
 
-            await _ploggingApiClient.PatchAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PatchAsync(request);
         }
         catch (Exception ex)
         {
@@ -76,7 +76,7 @@ public class StreakService : IStreakService
             var request = new RestRequest("api/Streak/CreateUser");
             request.AddBody(user);
 
-            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PostAsync(request);
         }
         catch (Exception ex)
         {

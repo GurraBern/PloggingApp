@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
-using System.Diagnostics;
 using PloggingApp.Pages;
 using PloggingApp.Data.Services;
 using PloggingApp.Services;
@@ -37,15 +36,18 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
         Initialization = Initialize();
     }
 
-
     private async Task Initialize()
     {
         IsBusy = true;
-        await _authenticationService.AutoLogin();
-        await _streakService.ResetStreak(_authenticationService.UserId);
+
+        var isLoginSuccessful = await _authenticationService.AutoLogin();
+        if(isLoginSuccessful)
+        {
+            await _streakService.ResetStreak();
+        }
+
         IsBusy = false;
     }
-
 
     [RelayCommand]
     private async Task Logout()
@@ -54,13 +56,11 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
         await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
     }
 
-
     [RelayCommand]
     private async Task GoToLoginPage()
     {
         await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
     }
-
 
     [RelayCommand]
     private async Task Login()
@@ -71,7 +71,7 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
             {
                 await _authenticationService.LoginUser(LoginEmail, LoginPassword);
                 await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
-                await _streakService.ResetStreak(_authenticationService.UserId);
+                await _streakService.ResetStreak();
             }
             catch (Exception ex)
             {
@@ -80,13 +80,11 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
         }
     }
 
-
     [RelayCommand]
     private async Task GoToRegisterPage()
     {
         await Shell.Current.GoToAsync($"//{nameof(RegisterPage)}");
     }
-
 
     [RelayCommand]
     private async Task Register()
@@ -112,7 +110,6 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
     }
 
     private async void HandleAuthenticationError(Exception ex) {
-
         string errorMessage = ex.Message;
 
         if (errorMessage.Contains("INVALID_LOGIN_CREDENTIALS"))

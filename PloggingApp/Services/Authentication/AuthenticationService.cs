@@ -8,7 +8,7 @@ public class AuthenticationService : IAuthenticationService
 {
     private UserCredential _userCredential;
     public User CurrentUser => _userCredential?.User;
-    public string UserId => CurrentUser.Uid;
+    public string UserId => CurrentUser?.Uid;
     public string BearerToken => CurrentUser.Credential.IdToken;
 
     private readonly FirebaseAuthClient _firebaseAuthClient;
@@ -20,14 +20,19 @@ public class AuthenticationService : IAuthenticationService
         _toastService = toastService;
     }
 
-    public async Task LoginUser(string email, string password)
+    public async Task<bool> LoginUser(string email, string password)
     {
         _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
-        var currentUserId = CurrentUser.Uid;
+        if(_userCredential == null)
+        {
+            return false;
+        }
 
         await _toastService.MakeToast("You are being logged in.");
         await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
+
+        return true;
     }
 
     public async Task CreateUser(string email, string password, string displayName)
@@ -35,23 +40,19 @@ public class AuthenticationService : IAuthenticationService
         _userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password, displayName);
     }
 
-    public async Task AutoLogin()
+    public async Task<bool> AutoLogin()
     {
         var email = await SecureStorage.GetAsync("email");
         var password = await SecureStorage.GetAsync("password");
 
         if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
         {
-            _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
-
-            var currentUserId = CurrentUser.Uid;
-
-            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
+            return await LoginUser(email, password);
         } else
         {
             Trace.WriteLine("Autologin failed.");
+            return false;
         }
-
     }
 
     public async Task SaveCredentials(bool rememberMe, string email, string password)

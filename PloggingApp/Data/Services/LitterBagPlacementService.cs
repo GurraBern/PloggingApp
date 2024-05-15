@@ -10,13 +10,11 @@ public class LitterbagPlacementService : ILitterbagPlacementService
 {
     private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient;
     private readonly IPloggingImageService _ploggingImageService;
-    private readonly IAuthenticationService _authenticationService;
 
-    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingImageService ploggingImageService, IAuthenticationService authenticationService)
+    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingImageService ploggingImageService)
     {
         _ploggingApiClient = ploggingApiClient;
         _ploggingImageService = ploggingImageService;
-        _authenticationService = authenticationService;
     }
 
     public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
@@ -26,7 +24,7 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         var placementRequest = new RestRequest("api/LitterbagPlacement");
         placementRequest.AddBody(litterbagPlacement);
 
-        await _ploggingApiClient.PostAsync(placementRequest, _authenticationService.BearerToken);
+        await _ploggingApiClient.PostAsync(placementRequest);
     }
 
     private async Task<LitterbagPlacement> SaveLitterbagImage(LitterbagPlacement litterbagPlacement)
@@ -44,14 +42,14 @@ public class LitterbagPlacementService : ILitterbagPlacementService
         request.AddParameter("litterbagPlacementId", id);
         request.AddParameter("distanceToLitterbag", distance);
 
-        await _ploggingApiClient.DeleteAsync(request, _authenticationService.BearerToken);
+        await _ploggingApiClient.DeleteAsync(request);
     }
 
     public async Task<IEnumerable<LitterbagPlacement>> GetLitterbagPlacements()
     {
         var request = new RestRequest("api/LitterbagPlacement");
 
-        var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request, _authenticationService.BearerToken);
+        var litterbagPlacements = await _ploggingApiClient.GetAllAsync(request);
 
         return litterbagPlacements;
     }

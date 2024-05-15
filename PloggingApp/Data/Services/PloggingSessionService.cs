@@ -32,7 +32,7 @@ public class PloggingSessionService : IPloggingSessionService
             var request = new RestRequest("api/PloggingSession/UserSessions");
             request.AddBody(ploggingSession);
 
-            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PostAsync(request);
         }
         catch (Exception ex)
         {
@@ -49,7 +49,7 @@ public class PloggingSessionService : IPloggingSessionService
             request.AddParameter("startDate", startDate);
             request.AddParameter("endDate", endDate);
 
-            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request, _authenticationService.BearerToken);
+            var ploggingSessions = await _ploggingApiClient.GetAllAsync(request);
             return ploggingSessions;
         }
         catch (Exception)

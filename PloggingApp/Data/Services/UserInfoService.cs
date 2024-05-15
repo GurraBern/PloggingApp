@@ -22,7 +22,7 @@ public class UserInfoService : IUserInfoService
         {
             var request = new RestRequest($"api/UserInfo/GetUserInfo/{userId}");
 
-            var user = await _ploggingApiClient.GetAsync(request, _authenticationService.BearerToken);
+            var user = await _ploggingApiClient.GetAsync(request);
             return user;
         }
         catch (Exception ex)
@@ -46,7 +46,7 @@ public class UserInfoService : IUserInfoService
             var request = new RestRequest("api/UserInfo/CreateUser");
             request.AddBody(user);
 
-            await _ploggingApiClient.PostAsync(request, _authenticationService.BearerToken);
+            await _ploggingApiClient.PostAsync(request);
         }
         catch (Exception ex)
         {
