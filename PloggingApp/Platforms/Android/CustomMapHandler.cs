@@ -5,7 +5,7 @@ using Android.Graphics.Drawables;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Maps.Handlers;
 using Microsoft.Maui.Platform;
-using PloggingApp.MVVM.Views.Components;
+using PloggingApp.Features.Map.Components;
 using IMap = Microsoft.Maui.Maps.IMap;
 
 namespace PloggingApp;

@@ -1,26 +1,16 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Services;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class PloggingSessionService : IPloggingSessionService
+public class PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService) : IPloggingSessionService
 {
-    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient;
-    private readonly IPloggingImageService _ploggingImageService;
-    private readonly IToastService _toastService;
-    private readonly IAuthenticationService _authenticationService;
-
-    public PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService, IAuthenticationService authenticationService)
-    {
-        _ploggingApiClient = ploggingApiClient;
-        _ploggingImageService = ploggingImageService;
-        _toastService = toastService;
-        _authenticationService = authenticationService;
-    }
+    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient = ploggingApiClient;
+    private readonly IPloggingImageService _ploggingImageService = ploggingImageService;
+    private readonly IToastService _toastService = toastService;
 
     public async Task SavePloggingSession(PloggingSession ploggingSession)
     {
@@ -59,7 +49,7 @@ public class PloggingSessionService : IPloggingSessionService
             return [];
         }
     }
-    public string UserId { get; set; }
+    // public string UserId { get; set; }
     public string MyUserId { get; set; }
 
     public string OtherUserId { get; set; }

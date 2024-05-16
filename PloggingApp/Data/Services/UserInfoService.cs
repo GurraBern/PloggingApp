@@ -5,16 +5,9 @@ using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class UserInfoService : IUserInfoService
+public class UserInfoService(IPloggingApiClient<UserInfo> ploggingApiClient) : IUserInfoService
 {
-    private readonly IPloggingApiClient<UserInfo> _ploggingApiClient;
-    private readonly IAuthenticationService _authenticationService;
-
-    public UserInfoService(IPloggingApiClient<UserInfo> ploggingApiClient, IAuthenticationService authenticationService)
-	{
-        _ploggingApiClient = ploggingApiClient;
-        _authenticationService = authenticationService;
-    }
+    private readonly IPloggingApiClient<UserInfo> _ploggingApiClient = ploggingApiClient;
 
     public async Task<UserInfo> GetUser(string userId)
     {
@@ -55,4 +48,3 @@ public class UserInfoService : IUserInfoService
         }
     }
 }
-

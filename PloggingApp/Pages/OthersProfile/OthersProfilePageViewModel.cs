@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
@@ -6,14 +7,22 @@ using PloggingApp.MVVM.ViewModels;
 
 namespace PloggingApp.Pages;
 
-public partial class OthersProfilePageViewModel : BaseViewModel
+[QueryProperty(nameof(UserId), nameof(UserId))]
+public partial class OthersProfilePageViewModel(IPloggingSessionService sessionService, IUserInfoService userService, IStreakService streakService, IPopupService popupService) : BaseViewModel
 {
-    public OthersSessionsViewModel OthersSessionsViewModel { get; set; }
-    public BadgesViewModel BadgesViewModel { get; set; }
-    public OthersProfilePageViewModel(IPloggingSessionService sessionService, IUserInfoService userService, IStreakService streakService, IPopupService popupService)
+    [ObservableProperty]
+    public OthersSessionsViewModel? othersSessionsViewModel;
+    
+    [ObservableProperty]
+    private string userId = "";
+    private readonly IPloggingSessionService sessionService = sessionService;
+    private readonly IUserInfoService userService = userService;
+    private readonly IStreakService streakService = streakService;
+    private readonly IPopupService popupService = popupService;
+
+    public void Initialize()
     {
-        OthersSessionsViewModel = new OthersSessionsViewModel(sessionService, userService, streakService, popupService);
-        BadgesViewModel = new BadgesViewModel(sessionService, userService, streakService, popupService);
+        OthersSessionsViewModel = new OthersSessionsViewModel(UserId, sessionService, userService, streakService, popupService);
     }
 
     [RelayCommand]

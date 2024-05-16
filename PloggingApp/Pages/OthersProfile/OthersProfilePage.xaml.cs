@@ -11,14 +11,13 @@ public partial class OthersProfilePage : ContentPage
         this.vm = vm;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        base.OnAppearing();
-
-        await vm.OthersSessionsViewModel.UpdatePage();
-        await vm.BadgesViewModel.Init();
+        base.OnNavigatedTo(args);
+        vm.Initialize();
     }
 
+    //TODO change from obsolete
     private void BackTap(object sender, EventArgs e)
     {
         if (sender is Image tappedImage)

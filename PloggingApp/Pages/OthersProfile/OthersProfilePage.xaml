@@ -8,16 +8,13 @@
     Title="Others Profile"
     x:DataType="viewmodel:OthersProfilePageViewModel">
 
-    <Grid>
-        <Image
-            Margin="0,-675,320,0"
-            HeightRequest="25"
-            Source="leftarrow.png">
+    <VerticalStackLayout>
+        <Image Source="leftarrow.png">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding GoBackCommand}" Tapped="BackTap"/>
             </Image.GestureRecognizers>
         </Image>
-        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"/>
-    </Grid>
 
+        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"/>
+    </VerticalStackLayout>
 </ContentPage>

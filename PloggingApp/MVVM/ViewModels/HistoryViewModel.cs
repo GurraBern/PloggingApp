@@ -4,12 +4,8 @@ using PloggingApp.Services.Authentication;
 using PloggingApp.Extensions;
 using Plogging.Core.Models;
 using System.Collections.ObjectModel;
-using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.MVVM.Models;
-using PloggingApp.Pages;
 using PloggingApp.Services;
-using System.Windows.Input;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Shared;
 
@@ -17,23 +13,21 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
 {
-    public Task Initialization { get; set; }
-
     private readonly IToastService _toastService;
     private readonly IPloggingSessionService _ploggingSessionService;
     private readonly IAuthenticationService _authenticationService;
     private readonly ISessionStatisticsService _sessionStatisticsService;
 
-
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StatisticsViewModel StatisticsViewModel { get; }
-
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
-
-    public IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
+    public IEnumerable<PloggingSession> _allUserSessions = [];
 
     [ObservableProperty]
     bool isRefreshing;
+
+    public Task Initialization { get; set; }
+
     public HistoryViewModel(IPloggingSessionService ploggingSessionService,
         PloggingSessionViewModel ploggingSessionViewModel, IToastService toastService, 
         IAuthenticationService authenticationService, StatisticsViewModel statisticsViewModel,
@@ -45,7 +39,6 @@ public partial class HistoryViewModel : BaseViewModel, IAsyncInitialization
         _authenticationService = authenticationService;
         StatisticsViewModel = statisticsViewModel;
         _sessionStatisticsService = sessionStatisticsService;
-
 
         Initialization = InitializeAsync();
     }

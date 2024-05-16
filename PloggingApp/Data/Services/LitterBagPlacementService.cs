@@ -1,21 +1,14 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class LitterbagPlacementService : ILitterbagPlacementService
+public class LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingImageService ploggingImageService) : ILitterbagPlacementService
 {
-    private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient;
-    private readonly IPloggingImageService _ploggingImageService;
-
-    public LitterbagPlacementService(IPloggingApiClient<LitterbagPlacement> ploggingApiClient, IPloggingImageService ploggingImageService)
-    {
-        _ploggingApiClient = ploggingApiClient;
-        _ploggingImageService = ploggingImageService;
-    }
+    private readonly IPloggingApiClient<LitterbagPlacement> _ploggingApiClient = ploggingApiClient;
+    private readonly IPloggingImageService _ploggingImageService = ploggingImageService;
 
     public async Task AddTrashCollectionPoint(LitterbagPlacement litterbagPlacement)
     {

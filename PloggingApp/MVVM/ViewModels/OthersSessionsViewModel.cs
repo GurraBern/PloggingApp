@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
-using CommunityToolkit.Mvvm.Input;
 using PloggingApp.MVVM.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
@@ -13,25 +12,16 @@ namespace PloggingApp.MVVM.ViewModels;
 
 public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitialization
 {
+    private readonly string userId;
+    private readonly IPloggingSessionService _sessionService;
+    private readonly IUserInfoService _userInfo;
+    private readonly IStreakService _streakService;
 
     public ObservableCollection<PloggingSession> PloggingSessions { get; set; } = [];
-
     public ObservableCollection<Badge> Badges { get; set; } = [];
-    private readonly List<Badge> badges = [];
 
     [ObservableProperty]
-    PloggingStatistics ploggingStatistics;
-    //[ObservableProperty]
-    //private double totalSteps;
-
-    //[ObservableProperty]
-    //private double totalDistance;
-
-    //[ObservableProperty]
-    //private double totalCO2Saved;
-
-    //[ObservableProperty]
-    //private double totalWeight;
+    private PloggingStatistics ploggingStatistics;
 
     [ObservableProperty]
     private string displayName;
@@ -42,62 +32,45 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     [ObservableProperty]
     private string streakString;
 
-
-
     private IEnumerable<PloggingSession> _allSessions = [];
     public BadgesViewModel BadgesViewModel { get; set; }
-    private readonly IPloggingSessionService _sessionService;
-    private readonly IStreakService _streakService;
-    private readonly IUserInfoService _userInfo;
-    private readonly IPopupService _popupService;
 
-    private IRelayCommand? RecentSessionCommand { get; set; }
+
     public Task Initialization { get; private set; }
 
-    public OthersSessionsViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo, IStreakService StreakService, IPopupService PopupService)
+    public OthersSessionsViewModel(string userId, IPloggingSessionService sessionService, IUserInfoService userInfo, IStreakService streakService, IPopupService popupService)
     {
-        _sessionService = SessionService;
-        _userInfo = UserInfo;
-        _streakService = StreakService;
-        _popupService = PopupService;
-        BadgesViewModel = new BadgesViewModel(SessionService, UserInfo, StreakService, PopupService);
+        this.userId = userId;
+        _sessionService = sessionService;
+        _userInfo = userInfo;
+        _streakService = streakService;
+
+        BadgesViewModel = new BadgesViewModel(sessionService, userInfo, streakService, popupService);
 
         Initialization = GetSessions();
-    }
-
-    [RelayCommand]
-    public async Task UpdatePage()
-    {
-        await GetSessions();
     }
 
     public async Task GetSessions()
     {
         IsBusy = true;
-        string userId = _sessionService.OtherUserId;
-        _sessionService.UserId = userId;
 
         if(userId != null)
         {
             var user = await _userInfo.GetUser(userId);
             DisplayName = user.DisplayName;
             _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+
             PloggingStatistics = new PloggingStatistics(_allSessions);
-
-            ploggingStatistics.TotalSteps = Math.Round(ploggingStatistics.TotalSteps,1);
-
-            ploggingStatistics.TotalDistance = Math.Round(ploggingStatistics.TotalDistance,1);
-
-            ploggingStatistics.TotalWeight = Math.Round(ploggingStatistics.TotalWeight,1);
-
-            ploggingStatistics.TotalCO2Saved = Math.Round(ploggingStatistics.TotalCO2Saved,1);
+            PloggingStatistics.TotalSteps = Math.Round(PloggingStatistics.TotalSteps,1);
+            PloggingStatistics.TotalDistance = Math.Round(PloggingStatistics.TotalDistance,1);
+            PloggingStatistics.TotalWeight = Math.Round(PloggingStatistics.TotalWeight,1);
+            PloggingStatistics.TotalCO2Saved = Math.Round(PloggingStatistics.TotalCO2Saved,1);
 
             foreach (PloggingSession ps in _allSessions)
             {
                 ps.PloggingData.Distance = Math.Round(ps.PloggingData.Distance,1);
                 ps.PloggingData.Weight = Math.Round(ps.PloggingData.Weight,1);
                 ps.StartDate = ps.StartDate.AddHours(2);
-                
             }
 
             PloggingSessions.ClearAndAddRange(_allSessions);
@@ -111,5 +84,4 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
 
         IsBusy = false;
     }
-
 }

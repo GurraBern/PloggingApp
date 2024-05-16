@@ -1,20 +1,12 @@
 ﻿using Plogging.Core.Models;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class PlogTogetherService : IPlogTogetherService
+public class PlogTogetherService(IPloggingApiClient<PlogTogether> ploggingApiClient) : IPlogTogetherService
 {
-    private readonly IPloggingApiClient<PlogTogether> _ploggingApiClient;
-    private readonly IAuthenticationService _authenticationService;
-
-    public PlogTogetherService(IPloggingApiClient<PlogTogether> ploggingApiClient, IAuthenticationService authenticationService)
-	{
-        _ploggingApiClient = ploggingApiClient;
-        _authenticationService = authenticationService;
-    }
+    private readonly IPloggingApiClient<PlogTogether> _ploggingApiClient = ploggingApiClient;
 
     public async Task AddUserToGroup(string ownerUserId, string userId)
     {
@@ -28,7 +20,6 @@ public class PlogTogetherService : IPlogTogetherService
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
-
     }
 
     public async Task DeleteGroup(string ownerUserId)

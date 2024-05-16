@@ -1,18 +1,12 @@
 ﻿using Plogging.Core.Models;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services.Interfaces;
 
-public class LitterLocationService : ILitterLocationService
+public class LitterLocationService(IPloggingApiClient<LitterLocation> ploggingApiClient) : ILitterLocationService
 {
-    private readonly IPloggingApiClient<LitterLocation> _ploggingApiClient;
-
-    public LitterLocationService(IPloggingApiClient<LitterLocation> ploggingApiClient)
-    {
-        _ploggingApiClient = ploggingApiClient;
-    }
+    private readonly IPloggingApiClient<LitterLocation> _ploggingApiClient = ploggingApiClient;
 
     public async Task<IEnumerable<LitterLocation>> GetLitterLocations()
     {

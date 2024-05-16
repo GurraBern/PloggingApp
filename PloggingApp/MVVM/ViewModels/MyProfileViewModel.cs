@@ -22,6 +22,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     private readonly IStreakService _streakService;
     private readonly IToastService _toastService;
 
+    //TODO ploggingsessionviewmodel and leaderboardviewmodel should be removed
     public PloggingSessionViewModel PloggingSessionViewModel { get; }
     public StreakViewModel StreakViewModel { get; set; }
     public LeaderboardViewModel LeaderboardViewModel { get; }
@@ -80,8 +81,8 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
-        _ploggingSessionService.MyUserId = _authenticationService.UserId;
-        _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
+        // _ploggingSessionService.MyUserId = _authenticationService.UserId;
+        // _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
 
         await BadgesViewModel.Init();
 
@@ -99,7 +100,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
             LatestSessions = PloggingSessions.Take(3);
 
             //TODO get from RankingService instead
-            //UserRankInt = LeaderboardViewModel.UserRank.Rank;
+            UserRankInt = _rankingService.UserRank.Rank;
 
             IsBusy = false;
         }

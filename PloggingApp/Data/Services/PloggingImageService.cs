@@ -1,21 +1,13 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class PloggingImageService : IPloggingImageService
+public class PloggingImageService(IPloggingApiClient<PloggingImage> imageApiClient) : IPloggingImageService
 {
-    private readonly IPloggingApiClient<PloggingImage> _imageApiClient;
-    private readonly IAuthenticationService _authenticationService;
-
-    public PloggingImageService(IPloggingApiClient<PloggingImage> imageApiClient, IAuthenticationService authenticationService)
-    {
-        _imageApiClient = imageApiClient;
-        _authenticationService = authenticationService;
-    }
+    private readonly IPloggingApiClient<PloggingImage> _imageApiClient = imageApiClient;
 
     public async Task<PloggingImage> SaveImage(string imagePath)
     {

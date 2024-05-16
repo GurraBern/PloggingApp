@@ -9,19 +9,19 @@ using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
 public partial class BadgesPopUpViewModel : BaseViewModel {
-    public ObservableCollection<Badge> Badges { get; set; } = [];
-    private readonly List<Badge> badges = [];
+    private readonly string _userId;
     private readonly IPloggingSessionService _sessionService;
     private readonly IStreakService _streakService;
-    private readonly IUserInfoService _userInfo;
-    private readonly IPopupService _popupService;
+
+    public ObservableCollection<Badge> Badges { get; set; } = [];
+    private readonly List<Badge> badges = [];
+
     public Task Initialization { get; private set; }
-    public BadgesPopUpViewModel(IPloggingSessionService SessionService, IUserInfoService UserInfo, IStreakService StreakService, IPopupService PopupService)
+    public BadgesPopUpViewModel(string userId, IPloggingSessionService sessionService, IStreakService streakService)
     {
-        _sessionService = SessionService;
-        _userInfo = UserInfo;
-        _streakService = StreakService;
-        _popupService = PopupService;
+        this._userId = userId;
+        _sessionService = sessionService;
+        _streakService = streakService;
 
         Initialization = Init();
     }
@@ -29,11 +29,10 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
     public async Task Init()
     {
         IsBusy = true;
-        string userId = _sessionService.UserId;
 
-        if (userId != null)
+        if (_userId != null)
         {
-            var _allSessions = await _sessionService.GetUserSessions(userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
+            var _allSessions = await _sessionService.GetUserSessions(_userId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
             var stats = new PloggingStatistics(_allSessions);
             int streak;
             if (_allSessions.Any())
@@ -47,7 +46,7 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
             }
             else
             {
-                streak = (await _streakService.GetUserStreak(userId)).BiggestStreak;
+                streak = (await _streakService.GetUserStreak(_userId)).BiggestStreak;
             }
 
             await GetBadges(stats, streak);
