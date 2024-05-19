@@ -2,18 +2,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Firebase.Auth;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Features.Map.Components;
-using PloggingApp.MVVM.Models;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Pages;
-using PloggingApp.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
+using PloggingApp.Shared;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.MVVM.ViewModels;
@@ -107,7 +105,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [RelayCommand]
     private async Task StartPloggTogether()
     {
-        await Shell.Current.GoToAsync($"{nameof(PlogTogetherPage)}");
+        await Shell.Current.GoToAsync($"{nameof(PlogTogetherPage)}?UserId={_authenticationService.UserId}");
     }
 
     [RelayCommand]

@@ -5,7 +5,7 @@ using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.Services;
+using PloggingApp.Shared;
 
 namespace PloggingApp.MVVM.ViewModels;
 

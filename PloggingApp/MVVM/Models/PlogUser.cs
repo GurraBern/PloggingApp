@@ -6,12 +6,12 @@ namespace PloggingApp.MVVM.Models;
 public partial class PlogUser : ObservableObject
 {
 	[ObservableProperty]
-	public string displayName;
+	private string displayName;
 
     [ObservableProperty]
-    public string userId;
+    private string userId;
 
     [ObservableProperty]
-    public bool showButtons;
+    private bool showButtons;
 }
 

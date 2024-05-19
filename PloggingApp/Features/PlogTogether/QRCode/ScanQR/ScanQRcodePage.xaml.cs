@@ -22,7 +22,7 @@ public partial class ScanQRcodePage : ContentPage
         this.vm = vm;
     }
 
-    private async void barcodeReader_BarcodesDetected(System.Object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
+    private async void barcodeReader_BarcodesDetected(object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
     {
         if (!isScanning)
         {

@@ -5,7 +5,6 @@ using PloggingApp.Extensions;
 using Plogging.Core.Models;
 using System.Collections.ObjectModel;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.Services;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Shared;
 

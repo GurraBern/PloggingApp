@@ -17,7 +17,6 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IRankingService _rankingService;
     private readonly IPloggingSessionService _sessionService;
-    private readonly IUserInfoService _userInfo;
     private readonly IToastService _toastService;
 
     public ObservableCollection<UserRanking> Rankings { get; set; } = [];
@@ -47,11 +46,9 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IPloggingSessionService sessionService, IUserInfoService userInfo, IToastService toastService)
+    public LeaderboardViewModel(IRankingService rankingService, IToastService toastService)
     {
         _rankingService = rankingService;
-        _sessionService = sessionService;
-        _userInfo = userInfo;
         _toastService = toastService;
 
         Initialization = InitializeAsync();
@@ -123,16 +120,6 @@ public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
     [RelayCommand]
     private async Task GoToProfilePage(string userId)
     {
-        IsBusy = true;
-        var user = await _userInfo.GetUser(userId);
-        if (user == null)
-        {
-            IsBusy = false;
-            await Application.Current.MainPage.DisplayAlert("ERROR", "Can not show profile, user does not exist.", "OK");
-            return;
-        }
-
         await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}?UserId={userId}");
-        IsBusy = false;
     }
 }

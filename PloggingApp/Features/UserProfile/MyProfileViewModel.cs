@@ -81,9 +81,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
-        // _ploggingSessionService.MyUserId = _authenticationService.UserId;
-        // _ploggingSessionService.UserId = _ploggingSessionService.MyUserId;
-
+       
         await BadgesViewModel.Init();
 
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
@@ -99,7 +97,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
             PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
             LatestSessions = PloggingSessions.Take(3);
 
-            //TODO get from RankingService instead
+            //TODO get from RankingService instead, needs to calculate rank
             UserRankInt = _rankingService.UserRank.Rank;
 
             IsBusy = false;

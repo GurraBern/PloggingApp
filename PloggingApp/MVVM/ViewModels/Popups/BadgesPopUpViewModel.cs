@@ -72,7 +72,7 @@ public partial class BadgesPopUpViewModel : BaseViewModel {
     {
         if (Badge.Level == Levels.Gold)
         {
-            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.progression.ToString() + " " + Badge.Measurement + ", this is the highest level", "OK");
+            await Application.Current.MainPage.DisplayAlert(Badge.Type, "This user is currently on level " + Badge.Level + " with a total of " + Badge.Progression.ToString() + " " + Badge.Measurement + ", this is the highest level", "OK");
         }
         else if (Badge.Level == Levels.Locked)
         {

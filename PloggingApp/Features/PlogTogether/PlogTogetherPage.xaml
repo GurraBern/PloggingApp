@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PloggingApp.Pages.PlogTogetherPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:PloggingApp.Converters"
+    xmlns:model="clr-namespace:PloggingApp.MVVM.Models"
+    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
+    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    Title="PlogTogetherPage"
+    x:DataType="viewmodel:PlogTogetherViewModel"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        Padding="20"
+        ColumnDefinitions="*,*"
+        ColumnSpacing="10"
+        RowDefinitions="Auto,Auto,*,Auto"
+        RowSpacing="20">
+
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            HeightRequest="25"
+            HorizontalOptions="Start"
+            Source="leftarrow.png">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Label
+            Grid.Row="1"
+            FontAttributes="Bold"
+            FontSize="Title"
+            HorizontalOptions="Start"
+            IsVisible="{Binding InGroup}"
+            Text="Plog Group:"
+            VerticalOptions="End"/>
+
+        <Label
+            Grid.Row="1"
+            FontAttributes="Bold"
+            FontSize="Title"
+            HorizontalOptions="Start"
+            IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}"
+            Text="Not in a group!"
+            VerticalOptions="End"/>
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Command="{Binding GoToGenerateQRcodeCommand}"
+            IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}"
+            Text="Your ID"/>
+
+        <views:ScanQRButtonView
+            Grid.Row="3"
+            Grid.Column="1"
+            IsVisible="{Binding UserCanAdd}"/>
+
+        <CollectionView
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Group}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:PlogUser">
+                    <Border Padding="10" Style="{StaticResource RoundBorder}">
+                        <Grid ColumnDefinitions="*,*">
+
+                            <Label
+                                Grid.Column="0"
+                                FontSize="Medium"
+                                Text="{Binding DisplayName}"/>
+
+                            <Button
+                                Grid.Column="1"
+                                Command="{Binding RemoveUserCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PlogTogetherViewModel}}}"
+                                CommandParameter="{Binding UserId}"
+                                FontSize="Micro"
+                                HorizontalOptions="End"
+                                IsVisible="{Binding ShowButtons}"
+                                Text="Remove"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Command="{Binding LeaveGroupCommand}"
+            HeightRequest="60"
+            IsVisible="{Binding UserCanLeave}"
+            Text="Leave Group"
+            WidthRequest="170"/>
+
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Command="{Binding DeleteGroupCommand}"
+            HeightRequest="60"
+            IsVisible="{Binding UserCanDelete}"
+            Text="Delete Group"
+            WidthRequest="170"/>
+
+        <ActivityIndicator
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"/>
+    </Grid>
+</ContentPage>

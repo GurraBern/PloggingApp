@@ -1,6 +1,5 @@
 ﻿using Plogging.Core.Models;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.Services;
 using PloggingApp.Shared;
 using RestSharp;
 
@@ -49,9 +48,4 @@ public class PloggingSessionService(IPloggingApiClient<PloggingSession> plogging
             return [];
         }
     }
-    // public string UserId { get; set; }
-    public string MyUserId { get; set; }
-
-    public string OtherUserId { get; set; }
-    //public string SessionId { get; set; }
 }

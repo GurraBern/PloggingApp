@@ -1,5 +1,4 @@
 ﻿using Plogging.Core.Models;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using RestSharp;
 

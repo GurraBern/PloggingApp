@@ -6,6 +6,7 @@ using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.MVVM.Models.Messages;
 using PloggingApp.Services.Authentication;
+using PloggingApp.Shared;
 
 namespace PloggingApp.Services.PloggingTracking;
 
@@ -112,7 +113,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
                 StartDate = StartTime,
                 EndDate = DateTime.UtcNow,
-                PloggingRoute = ConvertRoute(Route),
+                PloggingRoute = PloggingSessionTracker.ConvertRoute(Route),
                 PloggingData = new PloggingData()
                 {
                     Litters = CurrentLitter,
@@ -151,7 +152,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                     DisplayName = displayName,
                     StartDate = StartTime,
                     EndDate = EndTime,
-                    PloggingRoute = ConvertRoute(Route),
+                    PloggingRoute = PloggingSessionTracker.ConvertRoute(Route),
                     PloggingData = ploggingData,
                     Image = imagePath
                 };
@@ -169,7 +170,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
         }
     }
 
-    private List<MapPoint> ConvertRoute(List<Location> route)
+    private static List<MapPoint> ConvertRoute(List<Location> route)
     {
         var mapPoints = new List<MapPoint>();
         foreach (var location in route)

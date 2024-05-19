@@ -6,15 +6,23 @@
     xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
     xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
     Title="Others Profile"
-    x:DataType="viewmodel:OthersProfilePageViewModel">
+    x:DataType="viewmodel:OthersProfilePageViewModel"
+    Shell.TabBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <Image Source="leftarrow.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image
+            Grid.Row="0"
+            HorizontalOptions="Start"
+            Source="leftarrow.png">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding GoBackCommand}" Tapped="BackTap"/>
             </Image.GestureRecognizers>
         </Image>
 
-        <views:OthersSessionsView BindingContext="{Binding OthersSessionsViewModel}"/>
-    </VerticalStackLayout>
+        <views:OthersSessionsView Grid.Row="1" BindingContext="{Binding OthersSessionsViewModel}"/>
+    </Grid>
 </ContentPage>

@@ -89,7 +89,7 @@ public partial class BadgesViewModel: BaseViewModel
     {
         if (badge.Level == Levels.Gold)
         {
-            await Application.Current.MainPage.DisplayAlert(badge.Type, "This user is currently on level " + badge.Level + " with a total of " + badge.progression.ToString() + " " + badge.Measurement + ", this is the highest level", "OK");
+            await Application.Current.MainPage.DisplayAlert(badge.Type, "This user is currently on level " + badge.Level + " with a total of " + badge.Progression.ToString() + " " + badge.Measurement + ", this is the highest level", "OK");
         }
         else
         {

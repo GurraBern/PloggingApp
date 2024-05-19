@@ -1,8 +1,7 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
-
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace PloggingApp.MVVM.Models;
+
 public class Badge : ObservableObject
 {
     public  string Type { get; set; } 
@@ -10,41 +9,42 @@ public class Badge : ObservableObject
     public  Levels Level { get; set; }  
     public  ImageSource Image { get; set; }
     public  double ToNextLevel { get; set; } 
-    public double progression { get; set; }
-    public double percentage { get; set; }
-    public string color { get; set; }
-    public void createBadge(double progress, string png, double th1, double th2, double th3)
+    public double Progression { get; set; }
+    public double Percentage { get; set; }
+    public string Color { get; set; }
+
+    public void CreateBadge(double progress, string png, double th1, double th2, double th3)
     {
         if (progress >= th3)
         {
             Image = ImageSource.FromFile(png + "badgegold.png");
             Level = Levels.Gold;
-            percentage = 100; 
-            color = "Gold";
+            Percentage = 100; 
+            Color = "Gold";
         }
         else if (progress >= th2)
         {
             Image = ImageSource.FromFile(png + "badgesilver.png");
             Level = Levels.Silver;
             ToNextLevel = Math.Round(th3 - progress,1);
-            percentage = progress / th3;
-            color = "Gold";
+            Percentage = progress / th3;
+            Color = "Gold";
         }
         else if (progress >= th1)
         {
             Image = ImageSource.FromFile(png + "badgebronze.png");
             Level = Levels.Bronze;
             ToNextLevel = Math.Round(th2 - progress,1);
-            percentage = progress / th2;
-            color = "#566470";
+            Percentage = progress / th2;
+            Color = "#566470";
         }
         else
         {
             Image = ImageSource.FromFile(png + "badge.png");
             Level = Levels.Locked;
             ToNextLevel = Math.Round(th1 - progress,1);
-            percentage = progress / th1;
-            color = "#CD7F32";
+            Percentage = progress / th1;
+            Color = "#CD7F32";
         }
     }
 }
@@ -55,9 +55,7 @@ public enum Levels
     Bronze,
     Silver,
     Gold
-
 }
-
 
 public class TrashCollectedBadge : Badge
 {
@@ -65,10 +63,8 @@ public class TrashCollectedBadge : Badge
     {
         Measurement = "kilogram(s)";
         Type = "Trash Weight";
-        progression = stats.TotalWeight;
-        createBadge(progression, "weight", 5, 10, 15);
-
-
+        Progression = stats.TotalWeight;
+        CreateBadge(Progression, "weight", 5, 10, 15);
     }
 }
 
@@ -78,11 +74,9 @@ public class TimeSpentBadge : Badge
     {
         Measurement = "hour(s)";
         Type = "Time Spent";
-        progression = stats.TotalTime.TotalHours;
-        progression = 0;
-        createBadge(progression, "timespent", 5, 10, 15);
-
-
+        Progression = stats.TotalTime.TotalHours;
+        Progression = 0;
+        CreateBadge(Progression, "timespent", 5, 10, 15);
     }
 }
 
@@ -93,13 +87,10 @@ public class DistanceBadge : Badge
     {
         Measurement = "kilometre(s)";
         Type = "Distance Traveled";
-        progression = stats.TotalDistance/1000;
-        createBadge(progression, "distance", 5, 10, 15);
-
+        Progression = stats.TotalDistance/1000;
+        CreateBadge(Progression, "distance", 5, 10, 15);
     }
-
 }
-
 
 public class CO2Badge : Badge
 {
@@ -107,13 +98,9 @@ public class CO2Badge : Badge
     {
         Measurement = "kilograms(s)";
         Type = "CO2 Saved";
-        progression = stats.TotalCO2Saved;
-        createBadge(progression, "co2", 5, 10, 15);
-
-
+        Progression = stats.TotalCO2Saved;
+        CreateBadge(Progression, "co2", 5, 10, 15);
     }
-
-
 }
 
 public class StreakBadge : Badge
@@ -122,10 +109,8 @@ public class StreakBadge : Badge
     {
         Measurement = "week(s)";
         Type = "Weekly Streak";
-        progression = streak;
-        createBadge(progression, "streak", 5, 10, 15);
+        Progression = streak;
+        CreateBadge(Progression, "streak", 5, 10, 15);
     }
-
-
 }
 

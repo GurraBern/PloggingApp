@@ -2,21 +2,23 @@
 using PloggingApp.Data.Services;
 using PloggingApp.Services.Authentication;
 using PloggingApp.MVVM.Models;
-using PloggingApp.Services;
+using PloggingApp.Shared;
 
 namespace PloggingApp.Pages;
 
 [QueryProperty(nameof(AddUser), nameof(AddUser))]
 public partial class ScanQRcodePageViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private PlogUser addUser;
-    private string UserId => _authenticationService.UserId;
-
     private readonly IPlogTogetherService _plogTogetherService;
     private readonly IUserInfoService _userInfoService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IToastService _toastService;
+
+    [ObservableProperty]
+    private PlogUser addUser;
+
+    [ObservableProperty]
+    private string userId;
 
     public ScanQRcodePageViewModel(IPlogTogetherService plogTogetherService, IUserInfoService userInfoService,
                                     IAuthenticationService authenticationService, IToastService toastService)
