@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.Pages.StatisticsPage"
-             xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
-             xmlns:viewmodel="clr-namespace:PloggingApp.Pages"
-             x:DataType="viewmodel:StatisticsPageViewModel"
-             Title="StatisticsPage">
+<ContentPage
+    x:Class="PloggingApp.Features.Statistics.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
+    Title="StatisticsPage"
+    x:DataType="statistics:StatisticsPageViewModel">
 
     <VerticalStackLayout>
-        <views:StatisticsView BindingContext="{Binding StatisticsViewModel}"></views:StatisticsView>
+        <statistics:StatisticsView BindingContext="{Binding StatisticsViewModel}"/>
     </VerticalStackLayout>
 </ContentPage>

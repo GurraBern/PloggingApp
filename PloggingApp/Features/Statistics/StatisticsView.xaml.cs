@@ -1,11 +1,11 @@
-using PloggingApp.MVVM.ViewModels;
 using CommunityToolkit.Maui.Views;
-using PloggingApp.MVVM.Views;
-namespace PloggingApp.MVVM.Views;
+
+namespace PloggingApp.Features.Statistics;
 
 public partial class StatisticsView : ContentView
 {
-	private StatisticsViewModel viewModel {  get; set; }
+	private StatisticsViewModel ViewModel { get; set; }
+
 	public StatisticsView()
 	{
 		InitializeComponent();
@@ -13,21 +13,21 @@ public partial class StatisticsView : ContentView
 
 	private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
 	{
-		if (viewModel is null)
+		if (ViewModel is null)
 		{
 			if (BindingContext != null)
-				viewModel = (StatisticsViewModel)BindingContext;
+				ViewModel = (StatisticsViewModel)BindingContext;
 			else
 				return;
 		}
 		RadioButton radioButton = sender as RadioButton;
 		if (radioButton.ContentAsString() == "Year")
 		{
-			viewModel.ShowYearCommand.Execute(null);
+			ViewModel.ShowYearCommand.Execute(null);
 		}
 		else
 		{
-			viewModel.ShowMonthCommand.Execute(null);
+			ViewModel.ShowMonthCommand.Execute(null);
 		}
 	}
 

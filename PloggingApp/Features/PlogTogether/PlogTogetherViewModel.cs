@@ -1,16 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using PloggingApp.MVVM.Models;
-using PloggingApp.MVVM.Models.Messages;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PloggingApp.Data.Services;
-using PloggingApp.Pages;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
+using PloggingApp.Features.Dashboard;
+using PloggingApp.Features.PloggingSession;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.Plogtogether;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization, IRecipient<PloggingSessionMessage>
@@ -257,6 +256,12 @@ public partial class PlogTogetherViewModel : BaseViewModel, IAsyncInitialization
     private async Task GoToGenerateQRcode()
     {
         await Shell.Current.GoToAsync($"{nameof(GenerateQRcodePage)}?UserId={UserId}");
+    }
+
+    [RelayCommand]
+    private async Task GoToScanQRcode()
+    {
+        await Shell.Current.GoToAsync(nameof(ScanQRcodePage));
     }
 
     private void ClearGroup()

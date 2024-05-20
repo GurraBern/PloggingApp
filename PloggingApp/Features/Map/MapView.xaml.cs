@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using PloggingApp.Features.Map.Components;
-using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Features.PloggingSession;
 
 namespace PloggingApp.Features.Map;
 

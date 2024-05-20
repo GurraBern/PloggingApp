@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PloggingApp.Data.Services;
 using PloggingApp.Services.Authentication;
-using PloggingApp.MVVM.Models;
 using PloggingApp.Shared;
 
-namespace PloggingApp.Pages;
+namespace PloggingApp.Features.Plogtogether;
 
 [QueryProperty(nameof(AddUser), nameof(AddUser))]
 public partial class ScanQRcodePageViewModel : ObservableObject

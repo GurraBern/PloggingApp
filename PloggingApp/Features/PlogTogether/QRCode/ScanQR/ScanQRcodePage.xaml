@@ -1,25 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="PloggingApp.Pages.ScanQRcodePage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
+<ContentPage
+    x:Class="PloggingApp.Features.Plogtogether.ScanQRcodePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls">
 
     <Grid
+        Padding="10"
         RowDefinitions="Auto,*"
-        RowSpacing="10"
-        Padding="10">
+        RowSpacing="10">
 
-        <Image Source="leftarrow.png" HeightRequest="25" Grid.Row="0" HorizontalOptions="Start">
+        <Image
+            Grid.Row="0"
+            HeightRequest="25"
+            HorizontalOptions="Start"
+            Source="leftarrow.png">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnNavigateClicked"/>
             </Image.GestureRecognizers>
         </Image>
 
         <zxing:CameraBarcodeReaderView
-        x:Name="barcodeReader"
-        BarcodesDetected="barcodeReader_BarcodesDetected"
-        Grid.Row="1"/>
-
+            x:Name="barcodeReader"
+            Grid.Row="1"
+            BarcodesDetected="barcodeReader_BarcodesDetected"/>
     </Grid>
 
 </ContentPage>

@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps" 
-             xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
-             xmlns:components="clr-namespace:PloggingApp.Features.Map.Components"
-             x:Class="PloggingApp.MVVM.Views.SessionStatsMapView"
-             x:DataType="viewmodel:SessionStatsMapViewModel">
-    
-    <maps:Map ItemsSource="{Binding TrashPins}" IsShowingUser="True" x:Name="Map" MapType="Street" HeightRequest="180">
+<ContentView
+    x:Class="PloggingApp.Features.Statistics.SessionStatsMapView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:PloggingApp.Features.Map.Components"
+    xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
+    x:DataType="statistics:SessionStatsMapViewModel">
+
+    <maps:Map
+        x:Name="Map"
+        HeightRequest="180"
+        IsShowingUser="True"
+        ItemsSource="{Binding TrashPins}"
+        MapType="Street">
         <maps:Map.MapElements>
-            <maps:Polyline x:Name="polyLine" StrokeColor="Blue" StrokeWidth="15">
+            <maps:Polyline
+                x:Name="polyLine"
+                StrokeColor="Blue"
+                StrokeWidth="15">
                 <maps:Polyline.Geopath/>
             </maps:Polyline>
         </maps:Map.MapElements>
@@ -19,10 +27,10 @@
         <maps:Map.ItemTemplate>
             <DataTemplate x:DataType="components:LocationPin">
                 <components:CustomPin
-                    Location="{Binding Location}"
                     Address="{Binding Address}"
-                    Label="{Binding Label}"
                     ImageSource="{Binding ImageSource}"
+                    Label="{Binding Label}"
+                    Location="{Binding Location}"
                     Type="Place"/>
             </DataTemplate>
         </maps:Map.ItemTemplate>

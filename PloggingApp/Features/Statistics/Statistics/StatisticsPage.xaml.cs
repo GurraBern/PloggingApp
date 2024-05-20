@@ -1,4 +1,4 @@
-namespace PloggingApp.Pages;
+namespace PloggingApp.Features.Statistics;
 
 public partial class StatisticsPage : ContentPage
 {

@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using PloggingApp.Pages;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.Plogtogether;
 
 [QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class GenerateQRcodeViewModel : ObservableObject 

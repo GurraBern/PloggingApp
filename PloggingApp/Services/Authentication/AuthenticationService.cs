@@ -1,7 +1,7 @@
 ﻿using Firebase.Auth;
 using System.Diagnostics;
-using PloggingApp.Pages;
 using PloggingApp.Shared;
+using PloggingApp.Features.Dashboard;
 
 namespace PloggingApp.Services.Authentication;
 

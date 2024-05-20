@@ -4,7 +4,7 @@ using Plogging.Core.Enums;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Features.Streak;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 
@@ -107,7 +107,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
 
         if (userIsPloggingTogether == null)
         {
-            var ploggingSession = new PloggingSession()
+            var ploggingSession = new PlogSession()
             {
                 UserId = currentUserId,
                 DisplayName = _authenticationService.CurrentUser.Info.DisplayName,
@@ -146,7 +146,7 @@ public class PloggingSessionTracker : IPloggingSessionTracker
                 var user = await _userInfoService.GetUser(userId);
                 var displayName = user.DisplayName;
 
-                var ploggingSession = new PloggingSession()
+                var ploggingSession = new PlogSession()
                 {
                     UserId = userId,
                     DisplayName = displayName,

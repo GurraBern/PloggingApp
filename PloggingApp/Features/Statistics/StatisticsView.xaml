@@ -1,105 +1,270 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PloggingApp.MVVM.Views.StatisticsView"
-             xmlns:models="clr-namespace:PloggingApp.MVVM.Models"
-             xmlns:modelscore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
-             xmlns:converter="clr-namespace:PloggingApp.Converters"
-             xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels" 
-             x:DataType="viewmodel:StatisticsViewModel"
-             >
+<ContentView
+    x:Class="PloggingApp.Features.Statistics.StatisticsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:PloggingApp.Converters"
+    xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+    xmlns:modelscore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="statistics:StatisticsViewModel">
+
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
         <converter:TimeResolutionToBoolConverter x:Key="TimeResolutionToBoolConverter"/>
         <converter:IntToMonthConverter x:Key="IntToMonthConverter"/>
     </ContentView.Resources>
-    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HeightRequest="800">
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        HeightRequest="800"
+        IsRefreshing="{Binding IsRefreshing}">
         <Grid RowDefinitions="*">
-            <ScrollView Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HeightRequest="800">
-                <VerticalStackLayout  Spacing="15" Padding="20,0" HeightRequest="1300">
+            <ScrollView
+                Grid.Row="0"
+                Grid.Column="0"
+                HeightRequest="800"
+                VerticalOptions="FillAndExpand">
+                <VerticalStackLayout
+                    Padding="20,0"
+                    HeightRequest="1300"
+                    Spacing="15">
 
-                    <Border Style="{StaticResource RoundBorder}" Padding="0, 10">
-                        <HorizontalStackLayout Spacing="15" Margin="0">
+                    <Border Padding="0,10" Style="{StaticResource RoundBorder}">
+                        <HorizontalStackLayout Margin="0" Spacing="15">
                             <StackLayout Orientation="Horizontal">
-                                <RadioButton GroupName="timefilter" Content="Year" IsChecked="True" CheckedChanged="RadioButton_CheckedChanged"/>
-                                <RadioButton GroupName="timefilter" Content="Month" IsChecked="False" CheckedChanged="RadioButton_CheckedChanged"/>
+                                <RadioButton
+                                    CheckedChanged="RadioButton_CheckedChanged"
+                                    Content="Year"
+                                    GroupName="timefilter"
+                                    IsChecked="True"/>
+                                <RadioButton
+                                    CheckedChanged="RadioButton_CheckedChanged"
+                                    Content="Month"
+                                    GroupName="timefilter"
+                                    IsChecked="False"/>
                             </StackLayout>
-                            <Border BackgroundColor ="{StaticResource Primary}" StrokeShape="RoundRectangle 10" Padding="0">
+                            <Border
+                                Padding="0"
+                                BackgroundColor="{StaticResource Primary}"
+                                StrokeShape="RoundRectangle 10">
                                 <HorizontalStackLayout>
-                                    <Picker BackgroundColor = "Transparent" TextColor= "White" ItemsSource="{Binding Years}" Title="Year" SelectedItem="{Binding SelectedYear}"/>
+                                    <Picker
+                                        Title="Year"
+                                        BackgroundColor="Transparent"
+                                        ItemsSource="{Binding Years}"
+                                        SelectedItem="{Binding SelectedYear}"
+                                        TextColor="White"/>
                                     <Image Source="arrowdown.svg"/>
                                 </HorizontalStackLayout>
                             </Border>
-                            <Border BackgroundColor ="{StaticResource Primary}" StrokeShape="RoundRectangle 10"  IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'}">
+                            <Border
+                                BackgroundColor="{StaticResource Primary}"
+                                IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'}"
+                                StrokeShape="RoundRectangle 10">
                                 <HorizontalStackLayout>
-                                    <Picker BackgroundColor ="Transparent" TextColor="White" ItemsSource="{Binding Months}" Title="Month" SelectedIndex="{Binding SelectedMonth}"/>
+                                    <Picker
+                                        Title="Month"
+                                        BackgroundColor="Transparent"
+                                        ItemsSource="{Binding Months}"
+                                        SelectedIndex="{Binding SelectedMonth}"
+                                        TextColor="White"/>
                                     <Image Source="arrowdown.svg"/>
                                 </HorizontalStackLayout>
                             </Border>
                         </HorizontalStackLayout>
                     </Border>
-                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
-                    <Grid RowDefinitions="*" ColumnDefinitions="Auto,60" ColumnSpacing="0">
-                        <Label Text="Your activity in " Style="{StaticResource SubHeadline}"  HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"/>
-                        <Label Text="{Binding SelectedMonth, StringFormat='Your activity in {0},' , Converter={StaticResource IntToMonthConverter}}" Style="{StaticResource SubHeadline}" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'} "/>
-                        <Label Text="{Binding SelectedYear}" Style="{StaticResource SubHeadline}" Grid.Column="1"/>
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+                    <Grid
+                        ColumnDefinitions="Auto,60"
+                        ColumnSpacing="0"
+                        RowDefinitions="*">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='year'}"
+                            Style="{StaticResource SubHeadline}"
+                            Text="Your activity in "/>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding TimeRes, Converter={StaticResource TimeResolutionToBoolConverter}, ConverterParameter='month'}"
+                            Style="{StaticResource SubHeadline}"
+                            Text="{Binding SelectedMonth, StringFormat='Your activity in {0},', Converter={StaticResource IntToMonthConverter}}"/>
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource SubHeadline}"
+                            Text="{Binding SelectedYear}"/>
                     </Grid>
                     <Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
                             <Grid ColumnDefinitions="30,*,45">
-                                <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30" Grid.Column="0">
-                                    <Image Source="stats.svg" HeightRequest="24" WidthRequest="24"/>
+                                <Border
+                                    Grid.Column="0"
+                                    BackgroundColor="#e6e6e6"
+                                    HeightRequest="30"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0"
+                                    WidthRequest="30">
+                                    <Image
+                                        HeightRequest="24"
+                                        Source="stats.svg"
+                                        WidthRequest="24"/>
                                 </Border>
-                                <Label Style="{StaticResource SubHeadline}" HorizontalOptions="Start" TextColor="Black" Margin="10" Text="General" VerticalOptions="Center" Grid.Column="1"/>
-                                <Border Style="{StaticResource RoundBorder}" BackgroundColor="{StaticResource White}" Margin="5" HeightRequest="45" WidthRequest="45" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="2" >
-                                    <ImageButton Clicked="ShowInformationPopup" Source="question_mark_round_icon.png" WidthRequest="30">
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="10"
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource SubHeadline}"
+                                    Text="General"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"/>
+                                <Border
+                                    Grid.Column="2"
+                                    Margin="5"
+                                    BackgroundColor="{StaticResource White}"
+                                    HeightRequest="45"
+                                    HorizontalOptions="End"
+                                    Style="{StaticResource RoundBorder}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="45">
+                                    <ImageButton
+                                        Clicked="ShowInformationPopup"
+                                        Source="question_mark_round_icon.png"
+                                        WidthRequest="30">
                                         <ImageButton.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}"/>
                                         </ImageButton.Behaviors>
                                     </ImageButton>
                                 </Border>
                             </Grid>
-                            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Margin="10" ColumnSpacing="10" RowSpacing="10">
-                                <!--Weight-->
-                                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                            <Grid
+                                Margin="10"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="10"
+                                RowDefinitions="*,*"
+                                RowSpacing="10">
+                                <!--  Weight  -->
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Style="{StaticResource StatsBorder}">
                                     <Grid Style="{StaticResource StatsGrid}">
-                                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                            <Image Source="scale.svg" HeightRequest="24" WidthRequest="24"/>
+                                        <Border
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Margin="5"
+                                            HeightRequest="40"
+                                            StrokeShape="RoundRectangle 30"
+                                            Style="{StaticResource RoundBorder}"
+                                            WidthRequest="40">
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="scale.svg"
+                                                WidthRequest="24"/>
                                         </Border>
-                                        <Label Style="{StaticResource StatsLabelText}" Text="Litter Weight" Grid.Row="0" Grid.Column="1"/>
-                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}" Grid.Row="1" Grid.Column="1"/>
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsLabelText}"
+                                            Text="Litter Weight"/>
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsText}"
+                                            Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}"/>
                                     </Grid>
                                 </Border>
-                                <!--CO2Saved-->
-                                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                                <!--  CO2Saved  -->
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Style="{StaticResource StatsBorder}">
                                     <Grid Style="{StaticResource StatsGrid}">
-                                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                            <Image Source="leaf.svg" HeightRequest="24" WidthRequest="24"/>
+                                        <Border
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            HeightRequest="40"
+                                            StrokeShape="RoundRectangle 30"
+                                            Style="{StaticResource RoundBorder}"
+                                            WidthRequest="40">
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="leaf.svg"
+                                                WidthRequest="24"/>
                                         </Border>
-                                        <Label Style="{StaticResource StatsLabelText}" Text="CO2e Saved" Grid.Row="0" Grid.Column="1"/>
-                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalCO2Saved, StringFormat='{0} kg CO2e'}" Grid.Row="1" Grid.Column="1"/>
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsLabelText}"
+                                            Text="CO2e Saved"/>
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsText}"
+                                            Text="{Binding PloggingStats.TotalCO2Saved, StringFormat='{0} kg CO2e'}"/>
                                     </Grid>
                                 </Border>
-                                <!--Distance-->
-                                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatsBorder}">
+                                <!--  Distance  -->
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Style="{StaticResource StatsBorder}">
                                     <Grid Style="{StaticResource StatsGrid}">
-                                        <Border Grid.RowSpan="2" Grid.Column="0"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                            <Image Source="distance.svg" HeightRequest="24" WidthRequest="24"/>
+                                        <Border
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            HeightRequest="40"
+                                            StrokeShape="RoundRectangle 30"
+                                            Style="{StaticResource RoundBorder}"
+                                            WidthRequest="40">
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="distance.svg"
+                                                WidthRequest="24"/>
                                         </Border>
-                                        <Label Style="{StaticResource StatsLabelText}" Text="Distance" Grid.Row="0" Grid.Column="1"/>
-                                        <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}" Grid.Row="1" Grid.Column="1"/>
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsLabelText}"
+                                            Text="Distance"/>
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsText}"
+                                            Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}"/>
                                     </Grid>
                                 </Border>
-                                <!--Time Plogged-->
-                                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatsBorder}">
+                                <!--  Time Plogged  -->
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Style="{StaticResource StatsBorder}">
                                     <Grid Style="{StaticResource StatsGrid}">
-                                        <Border Grid.RowSpan="2" Grid.Column="0" Margin="5"  Style="{StaticResource RoundBorder}" StrokeShape="RoundRectangle 30" HeightRequest="40" WidthRequest="40">
-                                            <Image Source="clock.svg"  HeightRequest="24" WidthRequest="24"/>
+                                        <Border
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Margin="5"
+                                            HeightRequest="40"
+                                            StrokeShape="RoundRectangle 30"
+                                            Style="{StaticResource RoundBorder}"
+                                            WidthRequest="40">
+                                            <Image
+                                                HeightRequest="24"
+                                                Source="clock.svg"
+                                                WidthRequest="24"/>
                                         </Border>
-                                        <Label Style="{StaticResource StatsLabelText}" Text="Time Plogged" Grid.Row="0" Grid.Column="1"/>
-                                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Style="{StaticResource StatsLabelText}"
+                                            Text="Time Plogged"/>
+                                        <HorizontalStackLayout
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            HorizontalOptions="Center">
                                             <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Hours, StringFormat='{0}h : '}"/>
                                             <Label Style="{StaticResource StatsText}" Text="{Binding PloggingStats.TotalTime.Minutes, StringFormat=' {0}min '}"/>
                                         </HorizontalStackLayout>
@@ -120,50 +285,99 @@
                             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
                         </VerticalStackLayout>
                     </Border>-->
-                 
 
-                    <CarouselView ItemsSource="{Binding Charts}" IndicatorView="indicatorCharts">
+
+                    <CarouselView IndicatorView="indicatorCharts" ItemsSource="{Binding Charts}">
                         <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="models:ChartContext">
+                            <DataTemplate x:DataType="statistics:ChartContext">
                                 <Border Style="{StaticResource RoundBorder}">
                                     <VerticalStackLayout>
                                         <HorizontalStackLayout HorizontalOptions="StartAndExpand">
-                                            <Border StrokeShape="RoundRectangle 10" BackgroundColor="#e6e6e6" StrokeThickness="0" HeightRequest="30" WidthRequest="30">
-                                                <Image Source="{Binding ImageURI}" HeightRequest="24" WidthRequest="24"/>
+                                            <Border
+                                                BackgroundColor="#e6e6e6"
+                                                HeightRequest="30"
+                                                StrokeShape="RoundRectangle 10"
+                                                StrokeThickness="0"
+                                                WidthRequest="30">
+                                                <Image
+                                                    HeightRequest="24"
+                                                    Source="{Binding ImageURI}"
+                                                    WidthRequest="24"/>
                                             </Border>
-                                            <Label Text="{Binding Name}" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
-                                            <Label Text="{Binding Unit, StringFormat='({0})'}" Style="{StaticResource StatsText}" TextColor="Black" VerticalOptions="Center"/>
-                                           </HorizontalStackLayout>
-                                        <micro:ChartView Chart="{Binding Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
+                                            <Label
+                                                Margin="10"
+                                                HorizontalOptions="StartAndExpand"
+                                                Style="{StaticResource SubHeadline}"
+                                                Text="{Binding Name}"/>
+                                            <Label
+                                                Style="{StaticResource StatsText}"
+                                                Text="{Binding Unit, StringFormat='({0})'}"
+                                                TextColor="Black"
+                                                VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                        <micro:ChartView
+                                            Chart="{Binding Chart}"
+                                            HeightRequest="120"
+                                            HorizontalOptions="FillAndExpand"
+                                            WidthRequest="350"/>
                                     </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
-                    <IndicatorView x:Name="indicatorCharts"  HorizontalOptions="Center"/>
+                    <IndicatorView x:Name="indicatorCharts" HorizontalOptions="Center"/>
                     <Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
                             <HorizontalStackLayout>
-                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="#e6e6e6" HeightRequest="30" WidthRequest="30">
-                                    <Image Source="trashcan.svg" HeightRequest="50" WidthRequest="50"/>
+                                <Border
+                                    BackgroundColor="#e6e6e6"
+                                    HeightRequest="30"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0"
+                                    WidthRequest="30">
+                                    <Image
+                                        HeightRequest="50"
+                                        Source="trashcan.svg"
+                                        WidthRequest="50"/>
                                 </Border>
-                                <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
+                                <Label
+                                    Margin="10"
+                                    HorizontalOptions="StartAndExpand"
+                                    Style="{StaticResource SubHeadline}"
+                                    Text="Litter Types"/>
                             </HorizontalStackLayout>
-                            <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="160" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
+                            <micro:ChartView
+                                Chart="{Binding LitterChart.Chart}"
+                                HeightRequest="160"
+                                HorizontalOptions="FillAndExpand"
+                                WidthRequest="300"/>
                         </VerticalStackLayout>
                     </Border>
-                                     <Label Style="{StaticResource SubHeadline}" Text="Sessions" Margin="10,0" HorizontalOptions="Start"/>
+                    <Label
+                        Margin="10,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="Sessions"/>
                     <CollectionView ItemsSource="{Binding UserSessions}">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="modelscore:PloggingSession">
-                                <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" BackgroundColor="{StaticResource Primary}" Margin="10,5" Padding="10, 10">
+                            <DataTemplate x:DataType="modelscore:PlogSession">
+                                <Border
+                                    Margin="10,5"
+                                    Padding="10,10"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0">
                                     <Grid ColumnDefinitions="275,*">
-                                        <Label Text="{Binding StartDate, Converter={StaticResource TitleCaseConverter}}" Grid.Column="0" TextColor="White" VerticalOptions="Center"/>
-                                        <Image Source="arrowright.svg" Grid.Column="1"/>
+                                        <Label
+                                            Grid.Column="0"
+                                            Text="{Binding StartDate, Converter={StaticResource TitleCaseConverter}}"
+                                            TextColor="White"
+                                            VerticalOptions="Center"/>
+                                        <Image Grid.Column="1" Source="arrowright.svg"/>
                                     </Grid>
 
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type viewmodel:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type statistics:StatisticsViewModel}}}" CommandParameter="{Binding .}"/>
                                     </Border.GestureRecognizers>
                                 </Border>
                             </DataTemplate>

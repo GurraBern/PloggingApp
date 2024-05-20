@@ -1,11 +1,9 @@
-using PloggingApp.MVVM.ViewModels;
 using Microsoft.Maui.Controls.Maps;
-using PloggingApp.MVVM.Models;
 using Microsoft.Maui.Maps;
 using CommunityToolkit.Mvvm.Messaging;
-using PloggingApp.MVVM.Models.Messages;
+using PloggingApp.Features.PloggingSession;
 
-namespace PloggingApp.MVVM.Views;
+namespace PloggingApp.Features.Statistics;
 
 public partial class SessionStatsMapView : ContentView, IRecipient<PloggingSessionMessage>
 {

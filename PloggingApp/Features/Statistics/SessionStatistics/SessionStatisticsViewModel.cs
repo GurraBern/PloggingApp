@@ -2,41 +2,41 @@
 using Microcharts;
 using Plogging.Core.Enums;
 using Plogging.Core.Models;
-using PloggingApp.MVVM.Models;
-using PloggingApp.MVVM.ViewModels;
 using PloggingApp.Services.Statistics;
+using PloggingApp.Shared;
 
-namespace PloggingApp.Pages;
-[QueryProperty(nameof(PloggingSession), nameof(PloggingSession))]
+namespace PloggingApp.Features.Statistics;
+
+[QueryProperty(nameof(PlogSession), nameof(PlogSession))]
 public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributable
 {
     [ObservableProperty]
-    PloggingSession ploggingSession;
+    private PlogSession plogSession;
 
-    private IChartService chartService;
+    private readonly IChartService _chartService;
     public SessionStatsMapViewModel SessionStatsMapViewModel { get; set; }
     public SessionStatisticsViewModel(IChartService ChartService, SessionStatsMapViewModel sessionStatsViewModel)
     {
         SessionStatsMapViewModel = sessionStatsViewModel;
-        this.chartService = ChartService;
+        _chartService = ChartService;
     }
 
     private void Init()
     {
-        if (PloggingSession == null)
+        if (PlogSession == null)
             return;
-        SessionStatsMapViewModel.Initialize(ploggingSession);
-        getStatistics();
+        SessionStatsMapViewModel.Initialize(PlogSession);
+        GetStatistics();
    }
 
-    private async void getStatistics()
+    private async void GetStatistics()
     {
-        TimeSpan = $"{PloggingSession.StartDate.ToString("HH:mm:ss")}" + " to " +
-           $"{PloggingSession.EndDate.ToString("HH:mm:ss")}";
+        TimeSpan = $"{PlogSession.StartDate.ToString("HH:mm:ss")}" + " to " +
+           $"{PlogSession.EndDate.ToString("HH:mm:ss")}";
 
-        if (PloggingSession.PloggingData.Litters.Any())
+        if (PlogSession.PloggingData.Litters.Any())
         {
-            Area = await GetArea(PloggingSession.PloggingData.Litters.First().LitterLocation);
+            Area = await GetArea(PlogSession.PloggingData.Litters.First().LitterLocation);
         }
         else
         {
@@ -44,17 +44,17 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
             Area = "?? :(";
         }
 
-        LitterChart = chartService.generateLitterChart(TimeResolution.Alltime, new List<PloggingSession> { PloggingSession });
-        LitterWeight = PloggingSession.PloggingData.Litters.Sum(x => x.Weight);
-        PloggingStats = new PloggingStatistics(PloggingSession);
+        LitterChart = _chartService.generateLitterChart(TimeResolution.Alltime, new List<PlogSession> { PlogSession });
+        LitterWeight = PlogSession.PloggingData.Litters.Sum(x => x.Weight);
+        PloggingStats = new PloggingStatistics(PlogSession);
 
     }
 
     // Using a makeshift constructor as the class constructor executes before ApplyQueryAttributes
-    // which results in PloggingSession being null
+    // which results in PlogSession being null
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        this.PloggingSession = query[nameof(PloggingSession)] as PloggingSession;
+        this.PlogSession = query[nameof(PlogSession)] as PlogSession;
         Init();
     }
 

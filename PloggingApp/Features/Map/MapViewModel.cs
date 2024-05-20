@@ -4,9 +4,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using Plogging.Core.Models;
 using PloggingApp.Commands;
 using PloggingApp.Data.Services.Interfaces;
+using PloggingApp.Features.LitterPickupRequests;
 using PloggingApp.Features.Map.Components;
-using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.Services;
+using PloggingApp.Features.PloggingSession;
 using PloggingApp.Shared;
 using System.Collections.ObjectModel;
 

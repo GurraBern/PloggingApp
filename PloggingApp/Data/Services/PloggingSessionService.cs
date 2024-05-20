@@ -5,13 +5,13 @@ using RestSharp;
 
 namespace PloggingApp.Data.Services;
 
-public class PloggingSessionService(IPloggingApiClient<PloggingSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService) : IPloggingSessionService
+public class PloggingSessionService(IPloggingApiClient<PlogSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService) : IPloggingSessionService
 {
-    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient = ploggingApiClient;
+    private readonly IPloggingApiClient<PlogSession> _ploggingApiClient = ploggingApiClient;
     private readonly IPloggingImageService _ploggingImageService = ploggingImageService;
     private readonly IToastService _toastService = toastService;
 
-    public async Task SavePloggingSession(PloggingSession ploggingSession)
+    public async Task SavePloggingSession(PlogSession ploggingSession)
     {
         try
         {
@@ -29,7 +29,7 @@ public class PloggingSessionService(IPloggingApiClient<PloggingSession> plogging
         }
     }
 
-    public async Task<IEnumerable<PloggingSession>> GetUserSessions(string userId, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<PlogSession>> GetUserSessions(string userId, DateTime startDate, DateTime endDate)
     {
         try
         {

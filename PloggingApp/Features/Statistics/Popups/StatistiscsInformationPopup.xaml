@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="PloggingApp.Features.Statistics.StatisticsInformationPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Color="Transparent">
+
+    <Border
+        Padding="20"
+        HeightRequest="500"
+        Style="{StaticResource RoundBorder}"
+        WidthRequest="300">
+        <ScrollView>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Margin="10">
+                    <Border
+                        BackgroundColor="#e6e6e6"
+                        HeightRequest="30"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="0"
+                        WidthRequest="30">
+                        <Image
+                            HeightRequest="24"
+                            Source="scale.svg"
+                            WidthRequest="24"/>
+                    </Border>
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="Weight"/>
+                </HorizontalStackLayout>
+                <Label Text="The weight of the picked up litter is an estimate based on a survey conducted in the Gothenburg area."/>
+                <Label Text="The survey examined what the average weight for the most common type of litters was, and resulted in the litter options that are available during the plogging sessions."/>
+
+                <HorizontalStackLayout Margin="10">
+                    <Border
+                        BackgroundColor="#e6e6e6"
+                        HeightRequest="30"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="0"
+                        WidthRequest="30">
+                        <Image
+                            HeightRequest="24"
+                            Source="leaf.svg"
+                            WidthRequest="24"/>
+                    </Border>
+                    <Label
+                        Margin="10,0"
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="CO2e Saved "/>
+                </HorizontalStackLayout>
+                <Label Text="CO2e Saved, or the CO2 offset, is an estimated value of the carbon emissions that the user saves by using PlogPal. "/>
+                <Label Text="The estimates are based on emission factors from peer reviewed sources and the estimated weight of the user's picked up litter."/>
+                <Label FontAttributes="Bold" Text="Note that these estimates assume that the user recycles the litter properly, since the estimates are based on emission factors expressed in CO2e per weight unit of material reprocessed."/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+</toolkit:Popup>

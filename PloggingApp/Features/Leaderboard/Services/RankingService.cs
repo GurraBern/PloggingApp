@@ -6,9 +6,9 @@ using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Leaderboard;
 
-public class RankingService(IPloggingApiClient<PloggingSession> ploggingApiClient, IAuthenticationService authenticationService) : IRankingService
+public class RankingService(IPloggingApiClient<PlogSession> ploggingApiClient, IAuthenticationService authenticationService) : IRankingService
 {
-    private readonly IPloggingApiClient<PloggingSession> _ploggingApiClient = ploggingApiClient;
+    private readonly IPloggingApiClient<PlogSession> _ploggingApiClient = ploggingApiClient;
     private readonly IAuthenticationService _authenticationService = authenticationService;
 
     public UserRanking UserRank { get; set; } = UserRanking.CreateDefault();

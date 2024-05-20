@@ -1,11 +1,14 @@
 using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using Google.Apis.Auth.OAuth2;
+using PloggingAPI.Features.LitterLocations;
+using PloggingAPI.Features.LitterPickupRequests;
+using PloggingAPI.Features.PloggingSession;
+using PloggingAPI.Features.Plogtogether;
+using PloggingAPI.Features.Streak;
+using PloggingAPI.Features.UploadPloggingImage;
+using PloggingAPI.Features.UserInformation;
 using PloggingAPI.Models;
-using PloggingAPI.Repository;
-using PloggingAPI.Repository.Interfaces;
-using PloggingAPI.Services;
-using PloggingAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,9 +55,7 @@ builder.Services.AddSingleton<IPloggingSessionRepository, PloggingSessionReposit
 builder.Services.AddSingleton<ILitterLocationsRepository, LitterLocationsRepository>();
 builder.Services.AddSingleton<ILitterbagRepository, LitterbagRepository>();
 builder.Services.AddSingleton<IStreakRepository, StreakRepository>();
-
 builder.Services.AddSingleton<IPlogTogetherRepository, PlogTogetherRepository>();
-
 builder.Services.AddSingleton<IUserInfoRepository, UserInfoRepository>();
 
 builder.Services.AddFirebaseAuthentication();

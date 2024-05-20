@@ -1,5 +1,4 @@
-﻿
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace PloggingApp.Converters;
 public class TitleCaseConverter : IValueConverter
@@ -9,7 +8,7 @@ public class TitleCaseConverter : IValueConverter
         if (value is DateTime dateTime)
         {
             string titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(dateTime.ToString("dddd"));
-            return $"{titleCase} {dateTime.ToString("dd/MM")}";
+            return $"{titleCase} {dateTime:dd/MM}";
         }
         return value;
     }

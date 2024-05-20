@@ -3,8 +3,12 @@
     x:Class="PloggingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:authentication="clr-namespace:PloggingApp.Features.Authentication"
+    xmlns:dashboard="clr-namespace:PloggingApp.Features.Dashboard"
     xmlns:leaderboard="clr-namespace:PloggingApp.Features.Leaderboard"
-    xmlns:views="clr-namespace:PloggingApp.Pages"
+    xmlns:plogtogether="clr-namespace:PloggingApp.Features.Plogtogether"
+    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
+    xmlns:userProfile="clr-namespace:PloggingApp.Features.UserProfiles"
     Title="PloggingApp"
     BackgroundColor="{StaticResource Primary}"
     Shell.FlyoutBehavior="Disabled"
@@ -16,14 +20,14 @@
     Shell.TitleColor="{StaticResource White}">
 
     <ShellItem>
-        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="LoginPage"/>
-        <ShellContent ContentTemplate="{DataTemplate views:RegisterPage}" Route="RegisterPage"/>
+        <ShellContent ContentTemplate="{DataTemplate authentication:LoginPage}" Route="LoginPage"/>
+        <ShellContent ContentTemplate="{DataTemplate authentication:RegisterPage}" Route="RegisterPage"/>
     </ShellItem>
 
     <TabBar>
         <ShellContent
             Title="Dashboard"
-            ContentTemplate="{DataTemplate views:DashboardPage}"
+            ContentTemplate="{DataTemplate dashboard:DashboardPage}"
             Icon="map_icon.png"
             Route="DashboardPage"/>
         <ShellContent
@@ -34,31 +38,31 @@
 
         <ShellContent
             Title="Statistics"
-            ContentTemplate="{DataTemplate views:StatisticsPage}"
+            ContentTemplate="{DataTemplate statistics:StatisticsPage}"
             Icon="stats.png"
             Route="StatisticsPage"/>
         <ShellContent
             Title="Profile"
-            ContentTemplate="{DataTemplate views:MyProfilePage}"
+            ContentTemplate="{DataTemplate userProfile:MyProfilePage}"
             Icon="user.png"
             Route="Profile"/>
     </TabBar>
 
     <ShellContent
         Title="Scan QR code"
-        ContentTemplate="{DataTemplate views:ScanQRcodePage}"
+        ContentTemplate="{DataTemplate plogtogether:ScanQRcodePage}"
         Route="ScanQRcodePage"/>
     <ShellContent
         Title="QR code"
-        ContentTemplate="{DataTemplate views:GenerateQRcodePage}"
+        ContentTemplate="{DataTemplate plogtogether:GenerateQRcodePage}"
         Route="GenerateQRcodePage"/>
     <ShellContent
         Title="OTHER PROFILE"
-        ContentTemplate="{DataTemplate views:OthersProfilePage}"
+        ContentTemplate="{DataTemplate userProfile:OthersProfilePage}"
         Route="OthersProfilePage"/>
     <ShellContent
         Title="HistoryPage"
-        ContentTemplate="{DataTemplate views:HistoryPage}"
+        ContentTemplate="{DataTemplate userProfile:HistoryPage}"
         Route="HistoryPage"/>
 
 </Shell> 

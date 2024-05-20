@@ -7,13 +7,10 @@ using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
 using PloggingApp.Services.Statistics;
 using CommunityToolkit.Mvvm.Input;
-using PloggingApp.MVVM.Models;
 using PloggingApp.Services.Authentication;
-using PloggingApp.Pages;
-using PloggingApp.Services;
 using PloggingApp.Shared;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.Statistics;
 
 public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
 {
@@ -21,9 +18,9 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     private readonly IAuthenticationService _authenticationService;
     private readonly IChartService _chartService;
     private readonly IToastService _toastService;
-    public ObservableCollection<PloggingSession> UserSessions { get; set; } = [];
-    private IEnumerable<PloggingSession> _allUserSessions = new ObservableCollection<PloggingSession>();
-    private Dictionary<TimeResolution, string> colorDict = new Dictionary<TimeResolution, string>
+    public ObservableCollection<PlogSession> UserSessions { get; set; } = [];
+    private IEnumerable<PlogSession> _allUserSessions = [];
+    private readonly Dictionary<TimeResolution, string> colorDict = new()
     {
         {TimeResolution.ThisYear,"#5c5aa8" },
         {TimeResolution.ThisMonth, "#9558a8"}
@@ -173,14 +170,14 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
         Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s), Co2savedChart.Color, SelectedYear, SelectedMonth + 1);
     }
     [RelayCommand]
-    private async Task GoToSessionStats(PloggingSession session)
+    private async Task GoToSessionStats(PlogSession session)
     {
         if (session is null)
             return;
         await Shell.Current.GoToAsync($"{nameof(SessionStatisticsPage)}", true, 
             new Dictionary<string, object>
             {
-                {nameof(PloggingSession), session}
+                {nameof(PlogSession), session}
             });
     }
 

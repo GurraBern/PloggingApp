@@ -30,7 +30,7 @@ public class ChartService : IChartService
 
     // Split into subfunctions
 
-    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions)
+    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions)
     {
         if (!sessions.Any() || sessions.All(s => !s.PloggingData.Litters.Any()))
             return generateEmptyLitterChart();
@@ -71,7 +71,7 @@ public class ChartService : IChartService
         };
         return graph;
     }
-    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PloggingSession> sessions, Func<PloggingSession, double> func, SKColor color, int year, int month = 1 )
+    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions, Func<PlogSession, double> func, SKColor color, int year, int month = 1 )
     {
         if (!sessions.Any() || sessions.Sum(func) == 0)
         {

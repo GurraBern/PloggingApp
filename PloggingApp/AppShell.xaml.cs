@@ -1,4 +1,8 @@
-﻿using PloggingApp.Pages;
+﻿using PloggingApp.Features.Dashboard;
+using PloggingApp.Features.PloggingSession;
+using PloggingApp.Features.Plogtogether;
+using PloggingApp.Features.Statistics;
+using PloggingApp.Features.UserProfiles;
 
 namespace PloggingApp
 {
@@ -17,7 +21,6 @@ namespace PloggingApp
             Routing.RegisterRoute(nameof(OthersProfilePage), typeof(OthersProfilePage));
             Routing.RegisterRoute(nameof(DashboardPage) + "/" + nameof(PlogTogetherPage), typeof(PlogTogetherPage));
             Routing.RegisterRoute(nameof(HistoryPage), typeof(HistoryPage));
-
         }
     }
 }

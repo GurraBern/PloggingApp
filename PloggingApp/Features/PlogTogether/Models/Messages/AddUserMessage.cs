@@ -1,6 +1,4 @@
-﻿using PloggingApp.MVVM.Models;
-
-namespace PloggingApp.MVVM.Models.Messages;
+﻿namespace PloggingApp.Features.Plogtogether;
 
 public class AddUserMessage
 {

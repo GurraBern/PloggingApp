@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.MVVM.Views;
+﻿namespace PloggingApp.Features.Streak;
 
 public partial class StreakView : ContentView
 {

@@ -5,16 +5,16 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
+using PloggingApp.Features.LitterPickupRequests;
 using PloggingApp.Features.Map.Components;
-using PloggingApp.MVVM.Models.Messages;
-using PloggingApp.Pages;
+using PloggingApp.Features.Plogtogether;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using PloggingApp.Shared;
 using System.Collections.ObjectModel;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Features.PloggingSession;
 
 public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>, IRecipient<PhotoTakenMessage>
 {

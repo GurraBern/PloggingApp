@@ -1,6 +1,6 @@
-﻿using PloggingApp.MVVM.ViewModels;
+﻿using PloggingApp.Features.Dashboard;
 
-namespace PloggingApp.Pages;
+namespace PloggingApp.Features.Plogtogether;
 
 public partial class PlogTogetherPage : ContentPage
 {

@@ -118,16 +118,16 @@
 	  <Compile Update="Features\Leaderboard\LeaderboardView.xaml.cs">
 	    <DependentUpon>LeaderboardView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Features\UserProfile\Badges\BadgesView.xaml.cs">
+	  <Compile Update="Features\UserProfiles\Badges\BadgesView.xaml.cs">
 	    <DependentUpon>BadgesView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Features\PloggingSession\PloggingSessionView.xaml.cs">
 	    <DependentUpon>PloggingSessionView.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="MVVM\Views\Popups\TutorialPopup.xaml.cs">
+	  <Compile Update="Features\Dashboard\Popups\TutorialPopup.xaml.cs">
 	    <DependentUpon>TutorialPopup.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\Dashboard\DashboardPage.xaml.cs">
+	  <Compile Update="Features\Dashboard\DashboardPage.xaml.cs">
 	    <DependentUpon>DashboardPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Features\Leaderboard\LeaderboardPage.xaml.cs">
@@ -136,40 +136,37 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Features\UserProfile\Badges\BadgesView.xaml">
+	  <MauiXaml Update="Features\UserProfiles\Badges\BadgesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Components\InformationExpander.xaml">
+	  <MauiXaml Update="Features\UserProfiles\History\HistoryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\HistoryView.xaml">
+	  <MauiXaml Update="Features\Statistics\Popups\StatistiscsInformationPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Popups\StatistiscsInformationPopup.xaml">
+	  <MauiXaml Update="Features\Dashboard\Popups\TutorialPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\Popups\TutorialPopup.xaml">
+	  <MauiXaml Update="Features\PloggingSession\AddLitter\AddLitter.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\PloggingSession\AddLitter.xaml">
+	  <MauiXaml Update="Features\UserProfiles\Badges\Popups\BadgesPopUpView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\UserProfile\Badges\BadgesPopUpView.xaml">
+	  <MauiXaml Update="Features\PloggingSession\AddLitter\LitterTypeButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\PloggingSession\LitterTypeButton.xaml">
+	  <MauiXaml Update="Features\UserProfiles\MyProfilePage\MyProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\UserProfile\MyProfileView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\OthersSessionsView.xaml">
+	  <MauiXaml Update="Features\UserProfiles\OthersProfile\OthersSessionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Leaderboard\LeaderboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\LitterPickupRequests\LitterBagPlacementPopup.xaml">
+	  <MauiXaml Update="Features\LitterPickupRequests\Popups\LitterBagPlacementPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Map\MapView.xaml">
@@ -184,13 +181,13 @@
 	  <MauiXaml Update="Features\PloggingSession\PloggingSessionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\CheckoutImage\CheckoutImagePage.xaml">
+	  <MauiXaml Update="Features\PloggingSession\CheckoutImage\CheckoutImagePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\Dashboard\DashboardPage.xaml">
+	  <MauiXaml Update="Features\Dashboard\DashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\HistoryPage\HistoryPage.xaml">
+	  <MauiXaml Update="Features\UserProfiles\History\HistoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Leaderboard\LeaderboardPage.xaml">
@@ -199,10 +196,10 @@
 	  <MauiXaml Update="Features\Authentication\LoginPage\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\UserProfile\MyProfilePage\MyProfilePage.xaml">
+	  <MauiXaml Update="Features\UserProfiles\MyProfilePage\MyProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\UserProfile\OthersProfile\OthersProfilePage.xaml">
+	  <MauiXaml Update="Features\UserProfiles\OthersProfile\OthersProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Statistics\Statistics\StatisticsPage.xaml">

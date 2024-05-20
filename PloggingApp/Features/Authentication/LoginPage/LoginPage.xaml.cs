@@ -1,7 +1,4 @@
-﻿using PloggingApp.MVVM.ViewModels;
-using System.Diagnostics;
-
-namespace PloggingApp.Pages;
+﻿namespace PloggingApp.Features.Authentication;
 
 public partial class LoginPage : ContentPage
 

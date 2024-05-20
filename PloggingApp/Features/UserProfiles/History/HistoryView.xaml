@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="PloggingApp.Features.UserProfiles.HistoryView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
+    xmlns:userProfiles="clr-namespace:PloggingApp.Features.UserProfiles"
+    x:DataType="userProfiles:HistoryViewModel">
+
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        HeightRequest="800"
+        IsRefreshing="{Binding IsRefreshing}">
+        <Grid RowDefinitions="*">
+            <ScrollView Grid.Row="0" VerticalOptions="FillAndExpand">
+
+                <VerticalStackLayout Padding="20,0" Spacing="10">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="Recent Sessions"/>
+                    <CollectionView ItemsSource="{Binding PloggingSessions}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="modelsCore:PlogSession">
+
+                                <Border
+                                    Margin="0,0,0,10"
+                                    BackgroundColor="White"
+                                    HeightRequest="80"
+                                    StrokeThickness="1"
+                                    Style="{StaticResource StatsBorder}">
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="Black"
+                                            Opacity="0.2"
+                                            Radius="8"
+                                            Offset="2,2"/>
+                                    </Border.Shadow>
+
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image
+                                            Grid.Column="0"
+                                            Aspect="AspectFill"
+                                            Source="{Binding Image}"
+                                            VerticalOptions="Center">
+                                            <Image.Clip>
+                                                <EllipseGeometry
+                                                    Center="50,40"
+                                                    RadiusX="35"
+                                                    RadiusY="35"/>
+                                            </Image.Clip>
+                                        </Image>
+
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <Label FontSize="Medium" Text="{Binding StartDate, StringFormat='{0:dd MMM yyyy HH:mm}'}"/>
+
+                                            <HorizontalStackLayout Grid.Row="1">
+                                                <Grid ColumnSpacing="20">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="4*"/>
+                                                        <ColumnDefinition Width="4*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label
+                                                        x:Name="Weight"
+                                                        Grid.Column="1"
+                                                        FontSize="Medium"
+                                                        Text="{Binding PloggingData.Weight, StringFormat='{0:F1}g'}"/>
+
+                                                    <Image
+                                                        Grid.Column="0"
+                                                        HeightRequest="20"
+                                                        HorizontalOptions="End"
+                                                        Source="trashbag.png"
+                                                        WidthRequest="20"/>
+
+                                                    <Label
+                                                        x:Name="Count"
+                                                        Grid.Column="0"
+                                                        Margin="0,0,20,0"
+                                                        FontSize="Medium"
+                                                        Text="{Binding PloggingData.Litters.Count, StringFormat='{0}'}"/>
+
+
+                                                    <Label
+                                                        x:Name="Distance"
+                                                        Grid.Column="2"
+                                                        FontSize="Medium"
+                                                        Text="{Binding PloggingData.Distance, StringFormat='{0}m'}"/>
+
+
+                                                </Grid>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type userProfiles:HistoryViewModel}}}" CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </RefreshView>
+</ContentView>

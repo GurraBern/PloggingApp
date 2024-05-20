@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="PloggingApp.Pages.PlogTogetherPage"
+    x:Class="PloggingApp.Features.Plogtogether.PlogTogetherPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:PloggingApp.Converters"
-    xmlns:model="clr-namespace:PloggingApp.MVVM.Models"
-    xmlns:viewmodel="clr-namespace:PloggingApp.MVVM.ViewModels"
-    xmlns:views="clr-namespace:PloggingApp.MVVM.Views"
+    xmlns:plogtogether="clr-namespace:PloggingApp.Features.Plogtogether"
     Title="PlogTogetherPage"
-    x:DataType="viewmodel:PlogTogetherViewModel"
+    x:DataType="plogtogether:PlogTogetherViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
@@ -62,10 +60,12 @@
             IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}"
             Text="Your ID"/>
 
-        <views:ScanQRButtonView
+        <Button
             Grid.Row="3"
             Grid.Column="1"
-            IsVisible="{Binding UserCanAdd}"/>
+            Command="{Binding GoToScanQRcodeCommand}"
+            IsVisible="{Binding UserCanAdd}"
+            Text="Add User"/>
 
         <CollectionView
             Grid.Row="2"
@@ -76,7 +76,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:PlogUser">
+                <DataTemplate x:DataType="plogtogether:PlogUser">
                     <Border Padding="10" Style="{StaticResource RoundBorder}">
                         <Grid ColumnDefinitions="*,*">
 
@@ -87,7 +87,7 @@
 
                             <Button
                                 Grid.Column="1"
-                                Command="{Binding RemoveUserCommand, Source={RelativeSource AncestorType={x:Type viewmodel:PlogTogetherViewModel}}}"
+                                Command="{Binding RemoveUserCommand, Source={RelativeSource AncestorType={x:Type plogtogether:PlogTogetherViewModel}}}"
                                 CommandParameter="{Binding UserId}"
                                 FontSize="Micro"
                                 HorizontalOptions="End"

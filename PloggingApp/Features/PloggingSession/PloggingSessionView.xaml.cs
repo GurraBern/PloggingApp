@@ -1,4 +1,4 @@
-namespace PloggingApp.MVVM.Views;
+namespace PloggingApp.Features.PloggingSession;
 
 public partial class PloggingSessionView : ContentView
 {

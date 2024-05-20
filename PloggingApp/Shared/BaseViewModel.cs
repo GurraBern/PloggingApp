@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PloggingApp.MVVM.ViewModels;
+namespace PloggingApp.Shared;
 
 public partial class BaseViewModel : ObservableObject
 {

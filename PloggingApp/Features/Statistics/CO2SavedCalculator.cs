@@ -1,7 +1,7 @@
 ﻿using Plogging.Core.Enums;
 using Plogging.Core.Models;
 
-namespace PloggingApp.MVVM.Models;
+namespace PloggingApp.Features.Statistics;
 // Values are based on the findings in "Greenhouse gas emission factors for recycling of source-segregated waste materials"
 // by David A. Turner et al. @ Table 6.
 public class CO2SavedCalculator
@@ -23,11 +23,11 @@ public class CO2SavedCalculator
     {
         return (CO2PerKgPairs[litter.LitterType]*(litter.Weight));
     }
-    public static double CalculateCO2Saved(IEnumerable<PloggingSession> sessions)
+    public static double CalculateCO2Saved(IEnumerable<PlogSession> sessions)
     {
         return Calculate(sessions.SelectMany(s => s.PloggingData.Litters).ToList());
     }
-    public static double CalculateCO2Saved(PloggingSession session)
+    public static double CalculateCO2Saved(PlogSession session)
     {
         return Calculate(session.PloggingData.Litters);
     }

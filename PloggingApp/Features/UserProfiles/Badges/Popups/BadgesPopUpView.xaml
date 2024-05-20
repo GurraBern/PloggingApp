@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="PloggingApp.Features.UserProfiles.Badges.BadgesPopUpView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:badgeFeature="clr-namespace:PloggingApp.Features.UserProfiles.Badges"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="badgeFeature:BadgesPopUpViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="True"
+    Size="450,500"
+    Color="white">
+    <VerticalStackLayout>
+        <Image
+            Margin="380,0,0,0"
+            Aspect="AspectFill"
+            HeightRequest="10"
+            Source="closepopup.png"
+            WidthRequest="10">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type toolkit:Popup}}}"
+                    Tapped="BadgeTap"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <CollectionView ItemsLayout="VerticalGrid, 5" ItemsSource="{Binding Badges}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="badgeFeature:Badge">
+                    <Grid Padding="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <VerticalStackLayout>
+                            <Image
+                                Aspect="AspectFill"
+                                HeightRequest="100"
+                                Source="{Binding Image}"
+                                WidthRequest="100">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type badgeFeature:BadgesPopUpViewModel}}, Path=TapBadgeCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Tapped="BadgeTap"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <HorizontalStackLayout>
+
+                                <Label
+                                    FontSize="9"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Type}"/>
+
+                            </HorizontalStackLayout>
+                            <ProgressBar Progress="{Binding Percentage}" ProgressColor="{Binding Color}"/>
+
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</toolkit:Popup>

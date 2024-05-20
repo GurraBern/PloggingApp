@@ -1,13 +1,13 @@
-﻿using Plogging.Core.Enums;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace PloggingApp.Converters;
 public class IntToMonthConverter : IValueConverter
 {
-    private static List<string> months = new List<string>()
-    {
+    private static readonly List<string> months =
+    [
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-    };
+    ];
+
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if(value == null) return null;

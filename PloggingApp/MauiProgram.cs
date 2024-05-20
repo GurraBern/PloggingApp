@@ -9,9 +9,6 @@ using Microsoft.Extensions.Logging;
 using Plogging.Core.Models;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
-using PloggingApp.MVVM.ViewModels;
-using PloggingApp.MVVM.Views;
-using PloggingApp.Pages;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using PloggingApp.Services.Authentication;
@@ -19,12 +16,20 @@ using RestSharp;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
 using PloggingApp.Services.Statistics;
-using PloggingApp.Services;
 using ZXing.Net.Maui.Controls;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Features.Leaderboard;
 using PloggingApp.Shared;
 using PloggingApp.Features.Map;
+using PloggingApp.Features.Dashboard;
+using PloggingApp.Features.Authentication;
+using PloggingApp.Features.Statistics;
+using PloggingApp.Features.PloggingSession;
+using PloggingApp.Features.UserProfiles.Badges;
+using PloggingApp.Features.UserProfiles;
+using PloggingApp.Features.Streak;
+using PloggingApp.Features.Plogtogether;
+using PloggingApp.Features.LitterPickupRequests;
 
 namespace PloggingApp;
 
@@ -82,7 +87,6 @@ public static class MauiProgram
 
         builder.Services.AddTransient<HistoryPageViewModel>();
         builder.Services.AddTransient<MyProfilePageViewModel>();
-
 
         //Views ViewModels
         builder.Services.AddTransient<LeaderboardViewModel>();
@@ -163,7 +167,7 @@ public static class MauiProgram
         if (apiUrl != null)
         {
             var ploggingApiClient = new RestClient(apiUrl);
-            builder.RegisterPloggingApiClient<PloggingSession>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<PlogSession>(ploggingApiClient);
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);

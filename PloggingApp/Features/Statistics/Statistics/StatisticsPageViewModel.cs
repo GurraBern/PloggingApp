@@ -1,11 +1,8 @@
-﻿using PloggingApp.MVVM.ViewModels;
+﻿using PloggingApp.Features.Statistics;
 
-namespace PloggingApp.Pages;
-public class StatisticsPageViewModel
+namespace PloggingApp.Features.Statistics;
+
+public class StatisticsPageViewModel(StatisticsViewModel statisticsViewModel)
 {
-    public StatisticsViewModel StatisticsViewModel { get; set; }
-    public StatisticsPageViewModel(StatisticsViewModel statisticsViewModel)
-    {
-        StatisticsViewModel = statisticsViewModel;
-    }
+    public StatisticsViewModel StatisticsViewModel { get; set; } = statisticsViewModel;
 }

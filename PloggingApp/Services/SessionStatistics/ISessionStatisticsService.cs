@@ -4,5 +4,5 @@ namespace PloggingApp.Services.SessionStatistics;
 
 public interface ISessionStatisticsService
 {    
-    Task GoToSessionStats(PloggingSession session);
+    Task GoToSessionStats(PlogSession session);
 }

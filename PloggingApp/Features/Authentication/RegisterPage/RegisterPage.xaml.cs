@@ -1,6 +1,4 @@
-﻿using PloggingApp.MVVM.ViewModels;
-
-namespace PloggingApp.Pages;
+﻿namespace PloggingApp.Features.Authentication;
 
 public partial class RegisterPage : ContentPage
 {
