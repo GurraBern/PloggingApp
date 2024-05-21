@@ -34,7 +34,9 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
     private string streakString;
 
     private IEnumerable<PlogSession> _allSessions = [];
-    public BadgesViewModel BadgesViewModel { get; set; }
+
+    [ObservableProperty]
+    public BadgesViewModel badgesViewModel;
 
 
     public Task Initialization { get; private set; }
@@ -46,7 +48,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
         _userInfo = userInfo;
         _streakService = streakService;
 
-        BadgesViewModel = new BadgesViewModel(sessionService, userInfo, streakService, popupService);
+        //BadgesViewModel = new BadgesViewModel(sessionService, userInfo, streakService, popupService);
 
         Initialization = GetSessions();
     }

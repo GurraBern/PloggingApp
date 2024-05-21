@@ -99,10 +99,10 @@ public static class MauiProgram
         builder.Services.AddTransient<PlogTogetherViewModel>();
         builder.Services.AddTransient<GenerateQRcodeViewModel>();
         builder.Services.AddTransient<ScanQRcodePageViewModel>();
-        builder.Services.AddTransient<MyProfileViewModel>();
         builder.Services.AddTransient<BadgesViewModel>();
         builder.Services.AddTransient<SessionStatsMapViewModel>();
         builder.Services.AddTransient<HistoryViewModel>();
+        builder.Services.AddTransient<ProfileInfoViewModel>();
     }
 
     private static void AddPopups(MauiAppBuilder builder)
@@ -138,7 +138,7 @@ public static class MauiProgram
     private static void AddServices(MauiAppBuilder builder)
     {
         builder.Services.AddTransient<IToastService, ToastService>();
-        builder.Services.AddTransient<IRankingService, RankingService>();
+        builder.Services.AddSingleton<IRankingService, RankingService>();
         builder.Services.AddTransient<IStreakService, StreakService>();
         builder.Services.AddTransient<IPloggingImageService, PloggingImageService>();
         builder.Services.AddScoped<ICameraService, CameraService>();

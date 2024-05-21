@@ -13,22 +13,32 @@ using PloggingApp.Features.PloggingSession;
 using PloggingApp.Features.Streak;
 using PloggingApp.Features.Statistics;
 using PloggingApp.Features.UserProfiles.Badges;
+using CommunityToolkit.Maui.Core;
 
 namespace PloggingApp.Features.UserProfiles;
 
 public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
 {
     private readonly IPloggingSessionService _ploggingSessionService;
+    private readonly IUserInfoService _userInfoService;
     private readonly IAuthenticationService _authenticationService;
     private readonly IRankingService _rankingService;
     private readonly IStreakService _streakService;
     private readonly IToastService _toastService;
+    private readonly IPopupService _popupService;
 
     //TODO ploggingsessionviewmodel and leaderboardviewmodel should be removed
-    public PloggingSessionViewModel PloggingSessionViewModel { get; }
-    public StreakViewModel StreakViewModel { get; set; }
-    public LeaderboardViewModel LeaderboardViewModel { get; }
-    public BadgesViewModel BadgesViewModel { get; }
+    [ObservableProperty]
+    private PloggingSessionViewModel ploggingSessionViewModel;
+
+    [ObservableProperty]
+    private StreakViewModel streakViewModel;
+
+    [ObservableProperty]
+    private LeaderboardViewModel leaderboardViewModel;
+
+    [ObservableProperty]
+    private BadgesViewModel badgesViewModel;
     private ObservableCollection<PlogSession> PloggingSessions { get; set; } = [];
     private IEnumerable<PlogSession> _allUserSessions = [];
 
@@ -49,25 +59,9 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
     [ObservableProperty]
     private IEnumerable<PlogSession> latestSessions;
 
-    public MyProfileViewModel(IAuthenticationService authenticationService, 
-        IRankingService rankingService,
-        IStreakService StreakService,
-        StreakViewModel streakViewModel, 
-        IPloggingSessionService ploggingSessionService, 
-        PloggingSessionViewModel ploggingSessionViewModel, 
-        LeaderboardViewModel leaderboardViewModel,
-        BadgesViewModel badgesViewModel,
-        IToastService toastService)
+    public MyProfileViewModel(IAuthenticationService authenticationService)
     {
         _authenticationService = authenticationService;
-        _rankingService = rankingService;
-        _ploggingSessionService = ploggingSessionService;
-        StreakViewModel = streakViewModel;
-        PloggingSessionViewModel = ploggingSessionViewModel;
-        LeaderboardViewModel = leaderboardViewModel;
-        BadgesViewModel = badgesViewModel;
-        _streakService = StreakService;
-        _toastService = toastService;
 
         Initialization = InitializeAsync();
     }
@@ -83,8 +77,6 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         DisplayName = _authenticationService.CurrentUser.Info.DisplayName;
-       
-        await BadgesViewModel.Init();
 
         _allUserSessions = await _ploggingSessionService.GetUserSessions(_authenticationService.UserId, DateTime.UtcNow.AddYears(-1), DateTime.UtcNow);
 
@@ -96,7 +88,7 @@ public partial class MyProfileViewModel : BaseViewModel, IAsyncInitialization
         else
         {
             PloggingSessions.ClearAndAddRange(_allUserSessions);
-            PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s =>s.StartDate.Month == DateTime.Now.Month));
+            PloggingStatistics = new PloggingStatistics(_allUserSessions.Where(s => s.StartDate.Month == DateTime.Now.Month));
             LatestSessions = PloggingSessions.Take(3);
 
             //TODO get from RankingService instead, needs to calculate rank

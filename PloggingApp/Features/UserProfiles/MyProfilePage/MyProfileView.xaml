@@ -70,12 +70,12 @@
                             Style="{StaticResource SubHeadline}"
                             Text="{Binding DisplayName}"
                             VerticalOptions="Center"/>
-                        <streak:StreakView
+                        <!--<streak:StreakView
                             Grid.Row="1"
                             Grid.Column="0"
                             BindingContext="{Binding StreakViewModel}"
                             HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
+                            VerticalOptions="Center"/>-->
 
                         <Label
                             Grid.Row="1"

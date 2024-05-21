@@ -14,7 +14,7 @@ public partial class OthersProfilePage : ContentPage
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        vm.Initialize();
+        vm.InitializeComponents();
     }
 
     //TODO change from obsolete

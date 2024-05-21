@@ -1,42 +1,38 @@
 ﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Data.Services;
 using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Features.Statistics;
+using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.Features.UserProfiles.Badges;
 
-[QueryProperty(nameof(UserId), nameof(UserId))]
 public partial class BadgesViewModel: BaseViewModel
 {
     public ObservableCollection<Badge> Badges { get; set; } = [];
-    //private readonly List<Badge> badges = [];
     private readonly IPloggingSessionService _sessionService;
+    private readonly IAuthenticationService _authenticationService;
     private readonly IStreakService _streakService;
-    private readonly IUserInfoService _userInfo;
     private readonly IPopupService _popupService;
     public Task Initialization { get; private set; }
 
-    [ObservableProperty]
-    private string userId;
+    private string UserId => _authenticationService.UserId;
 
-    public BadgesViewModel(IPloggingSessionService sessionService, IUserInfoService userInfo, IStreakService streakService, IPopupService popupService)
+    public BadgesViewModel(IPloggingSessionService sessionService, IAuthenticationService authenticationService, IStreakService streakService, IPopupService popupService)
     {
         _sessionService = sessionService;
-        _userInfo = userInfo;
+        _authenticationService = authenticationService;
         _streakService = streakService;
         _popupService = popupService;
 
-        Initialization = Init(); 
+        Initialization = Init();
     }
 
     public async Task Init()
     {
         IsBusy = true;
-        //string userId = _sessionService.UserId;
 
         if (UserId != null)
         {

@@ -20,7 +20,7 @@ public partial class OthersProfilePageViewModel(IPloggingSessionService sessionS
     private readonly IStreakService streakService = streakService;
     private readonly IPopupService popupService = popupService;
 
-    public void Initialize()
+    public void InitializeComponents()
     {
         OthersSessionsViewModel = new OthersSessionsViewModel(UserId, sessionService, userService, streakService, popupService);
     }

@@ -160,6 +160,9 @@
 	  <MauiXaml Update="Features\UserProfiles\MyProfilePage\MyProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Features\UserProfiles\MyProfilePage\ProfileInfo\ProfileInfoView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Features\UserProfiles\OthersProfile\OthersSessionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -8,13 +8,11 @@ namespace PloggingApp.Features.Dashboard;
 public class DashboardViewModel(MapViewModel mapViewModel,
     AddLitterViewModel addLitterViewModel,
     PloggingSessionViewModel ploggingSessionViewModel,
-    StreakViewModel streakViewModel,
-    MyProfileViewModel myProfileViewModel)
+    StreakViewModel streakViewModel)
 {
     public MapViewModel MapViewModel { get; } = mapViewModel;
     public AddLitterViewModel AddLitterViewModel { get; } = addLitterViewModel;
     public PloggingSessionViewModel PloggingSessionViewModel { get; } = ploggingSessionViewModel;
     public StreakViewModel StreakViewModel { get; } = streakViewModel;
-    public MyProfileViewModel MyProfileViewModel { get; } = myProfileViewModel;
 }
 

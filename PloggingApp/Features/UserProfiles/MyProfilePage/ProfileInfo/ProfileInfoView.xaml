@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="PloggingApp.Features.UserProfiles.ProfileInfoView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:PloggingApp.Converters"
+    xmlns:streak="clr-namespace:PloggingApp.Features.Streak"
+    xmlns:viewmodel="clr-namespace:PloggingApp.Features.UserProfiles"
+    x:DataType="viewmodel:ProfileInfoViewModel">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Border StrokeShape="RoundRectangle 80, 80, 0, 0" Style="{StaticResource RoundBorder}">
+        <Grid HeightRequest="120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Background="White"
+                Command="{Binding LogoutCommand}"
+                HeightRequest="350"
+                ImageSource="logout.svg"
+                Scale="0.15"
+                WidthRequest="350"/>
+
+            <Ellipse
+                Grid.Row="0"
+                Grid.Column="0"
+                HeightRequest="70"
+                Stroke="Black"
+                StrokeThickness="2"
+                WidthRequest="70"/>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                Style="{StaticResource SubHeadline}"
+                Text="{Binding DisplayName, Converter={StaticResource FirstTwoCharsConverter}}"
+                TextColor="Black"
+                VerticalOptions="Center"/>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                BackgroundColor="White"
+                Style="{StaticResource SubHeadline}"
+                Text="{Binding DisplayName}"
+                VerticalOptions="Center"/>
+
+            <streak:StreakView
+                Grid.Row="1"
+                Grid.Column="0"
+                BindingContext="{Binding StreakViewModel}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="White"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                Text="{Binding UserRank.Rank, StringFormat='Rank: {0}'}"/>
+        </Grid>
+
+
+    </Border>
+
+</ContentView>

@@ -6,13 +6,24 @@ using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Leaderboard;
 
-public class RankingService(IPloggingApiClient<PlogSession> ploggingApiClient, IAuthenticationService authenticationService) : IRankingService
+public class RankingService : IRankingService
 {
-    private readonly IPloggingApiClient<PlogSession> _ploggingApiClient = ploggingApiClient;
-    private readonly IAuthenticationService _authenticationService = authenticationService;
+    private readonly IPloggingApiClient<PlogSession> _ploggingApiClient;
+    private readonly IAuthenticationService _authenticationService;
 
     public UserRanking UserRank { get; set; } = UserRanking.CreateDefault();
     public IEnumerable<UserRanking> UserRankings { get; private set; } = [];
+
+    public RankingService(IPloggingApiClient<PlogSession> ploggingApiClient, IAuthenticationService authenticationService)
+    {
+        _ploggingApiClient = ploggingApiClient;
+        _authenticationService = authenticationService;
+    }
+
+    public async Task InitializeAsync()
+    {
+        await GetUserRankings(DateTime.MinValue, DateTime.MaxValue, SortProperty.Weight);
+    }
 
     public async Task<IEnumerable<UserRanking>> GetUserRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty)
     {
