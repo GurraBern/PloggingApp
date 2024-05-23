@@ -8,14 +8,10 @@
     x:DataType="badgeFeature:BadgesViewModel">
 
     <Grid
-        ColumnDefinitions="*,2*"
+        ColumnDefinitions="*,3*"
         HorizontalOptions="Fill"
         VerticalOptions="Fill">
-        <Border
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="-10,0,0,0"
-            Style="{StaticResource RoundBorder}">
+        <Border Grid.Column="0" Style="{StaticResource RoundBorder}">
             <Image Source="badgesindicator.png">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ShowBadgesCommand}" Tapped="BadgeTap"/>
@@ -23,16 +19,20 @@
             </Image>
         </Border>
 
-        <CollectionView Grid.Column="1" ItemsSource="{Binding Badges}">
+        <CollectionView
+            Grid.Column="1"
+            ItemsSource="{Binding Badges}"
+            VerticalOptions="Center">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="1" Orientation="Horizontal"/>
+                <LinearItemsLayout Orientation="Horizontal"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="badgeFeature:Badge">
                     <Image
                         x:Name="Badge"
                         Aspect="AspectFit"
-                        HeightRequest="150"
+                        HeightRequest="45"
+                        Scale="3"
                         Source="{Binding Image}">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
