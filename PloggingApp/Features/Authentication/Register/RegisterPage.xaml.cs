@@ -2,7 +2,7 @@
 
 public partial class RegisterPage : ContentPage
 {
-    public RegisterPage(AuthenticationViewModel vm)
+    public RegisterPage(RegisterViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

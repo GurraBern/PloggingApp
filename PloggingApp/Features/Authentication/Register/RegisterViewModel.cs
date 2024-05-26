@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Data.Services;
 using PloggingApp.Shared;
@@ -7,43 +6,23 @@ using PloggingApp.Shared;
 namespace PloggingApp.Features.Authentication;
 
 //More information on Firebase package used: https://www.nuget.org/packages/FirebaseAuthentication.net 
-public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitialization
+public partial class RegisterViewModel : BaseViewModel
 {
 	private readonly IAuthenticationService _authenticationService;
 	private readonly IStreakService _streakService;
 	private readonly IUserInfoService _userInfoService;
 	private readonly IToastService _toastService;
 
-	[ObservableProperty]
-	private bool rememberMeEnabled;
 	public string RegEmail { get; set; }
 	public string RegPassword { get; set; }
-	public string LoginEmail { get; set; }
-	public string LoginPassword { get; set; }
 	public string DisplayName { get; set; }
-	public Task Initialization { get; }
 
-	public AuthenticationViewModel(IAuthenticationService authenticationService, IStreakService streakService, IUserInfoService userInfoService, IToastService toastService)
+	public RegisterViewModel(IAuthenticationService authenticationService, IStreakService streakService, IUserInfoService userInfoService, IToastService toastService)
 	{
 		_authenticationService = authenticationService;
 		_streakService = streakService;
 		_userInfoService = userInfoService;
 		_toastService = toastService;
-
-		Initialization = Initialize();
-	}
-
-	private async Task Initialize()
-	{
-		IsBusy = true;
-
-		var isLoginSuccessful = await _authenticationService.AutoLogin();
-		if(isLoginSuccessful)
-		{
-			await _streakService.ResetStreak();
-		}
-
-		IsBusy = false;
 	}
 
 	[RelayCommand]
@@ -57,30 +36,6 @@ public partial class AuthenticationViewModel : BaseViewModel, IAsyncInitializati
 	private async Task GoToLoginPage()
 	{
 		await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
-	}
-
-	[RelayCommand]
-	private async Task Login()
-	{
-		if (!string.IsNullOrEmpty(LoginEmail) && !string.IsNullOrEmpty(LoginPassword))
-		{
-			try
-			{
-				await _authenticationService.LoginUser(LoginEmail, LoginPassword);
-				await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
-				await _streakService.ResetStreak();
-			}
-			catch (Exception ex)
-			{
-				HandleAuthenticationError(ex);
-			}
-		}
-	}
-
-	[RelayCommand]
-	private async Task GoToRegisterPage()
-	{
-		await Shell.Current.GoToAsync($"//{nameof(RegisterPage)}");
 	}
 
 	[RelayCommand]

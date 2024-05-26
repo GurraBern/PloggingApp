@@ -81,7 +81,8 @@ public static class MauiProgram
 
         builder.Services.AddScoped<CheckoutImageViewModel>();
         builder.Services.AddTransient<OthersProfilePageViewModel>();
-        builder.Services.AddSingleton<AuthenticationViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddSingleton<RegisterViewModel>();
 
         builder.Services.AddTransient<SessionStatisticsViewModel>();
 

@@ -196,7 +196,7 @@
 	  <MauiXaml Update="Features\Leaderboard\LeaderboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\Authentication\LoginPage\LoginPage.xaml">
+	  <MauiXaml Update="Features\Authentication\Login\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\UserProfiles\MyProfilePage\MyProfilePage.xaml">
@@ -208,7 +208,7 @@
 	  <MauiXaml Update="Features\Statistics\Statistics\StatisticsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\Authentication\RegisterPage\RegisterPage.xaml">
+	  <MauiXaml Update="Features\Authentication\Register\RegisterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
