@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using PloggingApp.Data.Services;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 
 namespace PloggingApp.Features.Plogtogether;

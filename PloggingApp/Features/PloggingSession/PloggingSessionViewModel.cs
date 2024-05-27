@@ -3,15 +3,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
-using Plogging.Core.Models;
-using PloggingApp.Data.Services;
 using PloggingApp.Features.LitterPickupRequests;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.Plogtogether;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using PloggingApp.Shared;
+using PlogPal.Domain.Models;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.Features.PloggingSession;

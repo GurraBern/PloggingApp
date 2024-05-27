@@ -1,6 +1,6 @@
-﻿using Plogging.Core.Enums;
-using Plogging.Core.Models;
-using PloggingApp.Extensions;
+﻿using PloggingApp.Extensions;
+using PlogPal.Domain.Enums;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Archive;
 public class Total<T>

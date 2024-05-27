@@ -1,4 +1,4 @@
-﻿using Plogging.Core.Enums;
+﻿using PlogPal.Domain.Models;
 
 namespace PloggingApp.Services.PloggingTracking;
 

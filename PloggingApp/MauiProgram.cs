@@ -6,16 +6,12 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Plogging.Core.Models;
-using PloggingApp.Data.Services;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Services.Camera;
 using PloggingApp.Services.PloggingTracking;
 using PloggingApp.Services.Authentication;
 using RestSharp;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using System.Reflection;
-using PloggingApp.Services.Statistics;
 using ZXing.Net.Maui.Controls;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Features.Leaderboard;
@@ -30,6 +26,7 @@ using PloggingApp.Features.UserProfiles;
 using PloggingApp.Features.Streak;
 using PloggingApp.Features.Plogtogether;
 using PloggingApp.Features.LitterPickupRequests;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp;
 
@@ -172,7 +169,7 @@ public static class MauiProgram
             builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
             builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
-            builder.RegisterPloggingApiClient<Plogging.Core.Models.UserInfo>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<PlogPal.Domain.Models.UserInfo>(ploggingApiClient);
             builder.RegisterPloggingApiClient<LitterbagPlacement>(ploggingApiClient);
             builder.RegisterPloggingApiClient<PloggingImage>(ploggingApiClient);
         }

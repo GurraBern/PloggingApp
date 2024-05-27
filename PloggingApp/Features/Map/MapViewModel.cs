@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using Plogging.Core.Models;
 using PloggingApp.Commands;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Features.LitterPickupRequests;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
 using PloggingApp.Shared;
+using PlogPal.Domain.Models;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.Features.Map;

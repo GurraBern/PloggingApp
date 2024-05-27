@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microcharts;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
-using PloggingApp.Services.Statistics;
 using PloggingApp.Shared;
+using PlogPal.Domain.Enums;
+using PlogPal.Domain.Models;
+using PlogPal.Maui.Services.Statistics;
 
 namespace PloggingApp.Features.Statistics;
 
@@ -44,7 +44,7 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
             Area = "?? :(";
         }
 
-        LitterChart = _chartService.generateLitterChart(TimeResolution.Alltime, new List<PlogSession> { PlogSession });
+        LitterChart = _chartService.GenerateLitterChart(TimeResolution.Alltime, new List<PlogSession> { PlogSession });
         LitterWeight = PlogSession.PloggingData.Litters.Sum(x => x.Weight);
         PloggingStats = new PloggingStatistics(PlogSession);
 

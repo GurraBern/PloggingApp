@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PloggingApp.Data.Services;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Shared;
 
 namespace PloggingApp.Features.UserProfiles;

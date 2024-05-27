@@ -1,15 +1,16 @@
 ﻿using Microcharts;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
+using PlogPal.Domain.Enums;
+using PlogPal.Domain.Models;
 using SkiaSharp;
 
-namespace PloggingApp.Services.Statistics;
+namespace PlogPal.Maui.Services.Statistics;
+
 public interface IChartService
 {
-    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions);
+    public Chart GenerateLitterChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions);
 
-    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions, Func<PlogSession, double> Func, SKColor color, int year, int month);
+    public Chart GenerateLineChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions, Func<PlogSession, double> Func, SKColor color, int year, int month);
 
-    public Chart generateEmptyLineChart(TimeResolution tr, int year, int month);
+    public Chart GenerateEmptyLineChart(TimeResolution tr, int year, int month);
 
 }

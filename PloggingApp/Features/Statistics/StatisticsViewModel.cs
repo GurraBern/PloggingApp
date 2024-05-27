@@ -1,14 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SkiaSharp;
-using Plogging.Core.Models;
-using Plogging.Core.Enums;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
-using PloggingApp.Services.Statistics;
 using CommunityToolkit.Mvvm.Input;
 using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
+using PlogPal.Domain.Enums;
+using PlogPal.Domain.Models;
+using PlogPal.Maui.Services.Statistics;
 
 namespace PloggingApp.Features.Statistics;
 
@@ -163,10 +162,10 @@ public partial class StatisticsViewModel : BaseViewModel, IAsyncInitialization
     
     private void GetCharts()
     {
-        LitterChart.Chart = _chartService.generateLitterChart(TimeRes, UserSessions);
-        DistanceChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth + 1);
-        WeightChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth + 1);
-        TimeChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth + 1);
+        LitterChart.Chart = _chartService.GenerateLitterChart(TimeRes, UserSessions);
+        DistanceChart.Chart = _chartService.GenerateLineChart(TimeRes, UserSessions, s => s.PloggingData.Distance, DistanceChart.Color, SelectedYear, SelectedMonth + 1);
+        WeightChart.Chart = _chartService.GenerateLineChart(TimeRes, UserSessions, s => s.PloggingData.Weight, WeightChart.Color, SelectedYear, SelectedMonth + 1);
+        TimeChart.Chart = _chartService.GenerateLineChart(TimeRes, UserSessions, s => (s.EndDate - s.StartDate).TotalMinutes, TimeChart.Color, SelectedYear, SelectedMonth + 1);
         Co2savedChart.Chart = _chartService.generateLineChart(TimeRes, UserSessions, s => CO2SavedCalculator.CalculateCO2Saved(s), Co2savedChart.Color, SelectedYear, SelectedMonth + 1);
     }
     [RelayCommand]

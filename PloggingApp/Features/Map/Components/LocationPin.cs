@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.Map.Components;
 

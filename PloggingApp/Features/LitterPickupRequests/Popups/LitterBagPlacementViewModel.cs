@@ -2,9 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
-using Plogging.Core.Models;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Shared;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.LitterPickupRequests;
 

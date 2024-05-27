@@ -1,12 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
-using PloggingApp.Data.Services;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Features.Streak;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Services.PloggingTracking;
 

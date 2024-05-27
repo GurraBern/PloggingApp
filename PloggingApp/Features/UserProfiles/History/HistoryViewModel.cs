@@ -1,14 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Extensions;
-using Plogging.Core.Models;
 using System.Collections.ObjectModel;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Shared;
 using PloggingApp.Features.PloggingSession;
 using PloggingApp.Features.Statistics;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.UserProfiles;
 

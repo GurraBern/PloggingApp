@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using Plogging.Core.Models;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
+using PlogPal.Domain.Models;
 using System.Collections.ObjectModel;
 
 namespace PloggingApp.Features.Statistics;

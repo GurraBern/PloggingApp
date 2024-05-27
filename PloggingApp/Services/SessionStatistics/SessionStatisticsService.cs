@@ -1,6 +1,6 @@
-using Plogging.Core.Models;
 using PloggingApp.Services.SessionStatistics;
 using PloggingApp.Features.Statistics;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Services.Authentication;
 

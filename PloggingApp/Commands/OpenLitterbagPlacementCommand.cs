@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Input;
-using Plogging.Core.Models;
 using PloggingApp.Features.LitterPickupRequests;
+using PlogPal.Domain.Models;
 using System.ComponentModel;
 
 namespace PloggingApp.Commands;

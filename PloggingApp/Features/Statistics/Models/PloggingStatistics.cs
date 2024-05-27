@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.Statistics;
 

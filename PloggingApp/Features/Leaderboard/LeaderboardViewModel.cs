@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
 using PloggingApp.Extensions;
 using System.Collections.ObjectModel;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Shared;
 using PloggingApp.Features.UserProfiles;
+using PlogPal.Domain.Models;
+using Plogging.Core.Enums;
 
 namespace PloggingApp.Features.Leaderboard;
 

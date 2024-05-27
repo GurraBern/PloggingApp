@@ -1,5 +1,5 @@
-﻿using Plogging.Core.Enums;
-using Plogging.Core.Models;
+﻿using PlogPal.Domain.Enums;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.Statistics;
 // Values are based on the findings in "Greenhouse gas emission factors for recycling of source-segregated waste materials"

@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using PloggingApp.Data.Services;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Shared;
 using PloggingApp.Features.Dashboard;
 using PloggingApp.Features.PloggingSession;

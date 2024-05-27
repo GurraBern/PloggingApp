@@ -1,13 +1,11 @@
-﻿using Plogging.Core.Models;
-using System.Collections.ObjectModel;
-using PloggingApp.Data.Services.Interfaces;
+﻿using System.Collections.ObjectModel;
 using PloggingApp.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
-using PloggingApp.Data.Services;
 using CommunityToolkit.Maui.Core;
 using PloggingApp.Shared;
 using PloggingApp.Features.Statistics;
 using PloggingApp.Features.UserProfiles.Badges;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.UserProfiles;
 
@@ -41,7 +39,7 @@ public partial class OthersSessionsViewModel : BaseViewModel, IAsyncInitializati
 
     public Task Initialization { get; private set; }
 
-    public OthersSessionsViewModel(string userId, IPloggingSessionService sessionService, IUserInfoService userInfo, IStreakService streakService, IPopupService popupService)
+    public OthersSessionsViewModel(string userId, IPloggingSessionService sessionService, IUserInfoService userInfo, IStreakService streakService)
     {
         _userId = userId;
         _sessionService = sessionService;

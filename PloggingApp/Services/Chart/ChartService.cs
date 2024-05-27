@@ -1,8 +1,10 @@
 ﻿using Microcharts;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
 using SkiaSharp;
-namespace PloggingApp.Services.Statistics;
+using PlogPal.Domain.Models;
+using PlogPal.Domain.Enums;
+
+namespace PlogPal.Maui.Services.Statistics;
+
 public class ChartService : IChartService
 {
     // TODO reorganize, simplify
@@ -30,10 +32,10 @@ public class ChartService : IChartService
 
     // Split into subfunctions
 
-    public Chart generateLitterChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions)
+    public Chart GenerateLitterChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions)
     {
         if (!sessions.Any() || sessions.All(s => !s.PloggingData.Litters.Any()))
-            return generateEmptyLitterChart();
+            return GenerateEmptyLitterChart();
         Dictionary<LitterType, double> keyValuePairs = sessions
             .SelectMany(x => x.PloggingData.Litters)
             .GroupBy(g => g.LitterType)
@@ -54,7 +56,7 @@ public class ChartService : IChartService
         };
         return graph;
     }
-    private Chart generateEmptyLitterChart()
+    private Chart GenerateEmptyLitterChart()
     {
         var graph = new BarChart()
         {
@@ -71,11 +73,12 @@ public class ChartService : IChartService
         };
         return graph;
     }
-    public Chart generateLineChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions, Func<PlogSession, double> func, SKColor color, int year, int month = 1 )
+
+    public Chart GenerateLineChart(TimeResolution timeResolution, IEnumerable<PlogSession> sessions, Func<PlogSession, double> func, SKColor color, int year, int month = 1 )
     {
         if (!sessions.Any() || sessions.Sum(func) == 0)
         {
-            return generateEmptyLineChart(timeResolution, year, month);
+            return GenerateEmptyLineChart(timeResolution, year, month);
         }
         Dictionary<DateTime, double> distancePerTimePeriod;
         if (timeResolution.Equals(TimeResolution.ThisMonth))
@@ -85,7 +88,7 @@ public class ChartService : IChartService
                     .ToDictionary(
                         group => group.Key,
                         group => group.Sum(func));
-            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
+            return MakeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
         else
         {
@@ -94,10 +97,11 @@ public class ChartService : IChartService
                     .ToDictionary(
                         group => new DateTime(year, group.Key, 1),
                         group => group.Sum(func));
-            return makeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
+            return MakeLineChart(distancePerTimePeriod, timeResolution, color, year, month);
         }
     }
-    private Chart makeLineChart(Dictionary<DateTime, double> dict, TimeResolution timeRes, SKColor color, int year, int month = 1)
+
+    private Chart MakeLineChart(Dictionary<DateTime, double> dict, TimeResolution timeRes, SKColor color, int year, int month = 1)
     {
         Dictionary<string, double> valuePerTimePeriod = new Dictionary<string, double>();
         if(timeRes is TimeResolution.ThisMonth)
@@ -136,7 +140,7 @@ public class ChartService : IChartService
         return lineChart;
     }
 
-    public Chart generateEmptyLineChart(TimeResolution tr, int year, int month)
+    public Chart GenerateEmptyLineChart(TimeResolution tr, int year, int month)
     {
         List<ChartEntry> entries = new List<ChartEntry>();
         if (tr is TimeResolution.ThisYear)

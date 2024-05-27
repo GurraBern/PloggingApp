@@ -1,11 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PloggingApp.Services.Authentication;
 using PloggingApp.Extensions;
-using Plogging.Core.Models;
 using System.Collections.ObjectModel;
-using PloggingApp.Data.Services;
-using PloggingApp.Data.Services.Interfaces;
 using PloggingApp.Features.Leaderboard;
 using PloggingApp.Shared;
 using PloggingApp.Features.Authentication;
@@ -14,6 +10,7 @@ using PloggingApp.Features.Streak;
 using PloggingApp.Features.Statistics;
 using PloggingApp.Features.UserProfiles.Badges;
 using CommunityToolkit.Maui.Core;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.UserProfiles;
 
