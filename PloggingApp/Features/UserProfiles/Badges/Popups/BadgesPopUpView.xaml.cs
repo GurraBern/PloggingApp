@@ -1,14 +1,14 @@
 using CommunityToolkit.Maui.Views;
 
-namespace PloggingApp.Features.UserProfiles.Badges;
+namespace PlogPal.Maui.Features.UserProfiles.Badges;
 
 public partial class BadgesPopUpView : Popup
 {
-	public BadgesPopUpView(BadgesPopUpViewModel vm)
-	{
-		InitializeComponent();
-		BindingContext = vm;
-	}
+    public BadgesPopUpView(/*BadgesPopUpViewModel vm*/)
+    {
+        InitializeComponent();
+        //BindingContext = vm;
+    }
 
     private void BadgeTap(object sender, EventArgs e)
     {
@@ -23,7 +23,5 @@ public partial class BadgesPopUpView : Popup
             });
         }
     }
-
-
-
 }
+

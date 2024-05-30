@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.UserProfiles.HistoryView"
+    x:Class="PlogPal.Maui.Features.UserProfiles.HistoryView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:userProfiles="clr-namespace:PloggingApp.Features.UserProfiles"
-    x:DataType="userProfiles:HistoryViewModel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <RefreshView
         Command="{Binding RefreshCommand}"
@@ -21,7 +18,7 @@
                         HorizontalOptions="Start"
                         Style="{StaticResource SubHeadline}"
                         Text="Recent Sessions"/>
-                    <CollectionView ItemsSource="{Binding PloggingSessions}">
+                    <!--<CollectionView ItemsSource="{Binding PloggingSessions}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="modelsCore:PlogSession">
 
@@ -115,13 +112,13 @@
                                     </Grid>
 
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type userProfiles:HistoryViewModel}}}" CommandParameter="{Binding .}"/>
+                                        --><!--<TapGestureRecognizer Command="{Binding GoToSessionStatsCommand, Source={RelativeSource AncestorType={x:Type userProfiles:HistoryViewModel}}}" CommandParameter="{Binding .}"/>--><!--
                                     </Border.GestureRecognizers>
 
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    </CollectionView>-->
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

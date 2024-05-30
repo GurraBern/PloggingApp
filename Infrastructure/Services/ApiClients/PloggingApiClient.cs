@@ -1,18 +1,18 @@
-﻿using Infrastructure.Services.Interfaces;
+﻿using PlogPal.Application.Common.Interfaces;
 using RestSharp;
 
 namespace Infrastructure.Services.ApiClients;
 
-public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService authService) : IPloggingApiClient<T>
+public class PloggingApiClient<T>(IRestClient restClient, IUserContext userContext) : IPloggingApiClient<T>
 {
     private readonly IRestClient _restClient = restClient;
-    private readonly IAuthenticationService _authService = authService;
+    private readonly IUserContext _userContext = userContext;
 
     public async Task<T> GetAsync(RestRequest request)
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.GetAsync<T>(request);
         }
         catch (Exception ex)
@@ -26,7 +26,7 @@ public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.GetAsync<IEnumerable<T>>(request);
         }
         catch (Exception ex)
@@ -40,7 +40,7 @@ public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.PostAsync<T>(request);
         }
         catch (Exception ex)
@@ -54,7 +54,7 @@ public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.DeleteAsync<T>(request);
         }
         catch (Exception ex)
@@ -68,7 +68,7 @@ public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.PatchAsync<T>(request);
         }
         catch (Exception ex)
@@ -82,7 +82,7 @@ public class PloggingApiClient<T>(IRestClient restClient, IAuthenticationService
     {
         try
         {
-            request.AddHeader("Authorization", $"Bearer {_authService.BearerToken}");
+            request.AddHeader("Authorization", $"Bearer {_userContext.BearerToken}");
             return await _restClient.PutAsync<T>(request);
         }
         catch (Exception ex)

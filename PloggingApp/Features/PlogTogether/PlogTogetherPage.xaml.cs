@@ -1,17 +1,15 @@
-﻿using PloggingApp.Features.Dashboard;
-
-namespace PloggingApp.Features.Plogtogether;
+﻿namespace PlogPal.Maui.Features.Plogtogether;
 
 public partial class PlogTogetherPage : ContentPage
 {
-	public PlogTogetherPage(PlogTogetherViewModel vm)
-	{
+    public PlogTogetherPage(/*PlogTogetherViewModel vm*/)
+    {
         InitializeComponent();
-        BindingContext = vm;
-	}
+        //BindingContext = vm;
+    }
 
     private async void OnNavigateClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
+        //await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
     }
 }

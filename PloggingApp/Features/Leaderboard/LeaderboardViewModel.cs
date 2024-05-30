@@ -1,121 +1,121 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using PloggingApp.Extensions;
-using System.Collections.ObjectModel;
-using PloggingApp.Shared;
-using PloggingApp.Features.UserProfiles;
-using PlogPal.Domain.Models;
-using Plogging.Core.Enums;
+﻿//using CommunityToolkit.Mvvm.ComponentModel;
+//using CommunityToolkit.Mvvm.Input;
+//using PloggingApp.Extensions;
+//using System.Collections.ObjectModel;
+//using PloggingApp.Shared;
+//using PloggingApp.Features.UserProfiles;
+//using PlogPal.Domain.Models;
+//using PlogPal.Common.Enums;
 
-namespace PloggingApp.Features.Leaderboard;
+//namespace PloggingApp.Features.Leaderboard;
 
-public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
-{
-    private readonly IRankingService _rankingService;
-    private readonly IPloggingSessionService _sessionService;
-    private readonly IToastService _toastService;
+//public partial class LeaderboardViewModel : BaseViewModel, IAsyncInitialization
+//{
+//    private readonly IRankingService _rankingService;
+//    private readonly IPloggingSessionService _sessionService;
+//    private readonly IToastService _toastService;
 
-    public ObservableCollection<UserRanking> Rankings { get; set; } = [];
-    public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
-    public SortProperty SelectedSortProperty
-    {
-        get => _selectedSortProperty;
-        set
-        {
-            _selectedSortProperty = value;
-            SortUnit = value.GetUnitOfMeasurement();
+//    public ObservableCollection<UserRanking> Rankings { get; set; } = [];
+//    public SortProperty[] SortProperties { get; set; } = (SortProperty[])Enum.GetValues(typeof(SortProperty));
+//    public SortProperty SelectedSortProperty
+//    {
+//        get => _selectedSortProperty;
+//        set
+//        {
+//            _selectedSortProperty = value;
+//            SortUnit = value.GetUnitOfMeasurement();
 
-            if (RecentRankingCommand != null && RecentRankingCommand.CanExecute(this))
-            {
-                RecentRankingCommand.Execute(this);
-            }
+//            if (RecentRankingCommand != null && RecentRankingCommand.CanExecute(this))
+//            {
+//                RecentRankingCommand.Execute(this);
+//            }
 
-            OnPropertyChanged(nameof(SortUnit));
-            OnPropertyChanged(nameof(SelectedSortProperty));
-        }
-    }
-    private SortProperty _selectedSortProperty;
-    public string SortUnit { get; set; } = "";
-    private IRelayCommand? RecentRankingCommand { get; set; }
-    public Task Initialization { get; private set; }
+//            OnPropertyChanged(nameof(SortUnit));
+//            OnPropertyChanged(nameof(SelectedSortProperty));
+//        }
+//    }
+//    private SortProperty _selectedSortProperty;
+//    public string SortUnit { get; set; } = "";
+//    private IRelayCommand? RecentRankingCommand { get; set; }
+//    public Task Initialization { get; private set; }
 
-    [ObservableProperty]
-    private UserRanking userRank;
+//    [ObservableProperty]
+//    private UserRanking userRank;
 
-    public LeaderboardViewModel(IRankingService rankingService, IToastService toastService)
-    {
-        _rankingService = rankingService;
-        _toastService = toastService;
+//    public LeaderboardViewModel(IRankingService rankingService, IToastService toastService)
+//    {
+//        _rankingService = rankingService;
+//        _toastService = toastService;
 
-        Initialization = InitializeAsync();
-    }
+//        Initialization = InitializeAsync();
+//    }
 
-    private async Task InitializeAsync()
-    {
-        await GetYearlyRankings();
-    }
+//    private async Task InitializeAsync()
+//    {
+//        await GetYearlyRankings();
+//    }
 
-    [RelayCommand]
-    private async Task GetMonthlyRankings()
-    {
-        IsBusy = true;
+//    [RelayCommand]
+//    private async Task GetMonthlyRankings()
+//    {
+//        IsBusy = true;
 
-        await GetRankings(DateTime.UtcNow.FirstDateInMonth(), DateTime.UtcNow.LastDateInMonth(), SelectedSortProperty, GetMonthlyRankingsCommand);
+//        await GetRankings(DateTime.UtcNow.FirstDateInMonth(), DateTime.UtcNow.LastDateInMonth(), SelectedSortProperty, GetMonthlyRankingsCommand);
 
-        IsBusy = false;
-    }
+//        IsBusy = false;
+//    }
 
-    [RelayCommand]
-    private async Task GetYearlyRankings()
-    {
-        IsBusy = true;
+//    [RelayCommand]
+//    private async Task GetYearlyRankings()
+//    {
+//        IsBusy = true;
 
-        await GetRankings(DateTime.UtcNow.FirstDateInYear(), DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetYearlyRankingsCommand);
+//        await GetRankings(DateTime.UtcNow.FirstDateInYear(), DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetYearlyRankingsCommand);
 
-        IsBusy = false;
-    }
+//        IsBusy = false;
+//    }
 
-    [RelayCommand]
-    private async Task GetAllTimeRankings()
-    {
-        IsBusy = true;
+//    [RelayCommand]
+//    private async Task GetAllTimeRankings()
+//    {
+//        IsBusy = true;
 
-        await GetRankings(DateTime.MinValue, DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetAllTimeRankingsCommand);
+//        await GetRankings(DateTime.MinValue, DateTime.UtcNow.LastDateInYear(), SelectedSortProperty, GetAllTimeRankingsCommand);
 
-        IsBusy = false;
-    }
+//        IsBusy = false;
+//    }
 
-    private async Task GetRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty, IAsyncRelayCommand command)
-    {
-        RecentRankingCommand = command;
+//    private async Task GetRankings(DateTime startDate, DateTime endDate, SortProperty sortProperty, IAsyncRelayCommand command)
+//    {
+//        RecentRankingCommand = command;
 
-        var userRankings = await _rankingService.GetUserRankings(startDate, endDate, sortProperty);
-        if (!userRankings.Any())
-        {
-            await _toastService.MakeToast("Could not fetch user rankings");
-        }
+//        var userRankings = await _rankingService.GetUserRankings(startDate, endDate, sortProperty);
+//        if (!userRankings.Any())
+//        {
+//            await _toastService.MakeToast("Could not fetch user rankings");
+//        }
 
-        Rankings.ClearAndAddRange(userRankings);
-        UserRank = _rankingService.UserRank;
-    }
+//        Rankings.ClearAndAddRange(userRankings);
+//        UserRank = _rankingService.UserRank;
+//    }
 
-    [RelayCommand]
-    public void SearchUsers(string userName)
-    {
-        if (!userName.Equals(""))
-        {
-            var searchResults = _rankingService.UserRankings.Where(x => x.DisplayName != null && x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
-            Rankings.ClearAndAddRange(searchResults);
-        }
-        else
-        {
-            Rankings.ClearAndAddRange(_rankingService.UserRankings);
-        }
-    }
+//    [RelayCommand]
+//    public void SearchUsers(string userName)
+//    {
+//        if (!userName.Equals(""))
+//        {
+//            var searchResults = _rankingService.UserRankings.Where(x => x.DisplayName != null && x.DisplayName.Contains(userName, StringComparison.InvariantCultureIgnoreCase));
+//            Rankings.ClearAndAddRange(searchResults);
+//        }
+//        else
+//        {
+//            Rankings.ClearAndAddRange(_rankingService.UserRankings);
+//        }
+//    }
 
-    [RelayCommand]
-    private async Task GoToProfilePage(string userId)
-    {
-        await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}?UserId={userId}");
-    }
-}
+//    [RelayCommand]
+//    private async Task GoToProfilePage(string userId)
+//    {
+//        await Shell.Current.GoToAsync($"{nameof(OthersProfilePage)}?UserId={userId}");
+//    }
+//}

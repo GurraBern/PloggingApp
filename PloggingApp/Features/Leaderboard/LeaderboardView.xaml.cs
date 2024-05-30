@@ -1,4 +1,4 @@
-namespace PloggingApp.Features.Leaderboard;
+namespace PlogPal.Maui.Features.Leaderboard;
 
 public partial class LeaderboardView : ContentView
 {
@@ -9,12 +9,12 @@ public partial class LeaderboardView : ContentView
 
     private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
-        var vm = (LeaderboardViewModel) BindingContext;
+        //var vm = (LeaderboardViewModel)BindingContext;
 
-        if(vm != null && searchBar.Text.Length == 0)
-        {
-            vm.SearchUsers(searchBar.Text);
-        }
+        //if (vm != null && searchBar.Text.Length == 0)
+        //{
+        //    vm.SearchUsers(searchBar.Text);
+        //}
     }
 
     private void GridTap(object sender, EventArgs e)

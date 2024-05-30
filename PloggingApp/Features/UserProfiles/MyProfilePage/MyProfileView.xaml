@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.UserProfiles.MyProfileView"
+    x:Class="PlogPal.Maui.Features.UserProfiles.MyProfileView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:badgeFeature="clr-namespace:PloggingApp.Features.UserProfiles.Badges"
-    xmlns:converters="clr-namespace:PloggingApp.Converters"
-    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:streak="clr-namespace:PloggingApp.Features.Streak"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.UserProfiles"
-    x:DataType="viewmodel:MyProfileViewModel">
+    xmlns:converters="clr-namespace:PloggingApp.Converters">
 
     <ContentView.Resources>
         <converters:FirstTwoCharsConverter x:Key="FirstTwoCharsConverter"/>
@@ -89,7 +84,7 @@
 
                 </Border>
 
-                <Border HeightRequest="80" Style="{StaticResource RoundBorder}">
+                <!--<Border HeightRequest="80" Style="{StaticResource RoundBorder}">
                     <Grid ColumnDefinitions="*" RowDefinitions="*">
                         <badgeFeature:BadgesView
                             Grid.Row="0"
@@ -97,7 +92,7 @@
                             Margin="0,-20,0,0"
                             BindingContext="{Binding BadgesViewModel}"/>
                     </Grid>
-                </Border>
+                </Border>-->
 
                 <Border Style="{StaticResource RoundBorder}">
                     <StackLayout
@@ -172,7 +167,7 @@
                             </Grid.ColumnDefinitions>
 
 
-                            <CollectionView
+                            <!--<CollectionView
                                 x:Name="collectionView"
                                 Grid.Column="0"
                                 ItemsLayout="HorizontalList"
@@ -222,7 +217,7 @@
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                            </CollectionView>
+                            </CollectionView>-->
 
 
                             <ImageButton

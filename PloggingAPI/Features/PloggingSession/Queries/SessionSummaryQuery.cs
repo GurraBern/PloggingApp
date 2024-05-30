@@ -1,4 +1,5 @@
-﻿using Plogging.Core.Enums;
+﻿
+using PlogPal.Common.Enums;
 
 namespace PloggingAPI.Features.PloggingSession;
 

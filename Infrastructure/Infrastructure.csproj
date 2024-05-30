@@ -7,14 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.25.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
-    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="RestSharp" Version="111.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PlogPal.Application\PlogPal.Application.csproj" />
     <ProjectReference Include="..\PlogPal.Common\PlogPal.Common.csproj" />
-    <ProjectReference Include="..\PlogPal.Domain\PlogPal.Domain.csproj" />
   </ItemGroup>
 
 </Project>

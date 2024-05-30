@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Services.ApiClients;
 using Infrastructure.Services.Interfaces;
-using Plogging.Core.Models;
+using PlogPal.Application.Common.Interfaces;
+using PlogPal.Domain.Models;
 using RestSharp;
 
 namespace Infrastructure.Services;
@@ -8,12 +9,12 @@ namespace Infrastructure.Services;
 public class StreakService : IStreakService
 {
     private readonly IPloggingApiClient<UserStreak> _ploggingApiClient;
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IUserContext _userContext;
 
-    public StreakService(IPloggingApiClient<UserStreak> ploggingApiClient, IAuthenticationService authenticationService)
+    public StreakService(IPloggingApiClient<UserStreak> ploggingApiClient, IUserContext userContext)
     {
         _ploggingApiClient = ploggingApiClient;
-        _authenticationService = authenticationService;
+        _userContext = userContext;
     }
 
     public async Task<UserStreak> GetUserStreak(string id)
@@ -38,7 +39,7 @@ public class StreakService : IStreakService
     {
         try
         {
-            var request = new RestRequest($"api/Streak/ResetStreak/{_authenticationService.UserId}");
+            var request = new RestRequest($"api/Streak/ResetStreak/{_userContext.UserId}");
 
             await _ploggingApiClient.PatchAsync(request);
         }

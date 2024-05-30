@@ -1,6 +1,8 @@
-﻿using Infrastructure.Services.ApiClients;
+﻿using Infrastructure.Factories;
+using Infrastructure.Services.ApiClients;
 using Infrastructure.Services.Interfaces;
-using Plogging.Core.Enums;
+using PlogPal.Application.Common.Interfaces;
+using PlogPal.Common.Enums;
 using PlogPal.Domain.Models;
 
 namespace PloggingApp.Features.Leaderboard;
@@ -8,15 +10,16 @@ namespace PloggingApp.Features.Leaderboard;
 public class RankingService : IRankingService
 {
     private readonly IPloggingApiClient<PlogSession> _ploggingApiClient;
+    private readonly IUserContext _userContext;
     private readonly IAuthenticationService _authenticationService;
 
     public UserRanking UserRank { get; set; } = UserRanking.CreateDefault();
     public IEnumerable<UserRanking> UserRankings { get; private set; } = [];
 
-    public RankingService(IPloggingApiClient<PlogSession> ploggingApiClient, IAuthenticationService authenticationService)
+    public RankingService(IPloggingApiClient<PlogSession> ploggingApiClient, IUserContext userContext)
     {
         _ploggingApiClient = ploggingApiClient;
-        _authenticationService = authenticationService;
+        _userContext = userContext;
     }
 
     public async Task InitializeAsync()
@@ -49,7 +52,7 @@ public class RankingService : IRankingService
                 rankings.Add(userRank);
             }
 
-            UserRank = rankings.FirstOrDefault(user => user.Id.Equals(_authenticationService.UserId, StringComparison.InvariantCultureIgnoreCase));
+            UserRank = rankings.FirstOrDefault(user => user.Id.Equals(_userContext.UserId, StringComparison.InvariantCultureIgnoreCase));
 
             UserRankings = rankings;
 

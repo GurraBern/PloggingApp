@@ -3,12 +3,8 @@
     x:Class="PloggingApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:authentication="clr-namespace:PloggingApp.Features.Authentication"
-    xmlns:dashboard="clr-namespace:PloggingApp.Features.Dashboard"
-    xmlns:leaderboard="clr-namespace:PloggingApp.Features.Leaderboard"
-    xmlns:plogtogether="clr-namespace:PloggingApp.Features.Plogtogether"
-    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
-    xmlns:userProfile="clr-namespace:PloggingApp.Features.UserProfiles"
+    xmlns:authentication="clr-namespace:PlogPal.Maui.Features.Authentication"
+    xmlns:dashboard="clr-namespace:PlogPal.Maui.Features.Dashboard"
     Title="PloggingApp"
     BackgroundColor="{StaticResource Primary}"
     Shell.FlyoutBehavior="Disabled"
@@ -30,7 +26,7 @@
             ContentTemplate="{DataTemplate dashboard:DashboardPage}"
             Icon="map_icon.png"
             Route="DashboardPage"/>
-        <ShellContent
+        <!--<ShellContent
             Title="Rankings"
             ContentTemplate="{DataTemplate leaderboard:LeaderboardPage}"
             Icon="leaderboard.png"
@@ -45,10 +41,10 @@
             Title="Profile"
             ContentTemplate="{DataTemplate userProfile:MyProfilePage}"
             Icon="user.png"
-            Route="Profile"/>
+            Route="Profile"/>-->
     </TabBar>
 
-    <ShellContent
+    <!--<ShellContent
         Title="Scan QR code"
         ContentTemplate="{DataTemplate plogtogether:ScanQRcodePage}"
         Route="ScanQRcodePage"/>
@@ -63,6 +59,6 @@
     <ShellContent
         Title="HistoryPage"
         ContentTemplate="{DataTemplate userProfile:HistoryPage}"
-        Route="HistoryPage"/>
+        Route="HistoryPage"/>-->
 
 </Shell> 

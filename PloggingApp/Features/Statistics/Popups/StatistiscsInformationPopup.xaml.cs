@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui.Views;
 
-namespace PloggingApp.Features.Statistics;
+namespace PlogPal.Maui.Features.Statistics;
 
 public partial class StatisticsInformationPopup : Popup
 {

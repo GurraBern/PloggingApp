@@ -1,20 +1,20 @@
-﻿namespace PloggingApp.Features.UserProfiles;
+﻿namespace PlogPal.Maui.Features.UserProfiles;
 
 public partial class OthersProfilePage : ContentPage
 {
-    private readonly OthersProfilePageViewModel vm;
+    //private readonly OthersProfilePageViewModel vm;
 
-    public OthersProfilePage(OthersProfilePageViewModel vm)
+    public OthersProfilePage(/*OthersProfilePageViewModel vm*/)
     {
         InitializeComponent();
-        BindingContext = vm;
-        this.vm = vm;
+        //BindingContext = vm;
+        //this.vm = vm;
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        vm.InitializeComponents();
+        //vm.InitializeComponents();
     }
 
     //TODO change from obsolete

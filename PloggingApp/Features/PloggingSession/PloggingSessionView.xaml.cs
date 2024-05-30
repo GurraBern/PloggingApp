@@ -1,12 +1,12 @@
-namespace PloggingApp.Features.PloggingSession;
+namespace PlogPal.Maui.Features.PloggingSession;
 
 public partial class PloggingSessionView : ContentView
 {
     private bool isOpened = false;
 
-	public PloggingSessionView()
-	{
-		InitializeComponent();
+    public PloggingSessionView()
+    {
+        InitializeComponent();
 
         menuActions.IsEnabled = false;
     }

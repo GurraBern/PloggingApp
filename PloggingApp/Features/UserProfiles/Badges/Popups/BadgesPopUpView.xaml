@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup
-    x:Class="PloggingApp.Features.UserProfiles.Badges.BadgesPopUpView"
+    x:Class="PlogPal.Maui.Features.UserProfiles.Badges.BadgesPopUpView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:badgeFeature="clr-namespace:PloggingApp.Features.UserProfiles.Badges"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:DataType="badgeFeature:BadgesPopUpViewModel"
     CanBeDismissedByTappingOutsideOfPopup="True"
     Size="450,500"
     Color="white">
+
     <VerticalStackLayout>
         <Image
             Margin="380,0,0,0"
@@ -23,7 +22,7 @@
                     Tapped="BadgeTap"/>
             </Image.GestureRecognizers>
         </Image>
-        <CollectionView ItemsLayout="VerticalGrid, 5" ItemsSource="{Binding Badges}">
+        <!--<CollectionView ItemsLayout="VerticalGrid, 5" ItemsSource="{Binding Badges}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="badgeFeature:Badge">
                     <Grid Padding="2">
@@ -60,6 +59,6 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+        </CollectionView>-->
     </VerticalStackLayout>
 </toolkit:Popup>

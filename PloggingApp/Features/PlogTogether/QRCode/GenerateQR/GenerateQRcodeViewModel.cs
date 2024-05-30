@@ -1,15 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿//using CommunityToolkit.Mvvm.Input;
+//using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PloggingApp.Features.Plogtogether;
+//namespace PloggingApp.Features.Plogtogether;
 
-[QueryProperty(nameof(UserId), nameof(UserId))]
-public partial class GenerateQRcodeViewModel : ObservableObject 
-{
-	[ObservableProperty]
-	private string userId;
+//[QueryProperty(nameof(UserId), nameof(UserId))]
+//public partial class GenerateQRcodeViewModel : ObservableObject 
+//{
+//	[ObservableProperty]
+//	private string userId;
 
-	[RelayCommand]
-	private static async Task GoBack() => await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
-}
+//	[RelayCommand]
+//	private static async Task GoBack() => await Shell.Current.GoToAsync(nameof(PlogTogetherPage));
+//}
 

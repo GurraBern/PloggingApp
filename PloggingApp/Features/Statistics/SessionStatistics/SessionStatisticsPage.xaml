@@ -4,9 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converter="clr-namespace:PloggingApp.Converters"
-    xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
-    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
-    x:DataType="statistics:SessionStatisticsViewModel">
+    xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui">
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
@@ -57,7 +55,7 @@
             </HorizontalStackLayout>
             <!--  MapView  -->
             <Border Padding="0" Style="{StaticResource RoundBorder}">
-                <statistics:SessionStatsMapView BindingContext="{Binding SessionStatsMapViewModel}"/>
+                <!--<statistics:SessionStatsMapView BindingContext="{Binding SessionStatsMapViewModel}"/>-->
             </Border>
             <!--  Chart  -->
             <Border Style="{StaticResource RoundBorder}">

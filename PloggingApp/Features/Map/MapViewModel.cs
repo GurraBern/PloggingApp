@@ -1,30 +1,32 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using PloggingApp.Commands;
 using PloggingApp.Features.LitterPickupRequests;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
-using PloggingApp.Shared;
+using PlogPal.Maui.Commands;
 using PlogPal.Domain.Models;
+using PlogPal.Maui.Shared;
 using System.Collections.ObjectModel;
+using PlogPal.Application.Common.Interfaces;
 
 namespace PloggingApp.Features.Map;
 
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>, IRecipient<LitterbagPickedUpMessage>
 {
     private readonly ILitterLocationService _litterLocationService;
-    private readonly ILitterbagPlacementService _litterbagPlacementService;
+    //private readonly ILitterLocationService _litterLocationService;
+    //private readonly ILitterbagPlacementService _litterbagPlacementService;
     private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
 
     public Task Initialization { get; private set; }
 
-    public MapViewModel(ILitterLocationService litterLocationService, ILitterbagPlacementService litterbagPlacementService, IPopupService popupService, IToastService toastService)
+    public MapViewModel(ILitterLocationService litterLocationService/*, ILitterbagPlacementService litterbagPlacementService*/, IPopupService popupService, IToastService toastService)
     {
         _litterLocationService = litterLocationService;
-        _litterbagPlacementService = litterbagPlacementService;
+        //_litterbagPlacementService = litterbagPlacementService;
         _popupService = popupService;
         _toastService = toastService;
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
@@ -50,27 +52,27 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         }
     }
 
-    private void PlaceTrashPin(MapPoint location)
+    private void PlaceTrashPin(PlogPal.Domain.Models.Location location)
     {
         PlacedPins.Add(new CollectedLitterPin()
         {
             Label = "Litter",
-            Location = new Location()
+            Location = new Microsoft.Maui.Devices.Sensors.Location()
             {
                 Latitude = location.Latitude,
-                Longitude = location.Longitude 
+                Longitude = location.Longitude
             }
         });
     }
 
     private async Task AddLitterBagPlacementsToMap()
     {
-        var litterbagPlacements = await Task.Run(_litterbagPlacementService.GetLitterbagPlacements);
+        //var litterbagPlacements = await Task.Run(_litterbagPlacementService.GetLitterbagPlacements);
 
-        foreach (var litterbagPlacement in litterbagPlacements)
-        {
-            PlaceLitterbag(litterbagPlacement);
-        }
+        //foreach (var litterbagPlacement in litterbagPlacements)
+        //{
+        //    PlaceLitterbag(litterbagPlacement);
+        //}
     }
 
     private void PlaceLitterbag(LitterbagPlacement litterbagPlacement)
@@ -82,7 +84,7 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
         {
             MarkerId = litterbagPlacement.Id,
             Label = "Pickup Trashbag",
-            Location = new Location()
+            Location = new Microsoft.Maui.Devices.Sensors.Location()
             {
                 Latitude = location.Latitude,
                 Longitude = location.Longitude
@@ -98,9 +100,9 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
     }
 
     public void Receive(LitterBagPlacedMessage message)
-	{
+    {
         PlaceLitterbag(message.LitterbagPlacement);
-	}
+    }
 
     public void Receive(LitterbagPickedUpMessage message)
     {

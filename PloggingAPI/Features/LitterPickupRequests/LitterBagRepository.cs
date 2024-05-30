@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 using PloggingAPI.Models;
 
 namespace PloggingAPI.Features.LitterPickupRequests;

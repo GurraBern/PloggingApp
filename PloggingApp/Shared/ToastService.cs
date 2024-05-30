@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 
-namespace PloggingApp.Shared;
+namespace PlogPal.Maui.Shared;
 
 public class ToastService : IToastService
 {

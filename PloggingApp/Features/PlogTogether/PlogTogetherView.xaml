@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.Plogtogether.PlogTogetherView"
+    x:Class="PlogPal.Maui.Features.Plogtogether.PlogTogetherView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:plogtogether="clr-namespace:PloggingApp.Features.Plogtogether"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:DataType="plogtogether:PlogTogetherViewModel">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <CollectionView ItemsSource="{Binding Group}">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
         </CollectionView.ItemsLayout>
 
-        <CollectionView.ItemTemplate>
+        <!--<CollectionView.ItemTemplate>
             <DataTemplate x:DataType="plogtogether:PlogUser">
                 <Border Padding="10" Style="{StaticResource RoundBorder}">
                     <Grid ColumnDefinitions="*,*">
@@ -32,6 +30,6 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-        </CollectionView.ItemTemplate>
+        </CollectionView.ItemTemplate>-->
     </CollectionView>
 </ContentView>

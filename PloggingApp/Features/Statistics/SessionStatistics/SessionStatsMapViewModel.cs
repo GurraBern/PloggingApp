@@ -10,7 +10,7 @@ namespace PloggingApp.Features.Statistics;
 public partial class SessionStatsMapViewModel : ObservableObject
 { 
     public ObservableCollection<LocationPin> TrashPins { get; set; } = [];
-    public ObservableCollection<MapPoint> LocationPins { get; set; } = [];
+    public ObservableCollection<PlogPal.Domain.Models.Location> LocationPins { get; set; } = [];
 
 
 
@@ -25,7 +25,7 @@ public partial class SessionStatsMapViewModel : ObservableObject
      {
         PloggingSession = ploggingSession;
         PlaceTrashPins();
-        LocationPins = new ObservableCollection<MapPoint>(ploggingSession.PloggingRoute);
+        LocationPins = new ObservableCollection<PlogPal.Domain.Models.Location>(ploggingSession.PloggingRoute);
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(true, []));
     }
 
@@ -36,7 +36,7 @@ public partial class SessionStatsMapViewModel : ObservableObject
             TrashPins.Add(new CollectedLitterPin()
             {
                 Label = "Litter",
-                Location = new Location()
+                Location = new Microsoft.Maui.Devices.Sensors.Location()
                 {
                     Latitude = location.LitterLocation.Latitude,
                     Longitude = location.LitterLocation.Longitude

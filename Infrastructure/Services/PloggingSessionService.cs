@@ -1,15 +1,15 @@
-﻿using Infrastructure.Services.ApiClients;
+﻿using Infrastructure.Interfaces;
+using Infrastructure.Services.ApiClients;
 using Infrastructure.Services.Interfaces;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 using RestSharp;
 
 namespace Infrastructure.Services;
 
-public class PloggingSessionService(IPloggingApiClient<PlogSession> ploggingApiClient, IPloggingImageService ploggingImageService, IToastService toastService) : IPloggingSessionService
+public class PloggingSessionService(IPloggingApiClient<PlogSession> ploggingApiClient, IPloggingImageService ploggingImageService) : IPloggingSessionService
 {
     private readonly IPloggingApiClient<PlogSession> _ploggingApiClient = ploggingApiClient;
     private readonly IPloggingImageService _ploggingImageService = ploggingImageService;
-    private readonly IToastService _toastService = toastService;
 
     public async Task SavePloggingSession(PlogSession ploggingSession)
     {
@@ -25,7 +25,7 @@ public class PloggingSessionService(IPloggingApiClient<PlogSession> ploggingApiC
         }
         catch (Exception ex)
         {
-            await _toastService.MakeToast("Could not save plogging session");
+            //await _toastService.MakeToast("Could not save plogging session");
         }
     }
 
@@ -43,7 +43,7 @@ public class PloggingSessionService(IPloggingApiClient<PlogSession> ploggingApiC
         }
         catch (Exception)
         {
-            await _toastService.MakeToast("Could not fetch user sessions");
+            //await _toastService.MakeToast("Could not fetch user sessions");
 
             return [];
         }

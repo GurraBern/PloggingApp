@@ -1,6 +1,6 @@
-﻿using Plogging.Core.Models;
+﻿using PlogPal.Domain.Models;
 
-namespace Infrastructure.Services.Interfaces;
+namespace Infrastructure.Interfaces;
 
 public interface IPloggingImageService
 {

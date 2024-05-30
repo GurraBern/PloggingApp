@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.Map.MapView"
+    x:Class="PlogPal.Maui.Features.Map.MapView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:components="clr-namespace:PloggingApp.Features.Map.Components"
     xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
-    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.Map"
-    x:DataType="viewmodel:MapViewModel">
+    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials">
 
     <maps:Map
         x:Name="PloggingMap"

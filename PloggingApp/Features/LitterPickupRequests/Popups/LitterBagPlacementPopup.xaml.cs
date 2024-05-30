@@ -1,17 +1,17 @@
 using CommunityToolkit.Maui.Views;
 
-namespace PloggingApp.Features.LitterPickupRequests;
+namespace PlogPal.Maui.Features.LitterPickupRequests;
 
 public partial class LitterbagPlacementPopup : Popup
 {
-	public LitterbagPlacementPopup(LitterbagPlacementViewModel vm)
+	public LitterbagPlacementPopup(/*LitterbagPlacementViewModel vm*/)
 	{
-		InitializeComponent();
-		BindingContext = vm;
+		//InitializeComponent();
+		//BindingContext = vm;
 	}
 
-    private void ClosePopup(object sender, EventArgs e)
-    {
-        Close();
-    }
+	private void ClosePopup(object sender, EventArgs e)
+	{
+		Close();
+	}
 }

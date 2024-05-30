@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="PloggingApp.Features.PloggingSession.CheckoutImagePage"
+    x:Class="PlogPal.Maui.Features.PloggingSession.CheckoutImagePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:ploggingSessionFeature="clr-namespace:PloggingApp.Features.PloggingSession"
-    x:DataType="ploggingSessionFeature:CheckoutImageViewModel">
+    xmlns:ploggingSessionFeature="clr-namespace:PloggingApp.Features.PloggingSession">
 
     <Grid Padding="30">
         <Grid.RowDefinitions>

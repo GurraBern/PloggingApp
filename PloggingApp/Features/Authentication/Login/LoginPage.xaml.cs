@@ -1,7 +1,9 @@
-﻿namespace PloggingApp.Features.Authentication;
+﻿using PloggingApp.Features.Authentication;
+
+namespace PlogPal.Maui.Features.Authentication;
 
 public partial class LoginPage : ContentPage
-{    
+{
     public LoginPage(LoginViewModel vm)
     {
         InitializeComponent();

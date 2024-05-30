@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.PloggingSession.AddLitter"
+    x:Class="PlogPal.Maui.Features.PloggingSession.AddLitter"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:enumCore="clr-namespace:Plogging.Core.Enums;assembly=Plogging.Core"
-    xmlns:ploggingsession="clr-namespace:PloggingApp.Features.PloggingSession"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.PloggingSession"
-    x:DataType="viewmodel:AddLitterViewModel">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"> 
 
     <Border HeightRequest="250" Stroke="Transparent">
         <Grid IsVisible="{Binding IsTracking}">
@@ -35,7 +31,7 @@
                 </ImageButton.Behaviors>
             </ImageButton>
 
-            <ploggingsession:LitterTypeButton
+            <!--<ploggingsession:LitterTypeButton
                 Grid.Row="0"
                 Grid.Column="1"
                 BackgroundColor="#8865f1"
@@ -89,8 +85,8 @@
                 HorizontalOptions="End"
                 ImageSource="broken_glass_icon.png"
                 Text="Glass"
-                WidthRequest="80"/>
-            <ploggingsession:LitterTypeButton
+                WidthRequest="80"/>-->
+            <!--<ploggingsession:LitterTypeButton
                 Grid.Row="2"
                 Grid.Column="2"
                 BackgroundColor="#bc3434"
@@ -100,7 +96,7 @@
                 HorizontalOptions="End"
                 ImageSource="snus_icon.png"
                 Text="Snus"
-                WidthRequest="80"/>
+                WidthRequest="80"/>-->
         </Grid>
     </Border>
 </ContentView>

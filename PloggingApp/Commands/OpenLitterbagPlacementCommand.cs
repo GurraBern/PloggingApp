@@ -4,7 +4,7 @@ using PloggingApp.Features.LitterPickupRequests;
 using PlogPal.Domain.Models;
 using System.ComponentModel;
 
-namespace PloggingApp.Commands;
+namespace PlogPal.Maui.Commands;
 
 public class OpenLitterbagPlacementCommand : IAsyncRelayCommand
 {
@@ -33,11 +33,11 @@ public class OpenLitterbagPlacementCommand : IAsyncRelayCommand
         var request = new GeolocationRequest(GeolocationAccuracy.Best);
         var currentLocation = await Geolocation.GetLocationAsync(request);
 
-        await _popupService.ShowPopupAsync<LitterbagPlacementViewModel>(onPresenting: viewModel =>
-        {
-            viewModel.LitterbagPlacement = _litterbagPlacement;
-            viewModel.CalculateDistance(currentLocation);
-        });
+        //await _popupService.ShowPopupAsync<LitterbagPlacementViewModel>(onPresenting: viewModel =>
+        //{
+        //    viewModel.LitterbagPlacement = _litterbagPlacement;
+        //    viewModel.CalculateDistance(currentLocation);
+        //});
     }
 
     public void Cancel()

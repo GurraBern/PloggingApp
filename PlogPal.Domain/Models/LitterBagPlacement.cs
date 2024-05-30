@@ -9,7 +9,7 @@ public class LitterbagPlacement
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
-    public MapPoint Location { get; set; }
+    public Location Location { get; set; }
     public DateTime PlacementDate { get; set; }
     public string ImageUrl {  get; set; }
 }

@@ -1,9 +1,9 @@
-﻿namespace PloggingApp.Features.Plogtogether;
+﻿//namespace PloggingApp.Features.Plogtogether;
 
-public partial class PlogTogetherView : ContentView
-{
-	public PlogTogetherView()
-	{
-		InitializeComponent();
-	}
-}
+//public partial class PlogTogetherView : ContentView
+//{
+//	public PlogTogetherView()
+//	{
+//		InitializeComponent();
+//	}
+//}

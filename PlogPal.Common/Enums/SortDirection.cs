@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Plogging.Core.Enums;
+namespace PlogPal.Common.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortDirection

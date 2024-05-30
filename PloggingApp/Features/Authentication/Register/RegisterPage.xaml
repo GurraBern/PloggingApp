@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="PloggingApp.Features.Authentication.RegisterPage"
+    x:Class="PlogPal.Maui.Features.Authentication.RegisterPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.Authentication"
-    x:DataType="viewmodel:AuthenticationViewModel"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">

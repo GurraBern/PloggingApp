@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.Features.UserProfiles;
+﻿namespace PlogPal.Maui.Features.UserProfiles;
 
 public partial class OthersSessionsView : ContentView
 {

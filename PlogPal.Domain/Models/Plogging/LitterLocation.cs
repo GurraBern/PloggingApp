@@ -10,9 +10,9 @@ public class LitterLocation
     public string? Id { get; set; }
     public LitterType LitterType { get; set; }
     public double Weight { get; set; }
-    public MapPoint Location { get; set; }
+    public Location Location { get; set; }
 
-    public LitterLocation(LitterType litterType, double weight, MapPoint location)
+    public LitterLocation(LitterType litterType, double weight, Location location)
     {
         LitterType = litterType;
         Weight = weight;

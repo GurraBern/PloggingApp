@@ -13,7 +13,7 @@ public class PlogSession
     public DateTime EndDate { get; set; } = DateTime.UtcNow;
     public required string UserId { get; set; }
     public PloggingData PloggingData { get; set; } = new();
-    public List<MapPoint> PloggingRoute { get; set; } = [];
+    public List<Location> PloggingRoute { get; set; } = [];
     public string Image { get; set; }
 }
 

@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="PloggingApp.Features.Plogtogether.GenerateQRcodePage"
+    x:Class="PlogPal.Maui.Features.Plogtogether.GenerateQRcodePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.Plogtogether"
     xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
-    Title="GenerateQRcodePage"
-    x:DataType="viewmodel:GenerateQRcodeViewModel">
+    Title="GenerateQRcodePage">
+    
     <Grid
         Padding="20"
         RowDefinitions="Auto,*"

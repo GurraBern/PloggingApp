@@ -93,23 +93,21 @@
 
 	<ItemGroup>
 		<PackageReference Include="AsyncAwaitBestPractices" Version="7.0.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
-		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.1" />
-		<PackageReference Include="CommunityToolkit.Maui.Maps" Version="2.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="9.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Maps" Version="2.0.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Geolocator.Plugin" Version="1.0.2" />
 		<PackageReference Include="Microcharts.Maui" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.6" />
-		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.6" />
-		<PackageReference Include="RestSharp" Version="110.2.0" />
-		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
-		<PackageReference Include="Syncfusion.Maui.Charts" Version="24.2.9" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.40" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+		<PackageReference Include="Syncfusion.Maui.Charts" Version="25.2.6" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 	</ItemGroup>
@@ -217,8 +215,7 @@
 	  <MauiImage Include="Resources\AppIcon\raccoon.svg" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 	  <ProjectReference Include="..\PlogPal.Application\PlogPal.Application.csproj" />
-	  <ProjectReference Include="..\PlogPal.Common\PlogPal.Common.csproj" />
-	  <ProjectReference Include="..\PlogPal.Domain\PlogPal.Domain.csproj" />
 	</ItemGroup>
 </Project>

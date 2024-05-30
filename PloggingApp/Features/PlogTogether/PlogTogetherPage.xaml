@@ -1,12 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="PloggingApp.Features.Plogtogether.PlogTogetherPage"
+    x:Class="PlogPal.Maui.Features.Plogtogether.PlogTogetherPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:PloggingApp.Converters"
-    xmlns:plogtogether="clr-namespace:PloggingApp.Features.Plogtogether"
     Title="PlogTogetherPage"
-    x:DataType="plogtogether:PlogTogetherViewModel"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
@@ -75,7 +73,7 @@
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate>
+            <!--<CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="plogtogether:PlogUser">
                     <Border Padding="10" Style="{StaticResource RoundBorder}">
                         <Grid ColumnDefinitions="*,*">
@@ -96,7 +94,7 @@
                         </Grid>
                     </Border>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
+            </CollectionView.ItemTemplate>-->
         </CollectionView>
 
         <Button

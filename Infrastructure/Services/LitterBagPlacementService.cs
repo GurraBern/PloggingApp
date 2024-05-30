@@ -1,6 +1,7 @@
-﻿using Infrastructure.Services.ApiClients;
+﻿using Infrastructure.Interfaces;
+using Infrastructure.Services.ApiClients;
 using Infrastructure.Services.Interfaces;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 using RestSharp;
 
 namespace Infrastructure.Services;

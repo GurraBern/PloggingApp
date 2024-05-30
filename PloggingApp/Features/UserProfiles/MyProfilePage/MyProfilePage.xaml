@@ -1,28 +1,23 @@
 <ContentPage
-    x:Class="PloggingApp.Features.UserProfiles.MyProfilePage"
+    x:Class="PlogPal.Maui.Features.UserProfiles.MyProfilePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:badgeFeature="clr-namespace:PloggingApp.Features.UserProfiles.Badges"
-    xmlns:modelsCore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:userProfileFeature="clr-namespace:PloggingApp.Features.UserProfiles"
-    xmlns:viewmodel="clr-namespace:PloggingApp.Features.UserProfiles"
-    xmlns:views="clr-namespace:PloggingApp.Features.UserProfiles"
-    Title="My Profile"
-    x:DataType="viewmodel:MyProfilePageViewModel">
+    Title="My Profile">
 
     <VerticalStackLayout Padding="15" Spacing="20">
-        <userProfileFeature:ProfileInfoView BindingContext="{Binding ProfileInfoViewModel}"/>
+        <!--<userProfileFeature:ProfileInfoView BindingContext="{Binding ProfileInfoViewModel}"/>-->
 
         <Border Style="{StaticResource RoundBorder}">
-            <badgeFeature:BadgesView BindingContext="{Binding BadgesViewModel}"/>
+            <!--<badgeFeature:BadgesView BindingContext="{Binding BadgesViewModel}"/>-->
         </Border>
 
-        <!--  Monthly Plogging Statistics  -->
+          <!--Monthly Plogging Statistics-->  
         <Border Style="{StaticResource RoundBorder}">
             <StackLayout
                 Margin="0,10"
                 HeightRequest="90"
                 Orientation="Vertical">
+
                 <Label
                     Margin="10,5"
                     FontSize="Medium"
@@ -86,7 +81,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <CollectionView
+                    <!--<CollectionView
                         x:Name="collectionView"
                         Grid.Column="0"
                         ItemsLayout="HorizontalList"
@@ -135,7 +130,7 @@
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    </CollectionView>-->
 
                     <ImageButton
                         Grid.Column="1"

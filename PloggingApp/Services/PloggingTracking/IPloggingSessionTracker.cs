@@ -1,4 +1,5 @@
 ﻿using PlogPal.Domain.Models;
+using Location = PlogPal.Domain.Models.Location;
 
 namespace PloggingApp.Services.PloggingTracking;
 

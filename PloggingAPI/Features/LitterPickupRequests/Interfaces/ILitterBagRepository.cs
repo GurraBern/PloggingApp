@@ -1,4 +1,5 @@
-﻿using Plogging.Core.Models;
+﻿
+using PlogPal.Domain.Models;
 
 namespace PloggingAPI.Features.LitterPickupRequests;
 

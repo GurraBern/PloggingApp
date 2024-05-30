@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PloggingApp.Shared;
+namespace PlogPal.Maui.Shared;
 
 public partial class BaseViewModel : ObservableObject
 {

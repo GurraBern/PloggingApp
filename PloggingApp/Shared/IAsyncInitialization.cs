@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.Shared;
+﻿namespace PlogPal.Maui.Shared;
 
 public interface IAsyncInitialization
 {

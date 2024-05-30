@@ -1,4 +1,4 @@
-namespace PloggingApp.Features.UserProfiles.Badges;
+namespace PlogPal.Maui.Features.UserProfiles.Badges;
 
 public partial class BadgesView : ContentView
 {

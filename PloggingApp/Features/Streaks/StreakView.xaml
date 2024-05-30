@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.Streak.StreakView"
+    x:Class="PlogPal.Maui.Features.Streak.StreakView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:streak="clr-namespace:PloggingApp.Features.Streak"
-    x:DataType="streak:StreakViewModel">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <HorizontalStackLayout>
         <Image

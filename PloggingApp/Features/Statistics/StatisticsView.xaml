@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="PloggingApp.Features.Statistics.StatisticsView"
+    x:Class="PlogPal.Maui.Features.Statistics.StatisticsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converter="clr-namespace:PloggingApp.Converters"
     xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
-    xmlns:modelscore="clr-namespace:Plogging.Core.Models;assembly=Plogging.Core"
-    xmlns:statistics="clr-namespace:PloggingApp.Features.Statistics"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:DataType="statistics:StatisticsViewModel">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <ContentView.Resources>
         <converter:TitleCaseConverter x:Key="TitleCaseConverter"/>
@@ -177,6 +174,7 @@
                                             Text="{Binding PloggingStats.TotalWeight, StringFormat='{0} kg'}"/>
                                     </Grid>
                                 </Border>
+                                
                                 <!--  CO2Saved  -->
                                 <Border
                                     Grid.Row="0"
@@ -207,7 +205,7 @@
                                             Text="{Binding PloggingStats.TotalCO2Saved, StringFormat='{0} kg CO2e'}"/>
                                     </Grid>
                                 </Border>
-                                <!--  Distance  -->
+
                                 <Border
                                     Grid.Row="0"
                                     Grid.Column="0"
@@ -237,7 +235,7 @@
                                             Text="{Binding PloggingStats.TotalDistance, StringFormat='{0} m'}"/>
                                     </Grid>
                                 </Border>
-                                <!--  Time Plogged  -->
+                                
                                 <Border
                                     Grid.Row="1"
                                     Grid.Column="1"
@@ -273,7 +271,8 @@
                             </Grid>
                         </VerticalStackLayout>
                     </Border>
-                    <!--<Border Style="{StaticResource RoundBorder}">
+                   
+                    <Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
                             <Label Text="Distance (m)" Style="{StaticResource SubHeadline}" Margin= "10" HorizontalOptions="StartAndExpand"/>
                             <micro:ChartView Chart="{Binding DistanceChart.Chart}" HeightRequest="120" WidthRequest="350" HorizontalOptions="FillAndExpand"/>
@@ -284,10 +283,10 @@
                             <Label Text="Litter Types" Style="{StaticResource SubHeadline}" Margin="10" HorizontalOptions="StartAndExpand"/>
                             <micro:ChartView Chart="{Binding LitterChart.Chart}" HeightRequest="120" WidthRequest="300" HorizontalOptions="FillAndExpand"/>
                         </VerticalStackLayout>
-                    </Border>-->
+                    </Border>
 
 
-                    <CarouselView IndicatorView="indicatorCharts" ItemsSource="{Binding Charts}">
+                    <!--<CarouselView IndicatorView="indicatorCharts" ItemsSource="{Binding Charts}">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="statistics:ChartContext">
                                 <Border Style="{StaticResource RoundBorder}">
@@ -324,7 +323,7 @@
                                 </Border>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
-                    </CarouselView>
+                    </CarouselView>-->
                     <IndicatorView x:Name="indicatorCharts" HorizontalOptions="Center"/>
                     <Border Style="{StaticResource RoundBorder}">
                         <VerticalStackLayout>
@@ -358,7 +357,7 @@
                         HorizontalOptions="Start"
                         Style="{StaticResource SubHeadline}"
                         Text="Sessions"/>
-                    <CollectionView ItemsSource="{Binding UserSessions}">
+                    <!--<CollectionView ItemsSource="{Binding UserSessions}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="modelscore:PlogSession">
                                 <Border
@@ -382,7 +381,7 @@
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>
+                    </CollectionView>-->
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

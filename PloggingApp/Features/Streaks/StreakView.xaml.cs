@@ -1,4 +1,4 @@
-﻿namespace PloggingApp.Features.Streak;
+﻿namespace PlogPal.Maui.Features.Streak;
 
 public partial class StreakView : ContentView
 {

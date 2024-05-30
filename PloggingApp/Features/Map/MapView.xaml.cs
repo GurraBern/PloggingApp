@@ -5,7 +5,7 @@ using Microsoft.Maui.Maps;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
 
-namespace PloggingApp.Features.Map;
+namespace PlogPal.Maui.Features.Map;
 
 public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 {
@@ -21,8 +21,8 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
     public void DrawPolyLine(IEnumerable<Location> locations)
     {
         PloggingMap.MapElements.Clear();
-        polyLine = new Polyline() 
-        { 
+        polyLine = new Polyline()
+        {
             StrokeColor = Colors.Blue,
             StrokeWidth = 10,
         };
@@ -88,7 +88,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         }
 
         var locationCount = locations.Count;
-        var zoomLocation = new Location(latitude/locationCount, longitude/locationCount);
+        var zoomLocation = new Location(latitude / locationCount, longitude / locationCount);
 
         return zoomLocation;
     }

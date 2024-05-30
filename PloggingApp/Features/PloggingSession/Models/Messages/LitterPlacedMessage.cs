@@ -4,10 +4,10 @@ namespace PloggingApp.Features.PloggingSession;
 
 public class LitterPlacedMessage 
 {
-    public LitterPlacedMessage(Location location)
+    public LitterPlacedMessage(Microsoft.Maui.Devices.Sensors.Location location)
     {
-        LitterLocation = new MapPoint(location.Latitude, location.Longitude);
+        LitterLocation = new PlogPal.Domain.Models.Location(location.Latitude, location.Longitude);
     }
 
-    public MapPoint LitterLocation { get; private set; }
+    public PlogPal.Domain.Models.Location LitterLocation { get; private set; }
 }

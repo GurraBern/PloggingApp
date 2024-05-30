@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using PlogPal.Domain.Models;
+using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace PloggingApp.Features.Map.Components;
 

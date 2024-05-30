@@ -1,4 +1,4 @@
-namespace PloggingApp.Features.Leaderboard;
+namespace PlogPal.Maui.Features.Leaderboard;
 
 public partial class LeaderboardPage : ContentPage
 {

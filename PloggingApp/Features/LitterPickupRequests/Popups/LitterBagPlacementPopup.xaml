@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup
-    x:Class="PloggingApp.Features.LitterPickupRequests.LitterbagPlacementPopup"
+    x:Class="PlogPal.Maui.Features.LitterPickupRequests.LitterbagPlacementPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:PloggingApp.Converters"
-    xmlns:pickupRequests="clr-namespace:PloggingApp.Features.LitterPickupRequests"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:DataType="pickupRequests:LitterbagPlacementViewModel">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+
+    <!--xmlns:pickupRequests="clr-namespace:PloggingApp.Features.LitterPickupRequests"
     <toolkit:Popup.Resources>
         <ResourceDictionary>
             <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
@@ -20,7 +20,7 @@
             <Setter Property="Color" Value="Transparent"/>
             <Setter Property="CanBeDismissedByTappingOutsideOfPopup" Value="True"/>
         </Style>
-    </toolkit:Popup.Resources>
+    </toolkit:Popup.Resources>-->
 
     <Border Style="{StaticResource RoundBorder}">
         <Grid>

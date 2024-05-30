@@ -1,4 +1,4 @@
-﻿using Plogging.Core.Enums;
+﻿using PlogPal.Domain.Enums;
 using System.Globalization;
 
 namespace PloggingApp.Converters;

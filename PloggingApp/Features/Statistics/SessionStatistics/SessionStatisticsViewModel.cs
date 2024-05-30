@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microcharts;
-using PloggingApp.Shared;
 using PlogPal.Domain.Enums;
 using PlogPal.Domain.Models;
 using PlogPal.Maui.Services.Statistics;
+using PlogPal.Maui.Shared;
 
 namespace PloggingApp.Features.Statistics;
 
@@ -58,7 +58,7 @@ public partial class SessionStatisticsViewModel : BaseViewModel, IQueryAttributa
         Init();
     }
 
-    private async Task<string> GetArea(MapPoint location)
+    private async Task<string> GetArea(PlogPal.Domain.Models.Location location)
     {
         IEnumerable<Placemark> placemarks = await Geocoding.Default.GetPlacemarksAsync(location.Latitude, location.Longitude);
         Placemark placemark = placemarks?.FirstOrDefault();
