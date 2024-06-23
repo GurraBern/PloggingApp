@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PlogPal.Application\PlogPal.Application.csproj" />
     <ProjectReference Include="..\PlogPal.Common\PlogPal.Common.csproj" />
+    <ProjectReference Include="..\PlogPal.Domain\PlogPal.Domain.csproj" />
   </ItemGroup>
 
 </Project>

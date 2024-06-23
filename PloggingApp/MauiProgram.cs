@@ -47,6 +47,10 @@ public static class MauiProgram
         AddPopups(builder);
         AddPages(builder);
 
+
+
+        SetupHandlers(builder.Services);
+
         //builder.ConfigureMauiHandlers(handlers =>
         //{
         //    handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
@@ -57,6 +61,15 @@ public static class MauiProgram
 #endif
 
         return builder.Build();
+    }
+
+    private static void SetupHandlers(IServiceCollection services)
+    {
+        services.AddSingleton<IEventBus, EventBus>();
+
+        var bus = services.GetRequiredService<IEventBus>();
+
+        bus.Register<SignInEvent>(new SignInHandler());
     }
 
     private static void AddViewModels(MauiAppBuilder builder)
