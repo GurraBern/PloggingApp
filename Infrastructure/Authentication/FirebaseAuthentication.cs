@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Firebase.Auth;
+﻿using Firebase.Auth;
 using PlogPal.Application.Common.Interfaces;
+using PlogPal.Application.Interfaces;
 
 namespace Infrastructure.Authentication;
 

@@ -1,6 +1,6 @@
 ﻿using PlogPal.Domain.Models;
 
-namespace Infrastructure.Services.Interfaces;
+namespace PlogPal.Application.Common.Interfaces;
 
 public interface IStreakService
 {

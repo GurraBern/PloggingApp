@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using PlogPal.Application.Common.Interfaces;
+using PlogPal.Application;
 using PlogPal.Maui.Features.Dashboard;
 using PlogPal.Maui.Shared;
 
@@ -8,11 +8,12 @@ namespace PloggingApp.Features.Authentication;
 
 public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
 {
-    private readonly IAuthenticationService _authenticationService;
+    //private readonly IAuthenticationService _authenticationService;
+    private readonly IUserAuthentication _userAuthentication;
+
     //private readonly IStreakService _streakService;
     //private readonly IUserInfoService _userInfoService;
     private readonly IToastService _toastService;
-
     public string LoginEmail { get; set; }
     public string LoginPassword { get; set; }
 
@@ -21,9 +22,9 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
 
     public Task Initialization { get; }
 
-    public LoginViewModel(IAuthenticationService authenticationService, IToastService toastService)
+    public LoginViewModel(IUserAuthentication userAuthentication, IToastService toastService)
     {
-        _authenticationService = authenticationService;
+        _userAuthentication = userAuthentication;
         _toastService = toastService;
 
         Initialization = Initialize();
@@ -34,7 +35,7 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
         IsBusy = true;
 
         //var isLoginSuccessful = await _authenticationService.AutoLogin();
-       
+
         IsBusy = false;
     }
 
@@ -43,8 +44,7 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
     {
         if (!string.IsNullOrEmpty(LoginEmail) && !string.IsNullOrEmpty(LoginPassword))
         {
-           
-            var isLoggedIn = await _authenticationService.LoginUser(LoginEmail, LoginPassword);
+            var isLoggedIn = await _userAuthentication.LoginUser(LoginEmail, LoginPassword);
             if(isLoggedIn)
             {
                 await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
@@ -55,7 +55,6 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
             }
 
             //await _authenticationService.SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
-            //await _streakService.ResetStreak();
         }
     }
 

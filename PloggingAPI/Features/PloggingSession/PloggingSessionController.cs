@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Plogging.Core.Enums;
-using Plogging.Core.Models;
+using PlogPal.Common.Enums;
+using PlogPal.Domain.Models;
 
 namespace PloggingAPI.Features.PloggingSession;
 

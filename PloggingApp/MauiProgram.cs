@@ -16,6 +16,14 @@ using PlogPal.Maui.Features.Authentication;
 using PlogPal.Maui.Shared;
 using PlogPal.Maui.Features.Dashboard;
 using PloggingApp.Features.Dashboard;
+using Infrastructure.EventBus;
+using PlogPal.Domain.Events;
+using PlogPal.Application.EventHandlers;
+using PlogPal.Application;
+using Infrastructure.Services;
+using Infrastructure.Services.ApiClients;
+using RestSharp;
+using PlogPal.Domain.Models;
 
 namespace PloggingApp;
 
@@ -41,6 +49,9 @@ public static class MauiProgram
                 fonts.AddFont("Inter-Bold.ttf", "InterBold");
             });
 
+
+        builder.Services.AddEventBus(Assembly.GetAssembly(typeof(SignInEvent)), Assembly.GetAssembly(typeof(SignInHandler)));
+
         AddApiClients(builder);
         AddServices(builder);
         AddViewModels(builder);
@@ -48,8 +59,10 @@ public static class MauiProgram
         AddPages(builder);
 
 
+        builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
 
-        SetupHandlers(builder.Services);
+        //services.AddEventBus();
+        //SetupEventBus(builder.Services);
 
         //builder.ConfigureMauiHandlers(handlers =>
         //{
@@ -63,14 +76,23 @@ public static class MauiProgram
         return builder.Build();
     }
 
-    private static void SetupHandlers(IServiceCollection services)
-    {
-        services.AddSingleton<IEventBus, EventBus>();
+    //private static void SetupEventBus(IServiceCollection services)
+    //{
+    //    services.AddSingleton<IEventBus, EventBus>(x =>
+    //    {
+    //        var bus = new EventBus();
 
-        var bus = services.GetRequiredService<IEventBus>();
+    //        bus.Register<SignInEvent>(x.GetRequiredService<SignInHandler>());
 
-        bus.Register<SignInEvent>(new SignInHandler());
-    }
+    //        return bus;
+    //    });
+
+    //    //Handlers
+    //    services.AddScoped<SignInHandler>();
+
+    //    services.RegisterEventHandler<SignInEvent, SignInHandler>();
+    //    //builder.Services.AddScoped<IRequestHandler<FileProcessingRequest, ProcessingOutputDetails>, FileProcessingRequestHandler>();
+    //}
 
     private static void AddViewModels(MauiAppBuilder builder)
     {
@@ -142,9 +164,11 @@ public static class MauiProgram
 
     private static void AddServices(MauiAppBuilder builder)
     {
+        builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
         //builder.Services.AddTransient<IPloggingSessionManager, PloggingSessionManager>();
         //builder.Services.AddTransient<ILocationProvider, MauiLocationProvider>();
 
+        //Client Specific
         builder.Services.AddTransient<IToastService, ToastService>();
         ////builder.Services.AddSingleton<IRankingService, RankingService>();
         ////builder.Services.AddTransient<IStreakService, StreakService>();
@@ -158,7 +182,7 @@ public static class MauiProgram
         //builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
         //builder.Services.AddTransient<ISessionStatisticsService, SessionStatisticsService>();
 
-
+        builder.Services.AddScoped<IStreakService, StreakService>();
         builder.Services.AddSingleton<IAuthenticationService, FirebaseAuthentication>();
         builder.Services.AddSingleton<IUserContext, FirebaseUserContext>();
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
@@ -177,9 +201,9 @@ public static class MauiProgram
         var apiUrl = builder.Configuration["ApiUrls:PloggingApiUrl"];
         if (apiUrl != null)
         {
-            //var ploggingApiClient = new RestClient(apiUrl);
+            var ploggingApiClient = new RestClient(apiUrl);
             //builder.RegisterPloggingApiClient<PlogSession>(ploggingApiClient);
-            //builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
+            builder.RegisterPloggingApiClient<UserStreak>(ploggingApiClient);
             //builder.RegisterPloggingApiClient<LitterLocation>(ploggingApiClient);
             //builder.RegisterPloggingApiClient<PlogTogether>(ploggingApiClient);
             //builder.RegisterPloggingApiClient<PlogPal.Domain.Models.UserInfo>(ploggingApiClient);
@@ -188,18 +212,19 @@ public static class MauiProgram
         }
     }
 
-    //private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)
-    //{
-    //    builder.Services.AddScoped<IPloggingApiClient<T>>(serviceProvider =>
-    //    {
-    //        var authService = serviceProvider.GetService<IAuthenticationService>();
-    //        return new PloggingApiClient<T>(restClient, authService);
-    //    });
-    //}
+    private static void RegisterPloggingApiClient<T>(this MauiAppBuilder builder, IRestClient restClient)
+    {
+        builder.Services.AddScoped<IPloggingApiClient<T>>(serviceProvider =>
+        {
+            var userContext = serviceProvider.GetService<IUserContext>();
+            return new PloggingApiClient<T>(restClient, userContext);
+        });
+    }
 
     private static MauiAppBuilder AddAppSettings(this MauiAppBuilder builder)
     {
-        var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
+        //var environment = Environment.GetEnvironmentVariable("MAUI_ENVIRONMENT") ?? "Production";
+        var environment = "Production";
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"PlogPal.appsettings.{environment}.json");
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.

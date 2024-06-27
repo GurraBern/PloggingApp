@@ -1,5 +1,5 @@
-﻿using Plogging.Core.Models;
-using PloggingAPI.Features.LitterLocations;
+﻿using PloggingAPI.Features.LitterLocations;
+using PlogPal.Domain.Models;
 
 namespace PloggingAPI.Features.PloggingSession;
 

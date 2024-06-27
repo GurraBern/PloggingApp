@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Plogging.Core.Models;
+using PlogPal.Domain.Models;
 
 namespace PloggingAPI.Features.UploadPloggingImage;
 

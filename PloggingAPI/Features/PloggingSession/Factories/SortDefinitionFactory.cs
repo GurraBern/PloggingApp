@@ -1,6 +1,8 @@
 ﻿using MongoDB.Driver;
+using PlogPal.Common.Enums;
 using PlogPal.Domain.Models;
 using System.Linq.Expressions;
+using SortDirection = PlogPal.Common.Enums.SortDirection;
 
 namespace PloggingAPI.Features.PloggingSession;
 

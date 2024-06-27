@@ -1,6 +1,6 @@
 ﻿namespace PlogPal.Domain.Events;
 
-public class SignInEvent
+public class SignUpEvent : IDomainEvent
 {
 
 }

@@ -70,7 +70,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="appsettings.Development.json" />
 		<EmbeddedResource Include="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
@@ -108,6 +107,7 @@
 		<PackageReference Include="Microsoft.Maui.Maps" Version="8.0.40" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
 		<PackageReference Include="Syncfusion.Maui.Charts" Version="25.2.6" />
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 	</ItemGroup>

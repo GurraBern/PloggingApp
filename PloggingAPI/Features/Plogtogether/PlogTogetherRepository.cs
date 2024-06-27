@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Plogging.Core.Models;
 using PloggingAPI.Models;
+using PlogPal.Domain.Models;
 
 namespace PloggingAPI.Features.Plogtogether;
 

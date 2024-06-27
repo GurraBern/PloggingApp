@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Firebase.Auth;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Plogging.Core.Models;
 using PloggingAPI.Models;
 
 namespace PloggingAPI.Features.UserInformation;
@@ -21,15 +21,15 @@ public class UserInfoRepository : IUserInfoRepository
         await _userInfoCollection.InsertOneAsync(user);
     }
 
-    public async Task DeleteUser(string userId)
-    {
-        await _userInfoCollection.DeleteOneAsync(u => u.UserId == userId);
-    }
+    //public async Task DeleteUser(string userId)
+    //{
+    //    await _userInfoCollection.DeleteOneAsync(u => u.UserId == userId);
+    //}
 
-    public async Task<UserInfo> GetUser(string userId)
-    {
-        var user = await _userInfoCollection.Find(u => u.UserId == userId).FirstOrDefaultAsync();
-        return user;
-    }
+    //public async Task<UserInfo> GetUser(string userId)
+    //{
+    //    var user = await _userInfoCollection.Find(u => u.UserId == userId).FirstOrDefaultAsync();
+    //    return user;
+    //}
 }
 
