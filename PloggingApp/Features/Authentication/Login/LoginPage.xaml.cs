@@ -1,6 +1,4 @@
-﻿using PloggingApp.Features.Authentication;
-
-namespace PlogPal.Maui.Features.Authentication;
+﻿namespace PlogPal.Maui.Features.Authentication;
 
 public partial class LoginPage : ContentPage
 {

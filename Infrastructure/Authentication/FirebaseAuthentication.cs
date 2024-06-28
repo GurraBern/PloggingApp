@@ -1,6 +1,5 @@
 ﻿using Firebase.Auth;
 using PlogPal.Application.Common.Interfaces;
-using PlogPal.Application.Interfaces;
 
 namespace Infrastructure.Authentication;
 
@@ -22,54 +21,27 @@ public class FirebaseAuthentication : IAuthenticationService
         _userContext = userContext;
     }
 
-    public async Task<bool> LoginUser(string email, string password)
+    //TODO double check null values
+    public async Task<string> LoginUser(string email, string password)
     {
         try
         {
             _userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(email, password);
 
-            return true;
+            return _userCredential.User.Credential.IdToken;
         }
         catch (Exception)
         {
-            return false;
+            return string.Empty;
         }
     }
 
-    public async Task CreateUser(string email, string password, string displayName)
+    public async Task<bool> CreateUser(string email, string password, string displayName)
     {
         _userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(email, password, displayName);
+
+        return _userCredential != null;
     }
-
-    //public async Task<bool> AutoLogin()
-    //{
-    //    var email = await SecureStorage.GetAsync("email");
-    //    var password = await SecureStorage.GetAsync("password");
-
-    //    if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-    //    {
-    //        return await LoginUser(email, password);
-    //    }
-    //    else
-    //    {
-    //        Trace.WriteLine("Autologin failed.");
-    //        return false;
-    //    }
-    //}
-
-    //public async Task SaveCredentials(bool rememberMe, string email, string password)
-    //{
-    //    if (rememberMe)
-    //    {
-    //        await SecureStorage.SetAsync("email", email);
-    //        await SecureStorage.SetAsync("password", password);
-    //    }
-    //    else
-    //    {
-    //        SecureStorage.Remove("email");
-    //        SecureStorage.Remove("password");
-    //    }
-    //}
 
     public void SignOut()
     {

@@ -11,7 +11,6 @@ using System.Reflection;
 using ZXing.Net.Maui.Controls;
 using PlogPal.Application.Common.Interfaces;
 using Infrastructure.Authentication;
-using PloggingApp.Features.Authentication;
 using PlogPal.Maui.Features.Authentication;
 using PlogPal.Maui.Shared;
 using PlogPal.Maui.Features.Dashboard;
@@ -58,11 +57,7 @@ public static class MauiProgram
         AddPopups(builder);
         AddPages(builder);
 
-
         builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
-
-        //services.AddEventBus();
-        //SetupEventBus(builder.Services);
 
         //builder.ConfigureMauiHandlers(handlers =>
         //{
@@ -75,24 +70,6 @@ public static class MauiProgram
 
         return builder.Build();
     }
-
-    //private static void SetupEventBus(IServiceCollection services)
-    //{
-    //    services.AddSingleton<IEventBus, EventBus>(x =>
-    //    {
-    //        var bus = new EventBus();
-
-    //        bus.Register<SignInEvent>(x.GetRequiredService<SignInHandler>());
-
-    //        return bus;
-    //    });
-
-    //    //Handlers
-    //    services.AddScoped<SignInHandler>();
-
-    //    services.RegisterEventHandler<SignInEvent, SignInHandler>();
-    //    //builder.Services.AddScoped<IRequestHandler<FileProcessingRequest, ProcessingOutputDetails>, FileProcessingRequestHandler>();
-    //}
 
     private static void AddViewModels(MauiAppBuilder builder)
     {
