@@ -4,6 +4,6 @@ public interface IUserContext
 {
     bool IsAuthenticated { get; }
     string UserId { get; }
-    string Name { get; }
     string BearerToken { get; }
+    Task Login(string email, string password);
 }

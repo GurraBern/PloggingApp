@@ -1,4 +1,5 @@
 ﻿using PlogPal.Application.Common.Interfaces;
+using PlogPal.Application.Errors;
 using PlogPal.Application.Interfaces;
 using PlogPal.Domain.Events;
 
@@ -6,23 +7,24 @@ namespace PlogPal.Application.LoginManagement.Commands;
 
 public interface ILoginCommand
 {
-    Task<bool> LoginUser(string email, string password);
+    Task<Result> LoginUser(string email, string password);
 }
 
-public class LoginCommand(IAuthenticationService authenticationService, IEventBus eventBus) : ILoginCommand
+public class LoginCommand(IUserContext userContext, IEventBus eventBus) : ILoginCommand
 {
-    private readonly IAuthenticationService _authenticationService = authenticationService;
+    private readonly IUserContext _userContext = userContext;
     private readonly IEventBus _eventBus = eventBus;
 
-    public async Task<bool> LoginUser(string email, string password)
+    public async Task<Result> LoginUser(string email, string password)
     {
-        var result = await _authenticationService.LoginUser(email, password);
+        await _userContext.Login(email, password);
 
-        if (result)
+        if (_userContext.IsAuthenticated)
         {
             _eventBus.Publish(new SignInEvent());
+            return Result.Success();
         }
 
-        return result;
+        return Result.Failure(LoginErrors.InvalidCredentials);
     }
 }

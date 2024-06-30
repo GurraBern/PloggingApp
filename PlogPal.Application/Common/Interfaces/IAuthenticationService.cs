@@ -1,9 +1,10 @@
-﻿namespace PlogPal.Application.Common.Interfaces;
+﻿using PlogPal.Application.Errors;
 
-//TODO result pattern
+namespace PlogPal.Application.Common.Interfaces;
+
 public interface IAuthenticationService
 {
-    Task<bool> LoginUser(string email, string password);
+    Task<UserInformation> LoginUser(string email, string password);
     Task<string> CreateUser(string email, string password, string displayName);
     void SignOut();
 }

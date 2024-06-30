@@ -3,9 +3,11 @@
     x:Class="PlogPal.Maui.Features.Authentication.RegisterPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:PlogPal.Maui.Features.Authentication"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False"
-    Shell.TabBarIsVisible="False">
+    Shell.TabBarIsVisible="False"
+    x:DataType="viewmodel:RegisterViewModel">
 
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
@@ -49,7 +51,7 @@
                         Margin="0,15,0,0"
                         HorizontalOptions="FillAndExpand"
                         Placeholder="Email"
-                        Text="{Binding RegEmail}"
+                        Text="{Binding Email}"
                         TextColor="Black"
                         VerticalOptions="FillAndExpand"
                         WidthRequest="300"/>
@@ -58,7 +60,7 @@
                         HorizontalOptions="FillAndExpand"
                         IsPassword="True"
                         Placeholder="Password"
-                        Text="{Binding RegPassword}"
+                        Text="{Binding Password}"
                         TextColor="Black"
                         VerticalOptions="FillAndExpand"
                         WidthRequest="300"/>
@@ -79,14 +81,14 @@
                         Text="Register"
                         WidthRequest="260"/>
 
-                    <Button BackgroundColor="White" Command="{Binding GoToLoginPageCommand}">
+                    <!--<Button BackgroundColor="White" Command="{Binding GoToLoginPageCommand}">
                         <Button.ImageSource>
                             <FontImageSource
                                 Glyph="&#x2190;"
                                 Size="40"
                                 Color="Black"/>
                         </Button.ImageSource>
-                    </Button>
+                    </Button>-->
                 </VerticalStackLayout>
             </Border>
         </Grid>

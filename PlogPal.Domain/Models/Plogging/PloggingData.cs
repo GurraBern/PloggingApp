@@ -7,3 +7,5 @@ public class PloggingData
     public double Distance { get; set; }
     public double Weight { get; set; }
 }
+
+//public record Distance(double distance);

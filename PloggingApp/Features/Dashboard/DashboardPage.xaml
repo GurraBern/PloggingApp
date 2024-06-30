@@ -3,7 +3,7 @@
     x:Class="PlogPal.Maui.Features.Dashboard.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:streak="clr-namespace:PloggingApp.Features.Streak"
+    xmlns:map="clr-namespace:PlogPal.Maui.Features.Map"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="Dashboard">
 
@@ -17,8 +17,9 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
-        <!--<map:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
+        <map:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
+<!--
         <ploggingsession:AddLitter
             Margin="5,0"
             BindingContext="{Binding AddLitterViewModel}"

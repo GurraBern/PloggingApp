@@ -28,8 +28,8 @@ public partial class RegisterViewModel : BaseViewModel
 		{
 			try
 			{
-				var registerSuccess = await _registerCommand.RegisterUser(Email, Password, DisplayName);
-				if (registerSuccess)
+				var result = await _registerCommand.RegisterUser(Email, Password, DisplayName);
+				if (result.IsSuccess)
 				{
                     await _toastService.MakeToast("Success. Account created.");
                     await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");

@@ -1,4 +1,5 @@
 ﻿using PlogPal.Application.Common.Interfaces;
+using PlogPal.Application.Errors;
 using PlogPal.Application.Interfaces;
 using PlogPal.Domain.Events;
 
@@ -6,7 +7,7 @@ namespace PlogPal.Application.LoginManagement.Commands;
 
 public interface IRegisterCommand
 {
-    Task<bool> RegisterUser(string email, string password, string displayName);
+    Task<Result> RegisterUser(string email, string password, string displayName);
 }
 
 public class RegisterCommand(IAuthenticationService authenticationService, IEventBus eventBus) : IRegisterCommand
@@ -14,11 +15,12 @@ public class RegisterCommand(IAuthenticationService authenticationService, IEven
     private readonly IAuthenticationService _authenticationService = authenticationService;
     private readonly IEventBus _eventBus = eventBus;
 
-    public async Task<bool> RegisterUser(string email, string password, string displayName)
+    public async Task<Result> RegisterUser(string email, string password, string displayName)
     {
-        var userId = await _authenticationService.CreateUser(email, password, displayName);
-        if (!string.IsNullOrEmpty(userId))
+        try
         {
+            string userId = await _authenticationService.CreateUser(email, password, displayName);
+            
             _eventBus.Publish(new SignUpEvent()
             {
                 UserId = userId,
@@ -27,10 +29,12 @@ public class RegisterCommand(IAuthenticationService authenticationService, IEven
                 DisplayName = displayName
             });
 
-            return true;
+            return Result.Success();
         }
-            
-        return false;
+        catch (Exception)
+        {
+            return Result.Failure(LoginErrors.AccountNotCreated);
+        }
     }
 }
 

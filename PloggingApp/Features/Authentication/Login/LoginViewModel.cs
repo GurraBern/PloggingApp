@@ -41,8 +41,8 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
     {
         if (!string.IsNullOrEmpty(LoginEmail) && !string.IsNullOrEmpty(LoginPassword))
         {
-            var isLoggedIn = await _loginCommand.LoginUser(LoginEmail, LoginPassword);
-            if(isLoggedIn)
+            var result = await _loginCommand.LoginUser(LoginEmail, LoginPassword);
+            if(result.IsSuccess)
             {
                 await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
 
@@ -60,20 +60,18 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
         var email = await SecureStorage.GetAsync("email");
         var password = await SecureStorage.GetAsync("password");
 
-        if (email == null || password == null)
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             return;
 
-        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-        {
-            await _loginCommand.LoginUser(email, password);
-        }
+        var result = await _loginCommand.LoginUser(email, password);
+
+        if(result.IsSuccess)
+            await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
         else
-        {
-            await _toastService.MakeToast("Couldn't sign in");
-        }
+            await _toastService.MakeToast(result.Error.Description);
     }
 
-    public async Task SaveCredentials(bool rememberMe, string email, string password)
+    public static async Task SaveCredentials(bool rememberMe, string email, string password)
     {
         if (rememberMe)
         {

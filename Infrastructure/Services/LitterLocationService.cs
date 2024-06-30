@@ -13,8 +13,17 @@ public class LitterLocationService(IPloggingApiClient<LitterLocation> ploggingAp
     {
         var request = new RestRequest("api/PloggingSession/LitterLocations");
 
-        var litterLocations = await _ploggingApiClient.GetAllAsync(request);
+        try
+        {
+            var litterLocations = await _ploggingApiClient.GetAllAsync(request);
 
-        return litterLocations;
+            return litterLocations;
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
+
     }
 }
