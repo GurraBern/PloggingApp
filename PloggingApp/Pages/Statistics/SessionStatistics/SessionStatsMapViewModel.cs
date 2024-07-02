@@ -4,6 +4,7 @@ using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
 using PlogPal.Domain.Models;
 using System.Collections.ObjectModel;
+using PlogPal.Maui.Features.PloggingSession;
 
 namespace PloggingApp.Features.Statistics;
 

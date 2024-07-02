@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace PloggingApp.Features.PloggingSession;
+namespace PlogPal.Maui.Features.PloggingSession;
 
 public class PloggingSessionMessage : ValueChangedMessage<bool>
 {

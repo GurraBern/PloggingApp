@@ -1,6 +1,7 @@
 ﻿using Firebase.Auth;
 using PlogPal.Application;
 using PlogPal.Application.Common.Interfaces;
+using User = Firebase.Auth.User;
 
 namespace Infrastructure.Authentication;
 

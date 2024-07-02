@@ -7,6 +7,7 @@ public class UserContext : IUserContext
     private readonly IAuthenticationService _authenticationService;
     private UserInformation UserInformation { get; set; }
     public string BearerToken => UserInformation.BearerToken;
+    public User User { get; } = new(); 
 
     public string UserId => UserInformation.UserId;
 
@@ -17,6 +18,7 @@ public class UserContext : IUserContext
         _authenticationService = authenticationService;
     }
 
+    //TODO result pattern on login user
     public async Task Login(string email, string password)
     {
         UserInformation = await _authenticationService.LoginUser(email, password);

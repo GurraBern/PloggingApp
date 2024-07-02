@@ -17,7 +17,11 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": true
+      "dotnetRunMessages": true,
+      "Windows Machine": {
+        "commandName": "MsixPackage",
+        "nativeDebugging": false
+      } 
     },
     "https": {
       "commandName": "Project",

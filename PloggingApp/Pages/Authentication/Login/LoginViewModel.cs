@@ -46,7 +46,7 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
             {
                 await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
 
-                await SaveCredentials(RememberMeEnabled, LoginEmail, LoginPassword);
+                await SaveCredentials(RememberMeEnabled);
             }
             else
             {
@@ -71,17 +71,12 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
             await _toastService.MakeToast(result.Error.Description);
     }
 
-    public static async Task SaveCredentials(bool rememberMe, string email, string password)
+    private async Task SaveCredentials(bool rememberMe)
     {
         if (rememberMe)
         {
-            await SecureStorage.SetAsync("email", email);
-            await SecureStorage.SetAsync("password", password);
-        }
-        else
-        {
-            SecureStorage.Remove("email");
-            SecureStorage.Remove("password");
+            await SecureStorage.SetAsync("email", LoginEmail);
+            await SecureStorage.SetAsync("password", LoginPassword);
         }
     }
 

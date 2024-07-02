@@ -14,7 +14,6 @@ using Infrastructure.Authentication;
 using PlogPal.Maui.Features.Authentication;
 using PlogPal.Maui.Shared;
 using PlogPal.Maui.Features.Dashboard;
-using PloggingApp.Features.Dashboard;
 using Infrastructure.EventBus;
 using PlogPal.Domain.Events;
 using PlogPal.Application.EventHandlers;
@@ -25,6 +24,7 @@ using PlogPal.Domain.Models;
 using PlogPal.Application.LoginManagement.Commands;
 using PloggingApp.Features.Map;
 using PlogPal.Application;
+using PlogPal.Maui.Features.Streak;
 
 namespace PloggingApp;
 
@@ -96,6 +96,7 @@ public static class MauiProgram
 
         builder.Services.AddTransient<MapViewModel>();
 
+        builder.Services.AddTransient<StreakViewModel>();
 
         //builder.Services.AddTransientView<LeaderboardPage, LeaderboardViewModel>();
 
@@ -117,6 +118,7 @@ public static class MauiProgram
         builder.Services.AddTransient<IToastService, ToastService>();
         builder.Services.AddScoped<ILitterLocationService, LitterLocationService>();
         builder.Services.AddScoped<IStreakService, StreakService>();
+        builder.Services.AddScoped<IStreakManager, StreakManager>(); 
         builder.Services.AddSingleton<IAuthenticationService, FirebaseAuthentication>();
         builder.Services.AddSingleton<IUserContext, UserContext>();
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()

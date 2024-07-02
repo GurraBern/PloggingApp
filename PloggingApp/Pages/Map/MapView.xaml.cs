@@ -4,6 +4,7 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
+using PlogPal.Maui.Features.PloggingSession;
 
 namespace PlogPal.Maui.Features.Map;
 

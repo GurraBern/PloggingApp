@@ -1,4 +1,4 @@
-using PloggingApp.Features.Dashboard;
+using CommunityToolkit.Maui.Views;
 
 namespace PlogPal.Maui.Features.Dashboard;
 
@@ -13,6 +13,6 @@ public partial class DashboardPage : ContentPage
     private void ShowTutorialPopup(object sender, EventArgs e)
     {
         var mapIconExplanationsPopup = new TutorialPopup();
-        //Application.Current?.MainPage?.ShowPopup(mapIconExplanationsPopup);
+        Microsoft.Maui.Controls.Application.Current?.MainPage?.ShowPopup(mapIconExplanationsPopup);
     }
 }
