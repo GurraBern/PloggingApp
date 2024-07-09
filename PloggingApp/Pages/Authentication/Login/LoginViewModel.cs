@@ -31,7 +31,7 @@ public partial class LoginViewModel : BaseViewModel, IAsyncInitialization
     {
         IsBusy = true;
 
-        await AutoLogin();
+        // await AutoLogin();
 
         IsBusy = false;
     }

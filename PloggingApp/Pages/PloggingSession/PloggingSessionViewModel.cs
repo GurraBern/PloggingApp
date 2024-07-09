@@ -1,32 +1,28 @@
-﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Maps;
 using PloggingApp.Features.LitterPickupRequests;
-using PloggingApp.Features.Map.Components;
 using PloggingApp.Services.Camera;
-using PloggingApp.Services.PloggingTracking;
 using PlogPal.Application.Common.Interfaces;
 using PlogPal.Domain.Models;
 using System.Collections.ObjectModel;
-using Infrastructure.Services.Interfaces;
+using PloggingApp.Features.PloggingSession;
+using PlogPal.Maui.Features.Map.Components;
 using PlogPal.Maui.Features.PloggingSession;
-using PlogPal.Maui.Features.Plogtogether;
 using PlogPal.Maui.Shared;
 
-namespace PloggingApp.Features.PloggingSession;
+namespace PlogPal.Maui.Pages.PloggingSession;
 
 public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>, IRecipient<PhotoTakenMessage>
 {
     private readonly IPloggingSessionManager _ploggingSessionManager;
     //private readonly IPloggingSessionTracker _ploggingSessionTracker;
     private readonly ICameraService _cameraService;
-    private readonly IPopupService _popupService;
+    // private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
     //private readonly IPlogTogetherService _plogTogetherService;
     //private readonly IAuthenticationService _authenticationService;
-
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Microsoft.Maui.Devices.Sensors.Location> TrackingPositions { get; set; } = [];
     private Microsoft.Maui.Devices.Sensors.Location CurrentLocation { get; set; }
@@ -36,21 +32,19 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
 
     public PloggingSessionViewModel(
         IPloggingSessionManager ploggingSessionManager,
-        IPloggingSessionTracker ploggingSessionTracker, 
-        ICameraService cameraService, 
-        IPopupService popupService,
-        IToastService toastService,
-        IPlogTogetherService plogTogetherService,
-        IAuthenticationService authenticationService)
+        // IPloggingSessionTracker ploggingSessionTracker, 
+        // ICameraService cameraService, 
+        IToastService toastService
+        // IPlogTogetherService plogTogetherService,
+        // IAuthenticationService authenticationService)
+        )
     {
         _ploggingSessionManager = ploggingSessionManager;
         // _ploggingSessionTracker = ploggingSessionTracker;
-        _cameraService = cameraService;
-        _popupService = popupService;
+        // _cameraService = cameraService;
         _toastService = toastService;
         // _plogTogetherService = plogTogetherService;
         // _authenticationService = authenticationService;
-
         // _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
@@ -66,6 +60,7 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private void StartPloggingSession()
     {
         _ploggingSessionManager.StartPlogging();
+        _toastService.MakeToast("started plogging"); // Temp
     }
 
     [RelayCommand]

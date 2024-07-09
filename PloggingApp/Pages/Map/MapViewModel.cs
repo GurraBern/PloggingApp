@@ -2,15 +2,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using PloggingApp.Features.LitterPickupRequests;
-using PloggingApp.Features.Map.Components;
 using PloggingApp.Features.PloggingSession;
 using PlogPal.Maui.Commands;
 using PlogPal.Domain.Models;
 using PlogPal.Maui.Shared;
 using System.Collections.ObjectModel;
 using PlogPal.Application.Common.Interfaces;
+using PlogPal.Maui.Features.Map.Components;
 
-namespace PloggingApp.Features.Map;
+namespace PlogPal.Maui.Features.Map;
 
 public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRecipient<LitterPlacedMessage>, IRecipient<LitterBagPlacedMessage>, IRecipient<LitterbagPickedUpMessage>
 {
@@ -38,8 +38,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task Initialize()
     {
-        await AddTrashPinsToMap();
-        await AddLitterBagPlacementsToMap();
+        // await AddTrashPinsToMap();
+        // await AddLitterBagPlacementsToMap();
     }
 
     private async Task AddTrashPinsToMap()

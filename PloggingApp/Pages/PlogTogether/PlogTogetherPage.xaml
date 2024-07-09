@@ -41,22 +41,22 @@
             IsVisible="{Binding InGroup}"
             Text="Plog Group:"
             VerticalOptions="End"/>
-
-        <Label
-            Grid.Row="1"
-            FontAttributes="Bold"
-            FontSize="Title"
-            HorizontalOptions="Start"
-            IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}"
-            Text="Not in a group!"
-            VerticalOptions="End"/>
-
-        <Button
-            Grid.Row="3"
-            Grid.Column="0"
-            Command="{Binding GoToGenerateQRcodeCommand}"
-            IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}"
-            Text="Your ID"/>
+        <!-- -->
+        <!-- <Label -->
+        <!--     Grid.Row="1" -->
+        <!--     FontAttributes="Bold" -->
+        <!--     FontSize="Title" -->
+        <!--     HorizontalOptions="Start" -->
+        <!--     IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}" -->
+        <!--     Text="Not in a group!" -->
+        <!--     VerticalOptions="End"/> -->
+        <!-- -->
+        <!-- <Button -->
+        <!--     Grid.Row="3" -->
+        <!--     Grid.Column="0" -->
+        <!--     Command="{Binding GoToGenerateQRcodeCommand}" -->
+        <!--     IsVisible="{Binding InGroup, Converter={converters:InverseBoolConverter}}" -->
+        <!--     Text="Your ID"/> -->
 
         <Button
             Grid.Row="3"

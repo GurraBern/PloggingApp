@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Maps;
 
-namespace PloggingApp.Features.Map.Components;
+namespace PlogPal.Maui.Features.Map.Components;
 
 public class CustomPin : Pin
 {

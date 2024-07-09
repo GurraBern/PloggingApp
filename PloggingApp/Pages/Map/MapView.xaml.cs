@@ -2,8 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
-using PloggingApp.Features.Map.Components;
-using PloggingApp.Features.PloggingSession;
+using PlogPal.Maui.Features.Map.Components;
 using PlogPal.Maui.Features.PloggingSession;
 
 namespace PlogPal.Maui.Features.Map;
@@ -21,7 +20,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 
     public void DrawPolyLine(IEnumerable<Location> locations)
     {
-        PloggingMap.MapElements.Clear();
+        PlogMap.MapElements.Clear();
         polyLine = new Polyline()
         {
             StrokeColor = Colors.Blue,
@@ -33,7 +32,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
             polyLine.Geopath.Add(location);
         }
 
-        PloggingMap.MapElements.Add(polyLine);
+        PlogMap.MapElements.Add(polyLine);
     }
 
     private async Task MoveMapToCurrentLocationAsync()
@@ -43,7 +42,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
 
         if (location != null)
         {
-            PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
+            PlogMap.MoveToRegion(MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(1)));
         }
     }
 
@@ -52,7 +51,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         var location = await Geolocation.GetLastKnownLocationAsync();
         if (location != null)
         {
-            PloggingMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(location.Latitude, location.Longitude), Distance.FromMiles(1)));
+            PlogMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(location.Latitude, location.Longitude), Distance.FromMiles(1)));
         }
     }
 
@@ -75,7 +74,7 @@ public partial class MapView : ContentView, IRecipient<PloggingSessionMessage>
         var routeCenter = CalculateRouteCenter(locations);
         var (LatitudeRegion, LongitudeRegion) = CalculateZoomRegion(locations);
         var routeRegion = new MapSpan(routeCenter, LatitudeRegion * 1.8, LongitudeRegion * 1.4);
-        PloggingMap.MoveToRegion(routeRegion);
+        PlogMap.MoveToRegion(routeRegion);
     }
 
     private static Location CalculateRouteCenter(ICollection<Location> locations)

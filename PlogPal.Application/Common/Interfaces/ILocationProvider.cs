@@ -4,5 +4,5 @@ namespace PlogPal.Application.Common.Interfaces;
 
 public interface ILocationProvider
 {
-    Task<Location> GetCurrentLocation();
+    Task<Location?> GetCurrentLocation();
 }

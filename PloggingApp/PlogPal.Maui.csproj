@@ -50,6 +50,11 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <RunAOTCompilation>True</RunAOTCompilation>
 	</PropertyGroup>
+	
+<!--	<PropertyGroup>-->
+<!--		<_MauiForceXamlCForDebug>true</_MauiForceXamlCForDebug>-->
+<!--	</PropertyGroup>-->
+	
 	<ItemGroup>
 		<!-- App Icon -->
 		<!-- <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" /> -->

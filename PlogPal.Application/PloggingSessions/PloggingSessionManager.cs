@@ -1,13 +1,11 @@
 ﻿using PlogPal.Application.Common.Interfaces;
 using PlogPal.Domain.Models;
-using PlogPal.Domain.Services;
 
 namespace PlogPal.Application.PloggingSessions;
 
 public class PloggingSessionManager: IPloggingSessionManager
 {
-    private readonly ILocationProvider _locationProvider;
-    private readonly RouteTracker _routeTracker;
+    private readonly ILocationTracker _locationTracker;
 
     public bool IsPlogging { get; private set; }
     private DateTime StartTime { get; set; }
@@ -15,12 +13,10 @@ public class PloggingSessionManager: IPloggingSessionManager
 
     private Task _updateLocation;
 
-    public event EventHandler<Location> LocationUpdated;
 
-    public PloggingSessionManager(ILocationProvider locationProvider, RouteTracker routeTracker)
+    public PloggingSessionManager(ILocationTracker locationTracker)
     {
-        _locationProvider = locationProvider;
-        _routeTracker = routeTracker;
+        _locationTracker = locationTracker;
     }
 
     public void StartPlogging()
@@ -29,25 +25,9 @@ public class PloggingSessionManager: IPloggingSessionManager
 
         StartTime = DateTime.UtcNow;
 
-        _updateLocation = Task.Run(UpdateLocation);
+        _locationTracker.TrackLocation();
     }
 
-    private async Task UpdateLocation()
-    {
-        while (IsPlogging)
-        {
-            CurrentLocation = await _locationProvider.GetCurrentLocation();
-
-            if (CurrentLocation != null)
-            {
-                //TrackRoute();
-
-                LocationUpdated?.Invoke(this, CurrentLocation);
-
-                await Task.Delay(TimeSpan.FromSeconds(1));
-            }
-        }
-    }
 
     public void StopPlogging()
     {

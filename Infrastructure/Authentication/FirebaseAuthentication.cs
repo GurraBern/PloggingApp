@@ -13,8 +13,7 @@ public class FirebaseAuthentication : IAuthenticationService
 
     private readonly FirebaseAuthClient _firebaseAuthClient;
 
-    //TODO can this somehow set usercontext throughout the application
-    //Ta bort unused dependencies i olika paket
+    //TODO Ta bort unused dependencies i olika paket
     public FirebaseAuthentication(FirebaseAuthClient firebaseAuthClient)
     {
         _firebaseAuthClient = firebaseAuthClient;

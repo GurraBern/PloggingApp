@@ -28,7 +28,7 @@
         <!--     BindingContext="{Binding AddLitterViewModel}" -->
         <!--     HorizontalOptions="End"/> -->
         
-        <!-- <ploggingsession:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/> -->
+        <ploggingsession:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 
         <Border
             Margin="5"

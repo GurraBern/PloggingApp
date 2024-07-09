@@ -22,9 +22,14 @@ using Infrastructure.Services.ApiClients;
 using RestSharp;
 using PlogPal.Domain.Models;
 using PlogPal.Application.LoginManagement.Commands;
-using PloggingApp.Features.Map;
 using PlogPal.Application;
+using PlogPal.Application.PloggingSessions;
+using PlogPal.Maui.Features.Map;
+using PlogPal.Maui.Features.PloggingSession;
 using PlogPal.Maui.Features.Streak;
+using PlogPal.Maui.Pages.PloggingSession;
+using PlogPal.Services;
+using PlogPal.Services.PloggingTracking;
 
 namespace PloggingApp;
 
@@ -41,7 +46,7 @@ public static class MauiProgram
             .UseMicrocharts()
             .UseSkiaSharp()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
-            //.UseMauiMaps() /*android och IOS specific*/
+            .UseMauiMaps() /*android och IOS specific*/
             .UseBarcodeReader()
 
             .ConfigureFonts(fonts =>
@@ -59,10 +64,10 @@ public static class MauiProgram
         AddPopups(builder);
         AddPages(builder);
 
-        //builder.ConfigureMauiHandlers(handlers =>
-        //{
-        //    handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
-        //});
+        // builder.ConfigureMauiHandlers(handlers =>
+        // {
+        //     handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
+        // });
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -98,6 +103,10 @@ public static class MauiProgram
 
         builder.Services.AddTransient<StreakViewModel>();
 
+        builder.Services.AddTransient<AddLitterViewModel>();
+
+        builder.Services.AddTransient<PloggingSessionViewModel>();
+
         //builder.Services.AddTransientView<LeaderboardPage, LeaderboardViewModel>();
 
         //builder.Services.AddTransient<StatisticsPage>();
@@ -115,18 +124,30 @@ public static class MauiProgram
 
     private static void AddServices(MauiAppBuilder builder)
     {
-        builder.Services.AddTransient<IToastService, ToastService>();
+        //Infrastructure
+        builder.Services.AddSingleton<IAuthenticationService, FirebaseAuthentication>();
         builder.Services.AddScoped<ILitterLocationService, LitterLocationService>();
         builder.Services.AddScoped<IStreakService, StreakService>();
-        builder.Services.AddScoped<IStreakManager, StreakManager>(); 
         builder.Services.AddSingleton<IAuthenticationService, FirebaseAuthentication>();
-        builder.Services.AddSingleton<IUserContext, UserContext>();
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
             ApiKey = builder.Configuration["FirebaseApiKey"],
             AuthDomain = builder.Configuration["FirebaseUrl"],
             Providers = [new EmailProvider()]
         }));
+        builder.Services.AddScoped<ILocationProvider, MauiLocationProvider>();
+        // builder.Services.AddSingleton<RouteTracker>();
+        
+        //Client
+        builder.Services.AddScoped<IToastService, ToastService>();
+        builder.Services.AddSingleton<ILocationTracker, LocationTracker>();
+        
+        //Application
+        builder.Services.AddScoped<IStreakManager, StreakManager>();
+        builder.Services.AddScoped<IPloggingSessionManager, PloggingSessionManager>();
+        // builder.Services.AddScoped<IPloggingSessionTracker, >(); //TODO ändra denna så att det är application layer som anropas
+        builder.Services.AddSingleton<IUserContext, UserContext>();
+        
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

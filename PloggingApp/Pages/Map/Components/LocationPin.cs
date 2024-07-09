@@ -2,7 +2,7 @@
 using PlogPal.Domain.Models;
 using Location = Microsoft.Maui.Devices.Sensors.Location;
 
-namespace PloggingApp.Features.Map.Components;
+namespace PlogPal.Maui.Features.Map.Components;
 
 public class LocationPin : CustomPin
 {
