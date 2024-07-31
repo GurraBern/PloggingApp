@@ -38,8 +38,8 @@ public partial class MapViewModel : ObservableObject, IAsyncInitialization, IRec
 
     private async Task Initialize()
     {
-        // await AddTrashPinsToMap();
-        // await AddLitterBagPlacementsToMap();
+        await AddTrashPinsToMap();
+        await AddLitterBagPlacementsToMap();
     }
 
     private async Task AddTrashPinsToMap()

@@ -9,7 +9,9 @@ public class LocationTracker : ILocationTracker
 
     public event EventHandler<Location> LocationUpdated;
     public bool IsPlogging { get; set; }
-    
+
+    public ICollection<Location> PlogRoute { get; private set; } = [];
+
     public LocationTracker(ILocationProvider locationProvider)
     {
         _locationProvider = locationProvider;
@@ -28,15 +30,15 @@ public class LocationTracker : ILocationTracker
         while (IsPlogging)
         {
             var currentLocation = await _locationProvider.GetCurrentLocation();
-            if (currentLocation == null)
+            if (currentLocation == null) 
                 continue;
 
             CurrentLocation = currentLocation;
+            PlogRoute.Add(currentLocation);
                 
             LocationUpdated?.Invoke(this, CurrentLocation);
 
-            // await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(3));
         }
     }
-
 }

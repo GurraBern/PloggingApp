@@ -1,4 +1,4 @@
-﻿namespace PlogPal.Domain.Models;
+﻿namespace PlogPal.Domain.Enums;
 
 public enum LitterType
 {

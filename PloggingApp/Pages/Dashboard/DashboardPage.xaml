@@ -23,10 +23,10 @@
 
         <map:MapView Grid.Row="0" BindingContext="{Binding MapViewModel}"/>
 
-        <!-- <ploggingsession:AddLitter -->
-        <!--     Margin="5,0" -->
-        <!--     BindingContext="{Binding AddLitterViewModel}" -->
-        <!--     HorizontalOptions="End"/> -->
+         <ploggingsession:AddLitter 
+             Margin="5,0" 
+             BindingContext="{Binding AddLitterViewModel}" 
+             HorizontalOptions="End"/> 
         
         <ploggingsession:PloggingSessionView BindingContext="{Binding PloggingSessionViewModel}" VerticalOptions="End"/>
 

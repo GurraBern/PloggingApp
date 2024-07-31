@@ -30,6 +30,9 @@ using PlogPal.Maui.Features.Streak;
 using PlogPal.Maui.Pages.PloggingSession;
 using PlogPal.Services;
 using PlogPal.Services.PloggingTracking;
+using PlogPal.Domain.Services;
+using PloggingApp.Services.Camera;
+using PloggingApp.Features.PloggingSession;
 
 namespace PloggingApp;
 
@@ -46,15 +49,15 @@ public static class MauiProgram
             .UseMicrocharts()
             .UseSkiaSharp()
             .UseMauiCommunityToolkitMaps("AoUR4E62oR7u3eyHLolc9rR0ofWn0p0DrczTs1d6oIQCwkUmla3SCdnzdftVvCMS") /*FÖR WINDOWS */
+#if ANDROID || IOS
             .UseMauiMaps() /*android och IOS specific*/
+#endif
             .UseBarcodeReader()
-
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Inter-SemiBold.ttf", "InterSemiBold");
                 fonts.AddFont("Inter-Bold.ttf", "InterBold");
             });
-
 
         builder.Services.AddEventBus(Assembly.GetAssembly(typeof(SignInEvent)), Assembly.GetAssembly(typeof(SignInHandler)));
 
@@ -64,10 +67,12 @@ public static class MauiProgram
         AddPopups(builder);
         AddPages(builder);
 
-        // builder.ConfigureMauiHandlers(handlers =>
-        // {
-        //     handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
-        // });
+#if ANDROID
+        builder.ConfigureMauiHandlers(handlers =>
+        {
+            handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
+        });
+#endif
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -112,7 +117,8 @@ public static class MauiProgram
         //builder.Services.AddTransient<StatisticsPage>();
         //builder.Services.AddTransient<SessionStatisticsPage>();
 
-        //builder.Services.AddScoped<CheckoutImagePage>();
+        builder.Services.AddScoped<CheckoutImagePage>();
+        builder.Services.AddScoped<CheckoutImageViewModel>();
         //builder.Services.AddScoped<GenerateQRcodePage>();
         //builder.Services.AddTransient<ScanQRcodePage>();
 
@@ -140,6 +146,7 @@ public static class MauiProgram
         
         //Client
         builder.Services.AddScoped<IToastService, ToastService>();
+        builder.Services.AddScoped<ICameraService, CameraService>();
         builder.Services.AddSingleton<ILocationTracker, LocationTracker>();
         
         //Application
@@ -147,7 +154,9 @@ public static class MauiProgram
         builder.Services.AddScoped<IPloggingSessionManager, PloggingSessionManager>();
         // builder.Services.AddScoped<IPloggingSessionTracker, >(); //TODO ändra denna så att det är application layer som anropas
         builder.Services.AddSingleton<IUserContext, UserContext>();
-        
+
+        //Domain
+        builder.Services.AddScoped<ILitterTracker, LitterTracker>();
     }
 
     private static void AddApiClients(MauiAppBuilder builder)

@@ -4,6 +4,8 @@
 //using PloggingApp.Features.Statistics;
 //using PloggingApp.Features.UserProfiles;
 
+using PlogPal.Maui.Features.PloggingSession;
+
 namespace PloggingApp
 {
     public partial class AppShell : Shell
@@ -12,7 +14,7 @@ namespace PloggingApp
         {
             InitializeComponent();
 
-            //Routing.RegisterRoute(nameof(CheckoutImagePage), typeof(CheckoutImagePage));
+            Routing.RegisterRoute(nameof(CheckoutImagePage), typeof(CheckoutImagePage));
             //Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
             //Routing.RegisterRoute(nameof(ScanQRcodePage), typeof(ScanQRcodePage));
             //Routing.RegisterRoute(nameof(GenerateQRcodePage), typeof(GenerateQRcodePage));

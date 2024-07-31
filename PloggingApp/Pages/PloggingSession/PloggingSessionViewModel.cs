@@ -17,12 +17,8 @@ namespace PlogPal.Maui.Pages.PloggingSession;
 public partial class PloggingSessionViewModel : ObservableObject, IRecipient<LitterPlacedMessage>, IRecipient<PhotoTakenMessage>
 {
     private readonly IPloggingSessionManager _ploggingSessionManager;
-    //private readonly IPloggingSessionTracker _ploggingSessionTracker;
     private readonly ICameraService _cameraService;
-    // private readonly IPopupService _popupService;
     private readonly IToastService _toastService;
-    //private readonly IPlogTogetherService _plogTogetherService;
-    //private readonly IAuthenticationService _authenticationService;
     public ObservableCollection<LocationPin> PlacedPins { get; set; } = [];
     public List<Microsoft.Maui.Devices.Sensors.Location> TrackingPositions { get; set; } = [];
     private Microsoft.Maui.Devices.Sensors.Location CurrentLocation { get; set; }
@@ -30,22 +26,11 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     [ObservableProperty]
     private bool isTracking = false;
 
-    public PloggingSessionViewModel(
-        IPloggingSessionManager ploggingSessionManager,
-        // IPloggingSessionTracker ploggingSessionTracker, 
-        // ICameraService cameraService, 
-        IToastService toastService
-        // IPlogTogetherService plogTogetherService,
-        // IAuthenticationService authenticationService)
-        )
+    public PloggingSessionViewModel(IPloggingSessionManager ploggingSessionManager, ICameraService cameraService, IToastService toastService)
     {
         _ploggingSessionManager = ploggingSessionManager;
-        // _ploggingSessionTracker = ploggingSessionTracker;
-        // _cameraService = cameraService;
+        _cameraService = cameraService;
         _toastService = toastService;
-        // _plogTogetherService = plogTogetherService;
-        // _authenticationService = authenticationService;
-        // _ploggingSessionTracker.LocationUpdated += OnLocationUpdated;
 
         WeakReferenceMessenger.Default.Register<LitterPlacedMessage>(this);
         WeakReferenceMessenger.Default.Register<PhotoTakenMessage>(this);
@@ -60,7 +45,9 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     private void StartPloggingSession()
     {
         _ploggingSessionManager.StartPlogging();
-        _toastService.MakeToast("started plogging"); // Temp
+
+        IsTracking = true;
+        WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(true, []));
     }
 
     [RelayCommand]
@@ -68,6 +55,10 @@ public partial class PloggingSessionViewModel : ObservableObject, IRecipient<Lit
     {
         var imagePath = await _cameraService.TakePhoto();
         await Shell.Current.GoToAsync($"{nameof(CheckoutImagePage)}?ImagePath={imagePath}");
+        //TODO check result
+
+        _ploggingSessionManager.StopPlogging();
+
 
         IsTracking = false;
         WeakReferenceMessenger.Default.Send(new PloggingSessionMessage(IsTracking, TrackingPositions));
